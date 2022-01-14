@@ -5,58 +5,13 @@ import 'font-awesome/css/font-awesome.min.css';
 import {
     Container, Row, Col, Button
 } from 'react-bootstrap'
-const Footer = () => (
+const FooterLogin = () => (
     <div className="RSI__footer section__padding">
         <Container>
-            <Row className="justify-content-md-center ">
-                <Col   sm={12} xs={12} >
-                    <h4 >Giving everyone access to early-stage startup investing <br /> All Rights Reserved</h4>
-                    <hr />
-                </Col>
-                <Col xxl={3} xl={3}sm={6} xs={6}>
-                    <h2 >For investors</h2>
-                    <hr />
-                    <Row><a href='#'>Why invest</a></Row>
-                    <Row><a href='#'>How it works</a></Row>
-                    <Row><a href='#'>FAQ</a> </Row>
-                    <Row><a href='#'> Risks</a></Row>
-                    <Row><a href='#'>Privacy policy</a></Row>
-                </Col>
-                <Col xxl={2} xl={2}sm={6} xs={6}>
-                    <h2>Company</h2>
-                    <hr />
-                    <Row><a href='#'>For startups</a></Row>
-                    <Row><a href='#'> Why raise</a></Row>
-                    <Row><a href='#'>Learn</a></Row>
-                    <Row><a href='#'>FAQ</a></Row>
-                    <Row><a href='#'>Instruments</a></Row>
-                    <Row><a href='#'>Crowd SAFE</a></Row>  
-                </Col>
-                <Col xxl={3} xl={3} sm={6} xs={6}>
-                    <h2>Get in touch</h2>
-                    <hr />
-                    <Row><a href='#'>Crypto</a></Row>
-                    <Row><a href='#'>For investors</a></Row>
-                    <Row><a href='#'>For companies</a></Row>
-                    <Row><a href='#'>How it works</a></Row>
-                    <Row><a href='#'>Token DPA</a></Row>
-                </Col>
-                <Col xxl={4} xl={4} sm={6} xs={6}>
-                    <h2>Company</h2>
-                    <hr />
-                    <Row><a href='#'>About</a></Row>
-                    <Row><a href='#'>Journal</a></Row>
-                    <Row><a href='#'>Events</a></Row>
-                    <Row><a href='#'>Contact</a></Row>
-                    <Row><a href='#'>We're hiring!</a></Row>
-                </Col>
+            <Row className="justify-content-md-left ">
+            <h2>Revenue Sharing Invest</h2> 
             </Row>
-            <Row className="justify-content-md-center pt-3">
-                <hr />
-            </Row>
-            <Row className="text-center ">
-                <h2>Refer a startup, get $2,500</h2>
-            </Row>
+       
             <Row className='justify-content-md-center pt-3'>
                 <hr />
             </Row>
@@ -126,4 +81,4 @@ const Footer = () => (
     </div>
 );
 
-export default Footer;
+export default FooterLogin;

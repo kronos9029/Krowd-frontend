@@ -14,7 +14,6 @@ const StartupPage = () => {
     <>
       <div className="RSI_invertco section__padding" id="blog">
 
-
         <Container>
           <Row className="justify-content-md-center">
             <h1 >Invert Now<br /> </h1>

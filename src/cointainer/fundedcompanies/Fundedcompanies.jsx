@@ -8,7 +8,6 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 
 const Fundedcompanies = () => {
 
-
   return (
     <div className="RSI_Funded section__padding" id="regulation">
       <Container>

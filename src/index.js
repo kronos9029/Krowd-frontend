@@ -7,7 +7,8 @@ import Navbar from './component/navbar/Navbar';
 import StartupPage from './pages/startup/StartupPage';
 import RealEstate from './pages/realEstate/RealEstate';
 import ViewsIndex from './views/Index';
-
+import LoginPage from './pages/login/LoginPage'
+import RegisterPage from './pages/login/RegisterPage'
 ReactDOM.render(
   
   <BrowserRouter>
@@ -15,6 +16,8 @@ ReactDOM.render(
     <Switch>
       {/* <Route path="/admin" render={(props) => <AdminLayout {...props} />} /> */}
       {/* <Route path="/rtl" render={(props) => <RTLLayout {...props} />} /> */}
+      <Route path="/register" render={(props) => <RegisterPage {...props} />} />
+      <Route path="/login" render={(props) => <LoginPage {...props} />} />
       <Route path="/real-estate" render={(props) => <RealEstate {...props} />} />
       <Route path="/companies" render={(props) => <StartupPage {...props} />} />
       <Route path="/" render={(props) => <ViewsIndex {...props} />} />

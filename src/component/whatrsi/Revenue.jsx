@@ -85,10 +85,10 @@ const Revenue = () => {
                 </div>
               </Col>
               <Col className="order-md-1" md="6">
-                <div className="pr-md-5">
+                <div className="pr-md-5 ">
                   <ul className="list-unstyled mt-5">
                     <li className="py-2">
-                      <div className="d-flex align-items-center">
+                      <div className="d-flex align-items-center ">
                         <div>
                           <Badge className="badge-circle mr-3" color="success">
                             <i className="ni ni-settings-gear-65" />

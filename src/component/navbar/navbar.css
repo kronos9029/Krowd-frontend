@@ -72,13 +72,14 @@
 .RSI__navbar-sign button,
 .RSI__navbar-menu_container button {
     padding: 0.5rem 1rem;
-    background: #f8502aed;
+    background: #17dd31ed;
     border: none;
     outline: none;
     font-weight: 500;
     font-size: 18px;
     line-height: 23px;
     border-radius: 7px;
+    margin-right: 1rem;
     cursor: pointer;
     font-family: var(--font-family);
 
@@ -108,7 +109,7 @@
     align-items: flex-end;
     flex-direction: column;
     text-align: end;
-    background: radial-gradient(circle at 11% 42%, rgb(205, 215, 226) 13%, rgb(194, 251, 199) 59%);
+    background: radial-gradient(circle at 11% 42%, rgb(237, 240, 243) 13%, rgb(255, 255, 255) 59%);
     padding: 2rem;
     position: absolute;
     right: 0;
@@ -122,6 +123,8 @@
 .dropdown {
     position: relative;
     display: inline-block;
+    padding-left: 2rem;
+    color: #000;
 }
 
 .dropdown-content {
@@ -132,7 +135,29 @@
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
 }
+.dropdown-content-learn{
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
 
+.dropdown-content-learn a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    width: 160px;
+}
+
+.dropdown-content-learn a:hover {
+    background-color: #ddd;
+}
+.dropdown:hover .dropdown-content-learn {
+    display: block;
+}
 .dropdown-content a {
     color: black;
     padding: 12px 16px;

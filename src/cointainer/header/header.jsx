@@ -1,9 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 // import people from '../../assets/people.png';
 // import is from '../../assets/IS.jpg';
 import is from '../../assets/ISS.jpg';
 import './header.css';
-
 const Header = () => (
   <div className="RSI__header section__padding" id="home">
     <div className="RSI__header-content">
@@ -13,7 +14,7 @@ businesses</h1>
 businesses all over the U.S.</p>
       <div className="RSI__header-content__input">
         <input type="email" placeholder="Your Email Address" />
-        <button type="button">Get Started</button>
+        <Link to='/register'><button type="button">Get Started</button></Link>
       </div>
     </div>
 
