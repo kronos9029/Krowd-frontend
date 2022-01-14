@@ -1,0 +1,68 @@
+
+  .RSI-container_group{
+    display: flex;
+    max-width: 1658px;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0rem 5rem;
+}
+
+
+
+/* @media screen and (max-width: 1590px) {
+    .RSI-container_group{
+        display: flex;
+        max-width: 1590px;
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 0rem auto;
+    }
+
+    .RSI_invertco-heading h1 {
+        font-size: 36px;
+        line-height: 52px;
+    }
+    .RSI_invertco-heading,.RSI_Regulation-heading,.RSI_RealEstate-heading
+    {
+        padding: 0 12rem;
+    }
+    .main-content{
+        padding: 2rem 18rem;
+    }
+    .container{
+        padding: 2rem;
+    }
+    .order-md-2{
+        padding: 0 2rem;
+    }
+  
+    .RSI__footer-links div{
+        width: 195px;
+        margin: 1rem;
+    }
+    .RSI__footer-content{
+        color: rgb(246, 244, 244);
+        padding: 1rem 12rem;
+    }
+    .RSI_hr-footer{
+        width: 76%;
+        padding: 0.5rem;
+        color: #FFF;
+    }
+    .RSI__header-content{
+        padding: 0 12rem;
+    }
+    .RSI_RealEstate-container_groupC{
+        flex: 1;
+        display:grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 2rem;
+        margin: 0 4rem;
+        padding: 0 8rem;
+    }
+    .align-items-center{
+        padding: 0 5rem;
+    }
+} */
