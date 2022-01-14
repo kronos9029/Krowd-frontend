@@ -33,7 +33,7 @@ const Invertco = () => {
       </Row>
       <Row className="justify-content-md-center pt-5">
       <Col xxl={4} xl={4} md={6} >
-        <Link  to={Title.text}><Title imgUrl={funded1} logo={logo2} date="Sep 26, 2021" text="First Tokenized " des="First Tokenized Litigation Funding for one of largest US crop destructions" /> </Link>
+        <Link  to={`/details?${localStorage.getItem("name")}`}><Title imgUrl={funded1} logo={logo2} date="Sep 26, 2021" text="First Tokenized " des="First Tokenized Litigation Funding for one of largest US crop destructions" /> </Link>
           </Col>
       <Col xxl={4} xl={4} md={6} >
       <Title imgUrl={funded6} logo={logo1} date="Sep 26, 2021" text="Terraformation" des="

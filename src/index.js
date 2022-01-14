@@ -7,8 +7,9 @@ import Navbar from './component/navbar/Navbar';
 import StartupPage from './pages/startup/StartupPage';
 import RealEstate from './pages/realEstate/RealEstate';
 import ViewsIndex from './views/Index';
-import LoginPage from './pages/login/LoginPage'
-import RegisterPage from './pages/login/RegisterPage'
+import LoginPage from './pages/login/LoginPage';
+import RegisterPage from './pages/login/RegisterPage';
+import InvestDetails from '../src/cointainer/pages/details/InvestDetails';
 ReactDOM.render(
   
   <BrowserRouter>
@@ -16,6 +17,7 @@ ReactDOM.render(
     <Switch>
       {/* <Route path="/admin" render={(props) => <AdminLayout {...props} />} /> */}
       {/* <Route path="/rtl" render={(props) => <RTLLayout {...props} />} /> */}
+      <Route path="/details" render={(props) => <InvestDetails {...props} />} />
       <Route path="/register" render={(props) => <RegisterPage {...props} />} />
       <Route path="/login" render={(props) => <LoginPage {...props} />} />
       <Route path="/real-estate" render={(props) => <RealEstate {...props} />} />

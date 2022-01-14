@@ -1,11 +1,12 @@
-import { React, useEffect } from 'react';
+import { React } from 'react';
 import './title.css';
 
 import Aos from 'aos';
 import "aos/dist/aos.css"
 Aos.init({ duration: 2000 });
-const Title = ({ imgUrl,logo, date, text ,des} ) => (
+localStorage.setItem("name","Title.text");
 
+const Title = ({ imgUrl,logo, date, text ,des} ) => (
  
   
   <div className="RSI_invertco-container_title" >
