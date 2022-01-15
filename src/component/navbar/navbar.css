@@ -1,7 +1,5 @@
 /* 
-.RSI__navbar-links_logo {
-    margin-right: 2rem;
-}
+
 
 .RSI__navbar-links_logo img {
     width: 62.56px;
@@ -10,7 +8,9 @@
 } */
 
 /*top right bottom left */
-
+.RSI__navbar-links_logo h1 {
+line-height: 20px;
+}
 .RSI__navbar_control {
     background-color: #FFF;
     height: 5rem;
@@ -20,7 +20,8 @@
 }
 
 .RSI__navbar_control {
-    background-color: #FFF;
+    background-color: rgba(245, 238, 238, 0.767);
+    /* box-shadow: 0 0.125rem 0.1875rem -0.125rem rgb(0 0 0 / 20%); */
 }
 
 .RSI__navbar {
@@ -28,7 +29,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 32px 96px;
-    color: aquamarine;
+    color: #009834;
+
 }
 
 .RSI__navbar-links {
@@ -41,7 +43,7 @@
 }
 
 .RSI__navbar-links :hover {
-    color: aquamarine;
+    color: #009834;
 }
 
 .RSI__navbar-links_container {
@@ -54,6 +56,11 @@
     justify-content: flex-end;
     align-items: center;
 }
+.RSI__navbar-sign #Sign{
+    color: #009834;
+    font-weight: 900;
+    text-align: center;
+}
 
 .RSI__navbar-links_container p,
 .RSI__navbar-sign p,
@@ -64,22 +71,19 @@
     font-size: 1.125rem;
     line-height: 25px;
     text-transform: capitalize;
-    margin: 0 1rem;
+    margin: 0 1rem 2rem;
     cursor: pointer;
 
 }
 
 .RSI__navbar-sign button,
 .RSI__navbar-menu_container button {
-    padding: 0.5rem 1rem;
     background: #17dd31ed;
     border: none;
     outline: none;
     font-weight: 500;
-    font-size: 18px;
-    line-height: 23px;
     border-radius: 7px;
-    margin-right: 1rem;
+    margin: 0 1rem 1rem ;
     cursor: pointer;
     font-family: var(--font-family);
 
@@ -126,12 +130,22 @@
     padding-left: 2rem;
     color: #000;
 }
+.dropdown h3{
+    color: rgb(2, 0, 0);
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 1.125rem;
+    line-height: 25px;
+    text-transform: capitalize;
+    cursor: pointer;
+    margin-bottom: 2rem;
+}
 
 .dropdown-content {
     display: none;
     position: absolute;
     background-color: #f1f1f1;
-    min-width: 760px;
+    min-width: 180px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
 }
@@ -153,14 +167,15 @@
 }
 
 .dropdown-content-learn a:hover {
-    background-color: #ddd;
+    background-color: rgb(255, 255, 255);
 }
 .dropdown:hover .dropdown-content-learn {
     display: block;
 }
 .dropdown-content a {
     color: black;
-    padding: 12px 16px;
+    padding: 0 16px;
+    margin-top: 1px;
     text-decoration: none;
     display: block;
 }

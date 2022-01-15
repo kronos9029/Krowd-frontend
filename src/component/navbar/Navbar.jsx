@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Row, Col } from 'react-bootstrap';
+import { Button, Row, Col,Accordion } from 'react-bootstrap';
 import { RiMenu3Line, RiCloseLine } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 import { logoTest } from '../../cointainer/startup/import';
@@ -15,30 +15,31 @@ const Navbar = () => {
                         {/* <img src={logo} /> */}
                         <h1><Link to="/">SRI</Link> </h1>
                     </div>
+                    {/* <Accordion defaultActiveKey="0">
+                        <Accordion.Item eventKey="0">
+                            <Accordion.Header>Accordion Item #1</Accordion.Header>
+                            <Accordion.Body>
 
+                            </Accordion.Body>
+                        </Accordion.Item>
+                        <Accordion.Item eventKey="1">
+                            <Accordion.Header>Accordion Item #2</Accordion.Header>
+                            <Accordion.Body>
+
+                            </Accordion.Body>
+                        </Accordion.Item>
+                    </Accordion> */}
                     <div className="dropdown">
-                        <h3 className="dropbtn"> Invest</h3>
+                        <h3 className="dropbtn">Discover</h3>
                         <div className="dropdown-content">
                             <Row>
-                                <Col xxl={4} xl={3} md={6} >
-                                    {/* <img src={logoTest}/> */}
-                                    <a>  <p><Link to="/">Home</Link> </p></a>
-                                </Col>
-                                <Col xxl={4} xl={3} md={6} >
-                                <a>  <p><a style={{ textDecoration: "none" }} href="#wIns">What is RSI?</a></p></a>
-                                </Col>
-                                <Col xxl={4} xl={3} md={6} >
-                                    <a>  <p><a style={{ textDecoration: "none" }} href="#wIns">Why inverts?</a></p></a>
-                                </Col>
-                                <Col xxl={4} xl={3} md={6} >
-                                    <a>  <p><a style={{ textDecoration: "none" }} href="#features">Case Studies</a></p></a>
-                                </Col>
-                                <Col xxl={4} xl={3} md={6} >
-                                    <a>  <p><Link to="/real-estate">Real estate</Link> </p></a>
-                                </Col>
-                                <Col xxl={4} xl={3} md={6} >
-                                    <a>  <p><Link to="/companies">Startup</Link> </p></a>
-                                </Col>
+                                {/* <img src={logoTest}/> */}
+                                <a>  <p><Link to="/">Home</Link> </p></a>
+                                <a>  <p><a href="#wIns">What is RSI?</a></p></a>
+                                <a>  <p><a href="#wIns">Why inverts?</a></p></a>
+                                <a>  <p><a href="#features">Case Studies</a></p></a>
+                                <a>  <p><Link to="/real-estate">Real estate</Link> </p></a>
+                                <a>  <p><Link to="/companies">Startup</Link> </p></a>
                             </Row>
                         </div>
                     </div>
@@ -55,8 +56,8 @@ const Navbar = () => {
                 </div>
                 <div className="RSI__navbar-sign">
                     <p>About</p>
-                    <Link to="/login"><Button>Login</Button></Link>
-                    <Link   to="/register"><Button>Sign up</Button></Link>
+                    <Link to="/login"><p>Sign in </p></Link>
+                    <Link to="/register"><p id="Sign">Sign up</p></Link>
 
                 </div>
                 <div className="RSI__navbar-menu">
