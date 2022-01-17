@@ -1,15 +1,17 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import Footer from '../../../component/footer/Footer'
 import {
-    Container, Row, Col, Button,Collapse
+    Container, Row, Col, Button, Collapse
 } from "react-bootstrap";
 import { funded1 } from '../../../../src/cointainer/startup/import';
+import Navbar from '../../../component/navbar/Navbar';
 
 export default function InvestDetails() {
     const [open, setOpen] = useState(false);
 
     return (
         <>
+  <Navbar/>
 
             <div>
                 <div className="RSI_invertco section__padding" id="blog">
@@ -21,11 +23,11 @@ export default function InvestDetails() {
                         </Row>
 
                         <Row className="justify-content-md-center pt-5">
-                            <Col xxl={6} xl={4} md={6} >
+                            <Col xxl={6} xl={6} md={6}  >
                                 {/* <Title imgUrl={funded1} logo={logo2} text="AlPhineX" des="Invest in indoor snowsports resorts throughout North America!" /> */}
                                 <img className='w-100' src={funded1} />
                             </Col>
-                            <Col xxl={6} xl={4} md={6} >
+                            <Col xxl={6} xl={6} md={6}>
                                 {/* <Title imgUrl={funded1} logo={logo2} text="AlPhineX" des="Invest in indoor snowsports resorts throughout North America!" /> */}
                                 <Container className='pl-3 '>
                                     <Button className='btn btn-success'> FULLY RESERVED</Button>
@@ -39,7 +41,7 @@ export default function InvestDetails() {
                                     <h3>
                                         Join the waitlist for a chance to invest if room in the offering becomes available.
                                     </h3>
-                                    <Row className='pt-4 pb-4'><Button className='w-25'>Join with me</Button></Row>
+                                    <Row  className='pt-4 pb-4'><Button  className='w-50'>Join with me</Button></Row>
                                     <p>$1,000 minimum investment </p>
                                 </Container>
                             </Col>
@@ -55,15 +57,15 @@ export default function InvestDetails() {
                                 </Button>
                                 <Collapse in={open}>
                                     <div id="example-collapse-text ">
-                                       <h2 className='pt-3'>Highlights</h2>
-                                       <ul>
-                                           <li className='w-100'> A diversified portfolio of digital assets across 13 metaverses</li>
-                                           <li className='w-100'> A diversified portfolio of digital assets across 13 metaverses</li>
-                                           <li className='w-100'> A diversified portfolio of digital assets across 13 metaverses</li>
-                                           <li className='w-100'> A diversified portfolio of digital assets across 13 metaverses</li>
-                                           <li className='w-100'> A diversified portfolio of digital assets across 13 metaverses</li>
-                                         
-                                       </ul>
+                                        <h2 className='pt-3'>Highlights</h2>
+                                        <ul>
+                                            <li className='w-100'> A diversified portfolio of digital assets across 13 metaverses</li>
+                                            <li className='w-100'> A diversified portfolio of digital assets across 13 metaverses</li>
+                                            <li className='w-100'> A diversified portfolio of digital assets across 13 metaverses</li>
+                                            <li className='w-100'> A diversified portfolio of digital assets across 13 metaverses</li>
+                                            <li className='w-100'> A diversified portfolio of digital assets across 13 metaverses</li>
+
+                                        </ul>
                                     </div>
                                 </Collapse>
                             </Col>

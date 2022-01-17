@@ -16,11 +16,14 @@ import logo5 from '../../assets/logo5.png';
 import logo6 from '../../assets/logo6.png';
 import logo7 from '../../assets/logo7.png';
 import logoTest from '../../assets/logoTest.png';
+import GGL from '../../assets/GooglePlay.png';
+import APPS from '../../assets/AppStore.png';
+import BannerHead from '../../assets/BannerHead.png';
 
 export {
     funded3,
     funded4,
     funded6,
     funded5,realstate,author,realstate2,
-    logo1,logo2,logo3,logo4,logo5,logo6,logo7,funded1,funded2,logoTest
+    logo1,logo2,logo3,logo4,logo5,logo6,logo7,funded1,funded2,logoTest,GGL,APPS,BannerHead,
 };

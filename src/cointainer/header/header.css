@@ -1,6 +1,7 @@
 .RSI__header {
     display: flex;
     flex-direction: row;
+    background-color: #2c5c08;
 }
 
 .RSI__header-content {
@@ -19,6 +20,7 @@
     font-size: 62px;
     line-height: 75px;
     letter-spacing: -0.04em;
+    color: #FFF;
 }
 
 .RSI__header-content p {
@@ -26,7 +28,8 @@
     font-weight: 400;
     font-size: 20px;
     line-height: 28px;
-    color: var(--color-text);
+    /* color: var(--color-text); */
+    color: #FFFF;
 
     margin-top: 1.5rem;
 }
@@ -38,23 +41,10 @@
     flex-direction: row;
 }
 
-.RSI__header-content__input input {
-    flex: 2;
-    width: 100%;
-    min-height: 50px;
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 28px;
-    background: rgb(240, 243, 240);
-    border: 2px solid rgb(203, 236, 199);
-    padding: 0 1rem;
-    outline: none;
-    color: #fff;
-
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
+.RSI__header-content__input button:hover{
+    background-color: #009834;
 }
+
 .RSI__header-content__input button {
     flex: 0.6;
     width: 100%;
@@ -63,8 +53,9 @@
     font-weight: 400;
     font-size: 20px;
     line-height: 28px;
-    background: #4db8d3;
-    border: 2px solid #f8f5f5;
+    background: #069024;
+    border: 2px solid #086802;
+    border-radius: 5px;
     padding: 0 1rem;
     color: #fff;
     cursor: pointer;

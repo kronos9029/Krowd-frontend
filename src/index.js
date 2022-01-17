@@ -9,14 +9,20 @@ import RealEstate from './pages/realEstate/RealEstate';
 import ViewsIndex from './views/Index';
 import LoginPage from './pages/login/LoginPage';
 import RegisterPage from './pages/login/RegisterPage';
+import CreateFundraiserPage from './pages/startFunderaise/CreateFundraiserPage';
+import FundraiserGoalPage from './pages/startFunderaise/FundraiserGoalPage';
+import RegisterPageMedia from './pages/startFunderaise/RegisterPageMedia';
 import InvestDetails from '../src/cointainer/pages/details/InvestDetails';
 ReactDOM.render(
   
-  <BrowserRouter>
-  <Navbar/>
-    <Switch>
+  <BrowserRouter >
+
+    <Switch >
       {/* <Route path="/admin" render={(props) => <AdminLayout {...props} />} /> */}
       {/* <Route path="/rtl" render={(props) => <RTLLayout {...props} />} /> */}
+      <Route path="/create/fundraiser/sign-up/media" render={(props) => <RegisterPageMedia {...props} />} />
+      <Route path="/create/fundraiser/goal" render={(props) => <FundraiserGoalPage {...props} />} />
+      <Route path="/create/fundraiser/details" render={(props) => <CreateFundraiserPage {...props} />} />
       <Route path="/details" render={(props) => <InvestDetails {...props} />} />
       <Route path="/register" render={(props) => <RegisterPage {...props} />} />
       <Route path="/login" render={(props) => <LoginPage {...props} />} />

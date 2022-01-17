@@ -65,7 +65,7 @@ line-height: 20px;
 .RSI__navbar-links_container p,
 .RSI__navbar-sign p,
 .RSI__navbar-menu_container p {
-    color: rgb(2, 0, 0);
+    color: rgb(0, 0, 0);
     font-family: var(--font-family);
     font-weight: 600;
     font-size: 1.125rem;
@@ -78,7 +78,7 @@ line-height: 20px;
 
 .RSI__navbar-sign button,
 .RSI__navbar-menu_container button {
-    background: #17dd31ed;
+    /* background: #17dd31ed; */
     border: none;
     outline: none;
     font-weight: 500;
@@ -93,6 +93,7 @@ line-height: 20px;
     margin-left: 1rem;
     display: none;
     position: relative;
+    margin-bottom: 2rem;
 }
 
 .RSI__navbar-menu svg {
@@ -189,23 +190,61 @@ line-height: 20px;
 }
 
 
-@media screen and (max-width: 1050px) {
+@media screen and (max-width: 850px) {
     .RSI__navbar-links_container {
         display: none;
     }
 
     .RSI__navbar-menu {
         display: flex;
-        background-color: black;
+        /* background-color: rgb(246, 234, 234);
+         */
+         color: #000;
     }
+    .RSI__navbar-menu g{
+        color: #000;
+    }
+    .RSI__navbar {
+        padding: 2rem;
+    }
+
+    .RSI__navbar-sign {
+        display: none;
+    }
+
+    .RSI__navbar-menu_container {
+        top: 20px;
+
+    }
+
+    .RSI__navbar-menu_container-links-sign {
+        display: block;
+    }
+
 
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 800px) {
     .RSI__navbar {
         padding: 2rem 4rem;
 
     }
+    .RSI__navbar {
+        padding: 2rem;
+    }
+
+    .RSI__navbar-sign {
+        display: none;
+    }
+
+    .RSI__navbar-menu_container {
+        top: 20px;
+    }
+
+    .RSI__navbar-menu_container-links-sign {
+        display: block;
+    }
+
 }
 
 @media screen and (max-width: 550px) {

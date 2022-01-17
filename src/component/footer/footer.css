@@ -4,11 +4,17 @@
     justify-content: center;
     align-items: center;
 
-    background: #161d2d;
+    background: #f0f0f0;
 }
 .RSI__footer{
-  color: rgba(255,255,255,0.5);
-  font-size: 13px;
+  color: rgb(0, 0, 0);
+  font-size: 17px;
+  font-weight: 300;
+  border-top: 1px solid #82828280;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: justify;
+  color: #333333;
 }
 
 .RSI__footer-heading {

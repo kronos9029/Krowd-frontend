@@ -4,9 +4,40 @@
     font-size: 1rem;
     font-weight: 500;
 }
+.RSI__card{
+    padding-top: 2rem;
+    height: 105%;
+}
 .RSI__card:hover{
     color: rgb(0, 0, 0);
 }
+.RSI_cardText{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.RSI_cardTitle{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.RSI__title-invest{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+/* .RSI_Image{
+    width: 270px;
+    height: 360px;
+} */
+.RSI_card_image{
+    /* height: 369; */
+    height: 90%;
+    margin:  2rem 0;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
 
 @media screen and (max-width: 1350px) {
     .RSI_cardText{
@@ -15,6 +46,11 @@
         text-overflow: ellipsis;
     }
     .RSI__title-invest{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .RSI_cardTitle{
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;

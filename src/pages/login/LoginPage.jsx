@@ -3,10 +3,13 @@ import { Button, Col, Container, Row, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import Footer from '../../component/footer/Footer'
 import FooterLogin from '../../component/footer/FooterLogin'
+import Navbar from '../../component/navbar/Navbar'
 
 export default function LoginPage() {
     return (
         <>
+          <Navbar/>
+
             <div >
                 <Container className="pt-5 pb-5">
                     <Row className='justify-content-md-center text-center'>

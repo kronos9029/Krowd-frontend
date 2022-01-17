@@ -3,7 +3,7 @@
     /* align-items: center; */
     flex-direction: row;
     padding: 2rem;
-    background:radial-gradient(circle at 3% 25%, rgb(226, 233, 224) 0%, #f6f6f6 25%);
+    background:radial-gradient(circle at 3% 25%, rgb(115, 209, 115) 0%, green 25%);
     margin-bottom: 2rem;    
 }
 
@@ -29,7 +29,7 @@
     line-height: 45px;
     font-weight: 800;
     text-align: center;
-    color: #000;
+    color: #fff;
 }
 .RSI__header-content__input-CTA {
     width: 100%;
@@ -37,23 +37,14 @@
     flex-direction: row;
     text-align: center;
     
+}.RSI__header-content__input-CTA img{
+    padding-left: 1rem;
+    width: 27%;
+
 }
+.RSI__header-content__input-CTA button:hover{
+    background-color: #03501e;
 
-.RSI__header-content__input-CTA input {
-    min-height: 50px;
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 28px;
-    background: rgb(240, 243, 240);
-    border: 2px solid rgb(203, 236, 199);
-    padding: 0 1rem;
-    text-align: center;
-    outline: none;
-    color: #fff;
-
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
 }
 .RSI__header-content__input-CTA button {
     min-height: 50px;
@@ -61,8 +52,8 @@
     font-weight: 400;
     font-size: 20px;
     line-height: 28px;
-    background: #4db8d3;
-    border: 2px solid #f8f5f5;
+    background: green;
+    border: 2px solid #055a2f;
     padding: 0 1rem;
     color: #fff;
     cursor: pointer;
@@ -95,14 +86,21 @@
     cursor: pointer;
     min-width: 150px;
 }
-
-@media screen and (max-width: 650px) {
+.App-h3{
+    font-weight: bolder;
+}
+@media screen and (max-width: 850px) {
     .RSI__cta {
         flex-direction: column;
     }
 
     .RSI__cta-btn {
         margin: 2rem 0 0;
+    }
+    .RSI__header-content__input-CTA img{
+        padding-left: 10px;
+        width: 50%;
+    
     }
 }
 
@@ -122,5 +120,10 @@
     .RSI__cta-btn button {
         font-size: 14px;
         line-height: 28px;
+    }
+    .RSI__header-content__input-CTA img{
+        padding-left: 10px;
+        width: 50%;
+    
     }
 }

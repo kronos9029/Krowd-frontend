@@ -1,0 +1,29 @@
+.RSI__ProcessBar-create ,.RSI__ProcessBar-create11{
+    width: 5rem;
+    height: 10px;
+    background-color: green;
+    margin-left: 1rem;
+}
+.link-a-funder{
+    color: rgb(15, 98, 207);
+    font-weight: 500;
+    text-decoration:underline;
+}
+.button-funder{
+    width: 4rem;
+    
+}
+.Box-p{
+    background-color: #e7f0f7;
+    width: 100%;
+}
+.Box-p li{
+    
+    padding-left: 2rem;
+}
+.RSI__ProcessBar-create1,.RSI__ProcessBar-create2,.RSI__ProcessBar-create3{
+   margin-left: 1rem;
+    width: 5rem;
+    height: 10px;
+    /* background-color: green; */
+}
