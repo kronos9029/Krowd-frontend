@@ -46,7 +46,7 @@ export default function InvestDetails() {
                                 </Container>
                             </Col>
                         </Row>
-                        <Row className="justify-content-md-center pt-5">
+                        {/* <Row className="justify-content-md-center pt-5">
                             <Col xxl={1} xl={4} md={6} >
                                 <Button
                                     onClick={() => setOpen(!open)}
@@ -78,7 +78,7 @@ export default function InvestDetails() {
                             <Col xxl={9} xl={4} md={6} >
                                 <p>Pitch</p>
                             </Col>
-                        </Row>
+                        </Row> */}
                     </Container>
                 </div>
                 <Footer />

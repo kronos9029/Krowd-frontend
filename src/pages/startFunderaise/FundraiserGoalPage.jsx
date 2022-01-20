@@ -37,10 +37,10 @@ export default function FundraiserGoalPage() {
                                     <div className="form-group pt-3 text-left">
                                         <h5>How much would you like to raise?</h5>
                                     </div>
-                                    <div class="row g-3 align-items-center">
+                                    <div className="row g-3 align-items-center">
 
-                                        <div class="col-12">
-                                            <input type="number" min="0" id="inputMoney" placeholder='Enter Goal Ammount' class="form-control" aria-describedby="passwordHelpInline" />
+                                        <div className="col-12">
+                                            <input type="number" min="0" id="inputMoney" placeholder='Enter Goal Ammount' className="form-control" aria-describedby="passwordHelpInline" />
                                         </div>
                                      
                                     </div>

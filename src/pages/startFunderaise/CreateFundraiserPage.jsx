@@ -28,13 +28,13 @@ export default function CreateFundraiserPage() {
                                     <div className="form-group pt-3 text-left">
                                         <h5> What's your name?</h5>
                                     </div>
-                                    <div class="row g-3 align-items-center">
+                                    <div className="row g-3 align-items-center">
 
-                                        <div class="col-6">
-                                            <input type="text" id="inputFirstname" placeholder='Firstname' class="form-control" aria-describedby="passwordHelpInline" />
+                                        <div className="col-6">
+                                            <input type="text" id="inputFirstname" placeholder='Firstname' className="form-control" aria-describedby="passwordHelpInline" />
                                         </div>
-                                        <div class="col-6">
-                                            <input type="text" id="inputLastname" placeholder='Lastname' class="form-control" aria-describedby="passwordHelpInline" />
+                                        <div className="col-6">
+                                            <input type="text" id="inputLastname" placeholder='Lastname' className="form-control" aria-describedby="passwordHelpInline" />
                                         </div>
                                     </div>
                                 </div>
@@ -60,13 +60,13 @@ export default function CreateFundraiserPage() {
                                                 <option>select</option>
                                             </select>
 
-                                            <div class="row g-3 align-items-center pt-3">
+                                            <div className="row g-3 align-items-center pt-3">
 
-                                                <div class="col-auto">
+                                                <div className="col-auto">
                                                     <h5><i className="fa fa-search pt-2" aria-hidden="true"> Search your postcode</i></h5>
                                                 </div>
                                                 <div >
-                                                    <input placeholder='Search...' class="form-control" type="text" aria-label="Search" /></div>
+                                                    <input placeholder='Search...' className="form-control" type="text" aria-label="Search" /></div>
                                             </div>
 
                                         </div>
@@ -84,7 +84,7 @@ export default function CreateFundraiserPage() {
                                         <h5>What are you fundraising for?</h5>
                                     </div>
 
-                                    <div class="row g-3 align-items-center">
+                                    <div className="row g-3 align-items-center">
 
                                         <select id="disabledSelect" className="form-select" >
                                             <option disabled>Choose a category</option>

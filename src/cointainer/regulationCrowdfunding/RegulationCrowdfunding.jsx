@@ -12,7 +12,7 @@ const RegulationCrowdfunding = () => {
     <div className="RSI_Regulation section__padding" id="regulation">
       <Container>
       <Row className="justify-content-md-center"  data-aos="fade-right">
-      <h3 > <a style={{ color: "green" }} href="#"><i class="fa fa-check"></i>
+      <h3 > <a style={{ color: "green" }} href="#"><i className="fa fa-check"></i>
         </a>All Regulation Crowdfunding deals are highly vetted by our <a href='#'>investment team.</a></h3>
         </Row>
         <Row className="justify-content-md-center pt-5">

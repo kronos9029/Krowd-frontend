@@ -28,8 +28,8 @@ const Invertco = () => {
       </div> */}
       <Container>
         <Row  className="justify-content-md-left pt-5" data-aos="fade-right">
-          <h1 >Invert Now<br /> </h1>
-          <h3 > <a style={{ color: "green" }} href="#"><i class="fa fa-line-chart"></i></a>Most traction in 3 days</h3>
+          <h1 >Top fundraisers<br /> </h1>
+          <h3 > <a style={{ color: "green" }} href="#"><i className="fa fa-line-chart"></i></a>Most traction in 3 days</h3>
         </Row>
 
         <Row className="justify-content-md-center pt-5">
@@ -88,7 +88,7 @@ const Invertco = () => {
                   Last donation 4w ago
                   <ProgressBar animated variant="success" now={65} />
                   <strong>$12,103 raised</strong>  of $20.000
-                  {/* <Button variant="primary">Go somewhere</Button> */}
+                  <Button variant="primary">Go somewhere</Button>
                 </Card.Body>
               </Card>
             </Link>

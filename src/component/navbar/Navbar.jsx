@@ -34,12 +34,12 @@ const Navbar = () => {
                         <div className="dropdown-content">
                             <Row>
                                 {/* <img src={logoTest}/> */}
-                                <a>  <p><Link to="/">Home</Link> </p></a>
-                                <a>  <p><a href="#wIns">What is RSI?</a></p></a>
-                                <a>  <p><a href="#wIns">Why inverts?</a></p></a>
-                                <a>  <p><a href="#features">Case Studies</a></p></a>
-                                <a>  <p><Link to="/real-estate">Real estate</Link> </p></a>
-                                <a>  <p><Link to="/companies">Startup</Link> </p></a>
+                                  <p><Link to="/">Home</Link> </p>
+                              <p>What is RSI?</p>
+                                <p> Why inverts?</p>
+                               <p><a href="#features">Case Studies</a></p>
+                                <p><Link to="/real-estate">Real estate</Link> </p>
+                                 <p><Link to="/companies">Startup</Link> </p>
                             </Row>
                         </div>
                     </div>
@@ -69,7 +69,7 @@ const Navbar = () => {
                             {/* <div className="RSI__navbar-menu_container-links">
                                 <p><a href="#home">Home</a></p>
                                 <p><a href="#wRSI">What is RSI?</a></p>
-                                <p><a href="#wIns">Why inverts</a></p>
+                                <p>Why inverts</a></p>
                                 <p><a href="#features">Case Studies</a></p>
                                 <p><a href="#invertco">Library</a></p>
                             </div> */}

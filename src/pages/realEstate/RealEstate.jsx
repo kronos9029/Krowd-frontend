@@ -36,7 +36,7 @@ const RealEstate = () => {
               </Col>
               <Col className="order-md-1" md="6">
                 <div className="pr-md-5">
-                  <h1 id="i0c1" className="c-largeTitle">Curated real estate investments
+                  <h1>Curated real estate investments
                   </h1>
                   <h4>Innovative real estate investment products for growth-focused investors. </h4>
                   <p>Become an Investor</p>

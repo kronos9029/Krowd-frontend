@@ -38,7 +38,7 @@ export default function RegisterPage() {
                             <div className="row">
                                 <div className="col-md-5 mx-auto">
                                     <div className="card card-body">
-                                        <form id="submitForm" action="#" method="post" data-parsley-validate="" data-parsley-errors-messages-disabled="true" novalidate="" _lpchecked="1">
+                                        <form id="submitForm" action="#" method="post" data-parsley-validate="" data-parsley-errors-messages-disabled="true" noValidate="" _lpchecked="1">
                                             <input type="hidden" name="_csrf" value="7635eb83-1f95-4b32-8788-abec2724a9a4" />
                                             <div className="form-group required pt-4">
                                                 <input type="text" className="form-control" id="username" placeholder='Email' required="" name="username" value="" />

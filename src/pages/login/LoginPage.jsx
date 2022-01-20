@@ -40,7 +40,7 @@ export default function LoginPage() {
                             <div className="row">
                                 <div className="col-md-5 mx-auto">
                                     <div className="card card-body">
-                                        <form id="submitForm" action="#" method="post" data-parsley-validate="" data-parsley-errors-messages-disabled="true" novalidate="" _lpchecked="1">
+                                        <form id="submitForm" action="#" method="post" data-parsley-validate="" data-parsley-errors-messages-disabled="true" noValidate="" _lpchecked="1">
                                             <input type="hidden" name="_csrf" value="7635eb83-1f95-4b32-8788-abec2724a9a4" />
                                             <div className="form-group required pt-4">
                                                 <input type="text" className="form-control" placeholder='Email' id="username" required="" name="username" value="" />
@@ -55,7 +55,7 @@ export default function LoginPage() {
                                                 </div>
                                             </div>
                                             <div className="form-group pt-1">
-                                                <button className="btn btn-primary btn-block w-100" type="submit"> Log In </button>
+                                               <Link to="/"><button className="btn btn-primary btn-block w-100" type="submit"> Log In </button> </Link> 
                                             </div>
                                         </form>
                                         <h5 className="small-xl pt-3 text-center">

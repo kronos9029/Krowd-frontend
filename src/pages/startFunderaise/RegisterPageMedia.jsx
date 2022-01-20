@@ -36,17 +36,17 @@ export default function RegisterPageMedia() {
                                     <div className="form-group pt-2 text-left">
                                         <h5>Create an account to save and continue</h5>
                                     </div>
-                                    <div class="row g-3 pt-3  align-items-center">
+                                    <div className="row g-3 pt-3  align-items-center">
 
-                                        <div class="col-12">
-                                            <input type="text" placeholder='Email' class="form-control" aria-describedby="passwordHelpInline" />
+                                        <div className="col-12">
+                                            <input type="text" placeholder='Email' className="form-control" aria-describedby="passwordHelpInline" />
                                         </div>
 
                                     </div>
-                                    <div class="row g-3  pt-3 align-items-center">
+                                    <div className="row g-3  pt-3 align-items-center">
 
-                                        <div class="col-12">
-                                            <input type="text" placeholder='Password' class="form-control" aria-describedby="passwordHelpInline" />
+                                        <div className="col-12">
+                                            <input type="text" placeholder='Password' className="form-control" aria-describedby="passwordHelpInline" />
                                         </div>
 
                                     </div>
