@@ -33,7 +33,7 @@ const Footer = () => (
                     <Row><a href='#'>Crowd SAFE</a></Row>  
                 </Col>
                 <Col xxl={3} xl={3} sm={6} xs={6}>
-                    <h2>Get in touch</h2>
+                    <h2>Get touch</h2>
                     <hr />
                     <Row><a href='#'>Crypto</a></Row>
                     <Row><a href='#'>For investors</a></Row>

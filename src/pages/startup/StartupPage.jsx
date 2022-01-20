@@ -9,20 +9,20 @@ import {
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 import Navbar from '../../component/navbar/Navbar';
+import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 const StartupPage = () => {
   const [items, setItems] = useState([]);
   const [valueVisible, setValueVisible] = useState();
   const [visible, setVisible] = useState(6);
-
+  const {t , i18n} = useTranslation();
   const showMoreItems =() => {
       setVisible((prevValue) => prevValue + 50);
       let value = items.length - visible - 50;
       setValueVisible((value))
       console.log("adhawjhkj", value);
-  
   }
-  
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/posts")
     .then((res) => res.json())
@@ -39,10 +39,10 @@ const StartupPage = () => {
 
         <Container>
           <Row className="justify-content-md-center">
-            <h1 >Invert Now<br /> </h1>
+            <h1 >{t("Funded_Companies")}<br /> </h1>
             <h3 > <a style={{ color: "green" }} href="#"><i className="fa fa-line-chart"></i>
-            </a>Browse current investment opportunities on Republic.</h3>
-            <h3>All companies are vetted & pass due diligence. </h3>
+            </a>{t("Sub-Startup-a")}</h3>
+            <h3> {t("Sub-Startup-h3")}</h3>
           </Row>
 
           <Row xxl={3} xl={3} md={2} className="justify-content-md-center pt-5 ">
@@ -73,7 +73,7 @@ const StartupPage = () => {
           {valueVisible < 0 ?
           ""   
           :
-          <Button onClick={showMoreItems} style={{ textAlign: "center" }}>Load More</Button>
+          <Button onClick={showMoreItems} style={{ textAlign: "center" }}>{t("ButtonView")}</Button>
               }
           </Row>
         </Container>

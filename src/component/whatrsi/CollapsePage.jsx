@@ -9,7 +9,6 @@ class CollapsePage extends Component {
     state = {
         collapseID: "collapse"
     }
-
     toggleCollapse = collapseID => () =>
         this.setState(prevState => ({
             collapseID: prevState.collapseID !== collapseID ? collapseID : ""
@@ -21,16 +20,16 @@ class CollapsePage extends Component {
 
             <MDBContainer className="mt-5">
                 <Row className="justify-content-md-center pt-5">
-                    <Col xxl={6} xl={6} md={6} >
+                    <Col xxl={6} xl={6} md={6}  >
                         <Row>
                             <h4 className='pt-3' onClick={this.toggleCollapse("collapse1")}>
-                                <Badge className="badge-circle mr-3" color="success">
+                                <Badge className="badge-circle " color="success">
                                     <i className="ni ni-settings-gear-65" />
                                 </Badge>
                                 How much can I invest?
                                 <i className={collapseID === "collapse1" ? "fa fa-angle-down rotate-icon" : "fa fa-angle-down"} />
                             </h4>
-                            <MDBCollapse id="collapse1" isOpen={collapseID}>
+                            <MDBCollapse  id="collapse1" isOpen={collapseID}>
                                 <MDBCardBody>
                                     Pariatur cliche reprehenderit, enim eiusmod high life accusamus
                                     terry richardson ad squid. 3 wolf moon officia aute, non

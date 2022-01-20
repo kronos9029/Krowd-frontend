@@ -5,15 +5,19 @@ import { funded1, funded2, funded3, funded4, funded5, funded6, logo1, logo2, log
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {Container , Row, Col,Button,Card,ProgressBar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 
 const RegulationCrowdfunding = () => {
+  const {t , i18n} = useTranslation();
+
   return (
     <div className="RSI_Regulation section__padding" id="regulation">
       <Container>
       <Row className="justify-content-md-center"  data-aos="fade-right">
       <h3 > <a style={{ color: "green" }} href="#"><i className="fa fa-check"></i>
-        </a>All Regulation Crowdfunding deals are highly vetted by our <a href='#'>investment team.</a></h3>
+        </a>{t("Regulation")}  <a href='#'>{t("Regulation2")} </a></h3>
         </Row>
         <Row className="justify-content-md-center pt-5">
           <Col xxl={4} xl={4} md={6} className="pt-5" >
@@ -138,7 +142,7 @@ const RegulationCrowdfunding = () => {
           </Col>
         </Row>
         <Row xxl={4} xl={4} md={6} className="justify-content-md-center pt-5">
-            <Button >View more</Button>
+            <Button >{t("ButtonView")}</Button>
         </Row>
       </Container>
 </div>

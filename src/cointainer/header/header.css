@@ -157,11 +157,13 @@
     .RSI__header-content p {
         font-size: 14px;
         line-height: 24px;
+
     }
 
     .RSI__header-content__input input,
     .RSI__header-content__input button {
         font-size: 12px;
         line-height: 16px;
+
     }
 }

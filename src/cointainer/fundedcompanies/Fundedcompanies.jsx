@@ -4,17 +4,19 @@ import { funded3, funded4, funded6, funded5, logo1, logo2, logo3, logo5, logo6, 
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col, Button,Card,ProgressBar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 
 
 const Fundedcompanies = () => {
-
+  const {t , i18n} = useTranslation();
   return (
     <div className="RSI_Funded section__padding" id="regulation">
       <Container>
         <Row className="justify-content-md-center "  data-aos="fade-right">
-          <h1> Funded Companies</h1>
-          <h3 >90% of Republic campaigns have been successfully funded</h3>
+          <h1>{t("Funded_Companies")}</h1>
+          <h3 >{t("Sub_Funded_Companies")}</h3>
         </Row>
         <Row className="justify-content-md-center pt-5">
           <Col xxl={4} xl={4} md={6} className="pt-5" >
@@ -139,7 +141,7 @@ const Fundedcompanies = () => {
           </Col>
         </Row>
         <Row xxl={4} xl={4} md={6} className="justify-content-md-center pt-5">
-          <Button className='buttonTest'>View All Funded</Button>
+          <Button className='buttonTest'>{t("Button_Funded_Companies")}</Button>
         </Row>
       </Container>
     </div >

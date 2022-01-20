@@ -1,4 +1,6 @@
+import { t } from 'i18next';
 import React from 'react'
+import { useTranslation } from 'react-i18next';
 import {
   Container,
   Row,
@@ -9,7 +11,8 @@ import { APPS, GGL } from '../../cointainer/startup/import';
 import './cta.css';
 
 const AppRSI = () => {
-  return (
+  const {t , i18n} = useTranslation();
+  return ( 
     <div className='main-content'>
       <section className="py-7">
         <Container>
@@ -17,7 +20,7 @@ const AppRSI = () => {
             <Col className="text-center" lg="8">
               <div className="text-center">
                 <h3 className='App-h3'>
-                  Download the App Now to Experience Revenue Share Invest
+                  {t("AppStore")}
                 </h3>
               
               </div>

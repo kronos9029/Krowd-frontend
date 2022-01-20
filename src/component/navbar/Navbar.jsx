@@ -1,63 +1,66 @@
 import React, { useState } from 'react'
-import { Button, Row, Col,Accordion } from 'react-bootstrap';
+import { Button, Row, Col, Accordion } from 'react-bootstrap';
 import { RiMenu3Line, RiCloseLine } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 import { logoTest } from '../../cointainer/startup/import';
+import { useTranslation } from 'react-i18next';
+import '../../../src/pages/i18n'
+
 // import logo from '';
 import './navbar.css';
 const Navbar = () => {
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (lang) => {
+        return () => {
+            i18n.changeLanguage(lang)
+            console.log(`Lang change to ${lang}`);
+        };
+    }
     const [toggleMenu, setToggleMenu] = useState(false);
     return (
         <div className="RSI__navbar_control">
             <div className="RSI__navbar">
                 <div className="RSI__navbar-links">
                     <div className="RSI__navbar-links_logo">
-                        {/* <img src={logo} /> */}
                         <h1><Link to="/">SRI</Link> </h1>
                     </div>
-                    {/* <Accordion defaultActiveKey="0">
-                        <Accordion.Item eventKey="0">
-                            <Accordion.Header>Accordion Item #1</Accordion.Header>
-                            <Accordion.Body>
-
-                            </Accordion.Body>
-                        </Accordion.Item>
-                        <Accordion.Item eventKey="1">
-                            <Accordion.Header>Accordion Item #2</Accordion.Header>
-                            <Accordion.Body>
-
-                            </Accordion.Body>
-                        </Accordion.Item>
-                    </Accordion> */}
                     <div className="dropdown">
-                        <h3 className="dropbtn">Discover</h3>
+                        <h3 className="dropbtn">{t("Discover")}</h3>
                         <div className="dropdown-content">
                             <Row>
                                 {/* <img src={logoTest}/> */}
-                                  <p><Link to="/">Home</Link> </p>
-                              <p>What is RSI?</p>
-                                <p> Why inverts?</p>
-                               <p><a href="#features">Case Studies</a></p>
-                                <p><Link to="/real-estate">Real estate</Link> </p>
-                                 <p><Link to="/companies">Startup</Link> </p>
+                                <p><Link to="/">{t("Home")}</Link> </p>
+                                <p>{t("What is RSI?")}</p>
+                                <p> {t("Why inverts?")}</p>
+                                <p><a href="#features">{t("Case Studies")}</a></p>
+                                <p><Link to="/real-estate">{t("Real estate")}</Link> </p>
+                                <p><Link to="/companies">{t("Startup")}</Link> </p>
                             </Row>
                         </div>
                     </div>
                     <div className="dropdown">
-                        <h3 className="dropbtn">Learn</h3>
+                        <h3 className="dropbtn">{t("Learn")}</h3>
                         <div className="dropdown-content-learn">
-                            <a href="#">What is RSI?</a>
-                            <a href="#">Why invest</a>
-                            <a href="#">Case Studies</a>
+                            <a href="#">{t("What is RSI?")}</a>
+                            <a href="#">{t("Why inverts?")}</a>
+                            <a href="#">{t("Case Studies")}</a>
                             <a href="#">FAQ</a>
+                        </div>
+                    </div>
+                    <div className="dropdown2">
+                    <i className="fa fa-globe"> <h3 className="dropbtn">{t("Language")}</h3></i>
+                        <div className="dropdown-content-learn">
+                            <button onClick={changeLanguage("en")}> English</button>
+                            <button onClick={changeLanguage("vn")}> VietNamese</button>
                         </div>
                     </div>
 
                 </div>
+
                 <div className="RSI__navbar-sign">
-                    <p>About</p>
-                    <Link to="/login"><p>Sign in </p></Link>
-                    <Link to="/register"><p id="Sign">Sign up</p></Link>
+                    <p>{t("About")}</p>
+                    <Link to="/login"><p>{t("login")} </p></Link>
+                    <Link to="/register"><p id="Sign">{t("signup")}</p></Link>
 
                 </div>
                 <div className="RSI__navbar-menu">
@@ -66,17 +69,20 @@ const Navbar = () => {
                         : <RiMenu3Line color="#fff" size={27} onClick={() => setToggleMenu(true)} />}
                     {toggleMenu && (
                         <div className="RSI__navbar-menu_container scale-up-center">
-                            {/* <div className="RSI__navbar-menu_container-links">
-                                <p><a href="#home">Home</a></p>
-                                <p><a href="#wRSI">What is RSI?</a></p>
-                                <p>Why inverts</a></p>
-                                <p><a href="#features">Case Studies</a></p>
-                                <p><a href="#invertco">Library</a></p>
-                            </div> */}
+                            <div className="RSI__navbar-menu_container-links">
+                                <div className="dropdown">
+                                    <h3 className="dropbtn">{t("Language")}</h3>
+                                    <div className="dropdown-content-learn">
+                                        <button onClick={changeLanguage("en")}> English</button>
+                                        <button onClick={changeLanguage("vn")}> VietNamese</button>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div className="RSI__navbar-menu_container-links-sign">
-                                <p>About</p>
-                                <Link to="/login"><button type="button">Login</button></Link>
-                                <Link to="/register"><button type="button">Sign up</button></Link>
+                                <p>{t("About")}</p>
+                                <Link to="/login"><p>{t("login")} </p></Link>
+                                <Link to="/register"><p id="Sign">{t("signup")}</p></Link>
                             </div>
                         </div>
                     )}

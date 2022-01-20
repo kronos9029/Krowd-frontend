@@ -1,5 +1,4 @@
 import React from 'react'
-
 import {
   Container,
   Row,
@@ -11,11 +10,9 @@ const Revenue = () => {
     <>
       <Container>
         <Row className="justify-content-md-center">
-
-          <h3 >Frequently asked questions</h3>
+          <h3 className="pl-5">Frequently asked questions</h3>
         </Row>
         <Row className="justify-content-md-center">
-
           <CollapsePage />
         </Row>
       </Container>
