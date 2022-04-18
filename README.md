@@ -1,20 +1,42 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+## 1.Install
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+### npm
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+```
+npm i
+or
+npm i --legacy-peer-deps
+```
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+### yarn
+
+```
+yarn install
+```
+
+## 2.Start
+
+```sh
+npm start
+or
+yarn start
+```
+
+## 3.Build
+
+```sh
+npm run build or yarn build
+```
+
+Builds the app for production to the `build` folder.<br>
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.<br>
+
+Your app is ready to be deployed.
+
+## User Guide
+
+You can find detailed instructions on using Create React App and many tips in [its documentation](https://facebook.github.io/create-react-app/).

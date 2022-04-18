@@ -1,0 +1,10 @@
+export { default as LandingHero } from './LandingHero';
+export { default as LandingMinimal } from './LandingMinimal';
+export { default as LandingDarkMode } from './LandingDarkMode';
+export { default as LandingLegal } from './LandingLegal';
+export { default as LandingStartup } from './LandingStartup';
+export { default as LandingSteps } from './LandingSteps';
+export { default as LandingPricingFAQs } from './LandingPricingFAQs';
+export { default as LandingAdvertisement } from './LandingAdvertisement';
+export { default as LandingThreeSteps } from './LandingThreeSteps';
+export { default as LandingHugePackElements } from './LandingHugePackElements';
