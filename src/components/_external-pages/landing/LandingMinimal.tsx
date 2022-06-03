@@ -37,7 +37,7 @@ const CardStyle = styled(Card)(({ theme }) => {
     minHeight: 240,
     textAlign: 'center',
     color: '#FFFFFF',
-    backgroundImage: 'linear-gradient(to right bottom, #14b7cc 2%, #f3b6a0)',
+    backgroundColor: '#14b7cc',
     padding: theme.spacing(7, 5, 0),
     boxShadow: `-40px 40px 80px 0 ${shadowCard(0.48)}`,
     [theme.breakpoints.up('md')]: {
@@ -72,6 +72,11 @@ const CardStyle = styled(Card)(({ theme }) => {
   };
 });
 
+const MinimalContents = [
+  { card_title: 'card_title_1', card_description: 'card_description_1' },
+  { card_title: 'card_title_2', card_description: 'card_description_2' },
+  { card_title: 'card_title_3', card_description: 'card_description_3' }
+];
 // ----------------------------------------------------------------------
 
 export default function LandingMinimalHelps() {
@@ -85,91 +90,37 @@ export default function LandingMinimalHelps() {
     <RootStyle>
       <Container maxWidth="lg">
         <Grid container spacing={isDesktop ? 15 : 5}>
-          <Grid item xs={12} md={4}>
-            <MotionInView variants={varFadeInUp}>
-              <CardStyle>
-                <Typography>
-                  <img
+          {Array.from(MinimalContents).map((value) => (
+            <Grid key={value.card_title} item xs={12} md={4}>
+              <MotionInView variants={varFadeInUp}>
+                <CardStyle>
+                  <Typography>
+                    <img
+                      style={{
+                        width: '70px',
+                        display: 'inline',
+                        paddingBottom: '10px'
+                      }}
+                      src="/static/faqs/topup.png"
+                    />
+                  </Typography>
+                  <Typography
                     style={{
-                      width: '70px',
-                      display: 'inline',
-                      paddingBottom: '10px'
+                      fontSize: '17px',
+                      textTransform: 'uppercase'
                     }}
-                    src="/static/faqs/topup.png"
-                  />
-                </Typography>
-                <Typography
-                  style={{
-                    fontSize: '17px'
-                  }}
-                  variant="h6"
-                  paragraph
-                >
-                  {t('card_title_1')}
-                </Typography>
-                <Typography sx={{ color: isLight ? '#FFFFFF' : 'common.white' }}>
-                  {t('card_description_1')}
-                </Typography>
-              </CardStyle>
-            </MotionInView>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <MotionInView variants={varFadeInUp}>
-              <CardStyle>
-                <Typography>
-                  <img
-                    style={{
-                      width: '70px',
-                      display: 'inline',
-                      paddingBottom: '10px'
-                    }}
-                    src="/static/faqs/topup.png"
-                  />
-                </Typography>
-                <Typography
-                  style={{
-                    fontSize: '17px'
-                    // width: '229px'
-                  }}
-                  variant="h6"
-                  paragraph
-                >
-                  {t('card_title_2')}
-                </Typography>
-                <Typography sx={{ color: isLight ? '#FFFFFF' : 'common.white' }}>
-                  {t('card_description_2')}
-                </Typography>
-              </CardStyle>
-            </MotionInView>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <MotionInView variants={varFadeInUp}>
-              <CardStyle>
-                <Typography>
-                  <img
-                    style={{
-                      width: '70px',
-                      display: 'inline',
-                      paddingBottom: '10px'
-                    }}
-                    src="/static/faqs/topup.png"
-                  />
-                </Typography>
-                <Typography
-                  style={{
-                    fontSize: '17px'
-                  }}
-                  variant="h6"
-                  paragraph
-                >
-                  {t('card_title_3')}
-                </Typography>
-                <Typography sx={{ color: isLight ? '#FFFFFF' : 'common.white' }}>
-                  {t('card_description_3')}
-                </Typography>
-              </CardStyle>
-            </MotionInView>
-          </Grid>
+                    variant="h6"
+                    paragraph
+                  >
+                    {t(value.card_title)}
+                  </Typography>
+                  <Typography sx={{ color: isLight ? '#FFFFFF' : 'common.white' }}>
+                    {t(value.card_description)}
+                  </Typography>
+                </CardStyle>
+              </MotionInView>
+            </Grid>
+          ))}
         </Grid>
       </Container>
     </RootStyle>

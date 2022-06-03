@@ -32,42 +32,42 @@ const menuConfig = {
     // },
     {
       title: 'Dự án',
-      path: '/pages',
-      icon: <Icon icon={fileFill} {...ICON_SIZE} />,
-      children: [
-        {
-          subheader: 'Khác',
-          items: [
-            { title: 'Về chúng tôi', path: PATH_PAGE.about },
-            { title: 'Liên hệ với chúng tôi', path: PATH_PAGE.contact },
-            { title: 'FAQs', path: PATH_PAGE.faqs }
-            // { title: 'Pricing', path: PATH_PAGE.pricing },
-            // { title: 'Payment', path: PATH_PAGE.payment },
-            // { title: 'Maintenance', path: PATH_PAGE.maintenance },
-            // { title: 'Coming Soon', path: PATH_PAGE.comingSoon }
-          ]
-        },
-        {
-          subheader: 'Xác thực',
-          items: [
-            { title: 'Đăng nhập', path: PATH_AUTH.loginUnprotected },
-            { title: 'Đăng ký', path: PATH_AUTH.registerUnprotected }
-            // { title: 'Reset password', path: PATH_AUTH.resetPassword },
-            // { title: 'Verify code', path: PATH_AUTH.verify }
-          ]
-        },
-        // {
-        //   subheader: 'Error',
-        //   items: [
-        //     { title: 'Page 404', path: PATH_PAGE.page404 },
-        //     { title: 'Page 500', path: PATH_PAGE.page500 }
-        //   ]
-        // },
-        {
-          subheader: 'Trang chủ',
-          items: [{ title: 'Dashboard', path: PATH_DASHBOARD.root }]
-        }
-      ]
+      path: PATH_PAGE.project
+      // icon: <Icon icon={fileFill} {...ICON_SIZE} />,
+      // children: [
+      //   {
+      //     subheader: 'Khác',
+      //     items: [
+      //       { title: 'Về chúng tôi', path: PATH_PAGE.about },
+      //       { title: 'Liên hệ với chúng tôi', path: PATH_PAGE.contact },
+      //       { title: 'FAQs', path: PATH_PAGE.faqs }
+      //       // { title: 'Pricing', path: PATH_PAGE.pricing },
+      //       // { title: 'Payment', path: PATH_PAGE.payment },
+      //       // { title: 'Maintenance', path: PATH_PAGE.maintenance },
+      //       // { title: 'Coming Soon', path: PATH_PAGE.comingSoon }
+      //     ]
+      //   },
+      //   {
+      //     subheader: 'Xác thực',
+      //     items: [
+      //       { title: 'Đăng nhập', path: PATH_AUTH.loginUnprotected },
+      //       { title: 'Đăng ký', path: PATH_AUTH.registerUnprotected }
+      //       // { title: 'Reset password', path: PATH_AUTH.resetPassword },
+      //       // { title: 'Verify code', path: PATH_AUTH.verify }
+      //     ]
+      //   },
+      //   // {
+      //   //   subheader: 'Error',
+      //   //   items: [
+      //   //     { title: 'Page 404', path: PATH_PAGE.page404 },
+      //   //     { title: 'Page 500', path: PATH_PAGE.page500 }
+      //   //   ]
+      //   // },
+      //   {
+      //     subheader: 'Trang chủ',
+      //     items: [{ title: 'Dashboard', path: PATH_DASHBOARD.root }]
+      //   }
+      // ]
     },
     {
       title: 'Doanh Nghiệp',
@@ -89,42 +89,42 @@ const menuConfig = {
     // },
     {
       title: 'Project',
-      path: '/pages',
-      icon: <Icon icon={fileFill} {...ICON_SIZE} />,
-      children: [
-        {
-          subheader: 'Another',
-          items: [
-            { title: 'About us', path: PATH_PAGE.about },
-            { title: 'Contact us', path: PATH_PAGE.contact },
-            { title: 'FAQs', path: PATH_PAGE.faqs }
-            // { title: 'Pricing', path: PATH_PAGE.pricing },
-            // { title: 'Payment', path: PATH_PAGE.payment },
-            // { title: 'Maintenance', path: PATH_PAGE.maintenance },
-            // { title: 'Coming Soon', path: PATH_PAGE.comingSoon }
-          ]
-        },
-        {
-          subheader: 'Authentication',
-          items: [
-            { title: 'Login', path: PATH_AUTH.loginUnprotected },
-            { title: 'Register', path: PATH_AUTH.registerUnprotected }
-            // { title: 'Reset password', path: PATH_AUTH.resetPassword },
-            // { title: 'Verify code', path: PATH_AUTH.verify }
-          ]
-        },
-        // {
-        //   subheader: 'Error',
-        //   items: [
-        //     { title: 'Page 404', path: PATH_PAGE.page404 },
-        //     { title: 'Page 500', path: PATH_PAGE.page500 }
-        //   ]
-        // },
-        {
-          subheader: 'Dashboard',
-          items: [{ title: 'Dashboard', path: PATH_DASHBOARD.root }]
-        }
-      ]
+      path: PATH_PAGE.project
+      // icon: <Icon icon={fileFill} {...ICON_SIZE} />,
+      // children: [
+      //   {
+      //     subheader: 'Another',
+      //     items: [
+      //       { title: 'About us', path: PATH_PAGE.about },
+      //       { title: 'Contact us', path: PATH_PAGE.contact },
+      //       { title: 'FAQs', path: PATH_PAGE.faqs }
+      //       // { title: 'Pricing', path: PATH_PAGE.pricing },
+      //       // { title: 'Payment', path: PATH_PAGE.payment },
+      //       // { title: 'Maintenance', path: PATH_PAGE.maintenance },
+      //       // { title: 'Coming Soon', path: PATH_PAGE.comingSoon }
+      //     ]
+      //   },
+      //   {
+      //     subheader: 'Authentication',
+      //     items: [
+      //       { title: 'Login', path: PATH_AUTH.loginUnprotected },
+      //       { title: 'Register', path: PATH_AUTH.registerUnprotected }
+      //       // { title: 'Reset password', path: PATH_AUTH.resetPassword },
+      //       // { title: 'Verify code', path: PATH_AUTH.verify }
+      //     ]
+      //   },
+      //   // {
+      //   //   subheader: 'Error',
+      //   //   items: [
+      //   //     { title: 'Page 404', path: PATH_PAGE.page404 },
+      //   //     { title: 'Page 500', path: PATH_PAGE.page500 }
+      //   //   ]
+      //   // },
+      //   {
+      //     subheader: 'Dashboard',
+      //     items: [{ title: 'Dashboard', path: PATH_DASHBOARD.root }]
+      //   }
+      // ]
     },
     {
       title: 'Business',

@@ -29,7 +29,8 @@ export const PATH_PAGE = {
   faqs: '/faqs',
   page404: '/404',
   page500: '/500',
-  business: '/components'
+  business: '/components',
+  project: '/project'
 };
 
 export const PATH_DASHBOARD = {
