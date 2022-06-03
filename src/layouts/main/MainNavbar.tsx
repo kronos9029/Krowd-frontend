@@ -144,9 +144,9 @@ export default function MainNavbar() {
           <Button
             variant="contained"
             sx={{ backgroundColor: '#FF7F50', color: '#FFF', marginRight: '1rem' }}
-            href="/about-us"
+            href="/auth/login"
           >
-            {t('Navbar_about_us')}
+            {t('Navbar_login')}
           </Button>
           <div className="language-select">
             <div className="d-flex justify-content-end align-items-center language-select-root">
