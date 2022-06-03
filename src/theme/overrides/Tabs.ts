@@ -14,9 +14,9 @@ export default function Tabs(theme: Theme) {
           '&.Mui-selected': {
             color: theme.palette.text.primary
           },
-          '&:not(:last-of-type)': {
-            marginRight: theme.spacing(5)
-          },
+          // '&:not(:last-of-type)': {
+          //   marginRight: theme.spacing(5)
+          // },
           '@media (min-width: 600px)': {
             minWidth: 48
           }

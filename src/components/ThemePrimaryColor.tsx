@@ -4,7 +4,6 @@ import { alpha, ThemeProvider, createTheme, useTheme } from '@mui/material/style
 // hooks
 import useSettings from '../hooks/useSettings';
 //
-import componentsOverride from '../theme/overrides';
 
 // ----------------------------------------------------------------------
 
@@ -32,7 +31,5 @@ export default function ThemePrimaryColor({ children }: ThemePrimaryColorProps) 
   );
 
   const theme = createTheme(themeOptions);
-  theme.components = componentsOverride(theme);
-
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 }

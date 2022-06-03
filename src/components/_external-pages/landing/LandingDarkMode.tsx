@@ -23,7 +23,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
     display: 'inline-flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'flex-start'
+    alignItems: 'center'
   }
 }));
 const Language = [
@@ -62,7 +62,7 @@ export default function LandingDarkMode() {
           }}
         />
 
-        <Grid container spacing={5} direction="row-reverse" justifyContent="space-between">
+        <Grid container spacing={5} direction="row-reverse" justifyContent="space-evenly">
           <Grid item xs={12} md={4}>
             <ContentStyle>
               <MotionInView variants={varFadeInUp}>
@@ -82,11 +82,19 @@ export default function LandingDarkMode() {
               </MotionInView>
 
               <MotionInView variants={varFadeInUp}>
-                <Typography sx={{ color: '', mb: 5 }}>
-                  <img alt="light mode" src="/static/home/GooglePlay.png" />
+                <Typography sx={{ color: '', mb: 5, display: 'flex', justifyContent: 'center' }}>
+                  <img
+                    alt="light mode"
+                    src="/static/home/GooglePlay.png"
+                    style={{ border: '#000000 10px solid', borderRadius: '10px' }}
+                  />
                 </Typography>
-                <Typography sx={{ color: '', mb: 5 }}>
-                  <img alt="light mode" src="/static/home/AppStore.png" />
+                <Typography sx={{ color: '', mb: 5, display: 'flex', justifyContent: 'center' }}>
+                  <img
+                    alt="light mode"
+                    src="/static/home/AppStore.png"
+                    style={{ border: '#000000 10px solid', borderRadius: '10px' }}
+                  />
                 </Typography>
               </MotionInView>
             </ContentStyle>

@@ -162,7 +162,6 @@ function MegaMenuItem({ parent }: { parent: MegaMenuItemProps }) {
 type MegaMenuDesktopVerticalProps = {
   navConfig: MegaMenuItemProps[];
 };
-
 export default function MegaMenuDesktopVertical({
   navConfig,
   ...other
