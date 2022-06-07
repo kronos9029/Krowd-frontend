@@ -2,14 +2,11 @@
   "name": "@krowd/krowd-kit-react",
   "author": "minimals.cc",
   "version": "2.6.0",
-  "engines": {
-    "node": "14.17.3"
-  },
   "private": true,
   "scripts": {
     "build:prod": "react-scripts build",
     "start": "react-scripts start",
-    "build": "react-scripts --max-old-space-size=960 build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .ts,.tsx ./src",
