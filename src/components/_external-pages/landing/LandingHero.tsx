@@ -19,6 +19,7 @@ import {
 // routes
 import { varFadeInUp, MotionInView } from '../../animate';
 import { PATH_SEARCHPAGE } from 'routes/paths';
+import { OverlayBackground } from 'assets';
 
 // ----------------------------------------------------------------------
 const SearchbarStyle = styled('div')(({ theme }) => ({
@@ -37,7 +38,8 @@ const RootStyle = styled('div')(({ theme }) => ({
   padding: theme.spacing(14, 0, 0, 0),
   [theme.breakpoints.up('md')]: {
     paddingBottom: theme.spacing(13),
-    backgroundColor: '#14B7CC',
+    backgroundImage: `url(${OverlayBackground})`,
+    backgroundSize: 'cover',
     top: 0,
     left: 0,
     width: '100%',
@@ -57,7 +59,6 @@ const ContentStyle = styled((props: StackProps) => <Stack spacing={5} {...props}
     paddingRight: 0,
     position: 'relative',
     backgroundImage: 'none',
-    backgroundColor: '#14B7CC',
     paddingTop: theme.spacing(15),
     paddingBottom: theme.spacing(15),
     [theme.breakpoints.up('md')]: {
@@ -88,13 +89,12 @@ const ContentStyle = styled((props: StackProps) => <Stack spacing={5} {...props}
 //   }
 // }));
 
-const HeroOverlayStyle = styled(motion.img)({
-  zIndex: 9,
+const HeroOverlayStyle = styled(motion.img)(() => ({
+  zIndex: 0,
   width: '100%',
   height: '100%',
-  objectFit: 'cover',
-  position: 'absolute'
-});
+  objectFit: 'cover'
+}));
 
 const HeroImgStyle = styled(motion.img)(({ theme }) => ({
   top: 0,
@@ -138,7 +138,7 @@ export default function LandingHero() {
                 <Typography variant="h1" sx={{ color: 'common.white' }}>
                   {t('Thumbnail_landing_hero_title')} <br />
                   {t('Thumbnail_landing_hero_title_1')} <br /> {t('Thumbnail_landing_hero_title_2')}
-                  <Typography component="span" variant="h1" sx={{ color: '#251E18' }}>
+                  <Typography component="span" variant="h1" sx={{ color: '#14B7CC' }}>
                     &nbsp;KROWD
                   </Typography>
                 </Typography>
@@ -187,7 +187,7 @@ export default function LandingHero() {
                     <Button
                       href={PATH_SEARCHPAGE}
                       style={{
-                        backgroundColor: '#FF7F50',
+                        backgroundColor: '#14B7CC',
                         color: '#FAF4EF',
                         width: '150px',
                         margin: '7px',
@@ -203,104 +203,9 @@ export default function LandingHero() {
               </MotionInView>
             </ContentStyle>
           </Grid>
-          <Box
-            component="img"
-            alt="hero"
-            src="/static/home/hero2.png"
-            sx={{
-              top: 0,
-              right: 0,
-              bottom: 0,
-              my: 'auto',
-              position: 'absolute',
-              // filter: 'grayscale(1) opacity(48%)',
-              display: { xs: 'none', md: 'block' }
-            }}
-          />
+          <HeroImgStyle alt="hero" src="/static/home/hero2.png" />
         </Grid>
       </Container>
     </RootStyle>
-    // <RootStyle>
-    //   <HeroOverlayStyle alt="overlay" src="" variants={varFadeIn} />
-    //   <HeroImgStyle alt="hero" src="/static/home/hero2.png" variants={varFadeInUp} />
-    //   <Container maxWidth="lg">
-    //     <ContentStyle>
-    //       <motion.div variants={varFadeInRight}>
-    //         <Typography variant="h1" sx={{ color: 'common.white' }}>
-    //           {t('Thumbnail_landing_hero_title')} <br />
-    //           {t('Thumbnail_landing_hero_title_1')} <br /> {t('Thumbnail_landing_hero_title_2')}
-    //           <Typography component="span" variant="h1" sx={{ color: '#251E18' }}>
-    //             &nbsp;KROWD
-    //           </Typography>
-    //         </Typography>
-    //       </motion.div>
-
-    //       <motion.div variants={varFadeInRight}>
-    //         <Typography sx={{ color: 'common.white', paddingBottom: '1rem' }}>
-    //           {t('Thumbnail_landing_hero_description')} <br />
-    //           {t('Thumbnail_landing_hero_description_1')}
-    //         </Typography>
-    //         <Typography sx={{ color: 'common.white' }}>
-    //           {t('Thumbnail_landing_hero_description2')}
-    //         </Typography>
-    //       </motion.div>
-
-    //       <motion.div variants={varFadeInRight}>
-    //         <SearchbarStyle>
-    //           <Input
-    //             style={{
-    //               backgroundColor: '#FAF4EF',
-    //               height: '50px',
-    //               borderRadius: '15px'
-    //             }}
-    //             autoFocus
-    //             fullWidth
-    //             // disableUnderline
-    //             placeholder={t('Search_hover')}
-    //             startAdornment={
-    //               <InputAdornment position="start">
-    //                 <Box
-    //                   component={Icon}
-    //                   icon={searchFill}
-    //                   sx={{
-    //                     marginLeft: '10px',
-    //                     color: '#251E18',
-    //                     width: 20,
-    //                     height: 20
-    //                   }}
-    //                 />
-    //               </InputAdornment>
-    //             }
-    //             sx={{ mr: 1, fontWeight: 'fontWeightBold', color: '#251E18' }}
-    //           />
-    //           <Button
-    //             style={{
-    //               backgroundColor: '#FF7F50',
-    //               color: '#FAF4EF',
-    //               width: '150px',
-    //               // margin: '20px',
-    //               fontSize: '15px',
-    //               height: '50px'
-    //             }}
-    //             variant="contained"
-    //           >
-    //             {t('Search')}
-    //           </Button>
-    //         </SearchbarStyle>
-    //         {/* <Button
-    //           sx={{ backgroundColor: 'purple' }}
-    //           size="large"
-    //           variant="contained"
-    //           component={RouterLink}
-    //           to={PATH_DASHBOARD.root}
-    //           startIcon={<Icon icon={flashFill} width={20} height={20} />}
-    //         >
-    //           Đầu tư ngay
-    //         </Button> */}
-    //       </motion.div>
-    //     </ContentStyle>
-    //   </Container>
-    // </RootStyle>
-    // {/* <Box sx={{ height: { md: '100vh' } }} /> */}
   );
 }

@@ -1,7 +1,7 @@
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
-import { Box, Button, AppBar, Toolbar, Container } from '@mui/material';
+import { Box, Button, AppBar, Toolbar, Container, Typography } from '@mui/material';
 // hooks
 import useOffSetTop from '../../hooks/useOffSetTop';
 // components
@@ -125,7 +125,17 @@ export default function MainNavbar() {
           <RouterLink to="/">
             <Logo />
           </RouterLink>
-          <Label sx={{ ml: 1, color: '#14b7cc', backgroundColor: '#fff' }}> Krowd </Label>
+          <Label
+            sx={{
+              ml: 1,
+              color: '#14b7cc',
+              backgroundColor: '#fff',
+              textTransform: 'uppercase',
+              fontSize: '1.25rem'
+            }}
+          >
+            Krowd
+          </Label>
           <Box sx={{ flexGrow: 1 }} />
 
           <MHidden width="mdDown">

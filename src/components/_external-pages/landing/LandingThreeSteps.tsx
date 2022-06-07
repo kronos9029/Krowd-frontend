@@ -5,6 +5,7 @@ import { Box, Grid, Card, Container, Typography, useMediaQuery } from '@mui/mate
 import { varFadeInUp, MotionInView } from '../../animate';
 import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
+import { OverlayBackground } from 'assets';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
@@ -12,7 +13,8 @@ const RootStyle = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
     paddingBottom: theme.spacing(12),
     // backgroundColor: '#212b35'
-    backgroundColor: '#14B7CC'
+    backgroundImage: `url(${OverlayBackground})`,
+    backgroundSize: 'cover'
   }
 }));
 
@@ -83,8 +85,7 @@ export default function LandingMinimalHelps() {
     <RootStyle
       sx={{
         paddingBottom: '4rem',
-        color: isLight ? '#FAF4EF' : '#FAF4EF',
-        backgroundColor: bgLight ? '#14B7CC' : '#14B7CC'
+        color: isLight ? '#FAF4EF' : '#FAF4EF'
       }}
     >
       <Container maxWidth="lg">
