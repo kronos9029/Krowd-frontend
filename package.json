@@ -2,6 +2,9 @@
   "name": "@krowd/krowd-kit-react",
   "author": "minimals.cc",
   "version": "2.6.0",
+  "engines": {
+    "node": "16.13.1"
+  },
   "private": true,
   "scripts": {
     "build:prod": "react-scripts build",
