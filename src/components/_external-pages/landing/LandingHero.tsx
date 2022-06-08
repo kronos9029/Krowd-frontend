@@ -17,7 +17,7 @@ import {
   Grid
 } from '@mui/material';
 // routes
-import { varFadeInUp, MotionInView } from '../../animate';
+import { varFadeInUp, MotionInView, varFadeInDown } from '../../animate';
 import { PATH_SEARCHPAGE } from 'routes/paths';
 import { OverlayBackground } from 'assets';
 
@@ -36,10 +36,10 @@ const SearchbarStyle = styled('div')(({ theme }) => ({
 }));
 const RootStyle = styled('div')(({ theme }) => ({
   padding: theme.spacing(14, 0, 0, 0),
+  backgroundImage: `url(${OverlayBackground})`,
+  backgroundSize: 'cover',
   [theme.breakpoints.up('md')]: {
     paddingBottom: theme.spacing(13),
-    backgroundImage: `url(${OverlayBackground})`,
-    backgroundSize: 'cover',
     top: 0,
     left: 0,
     width: '100%',
@@ -70,6 +70,10 @@ const ContentStyle = styled((props: StackProps) => <Stack spacing={5} {...props}
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'flex-start'
+    },
+    [theme.breakpoints.down('md')]: {
+      paddingTop: 50,
+      paddingBottom: 60
     }
   })
 );
@@ -100,14 +104,18 @@ const HeroImgStyle = styled(motion.img)(({ theme }) => ({
   top: 0,
   right: 0,
   bottom: 0,
-  zIndex: 8,
+  zIndex: 9,
   width: '100%',
   margin: 'auto',
   position: 'absolute',
-  [theme.breakpoints.up('lg')]: {
-    right: '8%',
+  opacity: 0.6,
+  [theme.breakpoints.up('md')]: {
+    right: '5%',
     width: 'auto',
     height: '48vh'
+  },
+  [theme.breakpoints.down('md')]: {
+    display: 'none'
   }
 }));
 const Language = [
@@ -131,6 +139,7 @@ export default function LandingHero() {
   return (
     <RootStyle>
       <Container maxWidth="lg" sx={{ position: 'relative' }}>
+        <HeroImgStyle alt="hero" src="/static/home/hero2.png" />
         <Grid container spacing={5} justifyContent="space-between">
           <Grid item xs={12} md={7}>
             <ContentStyle>
@@ -203,7 +212,6 @@ export default function LandingHero() {
               </MotionInView>
             </ContentStyle>
           </Grid>
-          <HeroImgStyle alt="hero" src="/static/home/hero2.png" />
         </Grid>
       </Container>
     </RootStyle>

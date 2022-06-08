@@ -10,11 +10,11 @@ import { OverlayBackground } from 'assets';
 
 const RootStyle = styled('div')(({ theme }) => ({
   paddingTop: theme.spacing(9),
+  backgroundImage: `url(${OverlayBackground})`,
+  backgroundSize: 'cover',
   [theme.breakpoints.up('md')]: {
-    paddingBottom: theme.spacing(12),
+    paddingBottom: theme.spacing(12)
     // backgroundColor: '#212b35'
-    backgroundImage: `url(${OverlayBackground})`,
-    backgroundSize: 'cover'
   }
 }));
 
@@ -29,11 +29,10 @@ const CardStyle = styled(Card)(({ theme }) => {
     margin: 'auto',
     textAlign: 'center',
     padding: theme.spacing(5, 2, 0),
-    boxShadow: `-40px 40px 80px 0 ${shadowCard(0.48)}`,
+    // boxShadow: `-40px 40px 80px 0 ${shadowCard(0.48)}`,
     [theme.breakpoints.up('md')]: {
       backgroundColor: '#FFFFFF',
-      borderRadius: theme.shape.borderRadiusMd,
-      boxShadow: `-40px 40px 80px 0 ${shadowCard(0.48)}`
+      borderRadius: theme.shape.borderRadiusMd
     },
     '&.cardCenter': {
       [theme.breakpoints.up('md')]: {
@@ -52,8 +51,7 @@ const CardStyle = styled(Card)(({ theme }) => {
           width: 'calc(100% - 40px)',
           height: 'calc(100% - 40px)',
           borderRadius: theme.shape.borderRadiusMd,
-          backgroundColor: '#FFFFFF',
-          boxShadow: `-20px 20px 40px 0 ${shadowCard(0.12)}`
+          backgroundColor: '#FFFFFF'
         }
       }
     }
@@ -72,7 +70,23 @@ const Language = [
   }
 ];
 // ----------------------------------------------------------------------
-
+const ThreeSteps = [
+  {
+    icon: '/static/faqs/register.png',
+    step_title: 'invest_step_title_1',
+    step_content: 'invest_step_1'
+  },
+  {
+    icon: '/static/faqs/topup1.png',
+    step_title: 'invest_step_title_2',
+    step_content: 'invest_step_2'
+  },
+  {
+    icon: '/static/faqs/invest.png',
+    step_title: 'invest_step_title_3',
+    step_content: 'invest_step_3'
+  }
+];
 export default function LandingMinimalHelps() {
   const theme = useTheme();
   const isLight = theme.palette.mode === 'light';
@@ -98,99 +112,45 @@ export default function LandingMinimalHelps() {
           </Typography>
         </Box>
         <Grid container spacing={isDesktop ? 15 : 5}>
-          <Grid item xs={12} md={4}>
-            <MotionInView variants={varFadeInUp}>
-              <CardStyle
-                sx={{
-                  mb: 3,
-                  color: isLight ? '#251E18' : '#251E18',
-                  backgroundColor: bgLight ? '#FFFFFF' : '#FFFFFF'
-                }}
-              >
-                <Typography>
-                  <img
-                    style={{
-                      width: '50px',
-                      display: 'inline',
-                      paddingBottom: '10px'
-                    }}
-                    src="/static/faqs/register.png"
-                  />
-                </Typography>
-                {/* <Typography variant="h3" paragraph style={{ color: '#14B7CC' }}>
+          {ThreeSteps.map((value, index) => (
+            <Grid key={index} item xs={12} md={4}>
+              <MotionInView variants={varFadeInUp}>
+                <CardStyle
+                  sx={{
+                    mb: 3,
+                    color: isLight ? '#251E18' : '#251E18',
+                    backgroundColor: bgLight ? '#FFFFFF' : '#FFFFFF'
+                  }}
+                >
+                  <Typography>
+                    <img
+                      style={{
+                        width: '50px',
+                        display: 'inline',
+                        paddingBottom: '10px'
+                      }}
+                      src={value.icon}
+                    />
+                  </Typography>
+                  {/* <Typography variant="h3" paragraph style={{ color: '#14B7CC' }}>
                   1
                 </Typography> */}
-                <Typography variant="h5" paragraph style={{ color: '#14B7CC' }}>
-                  {t('invest_step_title_1')}
-                </Typography>
-                <Typography sx={{ color: isLight ? '#251E18' : 'common.white', textAlign: 'left' }}>
-                  {t('invest_step_1')}
-                </Typography>
-              </CardStyle>
-            </MotionInView>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <MotionInView variants={varFadeInUp}>
-              <CardStyle
-                sx={{
-                  mb: 3,
-                  color: isLight ? '#251E18' : '#251E18',
-                  backgroundColor: bgLight ? '#FFFFFF' : '#FFFFFF'
-                }}
-              >
-                {/* <Typography variant="h3" paragraph style={{ color: '#14B7CC' }}>
-                  2
-                </Typography> */}
-                <Typography>
-                  <img
-                    style={{
-                      width: '50px',
-                      display: 'inline',
-                      paddingBottom: '10px'
+                  <Typography variant="h5" paragraph style={{ color: '#14B7CC' }}>
+                    {t(value.step_title)}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      color: isLight ? 'rgb(99, 115, 129)' : 'common.white',
+                      textAlign: 'center',
+                      fontWeight: '400'
                     }}
-                    src="/static/faqs/topup1.png"
-                  />
-                </Typography>
-                <Typography variant="h5" paragraph style={{ color: '#14B7CC' }}>
-                  {t('invest_step_title_2')}
-                </Typography>
-                <Typography sx={{ color: isLight ? '#251E18' : 'common.white', textAlign: 'left' }}>
-                  {t('invest_step_2')}
-                </Typography>
-              </CardStyle>
-            </MotionInView>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <MotionInView variants={varFadeInUp}>
-              <CardStyle
-                sx={{
-                  mb: 3,
-                  color: isLight ? '#251E18' : '#251E18',
-                  backgroundColor: bgLight ? '#FFFFFF' : '#FFFFFF'
-                }}
-              >
-                {/* <Typography variant="h3" paragraph style={{ color: '#14B7CC' }}>
-                  3
-                </Typography> */}
-                <Typography>
-                  <img
-                    style={{
-                      width: '50px',
-                      display: 'inline',
-                      paddingBottom: '10px'
-                    }}
-                    src="/static/faqs/invest.png"
-                  />
-                </Typography>
-                <Typography variant="h5" paragraph style={{ color: '#14B7CC' }}>
-                  {t('invest_step_title_3')}
-                </Typography>
-                <Typography sx={{ color: isLight ? '#251E18' : 'common.white', textAlign: 'left' }}>
-                  {t('invest_step_3')}
-                </Typography>
-              </CardStyle>
-            </MotionInView>
-          </Grid>
+                  >
+                    {t(value.step_content)}
+                  </Typography>
+                </CardStyle>
+              </MotionInView>
+            </Grid>
+          ))}
         </Grid>
       </Container>
     </RootStyle>

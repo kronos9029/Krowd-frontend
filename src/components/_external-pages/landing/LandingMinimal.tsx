@@ -5,6 +5,7 @@ import { Grid, Card, Container, Typography, useMediaQuery } from '@mui/material'
 import { varFadeInUp, MotionInView } from '../../animate';
 import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
+import { fontSize } from '@mui/system';
 // ----------------------------------------------------------------------
 const Language = [
   {
@@ -20,38 +21,42 @@ const Language = [
 ];
 
 const RootStyle = styled('div')(({ theme }) => ({
-  paddingTop: theme.spacing(15),
+  paddingTop: theme.spacing(20),
   [theme.breakpoints.up('md')]: {
     paddingBottom: theme.spacing(1)
   }
 }));
 
+const CenterItemContainerMd = styled(Container)(({ theme }) => ({
+  [theme.breakpoints.between('sm', 'md')]: {
+    paddingLeft: '25%',
+    paddingRight: '25%'
+  }
+}));
 const CardStyle = styled(Card)(({ theme }) => {
-  const shadowCard = (opacity: number) =>
-    theme.palette.mode === 'light'
-      ? alpha(theme.palette.grey[500], opacity)
-      : alpha(theme.palette.common.black, opacity);
-
   return {
     maxWidth: 420,
-    minHeight: 240,
+    minHeight: 300,
     textAlign: 'center',
-    color: '#FFFFFF',
-    backgroundColor: '#14b7cc',
-    padding: theme.spacing(7, 5, 0),
-    boxShadow: `-40px 40px 80px 0 ${shadowCard(0.48)}`,
+    color: '#000000',
+    backgroundColor: '#FFFFFF',
+    padding: theme.spacing(10, 5, 0),
+    // boxShadow: '-20px 20px 40px 0 rgb(0 0 0 / 35%)',
     [theme.breakpoints.up('md')]: {
-      boxShadow: 'none',
-      backgroundColor: '#14b7cc'
+      backgroundColor: '#FFFFFF'
     },
-    '&.cardLeft': {
-      [theme.breakpoints.up('md')]: { marginTop: -40 }
+    '&.card_title_1': {
+      backgroundColor: '#14b7cc12',
+      [theme.breakpoints.up('md')]: { marginTop: -30 }
     },
-    '&.cardCenter': {
+    '&.card_title_3': {
+      backgroundColor: '#14b7cc0a'
+    },
+    '&.card_title_2': {
       [theme.breakpoints.up('md')]: {
-        marginTop: -80,
+        marginTop: -100,
         backgroundColor: theme.palette.background.paper,
-        boxShadow: `-40px 40px 80px 0 ${shadowCard(0.4)}`,
+        boxShadow: '-20px 20px 40px 0 rgb(0 0 0 / 35%)',
         '&:before': {
           top: 0,
           left: 0,
@@ -61,11 +66,11 @@ const CardStyle = styled(Card)(({ theme }) => {
           content: "''",
           margin: 'auto',
           position: 'absolute',
-          width: 'calc(100% - 40px)',
+          width: 'calc(100% - 20px)',
           height: 'calc(100% - 40px)',
           borderRadius: theme.shape.borderRadiusMd,
           backgroundColor: theme.palette.background.paper,
-          boxShadow: `-20px 20px 40px 0 ${shadowCard(0.12)}`
+          boxShadow: '-20px 20px 40px 0 rgb(0 0 0 / 15%)'
         }
       }
     }
@@ -73,9 +78,21 @@ const CardStyle = styled(Card)(({ theme }) => {
 });
 
 const MinimalContents = [
-  { card_title: 'card_title_1', card_description: 'card_description_1' },
-  { card_title: 'card_title_2', card_description: 'card_description_2' },
-  { card_title: 'card_title_3', card_description: 'card_description_3' }
+  {
+    icon: '/static/faqs/topup.png',
+    card_title: 'card_title_1',
+    card_description: 'card_description_1'
+  },
+  {
+    icon: '/static/faqs/clock.png',
+    card_title: 'card_title_2',
+    card_description: 'card_description_2'
+  },
+  {
+    icon: '/static/faqs/fund.png',
+    card_title: 'card_title_3',
+    card_description: 'card_description_3'
+  }
 ];
 // ----------------------------------------------------------------------
 
@@ -88,33 +105,35 @@ export default function LandingMinimalHelps() {
   const { t } = useTranslation();
   return (
     <RootStyle>
-      <Container maxWidth="lg">
+      <CenterItemContainerMd maxWidth="lg">
         <Grid container spacing={isDesktop ? 15 : 5}>
           {Array.from(MinimalContents).map((value) => (
             <Grid key={value.card_title} item xs={12} md={4}>
               <MotionInView variants={varFadeInUp}>
-                <CardStyle>
+                <CardStyle className={value.card_title}>
                   <Typography>
                     <img
                       style={{
-                        width: '70px',
+                        width: '50px',
                         display: 'inline',
-                        paddingBottom: '10px'
+                        paddingBottom: '1.5rem'
                       }}
-                      src="/static/faqs/topup.png"
+                      src={value.icon}
                     />
                   </Typography>
                   <Typography
-                    style={{
-                      fontSize: '17px',
-                      textTransform: 'uppercase'
-                    }}
+                    sx={{ fontSize: '16px', textTransform: 'uppercase' }}
                     variant="h6"
                     paragraph
                   >
                     {t(value.card_title)}
                   </Typography>
-                  <Typography sx={{ color: isLight ? '#FFFFFF' : 'common.white' }}>
+                  <Typography
+                    sx={{
+                      color: isLight ? 'rgb(99, 115, 129)' : 'common.white',
+                      fontWeight: '600'
+                    }}
+                  >
                     {t(value.card_description)}
                   </Typography>
                 </CardStyle>
@@ -122,7 +141,7 @@ export default function LandingMinimalHelps() {
             </Grid>
           ))}
         </Grid>
-      </Container>
+      </CenterItemContainerMd>
     </RootStyle>
   );
 }
