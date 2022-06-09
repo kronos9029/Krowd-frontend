@@ -12,6 +12,7 @@ const RootStyle = styled('div')(({ theme }) => ({
   paddingTop: theme.spacing(9),
   backgroundImage: `url(${OverlayBackground})`,
   backgroundSize: 'cover',
+  backgroundColor: '#14B7CC',
   [theme.breakpoints.up('md')]: {
     paddingBottom: theme.spacing(12)
     // backgroundColor: '#212b35'

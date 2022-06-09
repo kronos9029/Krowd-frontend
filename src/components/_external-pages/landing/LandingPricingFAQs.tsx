@@ -43,7 +43,7 @@ export default function Faqs() {
 
         <Grid container spacing={10}>
           <Grid item xs={12} md={6}>
-            <img src="/static/home/hero.png" />
+            <img src="/static/home/hero.svg" />
           </Grid>
           <Grid item xs={12} md={6}>
             <FaqsList />

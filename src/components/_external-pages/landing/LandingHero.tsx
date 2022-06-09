@@ -38,6 +38,7 @@ const RootStyle = styled('div')(({ theme }) => ({
   padding: theme.spacing(14, 0, 0, 0),
   backgroundImage: `url(${OverlayBackground})`,
   backgroundSize: 'cover',
+  backgroundColor: '#14B7CC',
   [theme.breakpoints.up('md')]: {
     paddingBottom: theme.spacing(13),
     top: 0,
@@ -110,7 +111,6 @@ const HeroImgStyle = styled(motion.img)(({ theme }) => ({
   position: 'absolute',
   opacity: 0.6,
   [theme.breakpoints.up('md')]: {
-    right: '5%',
     width: 'auto',
     height: '48vh'
   },
@@ -139,7 +139,7 @@ export default function LandingHero() {
   return (
     <RootStyle>
       <Container maxWidth="lg" sx={{ position: 'relative' }}>
-        <HeroImgStyle alt="hero" src="/static/home/hero2.png" />
+        <HeroImgStyle alt="hero" src="/static/home/hero2.svg" />
         <Grid container spacing={5} justifyContent="space-between">
           <Grid item xs={12} md={7}>
             <ContentStyle>

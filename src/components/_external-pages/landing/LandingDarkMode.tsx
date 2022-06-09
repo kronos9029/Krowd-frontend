@@ -5,11 +5,14 @@ import { Box, Grid, Container, Typography } from '@mui/material';
 import { MotionInView, varFadeInUp } from '../../animate';
 import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
+import { OverlayBackground } from 'assets';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
   padding: theme.spacing(10, 0),
-  backgroundColor: '#14B7CC'
+  backgroundColor: '#14B7CC',
+  backgroundImage: `url(${OverlayBackground})`,
+  backgroundSize: 'cover'
 }));
 
 const ContentStyle = styled('div')(({ theme }) => ({
@@ -104,9 +107,9 @@ export default function LandingDarkMode() {
             <MotionInView
               threshold={0.5}
               variants={varFadeInUp}
-              sx={{ top: 0, left: 0, paddingTop: '10rem', position: 'absolute' }}
+              sx={{ top: 0, left: 0, position: 'absolute' }}
             >
-              <img alt="dark mode" src="/static/home/AppDownload.png" />
+              <img alt="dark mode" src="/static/home/AppDownload.svg" />
             </MotionInView>
           </Grid>
         </Grid>

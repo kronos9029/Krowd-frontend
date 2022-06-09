@@ -6,13 +6,15 @@ import { varFadeInUp, MotionInView } from '../../animate';
 import CardMedia from '@mui/material/CardMedia';
 import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
+import { OverlayBackground } from 'assets';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
   paddingTop: theme.spacing(5),
+  backgroundImage: `url(${OverlayBackground})`,
+  backgroundSize: 'cover',
   [theme.breakpoints.up('md')]: {
-    paddingBottom: theme.spacing(12),
-    backgroundColor: '#14B7CC'
+    paddingBottom: theme.spacing(12)
   }
 }));
 
@@ -23,7 +25,7 @@ const CardStyle = styled(Card)(({ theme }) => {
       : alpha(theme.palette.common.black, opacity);
   return {
     maxWidth: 390,
-    minHeight: 400,
+    minHeight: 460,
     margin: 'auto',
     textAlign: 'left',
     padding: theme.spacing(0, 3, 0),
@@ -32,6 +34,9 @@ const CardStyle = styled(Card)(({ theme }) => {
       backgroundColor: '#ffffff',
       borderRadius: theme.shape.borderRadiusMd,
       boxShadow: `-20px 20px 40px 0 ${shadowCard(0.35)}`
+    },
+    '&.card_0': {
+      marginBottom: '2rem'
     },
     '&.cardCenter': {
       [theme.breakpoints.up('md')]: {
@@ -69,7 +74,23 @@ const Language = [
   }
 ];
 // ----------------------------------------------------------------------
-
+const Advertisements = [
+  {
+    icon: '/static/components/step1.svg',
+    step_title: 'advertise_description1',
+    step_content: 'advertise_description_cover_1'
+  },
+  {
+    icon: '/static/components/Kết nối nhà đầu tư.svg',
+    step_title: 'advertise_description2',
+    step_content: 'advertise_description_cover_2'
+  },
+  {
+    icon: '/static/components/step3.svg',
+    step_title: 'advertise_description3',
+    step_content: 'advertise_description_cover_3'
+  }
+];
 export default function LandingMinimalHelps() {
   const theme = useTheme();
   const isLight = theme.palette.mode === 'light';
@@ -86,97 +107,52 @@ export default function LandingMinimalHelps() {
         paddingBottom: '5rem'
       }}
     >
-      <Box sx={{ textAlign: 'center', paddingTop: '3rem' }}>
+      <Box sx={{ textAlign: 'center', padding: '1rem 0' }}>
         <Typography variant="h2" sx={{ mb: 3, color: isLight ? '#FAF4EF' : '#FAF4EF' }}>
           {t('advertise_title')}
         </Typography>
       </Box>
       <Container maxWidth="lg">
         <Grid container spacing={isDesktop ? 10 : 5}>
-          <Grid item xs={12} md={4}>
-            <MotionInView variants={varFadeInUp}>
-              <CardStyle sx={{ maxWidth: 345 }}>
-                <CardMedia
-                  style={{ paddingTop: '2rem' }}
-                  component="img"
-                  height="194"
-                  image="/static/components/step1.png"
-                />
-                <Typography
-                  variant="h5"
-                  style={{
-                    color: '#14B7CC',
-                    textAlign: 'center'
-                  }}
-                  paragraph
-                >
-                  {t('advertise_description1')}
-                </Typography>
-                <Typography
-                  style={{ paddingBottom: '2rem', textAlign: 'center' }}
-                  sx={{ color: isLight ? 'text.secondary' : 'common.black' }}
-                >
-                  {t('advertise_description_cover_1')}
-                </Typography>
-              </CardStyle>
-            </MotionInView>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <MotionInView variants={varFadeInUp}>
-              <CardStyle sx={{ maxWidth: 345 }}>
-                <CardMedia
-                  style={{ paddingTop: '2rem' }}
-                  component="img"
-                  height="194"
-                  image="/static/components/Kết nối nhà đầu tư.png"
-                />
-                <Typography
-                  variant="h5"
-                  style={{
-                    color: '#14B7CC',
-                    textAlign: 'center'
-                  }}
-                  paragraph
-                >
-                  {t('advertise_description2')}
-                </Typography>
-                <Typography
-                  style={{ paddingBottom: '2rem', textAlign: 'center' }}
-                  sx={{ color: isLight ? 'text.secondary' : 'common.black' }}
-                >
-                  {t('advertise_description_cover_2')}
-                </Typography>
-              </CardStyle>
-            </MotionInView>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <MotionInView variants={varFadeInUp}>
-              <CardStyle sx={{ maxWidth: 345 }}>
-                <CardMedia
-                  style={{ paddingTop: '2rem' }}
-                  component="img"
-                  height="194"
-                  image="/static/components/step3.png"
-                />
-                <Typography
-                  variant="h5"
-                  style={{
-                    color: '#14B7CC',
-                    textAlign: 'center'
-                  }}
-                  paragraph
-                >
-                  {t('advertise_description3')}
-                </Typography>
-                <Typography
-                  style={{ paddingBottom: '2rem', textAlign: 'center' }}
-                  sx={{ color: isLight ? 'text.secondary' : 'common.black' }}
-                >
-                  {t('advertise_description_cover_3')}
-                </Typography>
-              </CardStyle>
-            </MotionInView>
-          </Grid>
+          {Advertisements.map((value, index) => {
+            const isLeftCard = index === 0 ? '1.75rem' : 0;
+            const isRightCard = index === 2 ? '0.75rem' : 0;
+            return (
+              <Grid key={`card_${index}`} item xs={12} md={4}>
+                <MotionInView variants={varFadeInUp}>
+                  <CardStyle sx={{ maxWidth: 345 }}>
+                    <CardMedia
+                      className={`card_${index}`}
+                      style={{
+                        paddingTop: '2rem',
+                        marginBottom: isLeftCard || isRightCard
+                      }}
+                      component="img"
+                      width="150"
+                      sizes="cover"
+                      image={value.icon}
+                    />
+                    <Typography
+                      variant="h5"
+                      style={{
+                        color: '#14B7CC',
+                        textAlign: 'center'
+                      }}
+                      paragraph
+                    >
+                      {t(value.step_title)}
+                    </Typography>
+                    <Typography
+                      style={{ paddingBottom: '2rem', textAlign: 'center' }}
+                      sx={{ color: isLight ? 'text.secondary' : 'common.black' }}
+                    >
+                      {t(value.step_content)}
+                    </Typography>
+                  </CardStyle>
+                </MotionInView>
+              </Grid>
+            );
+          })}
         </Grid>
       </Container>
     </RootStyle>
