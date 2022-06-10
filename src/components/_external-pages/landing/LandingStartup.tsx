@@ -71,6 +71,17 @@ const CardStyle = styled(Card)(({ theme }) => {
     }
   };
 });
+const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
+  height: 13,
+  borderRadius: 5,
+  [`&.${linearProgressClasses.colorPrimary}`]: {
+    backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 300 : 700]
+  },
+  [`& .${linearProgressClasses.bar}`]: {
+    borderRadius: 5,
+    backgroundColor: theme.palette.mode === 'light' ? '#FF7F50' : '#af4cab'
+  }
+}));
 const Language = [
   {
     code: 'vi',
@@ -129,17 +140,6 @@ export default function LandingMinimalHelps() {
   const theme = useTheme();
   const isLight = theme.palette.mode === 'light';
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
-  const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
-    height: 13,
-    borderRadius: 5,
-    [`&.${linearProgressClasses.colorPrimary}`]: {
-      backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 300 : 700]
-    },
-    [`& .${linearProgressClasses.bar}`]: {
-      borderRadius: 5,
-      backgroundColor: theme.palette.mode === 'light' ? '#63C1E3' : '#af4cab'
-    }
-  }));
   const currentLanguageCode = cookies.get('i18next') || 'vi';
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
   const { t } = useTranslation();
@@ -225,7 +225,7 @@ export default function LandingMinimalHelps() {
                   </Typography>
                   <Button
                     style={{
-                      color: '#FF7F50',
+                      color: '#14B7CC',
                       display: 'flex',
                       float: 'right'
                     }}

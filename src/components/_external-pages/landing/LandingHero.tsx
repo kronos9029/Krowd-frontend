@@ -118,6 +118,17 @@ const HeroImgStyle = styled(motion.img)(({ theme }) => ({
     display: 'none'
   }
 }));
+const SearchInput = styled(Input)(() => ({
+  backgroundColor: '#FAF4EF',
+  height: '50px',
+  borderRadius: '5px',
+  fontWeight: 'bold',
+  color: '#251E18'
+  // '&:focus-within': {
+  //   border: '1px solid #14B7CC'
+  // }
+}));
+//
 const Language = [
   {
     code: 'vi',
@@ -166,13 +177,8 @@ export default function LandingHero() {
               <MotionInView variants={varFadeInUp}>
                 <Typography>
                   <SearchbarStyle>
-                    <Input
-                      style={{
-                        backgroundColor: '#FAF4EF',
-                        height: '50px',
-                        borderRadius: '15px',
-                        marginLeft: '5px'
-                      }}
+                    <SearchInput
+                      disableUnderline={true}
                       fullWidth
                       // disableUnderline
                       placeholder={t('Search_hover')}
@@ -190,9 +196,7 @@ export default function LandingHero() {
                           />
                         </InputAdornment>
                       }
-                      sx={{ fontWeight: 'fontWeightBold', color: '#251E18' }}
                     />
-
                     <Button
                       href={PATH_SEARCHPAGE}
                       style={{

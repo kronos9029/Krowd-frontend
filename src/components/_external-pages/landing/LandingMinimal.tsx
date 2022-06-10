@@ -39,39 +39,33 @@ const CardStyle = styled(Card)(({ theme }) => {
     minHeight: 300,
     textAlign: 'center',
     color: '#000000',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#14b7cc0a',
     padding: theme.spacing(10, 5, 0),
     // boxShadow: '-20px 20px 40px 0 rgb(0 0 0 / 35%)',
     [theme.breakpoints.up('md')]: {
-      backgroundColor: '#FFFFFF'
-    },
-    '&.card_title_1': {
-      backgroundColor: '#14b7cc12',
-      [theme.breakpoints.up('md')]: { marginTop: -30 }
-    },
-    '&.card_title_3': {
       backgroundColor: '#14b7cc0a'
     },
     '&.card_title_2': {
       [theme.breakpoints.up('md')]: {
-        marginTop: -100,
-        backgroundColor: theme.palette.background.paper,
-        boxShadow: '-20px 20px 40px 0 rgb(0 0 0 / 35%)',
-        '&:before': {
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          zIndex: -1,
-          content: "''",
-          margin: 'auto',
-          position: 'absolute',
-          width: 'calc(100% - 20px)',
-          height: 'calc(100% - 40px)',
-          borderRadius: theme.shape.borderRadiusMd,
-          backgroundColor: theme.palette.background.paper,
-          boxShadow: '-20px 20px 40px 0 rgb(0 0 0 / 15%)'
-        }
+        // backgroundColor: theme.palette.background.paper
+        backgroundColor: '#14b7cc0a'
+        // boxShadow: '-20px 20px 40px 0 rgb(0 0 0 / 35%)',
+        // '&:before': {
+        //   top: 0,
+        //   left: 0,
+        //   right: 0,
+        //   bottom: 0,
+        //   zIndex: -1,
+        //   content: "''",
+        //   margin: 'auto',
+        //   position: 'absolute',
+        //   width: 'calc(100% - 20px)',
+        //   height: 'calc(100% - 40px)',
+        //   borderRadius: theme.shape.borderRadiusMd,
+        // backgroundColor: theme.palette.background.paper
+        //   backgroundColor: '#14b7cc0a'
+        // boxShadow: '-20px 20px 40px 0 rgb(0 0 0 / 15%)'
+        // }
       }
     }
   };

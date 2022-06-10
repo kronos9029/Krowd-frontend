@@ -93,7 +93,7 @@ const Language = [
   }
 ];
 export default function MainNavbar() {
-  const isOffset = useOffSetTop(100);
+  const isOffset = useOffSetTop(-1);
   const { pathname } = useLocation();
   const isHome = pathname === '/';
   const currentLanguageCode = cookies.get('i18next') || 'vi';
@@ -149,59 +149,58 @@ export default function MainNavbar() {
               isHome={isHome}
               navConfig={t(`navbar_title_1.title_name}`)}
             /> */}
-          </MHidden>
-
-          <Button
-            variant="contained"
-            sx={{ backgroundColor: '#FF7F50', color: '#FFF', marginRight: '1rem' }}
-            href="/auth/login"
-          >
-            {t('Navbar_login')}
-          </Button>
-          <div className="language-select">
-            <div className="d-flex justify-content-end align-items-center language-select-root">
-              <div className="dropdown">
-                <button
-                  className="btn btn-link dropdown-toggle"
-                  type="button"
-                  id="dropdownMenuButton1"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                  style={{ color: '#14b7cc', textDecoration: 'solid', paddingRight: '1rem' }}
-                >
-                  <GlobeIcon />
-                  {t('language')}
-                </button>
-                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                  {Language.map(({ code, name, countryCode }) => (
-                    <li key={countryCode}>
-                      <a
-                        href="#"
-                        className={classNames('dropdown-item', {
-                          disabled: currentLanguageCode === code
-                        })}
-                        onClick={() => {
-                          i18next.changeLanguage(code);
-                          localStorage.setItem('i18nextLng', code);
-                        }}
-                      >
-                        <span
-                          className={`/static/icons/ic_flag_${countryCode}.svg`}
-                          style={{
-                            opacity: currentLanguageCode === code ? 0.5 : 1
+            <Button
+              variant="contained"
+              sx={{ backgroundColor: '#FF7F50', color: '#FFF', marginRight: '1rem' }}
+              href="/auth/login"
+            >
+              {t('Navbar_login')}
+            </Button>
+            <div className="language-select">
+              <div className="d-flex justify-content-end align-items-center language-select-root">
+                <div className="dropdown">
+                  <button
+                    className="btn btn-link dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    style={{ color: '#14b7cc', textDecoration: 'solid', paddingRight: '1rem' }}
+                  >
+                    <GlobeIcon />
+                    {t('language')}
+                  </button>
+                  <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    {Language.map(({ code, name, countryCode }) => (
+                      <li key={countryCode}>
+                        <a
+                          href="#"
+                          className={classNames('dropdown-item', {
+                            disabled: currentLanguageCode === code
+                          })}
+                          onClick={() => {
+                            i18next.changeLanguage(code);
+                            localStorage.setItem('i18nextLng', code);
                           }}
                         >
-                          <img src={`/static/icons/ic_flag_${countryCode}.svg`} />
-                        </span>
-                        {/* <img src="/static/icons/ic_flag_${countryCode}.svg mx-2" /> */}
-                        {name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+                          <span
+                            className={`/static/icons/ic_flag_${countryCode}.svg`}
+                            style={{
+                              opacity: currentLanguageCode === code ? 0.5 : 1
+                            }}
+                          >
+                            <img src={`/static/icons/ic_flag_${countryCode}.svg`} />
+                          </span>
+                          {/* <img src="/static/icons/ic_flag_${countryCode}.svg mx-2" /> */}
+                          {name}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
+          </MHidden>
           <MHidden width="mdUp">
             <MenuMobile
               isOffset={isOffset}
