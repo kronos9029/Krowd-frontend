@@ -20,8 +20,8 @@ i18n
       vi: { translations: viLocales },
       en: { translations: enLocales }
     },
-    lng: localStorage.getItem('i18nextLng') || 'vi',
-    fallbackLng: 'vi',
+    lng: localStorage.getItem('i18nextLng') || 'en',
+    fallbackLng: 'en',
     debug: false,
     detection: {
       order: ['path', 'cookie', 'htmlTag'],
