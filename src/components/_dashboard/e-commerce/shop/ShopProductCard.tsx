@@ -39,7 +39,7 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
         {status && (
           <Label
             variant="filled"
-            color={(status === 'sale' && 'error') || 'info'}
+            color={(status === 'Đang hoạt động' && 'error') || 'info'}
             sx={{
               top: 16,
               right: 16,

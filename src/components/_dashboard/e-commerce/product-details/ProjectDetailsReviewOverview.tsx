@@ -67,15 +67,15 @@ function ProgressItem({ star, total }: PercentProgressProps) {
   );
 }
 
-type ProductDetailsReviewOverviewProps = {
+type ProjectDetailsReviewOverviewProps = {
   product: Product;
   onOpen: VoidFunction;
 };
 
-export default function ProductDetailsReviewOverview({
+export default function ProjectDetailsReviewOverview({
   product,
   onOpen
-}: ProductDetailsReviewOverviewProps) {
+}: ProjectDetailsReviewOverviewProps) {
   const { totalRating, totalReview, ratings } = product;
 
   const total = sumBy(ratings, (star) => star.starCount);

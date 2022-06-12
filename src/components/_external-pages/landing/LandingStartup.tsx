@@ -94,13 +94,6 @@ const Language = [
     countryCode: 'en'
   }
 ];
-// ----------------------------------------------------------------------
-// `Gà rán Kentucky được biết đến trên toàn thế giới. các thương mại nhượng quyền KFC
-//                   hoạt động tại khoảng 123 quốc gia. Nhà hàng chuyên phục vụ thức ăn nhanh và các
-//                   món gà khác nhau. Thương hiệu mang đến cơ hội kinh doanh tuyệt với cho các doanh
-//                   nhân. Sở hữu một thương hiệu nhượng quyền nhà hàng thức ăn nhanh KFC rất dễ dàng
-//                   vì sự đào tạo và hỗ trợ của đội ngũ thương hiệu. Bạn khởi động một doanh nghiệp
-//                   với một cái tên được nhiều khách hàng biết đến.`
 const HotProject = [
   {
     image: '/static/components/Hot-Bussiness-KFC.png',
@@ -140,7 +133,7 @@ export default function LandingMinimalHelps() {
   const theme = useTheme();
   const isLight = theme.palette.mode === 'light';
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
-  const currentLanguageCode = cookies.get('i18next') || 'vi';
+  const currentLanguageCode = cookies.get('i18next') || 'en';
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
   const { t } = useTranslation();
   return (
@@ -152,7 +145,7 @@ export default function LandingMinimalHelps() {
       }}
     >
       <Box sx={{ mb: { xs: 10, md: 10, textAlign: 'center', paddingTop: '3rem' } }}>
-        <Typography variant="h4" sx={{ mb: 3, color: isLight ? '#14B7CC' : '#008dff' }}>
+        <Typography variant="h4" sx={{ mb: 3, color: isLight ? '#14B7CC' : '#FF7F50' }}>
           {t('highlight_project')}
         </Typography>
         <Typography variant="h3" sx={{ mb: 3, color: isLight ? '#251E18' : 'black' }}>
@@ -164,7 +157,7 @@ export default function LandingMinimalHelps() {
           {Array.from(HotProject).map((value) => (
             <Grid key={value.businessName} item xs={12} md={4}>
               <MotionInView variants={varFadeInUp}>
-                <CardStyle sx={{ maxWidth: 345 }}>
+                <CardStyle sx={{ maxWidth: 345, maxHeight: 500, height: '500px' }}>
                   <CardMedia
                     style={{ paddingTop: '2rem', borderRadius: '40px 42px 1rem 1rem' }}
                     component="img"
@@ -204,7 +197,7 @@ export default function LandingMinimalHelps() {
                       overflow: 'hidden',
                       display: '-webkit-box',
                       WebkitBoxOrient: 'vertical',
-                      WebkitLineClamp: 6
+                      WebkitLineClamp: 4
                     }}
                   >
                     {/* Thẩm mỹ viện uy tin 100% với chất lượng các y bác sĩ hàng đầu Việt Nam cùng nhiều

@@ -24,7 +24,7 @@ import Markdown from '../../components/Markdown';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import {
   ProductDetailsSummary,
-  ProductDetailsReview,
+  ProjectDetailsReview,
   ProductDetailsCarousel
 } from '../../components/_dashboard/e-commerce/product-details';
 import CartWidget from '../../components/_dashboard/e-commerce/CartWidget';
@@ -101,10 +101,10 @@ export default function EcommerceProductDetails() {
   };
 
   return (
-    <Page title="Ecommerce: Product Details | Krowd">
+    <Page title="Chi tiết dự án | Krowd">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="Product Details"
+          heading="Chi tiết dự án"
           links={[
             { name: 'Dashboard', href: PATH_DASHBOARD.root },
             {
@@ -173,7 +173,7 @@ export default function EcommerceProductDetails() {
                   </Box>
                 </TabPanel>
                 <TabPanel value="2">
-                  <ProductDetailsReview product={product} />
+                  <ProjectDetailsReview product={product} />
                 </TabPanel>
               </TabContext>
             </Card>

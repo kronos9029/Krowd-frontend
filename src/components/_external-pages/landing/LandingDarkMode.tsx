@@ -44,7 +44,7 @@ const Language = [
 // ----------------------------------------------------------------------
 
 export default function LandingDarkMode() {
-  const currentLanguageCode = cookies.get('i18next') || 'vi';
+  const currentLanguageCode = cookies.get('i18next') || 'en';
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
   const { t } = useTranslation();
   return (
@@ -89,14 +89,24 @@ export default function LandingDarkMode() {
                   <img
                     alt="light mode"
                     src="/static/home/GooglePlay.png"
-                    style={{ border: '#000000 10px solid', borderRadius: '10px' }}
+                    style={{
+                      border: '#000000 10px solid',
+                      borderRadius: '10px',
+                      height: '80px',
+                      marginRight: '130px'
+                    }}
                   />
                 </Typography>
                 <Typography sx={{ color: '', mb: 5, display: 'flex', justifyContent: 'center' }}>
                   <img
                     alt="light mode"
                     src="/static/home/AppStore.png"
-                    style={{ border: '#000000 10px solid', borderRadius: '10px' }}
+                    style={{
+                      border: '#000000 10px solid',
+                      borderRadius: '10px',
+                      height: '80px',
+                      marginRight: '130px'
+                    }}
                   />
                 </Typography>
               </MotionInView>

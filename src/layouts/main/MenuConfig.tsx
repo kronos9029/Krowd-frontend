@@ -69,10 +69,16 @@ const menuConfig = {
       //   }
       // ]
     },
+    // {
+    //   title: 'Doanh Nghiệp',
+    //   icon: <Icon icon={bookOpenFill} {...ICON_SIZE} />,
+    //   path: PATH_PAGE.comingSoon
+    //   // path: PATH_DOCS
+    // },
     {
-      title: 'Doanh Nghiệp',
+      title: 'Về chúng tôi',
       icon: <Icon icon={bookOpenFill} {...ICON_SIZE} />,
-      path: PATH_PAGE.comingSoon
+      path: PATH_PAGE.about
       // path: PATH_DOCS
     }
   ],
@@ -126,10 +132,16 @@ const menuConfig = {
       //   }
       // ]
     },
+    // {
+    //   title: 'Business',
+    //   icon: <Icon icon={bookOpenFill} {...ICON_SIZE} />,
+    //   path: PATH_PAGE.comingSoon
+    //   // path: PATH_DOCS
+    // },
     {
-      title: 'Business',
+      title: 'About-us',
       icon: <Icon icon={bookOpenFill} {...ICON_SIZE} />,
-      path: PATH_PAGE.comingSoon
+      path: PATH_PAGE.about
       // path: PATH_DOCS
     }
   ]

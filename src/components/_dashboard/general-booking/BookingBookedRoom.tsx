@@ -6,9 +6,9 @@ import mockData from '../../../utils/mock-data';
 
 // ----------------------------------------------------------------------
 
-const LABEL = ['Pending', 'Cancel', 'Done'];
+const LABEL = ['Đang đầu tư'];
 
-const MOCK_SALES = [...Array(3)].map((_, index) => ({
+const MOCK_SALES = [...Array(1)].map((_, index) => ({
   status: LABEL[index],
   quantity: mockData.number.percent(index) * 1000,
   value: mockData.number.percent(index)
@@ -19,18 +19,14 @@ const MOCK_SALES = [...Array(3)].map((_, index) => ({
 export default function BookingBookedRoom() {
   return (
     <Card>
-      <CardHeader title="Booked Room" />
-      <Stack spacing={3} sx={{ px: 3, my: 5 }}>
+      <CardHeader title="Tiến độ" />
+      <Stack spacing={3} sx={{ px: 3, my: 1 }}>
         {MOCK_SALES.map((progress) => (
           <LinearProgress
             variant="determinate"
             key={progress.status}
             value={progress.value}
-            color={
-              (progress.status === 'Pending' && 'warning') ||
-              (progress.status === 'Cancel' && 'error') ||
-              'success'
-            }
+            color={(progress.status === 'Đang đầu tư' && 'success') || 'warning'}
             sx={{ height: 8, bgcolor: 'grey.50016' }}
           />
         ))}

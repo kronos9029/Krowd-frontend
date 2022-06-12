@@ -239,8 +239,8 @@ export default function EcommerceProductList() {
                             <Label
                               variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
                               color={
-                                (inventoryType === 'out_of_stock' && 'error') ||
-                                (inventoryType === 'low_stock' && 'warning') ||
+                                (inventoryType === 'Chưa duyệt' && 'error') ||
+                                (inventoryType === 'Đang đầu tư' && 'warning') ||
                                 'success'
                               }
                             >

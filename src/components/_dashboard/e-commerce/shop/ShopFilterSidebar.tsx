@@ -33,13 +33,16 @@ export const SORT_BY_OPTIONS = [
   { value: 'priceDesc', label: 'Price: High-Low' },
   { value: 'priceAsc', label: 'Price: Low-High' }
 ];
-export const FILTER_GENDER_OPTIONS = ['Men', 'Women', 'Kids'];
-export const FILTER_CATEGORY_OPTIONS = ['All', 'Shose', 'Apparel', 'Accessories'];
+export const FILTER_GENDER_OPTIONS = ['a', 'b', 'c'];
+export const FILTER_CATEGORY_OPTIONS = ['All', 'Thước uống', 'Cửa hàng', 'Đồ ăn'];
 export const FILTER_RATING_OPTIONS = ['up4Star', 'up3Star', 'up2Star', 'up1Star'];
 export const FILTER_PRICE_OPTIONS = [
-  { value: 'below', label: 'Below $25' },
-  { value: 'between', label: 'Between $25 - $75' },
-  { value: 'above', label: 'Above $75' }
+  { value: 'below', label: 'Từ chối' },
+  { value: 'between', label: 'Đang hoạt động' },
+  { value: 'above', label: 'Đang kêu gọi đầu tư' },
+  { value: 'waiting', label: 'Chưa duyệt' },
+  { value: 'timout', label: 'Hết thời gian kêu gọi' },
+  { value: 'close', label: 'Đóng dự án' }
 ];
 export const FILTER_COLOR_OPTIONS = [
   '#14B7CC',
@@ -79,7 +82,7 @@ export default function ShopFilterSidebar({
         endIcon={<Icon icon={roundFilterList} />}
         onClick={onOpenFilter}
       >
-        Filters&nbsp;
+        Lọc danh sách&nbsp;
       </Button>
 
       <FormikProvider value={formik}>
@@ -99,7 +102,7 @@ export default function ShopFilterSidebar({
               sx={{ px: 1, py: 2 }}
             >
               <Typography variant="subtitle1" sx={{ ml: 1 }}>
-                Filters
+                Lọc danh sách
               </Typography>
               <MIconButton onClick={onCloseFilter}>
                 <Icon icon={closeFill} width={20} height={20} />
@@ -112,7 +115,7 @@ export default function ShopFilterSidebar({
               <Stack spacing={3} sx={{ p: 3 }}>
                 <div>
                   <Typography variant="subtitle1" gutterBottom>
-                    Gender
+                    Doanh nghiệp
                   </Typography>
                   <FormGroup>
                     {FILTER_GENDER_OPTIONS.map((item) => (
@@ -133,7 +136,7 @@ export default function ShopFilterSidebar({
 
                 <div>
                   <Typography variant="subtitle1" gutterBottom>
-                    Category
+                    Thuộc loại
                   </Typography>
                   <RadioGroup {...getFieldProps('category')}>
                     {FILTER_CATEGORY_OPTIONS.map((item) => (
@@ -144,20 +147,20 @@ export default function ShopFilterSidebar({
 
                 <div>
                   <Typography variant="subtitle1" gutterBottom>
-                    Colour
+                    Khu vực
                   </Typography>
-                  <ColorManyPicker
+                  {/* <ColorManyPicker
                     name="colors"
                     colors={FILTER_COLOR_OPTIONS}
                     onChange={handleChange}
                     onChecked={(color) => values.colors.includes(color)}
                     sx={{ maxWidth: 36 * 4 }}
-                  />
+                  /> */}
                 </div>
 
                 <div>
                   <Typography variant="subtitle1" gutterBottom>
-                    Price
+                    Trạng thái
                   </Typography>
                   <RadioGroup {...getFieldProps('priceRange')}>
                     {FILTER_PRICE_OPTIONS.map((item) => (
@@ -172,7 +175,7 @@ export default function ShopFilterSidebar({
                 </div>
 
                 <div>
-                  <Typography variant="subtitle1" gutterBottom>
+                  {/* <Typography variant="subtitle1" gutterBottom>
                     Rating
                   </Typography>
                   <RadioGroup {...getFieldProps('rating')}>
@@ -202,7 +205,7 @@ export default function ShopFilterSidebar({
                         }}
                       />
                     ))}
-                  </RadioGroup>
+                  </RadioGroup> */}
                 </div>
               </Stack>
             </Scrollbar>
@@ -217,7 +220,7 @@ export default function ShopFilterSidebar({
                 onClick={onResetFilter}
                 startIcon={<Icon icon={roundClearAll} />}
               >
-                Clear All
+                Xóa tìm kiếm
               </Button>
             </Box>
           </Drawer>

@@ -4,9 +4,9 @@ import { FormikProps } from 'formik';
 
 export type PaymentType = 'paypal' | 'credit_card' | 'cash';
 
-export type ProductStatus = 'sale' | 'new' | '';
+export type ProductStatus = 'Đang hoạt động' | 'Đang đầu tư' | '';
 
-export type ProductInventoryType = 'in_stock' | 'out_of_stock' | 'low_stock';
+export type ProductInventoryType = 'Đang hoạt động' | 'Đang đầu tư' | 'Chưa duyệt';
 
 export type ProductCategory = 'Accessories' | 'Apparel' | 'Shoes';
 

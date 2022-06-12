@@ -1,6 +1,7 @@
 export { default as ProductDetailsCarousel } from './ProductDetailsCarousel';
-export { default as ProductDetailsReview } from './ProductDetailsReview';
-export { default as ProductDetailsReviewForm } from './ProductDetailsReview';
-export { default as ProductDetailsReviewList } from './ProductDetailsReviewList';
-export { default as ProductDetailsReviewOverview } from './ProductDetailsReviewOverview';
+export { default as ProjectDetailsReview } from './ProjectDetailsReview';
+export { default as ProjectDetailsReviewForm } from './ProjectDetailsReview';
+export { default as ProjectDetailsHero } from './ProjectDetailsHero';
+export { default as ProjectDetailsReviewList } from './ProjectDetailsReviewList';
+export { default as ProjectDetailsReviewOverview } from './ProjectDetailsReviewOverview';
 export { default as ProductDetailsSummary } from './ProductDetailsSummary';

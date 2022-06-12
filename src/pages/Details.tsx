@@ -1,37 +1,192 @@
+import { Icon } from '@iconify/react';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 // material
-import { styled } from '@mui/material/styles';
-import { Container } from '@mui/material';
+import { alpha, styled } from '@mui/material/styles';
+import { Box, Tab, Card, Grid, Divider, Skeleton, Container, Typography } from '@mui/material';
+import { TabContext, TabList, TabPanel } from '@mui/lab';
+// redux
+import { useDispatch, useSelector } from 'redux/store';
+import { getProduct, addCart, onGotoStep } from 'redux/slices/product';
+// routes
+// @types
+import { CartItem, ProductState } from '../@types/products';
+// hooks
+import useSettings from 'hooks/useSettings';
 // components
-import Page from '../components/Page';
+import Page from 'components/Page';
+import Markdown from 'components/Markdown';
 import {
-  // ComponentHero,
-  ComponentMaterialUI,
-  ComponentContent
-} from '../components/_external-pages/components-overview';
-import MainNavbar from 'layouts/main/MainNavbar';
-import MainFooter from 'layouts/main/MainFooter';
+  ProductDetailsSummary,
+  ProjectDetailsReview,
+  ProductDetailsCarousel,
+  ProjectDetailsHero
+} from '../components/_dashboard/e-commerce/product-details';
+import {
+  TermOfProject,
+  MultiplierProject,
+  MembersParticipation,
+  SharedRevenue
+} from 'components/_dashboard/general-analytics';
 
 // ----------------------------------------------------------------------
 
-const RootStyle = styled(Page)(({ theme }) => ({
-  paddingTop: theme.spacing(8),
-  paddingBottom: theme.spacing(15),
-  [theme.breakpoints.up('md')]: {
-    paddingTop: theme.spacing(11)
-  }
+const IconWrapperStyle = styled('div')(({ theme }) => ({
+  margin: 'auto',
+  display: 'flex',
+  borderRadius: '50%',
+  alignItems: 'center',
+  width: theme.spacing(8),
+  justifyContent: 'center',
+  height: theme.spacing(8),
+  marginBottom: theme.spacing(3),
+  color: theme.palette.primary.main,
+  backgroundColor: `${alpha(theme.palette.primary.main, 0.08)}`
 }));
 
 // ----------------------------------------------------------------------
 
+const SkeletonLoad = (
+  <Grid container spacing={3}>
+    <Grid item xs={12} md={6} lg={7}>
+      <Skeleton variant="rectangular" width="100%" sx={{ paddingTop: '100%', borderRadius: 2 }} />
+    </Grid>
+    <Grid item xs={12} md={6} lg={5}>
+      <Skeleton variant="circular" width={80} height={80} />
+      <Skeleton variant="text" height={240} />
+      <Skeleton variant="text" height={40} />
+      <Skeleton variant="text" height={40} />
+      <Skeleton variant="text" height={40} />
+    </Grid>
+  </Grid>
+);
+
 export default function ComponentsDetails() {
+  const { themeStretch } = useSettings();
+  const dispatch = useDispatch();
+  const [value, setValue] = useState('1');
+  const { name = 'nike-air-force-1-ndestrukt' } = useParams();
+  const { product, error, checkout } = useSelector(
+    (state: { product: ProductState }) => state.product
+  );
+
+  useEffect(() => {
+    dispatch(getProduct(name));
+  }, [dispatch, name]);
+
+  const handleAddCart = (product: CartItem) => {
+    dispatch(addCart(product));
+  };
+
+  const handleGotoStep = (step: number) => {
+    dispatch(onGotoStep(step));
+  };
+
   return (
-    <RootStyle title="Chi tiết dự án | Krowd">
-      {/* <MainNavbar /> */}
-      <Container maxWidth="lg">
-        <ComponentMaterialUI />
-        <ComponentContent />
+    <Page title="Chi tiết dự án | Krowd">
+      <Container maxWidth={themeStretch ? false : 'lg'} sx={{ paddingBottom: '4rem' }}>
+        <Typography
+          sx={{
+            paddingTop: '7rem',
+            paddingBottom: '2rem',
+            textAlign: 'center',
+            color: 'rgb(20, 183, 204)'
+          }}
+          variant="h4"
+        >
+          Chi tiết dự án
+        </Typography>
+        {product && (
+          <>
+            <Card>
+              <Grid container>
+                <Grid item xs={12} md={6} lg={7}>
+                  <ProjectDetailsHero product={product} />
+                </Grid>
+                <Grid item xs={12} md={6} lg={5}>
+                  <ProductDetailsSummary
+                    product={product}
+                    cart={checkout.cart}
+                    onAddCart={handleAddCart}
+                    onGotoStep={handleGotoStep}
+                  />
+                </Grid>
+              </Grid>
+            </Card>
+
+            <Grid container spacing={3} sx={{ mb: 5, pb: 5, mt: 3 }}>
+              <Grid item xs={12} sm={6} md={3}>
+                <SharedRevenue />
+              </Grid>
+
+              <Grid item xs={12} sm={6} md={3}>
+                <MembersParticipation />
+              </Grid>
+
+              <Grid item xs={12} sm={6} md={3}>
+                <MultiplierProject />
+              </Grid>
+
+              <Grid item xs={12} sm={6} md={3}>
+                <TermOfProject />
+              </Grid>
+            </Grid>
+            {/* Nổi bật */}
+            <Typography variant="subtitle1" sx={{ ml: 1, fontSize: '20px', mb: 5 }}>
+              Nổi bật
+            </Typography>
+            <ProductDetailsCarousel product={product} />
+            {/*Change tab view at here */}
+            <Card>
+              <TabContext value={value}>
+                <Box sx={{ px: 3, bgcolor: 'background.neutral' }}>
+                  <TabList onChange={(e, value) => setValue(value)}>
+                    <Tab
+                      sx={{ paddingRight: '1rem' }}
+                      disableRipple
+                      value="1"
+                      label="Mô tả chi tiết"
+                    />
+                    <Tab
+                      disableRipple
+                      value="2"
+                      label="Thành viên"
+                      sx={{ '& .MuiTab-wrapper': { whiteSpace: 'nowrap' }, paddingRight: '1rem' }}
+                    />
+                    <Tab
+                      disableRipple
+                      value="3"
+                      label="Giai đoạn"
+                      sx={{ '& .MuiTab-wrapper': { whiteSpace: 'nowrap' } }}
+                    />
+                  </TabList>
+                </Box>
+
+                <Divider />
+
+                <TabPanel value="1">
+                  <Box sx={{ p: 3 }}>
+                    <Markdown children={product.description} />
+                  </Box>
+                </TabPanel>
+                <TabPanel value="2">
+                  <ProjectDetailsReview product={product} />
+                </TabPanel>
+                <TabPanel value="3">
+                  <Box sx={{ p: 3 }}>
+                    <Markdown children={product.description} />
+                  </Box>
+                </TabPanel>
+              </TabContext>
+            </Card>
+          </>
+        )}
+
+        {!product && SkeletonLoad}
+
+        {/* {error && <Typography variant="h6">404 Product not found</Typography>} */}
       </Container>
-      {/* <MainFooter /> */}
-    </RootStyle>
+      <hr />
+    </Page>
   );
 }

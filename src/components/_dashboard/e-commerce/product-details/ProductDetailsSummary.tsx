@@ -32,6 +32,7 @@ import Label from '../../../Label';
 import { MIconButton } from '../../../@material-extend';
 import ColorSinglePicker from '../../../ColorSinglePicker';
 import { Product, CartItem } from '../../../../@types/products';
+import { BookingBookedRoom } from 'components/_dashboard/general-booking';
 
 // ----------------------------------------------------------------------
 
@@ -195,13 +196,13 @@ export default function ProductDetailsSummary({
     <RootStyle {...other}>
       <FormikProvider value={formik}>
         <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-          <Label
+          {/* <Label
             variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
-            color={inventoryType === 'in_stock' ? 'success' : 'error'}
+            color={inventoryType === 'Đang hoạt động' ? 'success' : 'error'}
             sx={{ textTransform: 'uppercase' }}
           >
             {sentenceCase(inventoryType || '')}
-          </Label>
+          </Label> */}
 
           <Typography
             variant="overline"
@@ -209,7 +210,7 @@ export default function ProductDetailsSummary({
               mt: 2,
               mb: 1,
               display: 'block',
-              color: status === 'sale' ? 'error.main' : 'info.main'
+              color: status === 'Đang hoạt động' ? 'error.main' : 'info.main'
             }}
           >
             {status}
@@ -219,20 +220,12 @@ export default function ProductDetailsSummary({
             {name}
           </Typography>
 
-          <Box sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
-            <Rating value={totalRating} precision={0.1} readOnly />
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              ({fShortenNumber(totalReview)}
-              reviews)
-            </Typography>
-          </Box>
-
-          <Typography variant="h4" sx={{ mb: 3 }}>
+          {/* <Typography variant="h4" sx={{ mb: 3 }}>
             <Box component="span" sx={{ color: 'text.disabled', textDecoration: 'line-through' }}>
               {priceSale && fCurrency(priceSale)}
             </Box>
             &nbsp;{fCurrency(price)}
-          </Typography>
+          </Typography> */}
 
           <Divider sx={{ borderStyle: 'dashed' }} />
 
@@ -244,18 +237,9 @@ export default function ProductDetailsSummary({
             }}
           >
             <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
-              Color
+              Thuộc doanh nghiệp
             </Typography>
-            <ColorSinglePicker
-              {...getFieldProps('color')}
-              colors={colors}
-              sx={{
-                ...(colors.length > 4 && {
-                  maxWidth: 144,
-                  justifyContent: 'flex-end'
-                })
-              }}
-            />
+            <Typography sx={{ mt: 0.5 }}>GS 25</Typography>
           </Box>
 
           <Box
@@ -266,32 +250,9 @@ export default function ProductDetailsSummary({
             }}
           >
             <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
-              Size
+              Thuộc Khu vực:
             </Typography>
-            <TextField
-              select
-              size="small"
-              {...getFieldProps('size')}
-              SelectProps={{ native: true }}
-              FormHelperTextProps={{
-                sx: {
-                  textAlign: 'right',
-                  margin: 0,
-                  mt: 1
-                }
-              }}
-              helperText={
-                <Link href="#" underline="always" color="text.primary">
-                  Size Chart
-                </Link>
-              }
-            >
-              {sizes.map((size) => (
-                <option key={size} value={size}>
-                  {size}
-                </option>
-              ))}
-            </TextField>
+            <Typography sx={{ mt: 0.5 }}>TP HCM</Typography>
           </Box>
 
           <Box
@@ -302,30 +263,17 @@ export default function ProductDetailsSummary({
             }}
           >
             <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
-              Quantity
+              Địa chỉ:
             </Typography>
-
-            <div>
-              <Incrementer name="quantity" available={available} />
-              <Typography
-                variant="caption"
-                sx={{
-                  mt: 1,
-                  display: 'block',
-                  textAlign: 'right',
-                  color: 'text.secondary'
-                }}
-              >
-                Available: {available}
-              </Typography>
-
-              <FormHelperText error>{touched.quantity && errors.quantity}</FormHelperText>
-            </div>
+            <Typography sx={{ mt: 0.5 }}>Quận 12</Typography>
+          </Box>
+          <Box>
+            <BookingBookedRoom />
           </Box>
 
           <Divider sx={{ borderStyle: 'dashed' }} />
 
-          <Box sx={{ mt: 5 }}>
+          {/* <Box sx={{ mt: 5 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <Button
@@ -339,7 +287,7 @@ export default function ProductDetailsSummary({
                   onClick={handleAddCart}
                   sx={{ whiteSpace: 'nowrap' }}
                 >
-                  Add to Cart
+                  
                 </Button>
               </Grid>
 
@@ -349,7 +297,7 @@ export default function ProductDetailsSummary({
                 </Button>
               </Grid>
             </Grid>
-          </Box>
+          </Box> */}
 
           <Box sx={{ mt: 3, textAlign: 'center' }}>
             {SOCIALS.map((social) => (

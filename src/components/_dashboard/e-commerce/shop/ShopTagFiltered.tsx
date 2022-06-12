@@ -119,7 +119,7 @@ export default function ShopTagFiltered({
 
       {category !== 'All' && (
         <WrapperStyle>
-          <LabelStyle>Category:</LabelStyle>
+          <LabelStyle>Thuộc loại:</LabelStyle>
           <Stack direction="row" flexWrap="wrap" sx={{ p: 0.75 }}>
             <Chip size="small" label={category} onDelete={handleRemoveCategory} sx={{ m: 0.5 }} />
           </Stack>
@@ -128,7 +128,7 @@ export default function ShopTagFiltered({
 
       {colors.length > 0 && (
         <WrapperStyle>
-          <LabelStyle>Colors:</LabelStyle>
+          <LabelStyle>Khu vực:</LabelStyle>
           <Stack direction="row" flexWrap="wrap" sx={{ p: 0.75 }}>
             {colors.map((color) => (
               <Chip
@@ -155,7 +155,7 @@ export default function ShopTagFiltered({
 
       {priceRange && (
         <WrapperStyle>
-          <LabelStyle>Price:</LabelStyle>
+          <LabelStyle>Trạng thái</LabelStyle>
           <Stack direction="row" flexWrap="wrap" sx={{ p: 0.75 }}>
             <Chip
               size="small"
@@ -167,7 +167,7 @@ export default function ShopTagFiltered({
         </WrapperStyle>
       )}
 
-      {rating && (
+      {/* {rating && (
         <WrapperStyle>
           <LabelStyle>Rating:</LabelStyle>
           <Stack direction="row" flexWrap="wrap" sx={{ p: 0.75 }}>
@@ -179,7 +179,7 @@ export default function ShopTagFiltered({
             />
           </Stack>
         </WrapperStyle>
-      )}
+      )} */}
 
       {isShow && !isDefault && (
         <Button
@@ -189,7 +189,7 @@ export default function ShopTagFiltered({
           onClick={onResetFilter}
           startIcon={<Icon icon={roundClearAll} />}
         >
-          Clear All
+          Xóa tìm kiếm
         </Button>
       )}
     </RootStyle>

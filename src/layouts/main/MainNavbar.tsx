@@ -96,7 +96,7 @@ export default function MainNavbar() {
   const isOffset = useOffSetTop(-1);
   const { pathname } = useLocation();
   const isHome = pathname === '/';
-  const currentLanguageCode = cookies.get('i18next') || 'vi';
+  const currentLanguageCode = cookies.get('i18next') || 'en';
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
   const { t } = useTranslation();
 
@@ -152,7 +152,7 @@ export default function MainNavbar() {
             <Button
               variant="contained"
               sx={{ backgroundColor: '#FF7F50', color: '#FFF', marginRight: '1rem' }}
-              href="/auth/login"
+              // href="/auth/login"
             >
               {t('Navbar_login')}
             </Button>

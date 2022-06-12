@@ -95,7 +95,7 @@ export default function ProductNewForm({ isEdit, currentProduct }: ProductNewFor
       price: currentProduct?.price || '',
       priceSale: currentProduct?.priceSale || '',
       tags: currentProduct?.tags || [TAGS_OPTION[0]],
-      inStock: Boolean(currentProduct?.inventoryType !== 'out_of_stock'),
+      inStock: Boolean(currentProduct?.inventoryType !== 'Chưa duyệt'),
       taxes: true,
       gender: currentProduct?.gender || GENDER_OPTION[2],
       category: currentProduct?.category || CATEGORY_OPTION[0].classify[1]

@@ -19,16 +19,16 @@ const RootStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-type ProductDetailsReviewFormProps = {
+type ProjectDetailsReviewFormProps = {
   onClose: VoidFunction;
   id?: string;
 };
 
-export default function ProductDetailsReviewForm({
+export default function ProjectDetailsReviewForm({
   onClose,
   id,
   ...other
-}: ProductDetailsReviewFormProps) {
+}: ProjectDetailsReviewFormProps) {
   const { enqueueSnackbar } = useSnackbar();
 
   const ReviewSchema = Yup.object().shape({

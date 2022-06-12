@@ -32,7 +32,7 @@ const Language = [
 // ----------------------------------------------------------------------
 
 export default function FaqsList() {
-  const currentLanguageCode = cookies.get('i18next') || 'vi';
+  const currentLanguageCode = cookies.get('i18next') || 'en';
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
   const { t } = useTranslation();
   return (

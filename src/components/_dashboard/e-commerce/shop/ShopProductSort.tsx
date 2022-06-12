@@ -13,23 +13,23 @@ import { ProductState } from '../../../../@types/products';
 // ----------------------------------------------------------------------
 
 const SORT_BY_OPTIONS = [
-  { value: 'featured', label: 'Featured' },
-  { value: 'newest', label: 'Newest' },
-  { value: 'priceDesc', label: 'Price: High-Low' },
-  { value: 'priceAsc', label: 'Price: Low-High' }
+  { value: 'featured', label: 'Ngày tạo dự án' },
+  { value: 'newest', label: 'Dự án nổi bật' },
+  { value: 'priceDesc', label: 'Từ a - z' },
+  { value: 'priceAsc', label: 'Từ z - a' }
 ];
 
 function renderLabel(label: string | null) {
-  if (label === 'featured') {
+  if (label === 'Ngày tạo dự án') {
     return 'Featured';
   }
-  if (label === 'newest') {
+  if (label === 'Dự án nổi bật') {
     return 'Newest';
   }
-  if (label === 'priceDesc') {
-    return 'Price: High-Low';
+  if (label === 'Từ a - z') {
+    return 'Ký tự: High-Low';
   }
-  return 'Price: Low-High';
+  return 'Ký tự: Từ z - a';
 }
 
 export default function ShopProductSort() {
@@ -58,7 +58,7 @@ export default function ShopProductSort() {
         onClick={(event) => handleOpen(event.currentTarget)}
         endIcon={<Icon icon={open ? chevronUpFill : chevronDownFill} />}
       >
-        Sort By:&nbsp;
+        Sắp sếp theo&nbsp;&nbsp;&nbsp;
         <Typography component="span" variant="subtitle2" sx={{ color: 'text.secondary' }}>
           {renderLabel(sortBy)}
         </Typography>

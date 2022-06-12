@@ -30,7 +30,7 @@ export default function About() {
       <AboutVision />
       <Divider orientation="vertical" sx={{ my: 10, mx: 'auto', width: 2, height: 40 }} />
       <AboutTeam />
-      <AboutTestimonials />
+      {/* <AboutTestimonials /> */}
     </RootStyle>
   );
 }

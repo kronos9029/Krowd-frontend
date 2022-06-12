@@ -6,11 +6,11 @@ import useSettings from '../../hooks/useSettings';
 import Page from '../../components/Page';
 import {
   AnalyticsTasks,
-  AnalyticsNewUsers,
-  AnalyticsBugReports,
-  AnalyticsItemOrders,
+  MembersParticipation,
+  TermOfProject,
+  MultiplierProject,
   AnalyticsNewsUpdate,
-  AnalyticsWeeklySales,
+  SharedRevenue,
   AnalyticsOrderTimeline,
   AnalyticsCurrentVisits,
   AnalyticsWebsiteVisits,
@@ -33,19 +33,19 @@ export default function GeneralAnalytics() {
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AnalyticsWeeklySales />
+            <SharedRevenue />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AnalyticsNewUsers />
+            <MembersParticipation />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AnalyticsItemOrders />
+            <MultiplierProject />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AnalyticsBugReports />
+            <TermOfProject />
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
