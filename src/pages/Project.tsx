@@ -229,17 +229,7 @@ export default function Projects() {
   const theme = useTheme();
   const isLight = theme.palette.mode === 'light';
   //xanh
-  // const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
-  //   height: 13,
-  //   borderRadius: 5,
-  //   [`&.${linearProgressClasses.colorPrimary}`]: {
-  //     backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 300 : 700]
-  //   },
-  //   [`& .${linearProgressClasses.bar}`]: {
-  //     borderRadius: 5,
   //     backgroundColor: theme.palette.mode === 'light' ? '#63C1E3' : '#FF7F50'
-  //   }
-  // }));
   //cam
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     height: 13,
@@ -252,11 +242,65 @@ export default function Projects() {
       backgroundColor: theme.palette.mode === 'light' ? '#FF7F50' : '#63C1E3'
     }
   }));
+  const settings = {
+    slidesToShow: 3,
+    centerMode: true,
+    centerPadding: '0 80px',
+    rtl: Boolean(theme.direction === 'rtl'),
+    responsive: [
+      {
+        breakpoint: 1279,
+        settings: { slidesToShow: 2 }
+      },
+      {
+        breakpoint: 959,
+        settings: { slidesToShow: 3 }
+      },
+      {
+        breakpoint: 900,
+        settings: { slidesToShow: 3 }
+      },
+      {
+        breakpoint: 600,
+        settings: { slidesToShow: 2 }
+      }
+    ]
+  };
+
   return (
     <RootStyle title="Project | Krowd">
       <ContentStyle>
-        <Grid container spacing={2} columns={16}>
-          <Grid item xs={4}>
+        <Grid container columns={16}>
+          <Grid xs={4} sm={4} md={4}>
+            <Stack sx={{ mb: 4 }}>
+              <Stack sx={{ my: 1 }}>
+                <ShopTagFiltered
+                  filters={filters}
+                  formik={formik}
+                  isShowReset={openFilter}
+                  onResetFilter={handleResetFilter}
+                  isDefault={isDefault}
+                />
+
+                <ShopFilterSidebar
+                  formik={formik}
+                  isOpenFilter={openFilter}
+                  onResetFilter={handleResetFilter}
+                  onOpenFilter={handleOpenFilter}
+                  onCloseFilter={handleCloseFilter}
+                />
+                <ShopProductSort />
+              </Stack>
+            </Stack>
+            <Typography
+              sx={{
+                paddingTop: '5rem',
+                textAlign: 'center'
+              }}
+              variant="h6"
+            >
+              -----------------
+            </Typography>
             <Tabs
               value={value}
               onChange={handleChange}
@@ -309,43 +353,13 @@ export default function Projects() {
                     }}
                     variant="h6"
                   >
-                    Cửa hàng ăn nhanh
+                    Cửa hàng
                   </Typography>
                 }
               />
             </Tabs>
-            <Typography
-              sx={{
-                paddingTop: '5rem',
-                textAlign: 'center'
-              }}
-              variant="h6"
-            >
-              -----------------
-            </Typography>
-
-            <Stack sx={{ mb: 5 }}>
-              <Stack sx={{ my: 1 }}>
-                <ShopTagFiltered
-                  filters={filters}
-                  formik={formik}
-                  isShowReset={openFilter}
-                  onResetFilter={handleResetFilter}
-                  isDefault={isDefault}
-                />
-
-                <ShopFilterSidebar
-                  formik={formik}
-                  isOpenFilter={openFilter}
-                  onResetFilter={handleResetFilter}
-                  onOpenFilter={handleOpenFilter}
-                  onCloseFilter={handleCloseFilter}
-                />
-                <ShopProductSort />
-              </Stack>
-            </Stack>
           </Grid>
-          <Grid item xs={12} style={{ zIndex: 0 }}>
+          <Grid item xs={12} sm={12} md={12} style={{ zIndex: 0 }}>
             <Grid container spacing={{ xs: 2, md: 4 }} columns={{ xs: 5, sm: 8, md: 12 }}>
               {Array.from(new Array(6)).map((_, index) => {
                 let totalBudget = Math.floor(Math.random() * 100000000);
@@ -356,7 +370,11 @@ export default function Projects() {
                     <MotionInView variants={varFadeInUp}>
                       <CardStyle sx={{ maxWidth: 390 }}>
                         <CardMedia
-                          style={{ paddingTop: '2rem', borderRadius: '40px 42px 1rem 1rem' }}
+                          style={{
+                            paddingTop: '2rem',
+                            display: 'center',
+                            borderRadius: '40px 42px 1rem 1rem'
+                          }}
                           component="img"
                           height="194"
                           src={`/static/mock-images/covers/cover_${index + 1}.jpg`}

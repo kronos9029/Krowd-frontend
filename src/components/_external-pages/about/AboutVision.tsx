@@ -14,7 +14,7 @@ const Language = [
     countryCode: 'vn'
   },
   {
-    code: 'am',
+    code: 'vi',
     name: 'English',
     countryCode: 'en'
   }

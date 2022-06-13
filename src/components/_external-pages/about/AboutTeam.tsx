@@ -61,7 +61,11 @@ function MemberCard({ member }: MemberCardProps) {
       <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
         {role}
       </Typography>
-      <Box component="img" src={avatar} sx={{ width: '100%', borderRadius: 1.5 }} />
+      <Box
+        component="img"
+        src={avatar}
+        sx={{ width: '100%', height: '190px', borderRadius: 1.5 }}
+      />
       <Box sx={{ mt: 2, mb: 1 }}>
         {[facebookFill, instagramFilled, linkedinFill, twitterFill].map((social, index) => (
           <IconButton key={index}>
@@ -80,22 +84,26 @@ export default function AboutTeam() {
   const theme = useTheme();
 
   const settings = {
-    slidesToShow: 4,
+    slidesToShow: 5,
     centerMode: true,
     centerPadding: '0 80px',
     rtl: Boolean(theme.direction === 'rtl'),
     responsive: [
       {
         breakpoint: 1279,
-        settings: { slidesToShow: 3 }
+        settings: { slidesToShow: 4 }
       },
       {
         breakpoint: 959,
-        settings: { slidesToShow: 2 }
+        settings: { slidesToShow: 3 }
+      },
+      {
+        breakpoint: 900,
+        settings: { slidesToShow: 3 }
       },
       {
         breakpoint: 600,
-        settings: { slidesToShow: 1 }
+        settings: { slidesToShow: 2 }
       }
     ]
   };
@@ -111,15 +119,15 @@ export default function AboutTeam() {
     <Container maxWidth="lg" sx={{ pb: 10, textAlign: 'center' }}>
       <MotionInView variants={varFadeInDown}>
         <Typography component="p" variant="overline" sx={{ mb: 2, color: 'text.secondary' }}>
-          Project team
+          KROWD TEAM
         </Typography>
       </MotionInView>
-
+      {/* 
       <MotionInView variants={varFadeInUp}>
         <Typography variant="h2" sx={{ mb: 3 }}>
           " Great team is the key "
         </Typography>
-      </MotionInView>
+      </MotionInView> */}
 
       <MotionInView variants={varFadeInUp}>
         <Typography
@@ -148,7 +156,7 @@ export default function AboutTeam() {
           sx={{ transform: 'translateY(-64px)' }}
         />
       </Box>
-      <Button
+      {/* <Button
         variant="outlined"
         color="inherit"
         size="large"
@@ -156,7 +164,7 @@ export default function AboutTeam() {
         sx={{ mx: 'auto' }}
       >
         Xem tất cả thành viên
-      </Button>
+      </Button> */}
     </Container>
   );
 }

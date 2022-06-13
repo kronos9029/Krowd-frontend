@@ -35,10 +35,10 @@ const LINKS = [
     x: 0,
     children: [
       { name: 'Về chúng tôi', href: PATH_PAGE.about },
-      { name: 'Liên hệ với chúng tôi', href: PATH_PAGE.contact },
-      { name: 'Hướng dẫn đầu tư', href: PATH_PAGE.contact },
-      { name: 'Hướng dẫn gọi đầu tư', href: PATH_PAGE.contact },
-      { name: 'Các câu hỏi thường gặp', href: PATH_PAGE.faqs }
+      { name: 'Liên hệ với chúng tôi', href: '#' },
+      { name: 'Hướng dẫn đầu tư', href: '#' },
+      { name: 'Hướng dẫn gọi đầu tư', href: '#' },
+      { name: 'Các câu hỏi thường gặp', href: '#' }
     ]
   },
   {

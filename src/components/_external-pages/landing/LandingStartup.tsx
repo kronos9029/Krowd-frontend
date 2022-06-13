@@ -180,7 +180,7 @@ export default function LandingMinimalHelps() {
                       textOverflow: 'ellipsis',
                       whiteSpace: 'nowrap',
                       overflow: 'hidden',
-                      paddingTop: '1rem',
+                      paddingTop: '18px',
                       textAlign: 'center'
                     }}
                     variant="h5"
@@ -204,12 +204,16 @@ export default function LandingMinimalHelps() {
                   bác sĩ được mời từ các quốc gia chuyên về thẩm mỹ */}
                     {value.description}
                   </Typography>
-                  <BorderLinearProgress variant="determinate" value={83} />
+                  <BorderLinearProgress
+                    sx={{ marginTop: '18px' }}
+                    variant="determinate"
+                    value={83}
+                  />
                   <Typography
                     paragraph
                     sx={{
                       color: isLight ? '#251E18' : 'black',
-                      paddingTop: '1rem',
+                      paddingTop: '18px',
                       textAlign: 'center'
                     }}
                   >
