@@ -37,12 +37,8 @@ export const FILTER_GENDER_OPTIONS = ['a', 'b', 'c'];
 export const FILTER_CATEGORY_OPTIONS = ['All', 'Thước uống', 'Cửa hàng', 'Đồ ăn'];
 export const FILTER_RATING_OPTIONS = ['up4Star', 'up3Star', 'up2Star', 'up1Star'];
 export const FILTER_PRICE_OPTIONS = [
-  { value: 'below', label: 'Từ chối' },
   { value: 'between', label: 'Đang hoạt động' },
-  { value: 'above', label: 'Đang kêu gọi đầu tư' },
-  { value: 'waiting', label: 'Chưa duyệt' },
-  { value: 'timout', label: 'Hết thời gian kêu gọi' },
-  { value: 'close', label: 'Đóng dự án' }
+  { value: 'above', label: 'Đang kêu gọi đầu tư' }
 ];
 export const FILTER_COLOR_OPTIONS = [
   '#14B7CC',

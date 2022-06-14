@@ -132,10 +132,37 @@ export default function ComponentsDetails() {
               </Grid>
             </Grid>
             {/* Nổi bật */}
-            <Typography variant="subtitle1" sx={{ ml: 1, fontSize: '20px', mb: 5 }}>
-              Nổi bật
-            </Typography>
-            <ProductDetailsCarousel product={product} />
+            <Card>
+              <Typography variant="subtitle1" sx={{ ml: 1, fontSize: '20px', mb: 5 }}>
+                Nổi bật
+              </Typography>
+              <Grid container>
+                <Grid item xs={12} md={5} lg={5}>
+                  <ProductDetailsCarousel product={product} />
+                </Grid>
+                <Grid item xs={12} md={7} lg={7}>
+                  <Typography variant="subtitle1" sx={{ ml: 1, fontSize: '20px', mb: 5, mt: 2 }}>
+                    Nội dung chi tiết
+                  </Typography>
+                  <Typography sx={{ ml: 1, fontSize: '15px', mt: 5 }}>
+                    6/8 The Emerald Golf View có vị trí mặt tiền đại lộ Bình Dương (TP. Thuận An,
+                    Bình Dương) ngay sân golf Sông Bé và siêu thị Nhật Bản Aeon Mall, trực diện cổng
+                    chính VSIP1.
+                  </Typography>
+                  <Typography sx={{ ml: 1, fontSize: '15px', mt: 3 }}>
+                    Dự án bán đất nền khu dân cư Lê Phong Thuận Giao trực thuộc tỉnh Bình Dương là
+                    một dự án lớn có tầm tại công ty chúng tôi. Đất nền Thuận Giao Bình Dương là sự
+                    lựa chọn hàng đầu về an cư lạc nghiệp.
+                  </Typography>
+                  <Typography sx={{ ml: 1, fontSize: '15px', mt: 3 }}>
+                    Dự án bán đất nền khu dân cư Lê Phong Thuận Giao trực thuộc tỉnh Bình Dương là
+                    một dự án lớn có tầm tại công ty chúng tôi. Đất nền Thuận Giao Bình Dương là sự
+                    lựa chọn hàng đầu về an cư lạc nghiệp.
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Card>
+
             {/*Change tab view at here */}
             <Card>
               <TabContext value={value}>

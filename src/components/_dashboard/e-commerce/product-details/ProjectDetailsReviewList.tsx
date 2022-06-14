@@ -49,24 +49,13 @@ function ReviewItem({ review }: { review: ProductReview }) {
       <Grid container spacing={3}>
         <Grid key={review.id} item xs={12} sm={6} md={3}>
           <ListItem
-            disableGutters
             sx={{
               mb: 5,
-              alignItems: 'flex-start',
+              alignItems: 'center',
               flexDirection: { xs: 'column', sm: 'row' }
             }}
           >
-            <Box
-              sx={{
-                mr: 2,
-                display: 'flex',
-                alignItems: 'center',
-                mb: { xs: 2, sm: 0 },
-                minWidth: { xs: 160, md: 240 },
-                textAlign: { sm: 'center' },
-                flexDirection: { sm: 'column' }
-              }}
-            >
+            <div>
               <Avatar
                 src={avatarUrl}
                 sx={{
@@ -76,15 +65,13 @@ function ReviewItem({ review }: { review: ProductReview }) {
                   height: { md: 64 }
                 }}
               />
-              <div>
-                <Typography variant="subtitle2" noWrap>
-                  {name}
-                </Typography>
-                <Typography variant="caption" sx={{ color: 'text.secondary' }} noWrap>
-                  {fDate(postedAt)}
-                </Typography>
-              </div>
-            </Box>
+              <Typography variant="subtitle2" noWrap>
+                {name}
+              </Typography>
+              <Typography variant="caption" sx={{ color: 'text.secondary' }} noWrap>
+                {fDate(postedAt)}
+              </Typography>
+            </div>
           </ListItem>
         </Grid>
       </Grid>
@@ -104,22 +91,7 @@ export default function ProjectDetailsReviewList({ product }: ProjectDetailsRevi
       <Box sx={{ pt: 3, px: 2, pb: 5, textAlign: 'center', fontWeight: '900' }}>
         Danh sách các thành viên trong dự án
       </Box>
-      <Grid sx={{ display: 'flex' }} container spacing={6}>
-        <Grid key={product.id} item xs={12} sm={6} md={3}>
-          {reviews.map((review) => (
-            <ReviewItem key={review.id} review={review} />
-          ))}
-        </Grid>
-        <Grid key={product.id} item xs={12} sm={6} md={3}>
-          {reviews.map((review) => (
-            <ReviewItem key={review.id} review={review} />
-          ))}
-        </Grid>
-        <Grid key={product.id} item xs={12} sm={6} md={3}>
-          {reviews.map((review) => (
-            <ReviewItem key={review.id} review={review} />
-          ))}
-        </Grid>
+      <Grid sx={{ display: 'row' }} container spacing={3}>
         <Grid key={product.id} item xs={12} sm={6} md={3}>
           {reviews.map((review) => (
             <ReviewItem key={review.id} review={review} />

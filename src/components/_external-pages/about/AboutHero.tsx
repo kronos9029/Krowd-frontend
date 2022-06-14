@@ -16,7 +16,8 @@ import cookies from 'js-cookie';
 const RootStyle = styled(motion.div)(({ theme }) => ({
   backgroundSize: 'cover',
   backgroundPosition: 'center',
-  backgroundImage: 'url(/static/overlay.svg), url(/static/about/hero.jpg)',
+  // backgroundImage: 'url(/static/overlay.svg), url(/static/about/hero.jpg)',
+  backgroundImage: 'url(/static/overlay.svg), url(/static/media/overlay.cb8ff19f.svg)',
   padding: theme.spacing(10, 0),
   [theme.breakpoints.up('md')]: {
     height: 560,
@@ -53,7 +54,7 @@ export default function AboutHero() {
   return (
     <RootStyle initial="initial" animate="animate" variants={varWrapEnter}>
       <Container maxWidth="lg" sx={{ position: 'relative', height: '100%' }}>
-        <ContentStyle>
+        <ContentStyle sx={{ mb: 7 }}>
           <TextAnimate text={t('Who')} sx={{ color: 'primary.main' }} variants={varFadeInRight} />
           <br />
           <Box sx={{ display: 'inline-flex', color: 'common.white' }}>

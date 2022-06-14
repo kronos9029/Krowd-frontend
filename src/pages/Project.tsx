@@ -37,6 +37,7 @@ import fakeRequest from 'utils/fakeRequest';
 import useSettings from 'hooks/useSettings';
 import { Product, ProductFilter, ProductState } from '../@types/products';
 import { filterProducts, getProducts } from 'redux/slices/product';
+import { BlogPostsSearch } from 'components/_dashboard/blog';
 
 // ----------------------------------------------------------------------
 
@@ -266,41 +267,102 @@ export default function Projects() {
       }
     ]
   };
-
+  function applyFilter(products: Product[], sortBy: string | null, filters: ProductFilter) {
+    // SORT BY
+    if (sortBy === 'featured') {
+      products = orderBy(products, ['sold'], ['desc']);
+    }
+    if (sortBy === 'newest') {
+      products = orderBy(products, ['createdAt'], ['desc']);
+    }
+    if (sortBy === 'priceDesc') {
+      products = orderBy(products, ['price'], ['desc']);
+    }
+    if (sortBy === 'priceAsc') {
+      products = orderBy(products, ['price'], ['asc']);
+    }
+    // FILTER Project
+    if (filters.gender.length > 0) {
+      products = filter(products, (_product) => includes(filters.gender, _product.gender));
+    }
+    if (filters.category !== 'All') {
+      products = filter(products, (_product) => _product.category === filters.category);
+    }
+    if (filters.colors.length > 0) {
+      products = filter(products, (_product) =>
+        _product.colors.some((color) => filters.colors.includes(color))
+      );
+    }
+    if (filters.priceRange) {
+      products = filter(products, (_product) => {
+        if (filters.priceRange === 'below') {
+          return _product.price < 25;
+        }
+        if (filters.priceRange === 'between') {
+          return _product.price >= 25 && _product.price <= 75;
+        }
+        return _product.price > 75;
+      });
+    }
+    return products;
+  }
   return (
-    <RootStyle title="Project | Krowd">
+    <RootStyle title="Dự án | Krowd">
       <ContentStyle>
+        <Typography variant="h3" sx={{ textAlign: 'center', color: '#14b7cc', pb: 9 }}>
+          Danh sách các dự án
+        </Typography>
+        <Grid container columns={16}>
+          <Grid xs={4} sm={4} md={4}></Grid>
+          <Grid xs={12} sm={12} md={12}>
+            <BlogPostsSearch />
+            <Stack
+              direction="row"
+              flexWrap="wrap-reverse"
+              alignItems="center"
+              justifyContent="flex-end"
+              sx={{ mb: 5, paddingRight: '5rem' }}
+            >
+              {' '}
+              <ShopFilterSidebar
+                formik={formik}
+                isOpenFilter={openFilter}
+                onResetFilter={handleResetFilter}
+                onOpenFilter={handleOpenFilter}
+                onCloseFilter={handleCloseFilter}
+              />
+              <ShopProductSort />
+            </Stack>
+          </Grid>
+          <Grid xs={4} sm={4} md={4}></Grid>
+          <Grid xs={12} sm={12} md={12}>
+            {!isDefault && (
+              <Typography gutterBottom>
+                <Typography component="span" variant="subtitle1">
+                  {filteredProducts.length}
+                </Typography>
+                &nbsp;Dự án tìm thấy
+              </Typography>
+            )}
+            <Stack
+              direction="row"
+              flexWrap="wrap-reverse"
+              alignItems="center"
+              justifyContent="flex-end"
+              sx={{ mb: 5 }}
+            >
+              <ShopTagFiltered
+                filters={filters}
+                formik={formik}
+                isShowReset={openFilter}
+                onResetFilter={handleResetFilter}
+                isDefault={isDefault}
+              />
+            </Stack>
+          </Grid>
+        </Grid>
         <Grid container columns={16}>
           <Grid xs={4} sm={4} md={4}>
-            <Stack sx={{ mb: 4 }}>
-              <Stack sx={{ my: 1 }}>
-                <ShopTagFiltered
-                  filters={filters}
-                  formik={formik}
-                  isShowReset={openFilter}
-                  onResetFilter={handleResetFilter}
-                  isDefault={isDefault}
-                />
-
-                <ShopFilterSidebar
-                  formik={formik}
-                  isOpenFilter={openFilter}
-                  onResetFilter={handleResetFilter}
-                  onOpenFilter={handleOpenFilter}
-                  onCloseFilter={handleCloseFilter}
-                />
-                <ShopProductSort />
-              </Stack>
-            </Stack>
-            <Typography
-              sx={{
-                paddingTop: '5rem',
-                textAlign: 'center'
-              }}
-              variant="h6"
-            >
-              -----------------
-            </Typography>
             <Tabs
               value={value}
               onChange={handleChange}

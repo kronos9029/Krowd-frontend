@@ -29,13 +29,13 @@ import SearchNotFound from '../../SearchNotFound';
 
 const RootStyle = styled('div')(({ theme }) => ({
   '& .MuiAutocomplete-root': {
-    width: 200,
+    width: 250,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.easeInOut,
       duration: theme.transitions.duration.shorter
     }),
     '&.Mui-focused': {
-      width: 240,
+      width: 270,
       '& .MuiAutocomplete-inputRoot': {
         boxShadow: theme.customShadows.z12
       }
@@ -43,13 +43,13 @@ const RootStyle = styled('div')(({ theme }) => ({
   },
   '& .MuiAutocomplete-inputRoot': {
     '& fieldset': {
-      borderWidth: `1px !important`,
-      borderColor: `${theme.palette.grey[500_32]} !important`
+      borderWidth: `2px !important`,
+      borderColor: `#314459 !important`
     }
   },
   '& .MuiAutocomplete-option': {
     '&:not(:last-of-type)': {
-      borderBottom: `solid 1px ${theme.palette.divider}`
+      borderBottom: `solid 3px ${theme.palette.divider}`
     }
   }
 }));
@@ -65,7 +65,7 @@ export default function BlogPostsSearch({ sx }: BoxProps) {
     try {
       setSearchQuery(value);
       if (value) {
-        const response = await axios.get('/api/blog/posts/search', {
+        const response = await axios.get('/api/blog/posts/a', {
           params: { query: value }
         });
         setSearchResults(response.data.results);
@@ -99,7 +99,7 @@ export default function BlogPostsSearch({ sx }: BoxProps) {
         renderInput={(params) => (
           <TextField
             {...params}
-            placeholder="Search post..."
+            placeholder="Bạn đang tìm dự án gì...."
             InputProps={{
               ...params.InputProps,
               startAdornment: (

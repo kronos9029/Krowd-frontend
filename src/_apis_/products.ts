@@ -44,11 +44,16 @@ const PRODUCT_COLOR = [
 const PRODUCT_TAGS = ['Dangal', 'The Sting', '2001: A Space Odyssey', "Singin' in the Rain"];
 
 const PRODUCT_DESCRIPTION = `
-<p><strong><small> SPECIFICATION</small></strong></p>
-<p>Leather panels. Laces. Rounded toe. Rubber sole.
+<p><strong><small> Tổng quan dự án</small></strong></p>
+<br />
+<p>Dự án Hoàng Thành Pearl là tổ hợp căn hộ chung cư, shophouse và liền kề tại Cầu Diễn, Nam Từ Liêm, Hà Nội, được phát triển với tiêu chí mang đến cuộc sống hiện đại, tiện nghi tại phía Tây thủ đô. Tổ hợp Hoàng Thành Pearl gồm 1 tòa tháp cao 30 tầng nổi và 3 tầng hầm, bố trí trung tâm thương mại, dịch vụ và 336 căn hộ ở, bên cạnh là khu thấp tầng với 25 căn shophouse và liền kề.
+<br />
+<p>Chủ đầu tư dự án Hoàng Thành Pearl là Công ty Cổ phần Chế tạo Biến thế và Vật liệu điện Hà Nôi.</p>
 <br /><br />
-<p><strong><small> MATERIAL AND WASHING INSTRUCTIONS</small></strong></p>
-<p>Shoeupper: 54% bovine leather,46% polyurethane. Lining: 65% polyester,35% cotton. Insole: 100% polyurethane. Sole: 100% thermoplastic. Fixing sole: 100% glued.</p>
+<p><strong><small>Hạ tầng - Quy hoạch</small></strong></p>
+<p>Chung cư Roman Plaza được bao bọc xung quanh bởi quần thể công viên cây xanh, hồ nước trong lành. Công trình này được ví như một tòa tháp xanh tuyệt vời. Dự án chắc chắn sẽ mang tới cho cư dân không gian sống bình yên với mật độ phân bổ dân cư được đánh giá là thấp nhất trong khu vực.</p>
+<br />
+<p>Ngoài ra, Roman Plaza còn sở hữu đầy đủ tiện ích dịch vụ hiện đại như trung tâm thương mại, bể bơi, khu vui chơi cho trẻ em, trường mẫu giáo, đài phun nước, khu vườn dạo bộ, phòng tập Yoga, Gym, Spa và còn rất nhiều tiện ích khác. Các cư dân sẽ được trải nghiệm một cuộc sống trong lành và yên tĩnh nhất ngay giữa lòng thành phố sôi động.</p>
 `;
 const PRODUCT_SIZE = ['6', '7', '8', '8.5', '9', '9.5', '10', '10.5', '11', '11.5', '12', '13'];
 

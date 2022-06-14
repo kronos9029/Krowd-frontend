@@ -1,7 +1,7 @@
 // material
 import { Card, CardHeader, Typography, Stack, LinearProgress, Box } from '@mui/material';
 // utils
-import { fShortenNumber } from '../../../utils/formatNumber';
+import { fNumber, fShortenNumber } from '../../../utils/formatNumber';
 import mockData from '../../../utils/mock-data';
 
 // ----------------------------------------------------------------------
@@ -10,7 +10,7 @@ const LABEL = ['Đang đầu tư'];
 
 const MOCK_SALES = [...Array(1)].map((_, index) => ({
   status: LABEL[index],
-  quantity: mockData.number.percent(index) * 1000,
+  quantity: mockData.number.percent(index) * 10000000,
   value: mockData.number.percent(index)
 }));
 
@@ -50,8 +50,7 @@ export default function BookingBookedRoom() {
                 {progress.status}
               </Typography>
             </Stack>
-
-            <Typography variant="h6">{fShortenNumber(progress.quantity)}</Typography>
+            <Typography variant="h6">{fNumber(progress.quantity)}đ trên 520,000,000đ</Typography>
           </Stack>
         ))}
       </Stack>

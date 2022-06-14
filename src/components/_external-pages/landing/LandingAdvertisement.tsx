@@ -108,7 +108,10 @@ export default function LandingMinimalHelps() {
       }}
     >
       <Box sx={{ textAlign: 'center', padding: '1rem 0' }}>
-        <Typography variant="h2" sx={{ mb: 3, color: isLight ? '#FAF4EF' : '#FAF4EF' }}>
+        <Typography
+          variant="h2"
+          sx={{ mb: 3, color: isLight ? '#FAF4EF' : '#FAF4EF', marginTop: '1rem' }}
+        >
           {t('advertise_title')}
         </Typography>
       </Box>

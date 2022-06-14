@@ -105,7 +105,10 @@ export default function LandingMinimalHelps() {
     >
       <Container maxWidth="lg">
         <Box sx={{ mb: { xs: 10, md: 10, textAlign: 'center' } }}>
-          <Typography variant="h2" sx={{ color: isLight ? '#FAF4EF' : '#FAF4EF' }}>
+          <Typography
+            variant="h2"
+            sx={{ color: isLight ? '#FAF4EF' : '#FAF4EF', marginTop: '29px' }}
+          >
             {t('invest_step')}
           </Typography>
           <Typography sx={{ color: isLight ? '#FAF4EF' : '#FAF4EF' }}>

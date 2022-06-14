@@ -43,12 +43,12 @@ const LabelStyle = styled((props) => (
 
 function labelPriceRange(range: string) {
   if (range === 'below') {
-    return 'Below $25';
+    return 'Đang hoạt động';
   }
   if (range === 'between') {
-    return 'Between $25 - $75';
+    return 'Đang đầu tư';
   }
-  return 'Above $75';
+  return 'Đang hoạt động';
 }
 
 type ShopTagFilteredProps = {
@@ -93,16 +93,11 @@ export default function ShopTagFiltered({
     setFieldValue('priceRange', '');
   };
 
-  const handleRemoveRating = () => {
-    handleSubmit();
-    setFieldValue('rating', '');
-  };
-
   return (
     <RootStyle>
       {gender.length > 0 && (
         <WrapperStyle>
-          <LabelStyle>Gender:</LabelStyle>
+          <LabelStyle>Doanh nghiệp:</LabelStyle>
           <Stack direction="row" flexWrap="wrap" sx={{ p: 0.75 }}>
             {gender.map((_gender) => (
               <Chip
@@ -152,10 +147,9 @@ export default function ShopTagFiltered({
           </Stack>
         </WrapperStyle>
       )}
-
       {priceRange && (
         <WrapperStyle>
-          <LabelStyle>Trạng thái</LabelStyle>
+          <LabelStyle>Trạng thái:</LabelStyle>
           <Stack direction="row" flexWrap="wrap" sx={{ p: 0.75 }}>
             <Chip
               size="small"
@@ -166,21 +160,6 @@ export default function ShopTagFiltered({
           </Stack>
         </WrapperStyle>
       )}
-
-      {/* {rating && (
-        <WrapperStyle>
-          <LabelStyle>Rating:</LabelStyle>
-          <Stack direction="row" flexWrap="wrap" sx={{ p: 0.75 }}>
-            <Chip
-              size="small"
-              label={sentenceCase(rating)}
-              onDelete={handleRemoveRating}
-              sx={{ m: 0.5 }}
-            />
-          </Stack>
-        </WrapperStyle>
-      )} */}
-
       {isShow && !isDefault && (
         <Button
           color="error"
