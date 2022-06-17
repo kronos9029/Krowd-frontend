@@ -28,6 +28,7 @@ import {
   MembersParticipation,
   SharedRevenue
 } from 'components/_dashboard/general-analytics';
+import ProjectPackage from 'components/_dashboard/general-analytics/ProjectPackage';
 
 // ----------------------------------------------------------------------
 
@@ -82,7 +83,13 @@ export default function ComponentsDetails() {
   const handleGotoStep = (step: number) => {
     dispatch(onGotoStep(step));
   };
-
+  const projectPackage = {
+    id: null,
+    name: null,
+    description: null,
+    investValue: null,
+    voucherDescription: ['Ưu đãi khi mua gói 1', 'Ưu đãi khi mua gói 2', 'Ưu đãi khi mua gói 3']
+  };
   return (
     <Page title="Chi tiết dự án | Krowd">
       <Container maxWidth={themeStretch ? false : 'lg'} sx={{ paddingBottom: '4rem' }}>
@@ -239,36 +246,35 @@ export default function ComponentsDetails() {
                   <Box sx={{ p: 3 }}>
                     <Grid container spacing={3} sx={{ mb: 5, pb: 5, mt: 3 }}>
                       <Grid item xs={12} sm={6} md={4}>
-                        <SharedRevenue />
+                        <ProjectPackage projectPackage={projectPackage} />
                       </Grid>
 
                       <Grid item xs={12} sm={6} md={4}>
-                        <MembersParticipation />
+                        <ProjectPackage projectPackage={projectPackage} />
                       </Grid>
 
                       <Grid item xs={12} sm={12} md={4}>
-                        <MultiplierProject />
+                        <ProjectPackage projectPackage={projectPackage} />
                       </Grid>
                     </Grid>
                   </Box>
                 </TabPanel>
                 <TabPanel value="Higher">
-                  <Grid container spacing={1} sx={{ mb: 5, pb: 5, mt: 3 }}>
-                    <Grid item xs={12} sm={6} md={3}>
-                      <SharedRevenue />
-                    </Grid>
+                  <Box sx={{ p: 3 }}>
+                    <Grid container spacing={3} sx={{ mb: 5, pb: 5, mt: 3 }}>
+                      <Grid item xs={12} sm={6} md={4}>
+                        <ProjectPackage projectPackage={projectPackage} />
+                      </Grid>
 
-                    <Grid item xs={12} sm={6} md={3}>
-                      <MembersParticipation />
-                    </Grid>
+                      <Grid item xs={12} sm={6} md={4}>
+                        <ProjectPackage projectPackage={projectPackage} />
+                      </Grid>
 
-                    <Grid item xs={12} sm={6} md={3}>
-                      <MultiplierProject />
+                      <Grid item xs={12} sm={12} md={4}>
+                        <ProjectPackage projectPackage={projectPackage} />
+                      </Grid>
                     </Grid>
-                    <Grid item xs={12} sm={6} md={3}>
-                      <TermOfProject />
-                    </Grid>
-                  </Grid>
+                  </Box>
                 </TabPanel>
               </TabContext>
             </Card>
