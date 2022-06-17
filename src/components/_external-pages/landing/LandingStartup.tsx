@@ -159,7 +159,7 @@ export default function LandingMinimalHelps() {
               <MotionInView variants={varFadeInUp}>
                 <CardStyle sx={{ maxWidth: 345, maxHeight: 500, height: '500px' }}>
                   <CardMedia
-                    style={{ paddingTop: '2rem', borderRadius: '40px 42px 1rem 1rem' }}
+                    style={{ paddingTop: '2rem' }}
                     component="img"
                     height="194"
                     image={value.image}

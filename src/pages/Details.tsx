@@ -65,6 +65,7 @@ export default function ComponentsDetails() {
   const { themeStretch } = useSettings();
   const dispatch = useDispatch();
   const [value, setValue] = useState('1');
+  const [valuePackage, setValuePackage] = useState('Basic');
   const { name = 'nike-air-force-1-ndestrukt' } = useParams();
   const { product, error, checkout } = useSelector(
     (state: { product: ProductState }) => state.product
@@ -114,23 +115,6 @@ export default function ComponentsDetails() {
               </Grid>
             </Card>
 
-            <Grid container spacing={3} sx={{ mb: 5, pb: 5, mt: 3 }}>
-              <Grid item xs={12} sm={6} md={3}>
-                <SharedRevenue />
-              </Grid>
-
-              <Grid item xs={12} sm={6} md={3}>
-                <MembersParticipation />
-              </Grid>
-
-              <Grid item xs={12} sm={6} md={3}>
-                <MultiplierProject />
-              </Grid>
-
-              <Grid item xs={12} sm={6} md={3}>
-                <TermOfProject />
-              </Grid>
-            </Grid>
             {/* Nổi bật */}
             <Card>
               <Typography variant="subtitle1" sx={{ ml: 1, fontSize: '20px', mb: 5 }}>
@@ -183,6 +167,18 @@ export default function ComponentsDetails() {
                     <Tab
                       disableRipple
                       value="3"
+                      label="BÌnh luận"
+                      sx={{ '& .MuiTab-wrapper': { whiteSpace: 'nowrap' }, paddingRight: '1rem' }}
+                    />
+                    <Tab
+                      disableRipple
+                      value="4"
+                      label="Cập nhật"
+                      sx={{ '& .MuiTab-wrapper': { whiteSpace: 'nowrap' }, paddingRight: '1rem' }}
+                    />
+                    <Tab
+                      disableRipple
+                      value="5"
                       label="Giai đoạn"
                       sx={{ '& .MuiTab-wrapper': { whiteSpace: 'nowrap' } }}
                     />
@@ -204,6 +200,76 @@ export default function ComponentsDetails() {
                     <Markdown children={product.description} />
                   </Box>
                 </TabPanel>
+                <TabPanel value="4">
+                  <Box sx={{ p: 3 }}>
+                    <Markdown children={product.description} />
+                  </Box>
+                </TabPanel>
+                <TabPanel value="5">
+                  <Box sx={{ p: 3 }}>
+                    <Markdown children={product.description} />
+                  </Box>
+                </TabPanel>
+              </TabContext>
+            </Card>
+            <hr />
+
+            <Typography variant="h6" sx={{ ml: 1, fontSize: '15px', textAlign: 'center', mt: 3 }}>
+              Các loại gói đầu tư
+            </Typography>
+            <Card>
+              <TabContext value={valuePackage}>
+                <Box sx={{ px: 3, bgcolor: 'background.neutral' }}>
+                  <TabList onChange={(e, valuePackage) => setValuePackage(valuePackage)}>
+                    <Tab
+                      sx={{ paddingRight: '1rem' }}
+                      disableRipple
+                      value="Basic"
+                      label="Gói cơ bản"
+                    />
+                    <Tab
+                      disableRipple
+                      value="Higher"
+                      label="Gói nâng cao"
+                      sx={{ '& .MuiTab-wrapper': { whiteSpace: 'nowrap' }, paddingRight: '1rem' }}
+                    />
+                  </TabList>
+                </Box>
+                <TabPanel value="Basic">
+                  <Box sx={{ p: 3 }}>
+                    <Grid container spacing={3} sx={{ mb: 5, pb: 5, mt: 3 }}>
+                      <Grid item xs={12} sm={6} md={4}>
+                        <SharedRevenue />
+                      </Grid>
+
+                      <Grid item xs={12} sm={6} md={4}>
+                        <MembersParticipation />
+                      </Grid>
+
+                      <Grid item xs={12} sm={12} md={4}>
+                        <MultiplierProject />
+                      </Grid>
+                    </Grid>
+                  </Box>
+                </TabPanel>
+                <TabPanel value="Higher">
+                  <Grid container spacing={1} sx={{ mb: 5, pb: 5, mt: 3 }}>
+                    <Grid item xs={12} sm={6} md={3}>
+                      <SharedRevenue />
+                    </Grid>
+
+                    <Grid item xs={12} sm={6} md={3}>
+                      <MembersParticipation />
+                    </Grid>
+
+                    <Grid item xs={12} sm={6} md={3}>
+                      <MultiplierProject />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={3}>
+                      <TermOfProject />
+                    </Grid>
+                  </Grid>
+                </TabPanel>
               </TabContext>
             </Card>
           </>
@@ -211,7 +277,7 @@ export default function ComponentsDetails() {
 
         {!product && SkeletonLoad}
 
-        {/* {error && <Typography variant="h6">404 Product not found</Typography>} */}
+        {error && <Typography variant="h6">404 Product not found</Typography>}
       </Container>
       <hr />
     </Page>

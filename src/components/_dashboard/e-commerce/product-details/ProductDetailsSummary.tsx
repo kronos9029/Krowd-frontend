@@ -32,7 +32,7 @@ import Label from '../../../Label';
 import { MIconButton } from '../../../@material-extend';
 import ColorSinglePicker from '../../../ColorSinglePicker';
 import { Product, CartItem } from '../../../../@types/products';
-import { BookingBookedRoom } from 'components/_dashboard/general-booking';
+import { KrowdProjectProgress } from 'components/_dashboard/general-booking';
 
 // ----------------------------------------------------------------------
 
@@ -131,20 +131,7 @@ export default function ProductDetailsSummary({
 }: ProductDetailsSumaryprops) {
   const theme = useTheme();
   const navigate = useNavigate();
-  const {
-    id,
-    name,
-    sizes,
-    price,
-    cover,
-    status,
-    colors,
-    available,
-    priceSale,
-    totalRating,
-    totalReview,
-    inventoryType
-  } = product;
+  const { id, name, sizes, price, cover, status, colors, available } = product;
 
   const alreadyProduct = cart.map((item) => item.id).includes(id);
   const isMaxQuantity =
@@ -207,7 +194,6 @@ export default function ProductDetailsSummary({
           <Typography
             variant="overline"
             sx={{
-              mt: 2,
               mb: 1,
               display: 'block',
               color: status === 'Đang hoạt động' ? 'error.main' : 'info.main'
@@ -236,10 +222,10 @@ export default function ProductDetailsSummary({
               justifyContent: 'space-between'
             }}
           >
-            <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
+            <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
               Thuộc doanh nghiệp
             </Typography>
-            <Typography sx={{ mt: 0.5 }}>GS 25</Typography>
+            <Typography sx={{ mt: 0.2 }}>GS 25</Typography>
           </Box>
 
           <Box
@@ -249,10 +235,10 @@ export default function ProductDetailsSummary({
               justifyContent: 'space-between'
             }}
           >
-            <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
+            <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
               Thuộc Khu vực:
             </Typography>
-            <Typography sx={{ mt: 0.5 }}>TP HCM</Typography>
+            <Typography sx={{ mt: 0.2 }}>TP HCM</Typography>
           </Box>
 
           <Box
@@ -262,44 +248,69 @@ export default function ProductDetailsSummary({
               justifyContent: 'space-between'
             }}
           >
-            <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
+            <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
               Địa chỉ:
             </Typography>
-            <Typography sx={{ mt: 0.5 }}>Quận 12</Typography>
+            <Typography sx={{ mt: 0.2 }}>Quận 12</Typography>
           </Box>
+          <Box
+            sx={{
+              mb: 3,
+              display: 'flex',
+              justifyContent: 'space-between'
+            }}
+          >
+            <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
+              Doanh thu chia sẻ (%)
+            </Typography>
+            <Typography sx={{ mt: 0.2 }}>7%</Typography>
+          </Box>
+          <Box
+            sx={{
+              mb: 3,
+              display: 'flex',
+              justifyContent: 'space-between'
+            }}
+          >
+            <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
+              Thành viên đã tham gia
+            </Typography>
+            <Typography sx={{ mt: 0.2 }}>12</Typography>
+          </Box>
+          <Box
+            sx={{
+              mb: 3,
+              display: 'flex',
+              justifyContent: 'space-between'
+            }}
+          >
+            <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
+              Hệ số nhân
+            </Typography>
+            <Typography sx={{ mt: 0.2 }}>1.7</Typography>
+          </Box>
+
+          <Box
+            sx={{
+              mb: 2,
+              display: 'flex',
+              justifyContent: 'space-between'
+            }}
+          >
+            <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
+              Thời hạn
+            </Typography>
+            <Typography sx={{ mt: 0.2 }}>2 month</Typography>
+          </Box>
+          <Divider sx={{ borderStyle: 'dashed' }} />
+
           <Box>
-            <BookingBookedRoom />
+            <KrowdProjectProgress />
           </Box>
 
           <Divider sx={{ borderStyle: 'dashed' }} />
 
-          {/* <Box sx={{ mt: 5 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <Button
-                  fullWidth
-                  disabled={isMaxQuantity}
-                  size="large"
-                  type="button"
-                  color="warning"
-                  variant="contained"
-                  startIcon={<Icon icon={roundAddShoppingCart} />}
-                  onClick={handleAddCart}
-                  sx={{ whiteSpace: 'nowrap' }}
-                >
-                  
-                </Button>
-              </Grid>
-
-              <Grid item xs={12} sm={6}>
-                <Button fullWidth size="large" type="submit" variant="contained">
-                  Buy Now
-                </Button>
-              </Grid>
-            </Grid>
-          </Box> */}
-
-          <Box sx={{ mt: 3, textAlign: 'center' }}>
+          <Box sx={{ mt: 1, textAlign: 'center' }}>
             {SOCIALS.map((social) => (
               <Tooltip key={social.name} title={social.name}>
                 <MIconButton>{social.icon}</MIconButton>

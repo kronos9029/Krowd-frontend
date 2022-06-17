@@ -2,7 +2,7 @@ export { default as BookingTotal } from './BookingTotal';
 export { default as BookingCheckIn } from './BookingCheckIn';
 export { default as BookingDetails } from './BookingDetails';
 export { default as BookingCheckOut } from './BookingCheckOut';
-export { default as BookingBookedRoom } from './BookingBookedRoom';
+export { default as KrowdProjectProgress } from './KrowdProjectProgress';
 export { default as BookingTotalIncomes } from './BookingTotalIncomes';
 export { default as BookingRoomAvailable } from './BookingRoomAvailable';
 export { default as BookingNewestBooking } from './BookingNewestBooking';

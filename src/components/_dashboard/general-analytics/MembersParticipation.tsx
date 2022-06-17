@@ -2,16 +2,17 @@ import { Icon } from '@iconify/react';
 import appleFilled from '@iconify/icons-ant-design/apple-filled';
 // material
 import { alpha, styled } from '@mui/material/styles';
-import { Card, Typography } from '@mui/material';
 // utils
-import { fShortenNumber } from '../../../utils/formatNumber';
-
+import { Box, Button, Card, Stack, Typography } from '@mui/material';
+// utils
+import { fNumber, fShortenNumber } from '../../../utils/formatNumber';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Card)(({ theme }) => ({
   boxShadow: 'none',
-  textAlign: 'center',
-  padding: theme.spacing(5, 0),
+  textAlign: 'left',
+  padding: theme.spacing(3, 3, 0),
+  height: '600px',
   color: theme.palette.info.darker,
   backgroundColor: theme.palette.info.lighter
 }));
@@ -39,13 +40,70 @@ const TOTAL = 13;
 export default function MembersParticipation() {
   return (
     <RootStyle>
-      <IconWrapperStyle>
-        <Icon icon="ic:baseline-attribution" width={24} height={24} />
-      </IconWrapperStyle>
-      <Typography variant="h3">{fShortenNumber(TOTAL)}</Typography>
-      <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
-        Thành viên đã tham gia
+      <Typography variant="h6">Đối với sự hợp tác cơ bản</Typography>
+      <Typography sx={{ fontSize: '13px', paddingTop: '1rem' }}>
+        Khả năng hợp tác và bảo mật nâng cao cho các nhóm và công ty
       </Typography>
+      <Typography variant="h2" sx={{ paddingTop: '2rem' }}>
+        {fNumber(TOTAL)}đ
+      </Typography>
+      <Button
+        sx={{
+          width: '100%',
+          marginTop: '2rem',
+          pt: 2,
+          pb: 2,
+          textAlign: 'center',
+          backgroundColor: '#14B7CC',
+          opacity: 0.72
+        }}
+      >
+        <Typography variant="h3" sx={{ color: '#ffffff' }}>
+          Chọn gói
+        </Typography>{' '}
+      </Button>
+      <Typography variant="h6" sx={{ opacity: 0.72, pt: 3, pb: 3 }}>
+        Mô tả thêm voucher
+      </Typography>
+      <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 3 }}>
+        <Box
+          sx={{
+            width: 12,
+            height: 12,
+            borderRadius: 0.5,
+            bgcolor: 'success.main'
+          }}
+        />
+        <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
+          Unlimited guests Miro Smart Diagramming
+        </Typography>
+      </Stack>
+      <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 3 }}>
+        <Box
+          sx={{
+            width: 12,
+            height: 12,
+            borderRadius: 0.5,
+            bgcolor: 'success.main'
+          }}
+        />
+        <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
+          Unlimited guests Miro Smart Diagramming
+        </Typography>
+      </Stack>
+      <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 3 }}>
+        <Box
+          sx={{
+            width: 12,
+            height: 12,
+            borderRadius: 0.5,
+            bgcolor: 'success.main'
+          }}
+        />
+        <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
+          Unlimited guests Miro Smart Diagramming
+        </Typography>
+      </Stack>
     </RootStyle>
   );
 }

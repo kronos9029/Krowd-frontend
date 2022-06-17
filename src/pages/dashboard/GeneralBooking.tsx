@@ -9,7 +9,7 @@ import {
   BookingCheckIn,
   BookingDetails,
   BookingCheckOut,
-  BookingBookedRoom,
+  KrowdProjectProgress,
   BookingTotalIncomes,
   BookingRoomAvailable,
   BookingNewestBooking,
@@ -46,7 +46,7 @@ export default function GeneralBooking() {
               </Grid>
 
               <Grid item xs={12} md={6}>
-                <BookingBookedRoom />
+                <KrowdProjectProgress />
               </Grid>
 
               <Grid item xs={12} md={12}>
