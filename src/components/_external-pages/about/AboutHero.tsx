@@ -4,11 +4,8 @@ import { styled } from '@mui/material/styles';
 import { Box, Container, Typography } from '@mui/material';
 //
 import { varWrapEnter, varFadeInRight, TextAnimate } from '../../animate';
-import i18next from 'i18next';
 // import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
-import React, { useEffect } from 'react';
-import classNames from 'classnames';
 import cookies from 'js-cookie';
 
 // ----------------------------------------------------------------------

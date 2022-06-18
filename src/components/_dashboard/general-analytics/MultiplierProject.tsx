@@ -45,7 +45,7 @@ export default function MultiplierProject() {
       <Typography variant="h2" sx={{ paddingTop: '2rem' }}>
         {fNumber(TOTAL)}đ
       </Typography>
-      <Button
+      {/* <Button
         sx={{
           width: '100%',
           marginTop: '2rem',
@@ -59,7 +59,7 @@ export default function MultiplierProject() {
         <Typography variant="h3" sx={{ color: '#ffffff' }}>
           Chọn gói
         </Typography>{' '}
-      </Button>
+      </Button> */}
       <Typography variant="h6" sx={{ opacity: 0.72, pt: 3, pb: 3 }}>
         Mô tả thêm voucher
       </Typography>

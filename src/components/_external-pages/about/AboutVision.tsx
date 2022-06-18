@@ -3,8 +3,6 @@ import { Box, Container, Typography, Grid } from '@mui/material';
 //
 import { varFadeInUp, varFadeIn, MotionInView } from '../../animate';
 import { useTranslation } from 'react-i18next';
-import React, { useEffect } from 'react';
-import classNames from 'classnames';
 import cookies from 'js-cookie';
 //
 const Language = [

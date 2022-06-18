@@ -61,11 +61,7 @@ function MemberCard({ member }: MemberCardProps) {
       <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
         {role}
       </Typography>
-      <Box
-        component="img"
-        src={avatar}
-        sx={{ width: '100%', height: '190px', borderRadius: 1.5 }}
-      />
+      <Box component="img" src={avatar} sx={{ borderRadius: 1.5 }} />
       <Box sx={{ mt: 2, mb: 1 }}>
         {[facebookFill, instagramFilled, linkedinFill, twitterFill].map((social, index) => (
           <IconButton key={index}>
@@ -91,19 +87,18 @@ export default function AboutTeam() {
     responsive: [
       {
         breakpoint: 1279,
-        settings: { slidesToShow: 4 }
+        settings: { slidesToShow: 4 },
+        transForm: 'translateY(-30px)'
       },
       {
         breakpoint: 959,
-        settings: { slidesToShow: 3 }
-      },
-      {
-        breakpoint: 900,
-        settings: { slidesToShow: 3 }
+        settings: { slidesToShow: 2 },
+        transForm: 'translateY(-20px)'
       },
       {
         breakpoint: 600,
-        settings: { slidesToShow: 2 }
+        settings: { slidesToShow: 1 },
+        transForm: 'translateY(-40px)'
       }
     ]
   };
@@ -115,6 +110,7 @@ export default function AboutTeam() {
   const handleNext = () => {
     carouselRef.current?.slickNext();
   };
+
   return (
     <Container maxWidth="lg" sx={{ pb: 10, textAlign: 'center' }}>
       <MotionInView variants={varFadeInDown}>
@@ -122,10 +118,10 @@ export default function AboutTeam() {
           KROWD TEAM
         </Typography>
       </MotionInView>
-      {/* 
-      <MotionInView variants={varFadeInUp}>
+
+      {/* <MotionInView variants={varFadeInUp}>
         <Typography variant="h2" sx={{ mb: 3 }}>
-          " Great team is the key "
+          Great team is the key
         </Typography>
       </MotionInView> */}
 
@@ -150,11 +146,7 @@ export default function AboutTeam() {
             </MotionInView>
           ))}
         </Slider>
-        <CarouselControlsArrowsBasic2
-          onNext={handleNext}
-          onPrevious={handlePrevious}
-          sx={{ transform: 'translateY(-64px)' }}
-        />
+        <CarouselControlsArrowsBasic2 onNext={handleNext} onPrevious={handlePrevious} />
       </Box>
       {/* <Button
         variant="outlined"
@@ -163,7 +155,7 @@ export default function AboutTeam() {
         endIcon={<Icon icon={roundArrowRightAlt} width={24} height={24} />}
         sx={{ mx: 'auto' }}
       >
-        Xem tất cả thành viên
+        View all team members
       </Button> */}
     </Container>
   );

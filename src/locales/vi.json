@@ -100,5 +100,9 @@
     "Minutes": "Minutes",
     "Seconds": "Seconds",
     "comming_soon_1": "Coming soon",
-    "comming_soon_2": "We are currently working this page!"
+    "comming_soon_2": "We are currently working this page!",
+    "not_found": "Not found",
+    "No_results_found": "No results found for",
+    "Try_checking": "Try checking for typos or using complete words."
+
 }

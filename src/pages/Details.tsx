@@ -22,12 +22,6 @@ import {
   ProductDetailsCarousel,
   ProjectDetailsHero
 } from '../components/_dashboard/e-commerce/product-details';
-import {
-  TermOfProject,
-  MultiplierProject,
-  MembersParticipation,
-  SharedRevenue
-} from 'components/_dashboard/general-analytics';
 import ProjectPackage from 'components/_dashboard/general-analytics/ProjectPackage';
 
 // ----------------------------------------------------------------------

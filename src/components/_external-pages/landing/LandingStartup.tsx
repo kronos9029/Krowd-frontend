@@ -139,8 +139,6 @@ export default function LandingMinimalHelps() {
   return (
     <RootStyle
       sx={{
-        // color: isLight ? 'white' : 'text.primary',
-        // backgroundColor: bgLight ? '#14B7CC' : '#14B7CC',
         paddingBottom: '5rem'
       }}
     >
@@ -164,16 +162,6 @@ export default function LandingMinimalHelps() {
                     height="194"
                     image={value.image}
                   />
-                  {/*<Typography
-                  style={{
-                    color: '#14B7CC',
-                    textAlign: 'center',
-                    paddingTop: '1rem',
-                    fontWeight: 700
-                  }}
-                  paragraph
-                >
-                </Typography>*/}
                   <Typography
                     sx={{
                       color: isLight ? '#14B7CC' : 'white',
