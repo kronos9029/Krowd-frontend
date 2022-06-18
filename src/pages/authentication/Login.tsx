@@ -2,7 +2,19 @@ import { capitalCase } from 'change-case';
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
-import { Box, Card, Stack, Link, Alert, Tooltip, Container, Typography } from '@mui/material';
+import {
+  Box,
+  Card,
+  Stack,
+  Link,
+  Alert,
+  Tooltip,
+  Container,
+  Typography,
+  Tabs,
+  Tab,
+  Grid
+} from '@mui/material';
 // routes
 import { PATH_AUTH } from '../../routes/paths';
 // hooks
@@ -12,7 +24,9 @@ import AuthLayout from '../../layouts/AuthLayout';
 // components
 import Page from '../../components/Page';
 import { MHidden } from '../../components/@material-extend';
-import { LoginForm } from '../../components/authentication/login';
+import { LoginForm, LoginFormBusiness } from '../../components/authentication/login';
+import { useState } from 'react';
+import { TabContext, TabList, TabPanel } from '@mui/lab';
 // import { AuthContext } from '../contexts/FirebaseContext';
 
 // ----------------------------------------------------------------------
@@ -46,7 +60,10 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 export default function Login() {
   // const { } = useAuth();
-
+  const [value, setValue] = useState('1');
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+    setValue(newValue);
+  };
   return (
     <RootStyle title="Login | Krowd">
       <AuthLayout>
@@ -61,34 +78,36 @@ export default function Login() {
           <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
             Chào mừng trở lại
           </Typography>
-          <img src="/static/illustrations/illustration_login.png" alt="login" />
+          <img src="/static/illustrations/login-krowd.svg" alt="login" />
         </SectionStyle>
       </MHidden>
 
       <Container maxWidth="sm">
         <ContentStyle>
-          <Stack direction="row" alignItems="center" sx={{ mb: 5 }}>
-            <Box sx={{ flexGrow: 1 }}>
-              <Typography variant="h4" gutterBottom>
-                Đăng nhập vào Krowd
-              </Typography>
-              {/* <Typography sx={{ color: 'text.secondary' }}>Nhập thông tin bên dưới</Typography> */}
-            </Box>
+          <Stack direction="column" justifyContent="space-between" sx={{ mb: 3 }}>
+            <TabContext value={value}>
+              <Box sx={{ px: 3, bgcolor: 'background.neutral' }}>
+                <TabList onChange={(e, value) => setValue(value)}>
+                  <Tab disableRipple value="1" label="Người đầu tư" />
+                  <Tab
+                    disableRipple
+                    value="2"
+                    label="Doanh nghiệp"
+                    sx={{ '& .MuiTab-wrapper': { whiteSpace: 'nowrap' }, paddingLeft: '1rem' }}
+                  />
+                </TabList>
+              </Box>
+              <Grid>
+                <TabPanel value="1">
+                  <LoginForm />
+                </TabPanel>
+              </Grid>
 
-            {/* <Tooltip title={capitalCase(method)}>
-              <Box
-                component="img"
-                src={`/static/auth/ic_${method}.png`}
-                sx={{ width: 32, height: 32 }}
-              />
-            </Tooltip> */}
+              <TabPanel value="2">
+                <LoginFormBusiness />
+              </TabPanel>
+            </TabContext>
           </Stack>
-
-          {/* <Alert severity="info" sx={{ mb: 3 }}>
-            Email : <strong>krowd@demo.vn</strong> / Mật khẩu : <strong>&nbsp;krowd1234</strong>
-          </Alert> */}
-
-          <LoginForm />
 
           <MHidden width="smUp">
             <Typography variant="body2" align="center" sx={{ mt: 3 }}>

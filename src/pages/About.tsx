@@ -9,7 +9,7 @@ import {
   AboutTeam,
   AboutVision,
   AboutTestimonials
-} from '../components/_external-pages/about';
+} from '../components/_external-pages/about-krowd';
 
 // ----------------------------------------------------------------------
 

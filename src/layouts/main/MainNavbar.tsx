@@ -152,7 +152,7 @@ export default function MainNavbar() {
             <Button
               variant="contained"
               sx={{ backgroundColor: '#FF7F50', color: '#FFF', marginRight: '1rem' }}
-              // href="/auth/login"
+              href="/auth/login"
             >
               {t('Navbar_login')}
             </Button>

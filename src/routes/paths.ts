@@ -72,6 +72,12 @@ export const PATH_DASHBOARD = {
     checkout: path(ROOTS_DASHBOARD, '/e-commerce/checkout'),
     invoice: path(ROOTS_DASHBOARD, '/e-commerce/invoice')
   },
+  wallet: {
+    root: path(ROOTS_DASHBOARD, '/wallet'),
+    system: path(ROOTS_DASHBOARD, '/wallet/system-wallet'),
+    transaction: path(ROOTS_DASHBOARD, '/wallet/transaction-wallet'),
+    allWallet: path(ROOTS_DASHBOARD, '/wallet/all-wallet')
+  },
   blog: {
     root: path(ROOTS_DASHBOARD, '/blog'),
     posts: path(ROOTS_DASHBOARD, '/blog/posts'),

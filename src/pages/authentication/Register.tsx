@@ -60,7 +60,7 @@ export default function Register() {
           <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
             Quản lý công việc hiệu quả hơn với Krowd
           </Typography>
-          <img alt="register" src="/static/illustrations/illustration_register.png" />
+          <img alt="register" src="/static/illustrations/manage-krowd.svg" />
         </SectionStyle>
       </MHidden>
 

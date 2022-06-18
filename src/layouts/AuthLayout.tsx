@@ -2,10 +2,11 @@ import { ReactNode } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
-import { Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 // components
 import Logo from '../components/Logo';
 import { MHidden } from '../components/@material-extend';
+import Label from 'components/Label';
 
 // ----------------------------------------------------------------------
 
@@ -34,10 +35,23 @@ type AuthLayoutProps = {
 export default function AuthLayout({ children }: AuthLayoutProps) {
   return (
     <HeaderStyle>
-      <RouterLink to="/">
-        <Logo />
-      </RouterLink>
-
+      <Stack direction="row" justifyContent="space-between" sx={{ mb: 2 }}>
+        <RouterLink to="/">
+          <Logo />
+        </RouterLink>
+        <Label
+          sx={{
+            pt: 2,
+            ml: 1,
+            color: '#14b7cc',
+            backgroundColor: '#fff',
+            textTransform: 'uppercase',
+            fontSize: '1.25rem'
+          }}
+        >
+          Krowd
+        </Label>
+      </Stack>
       <MHidden width="smDown">
         <Typography
           variant="body2"

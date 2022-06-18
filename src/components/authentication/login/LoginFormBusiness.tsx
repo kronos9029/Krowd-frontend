@@ -5,18 +5,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { Icon } from '@iconify/react';
 // material
-import {
-  Link,
-  Stack,
-  Alert,
-  Checkbox,
-  TextField,
-  IconButton,
-  InputAdornment,
-  FormControlLabel,
-  Box,
-  Typography
-} from '@mui/material';
+import { Link, Stack, Alert, TextField, Box, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // routes
 import { PATH_AUTH } from '../../../routes/paths';
@@ -36,65 +25,29 @@ type InitialValues = {
   remember: boolean;
   afterSubmit?: string;
 };
-export default function LoginForm() {
+export default function LoginFormBusiness() {
   // const { loginWithGoogle } = useAuth();
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [showPassword, setShowPassword] = useState(false);
   const [phoneNum, setPhoneNum] = useState('');
   const LoginSchema = Yup.object().shape({
-    email: Yup.string().email('Email phải đúng định dạng').required('Yêu cầu nhập Phone'),
+    email: Yup.string().email('Email phải đúng định dạng').required('Yêu cầu nhập email'),
     password: Yup.string().required('Yêu cầu nhập mật khẩu')
   });
 
   const { loginWithGoogle, loginWithFaceBook, login, loginWithPhone } = useAuth();
 
-  // const handleLoginPhone = () => {
-  //   // window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
-  //   const appVerifier2 = new firebase.auth.RecaptchaVerifier('sign-in-button', {
-  //     size: 'invisible',
-  //     callback: function () {
-  //       // reCAPTCHA solved, allow signInWithPhoneNumber.
-  //       onSignInSubmit();
-  //     }
-  //   });
-  // };
-  // const onSignInSubmit = () => {
-  //   const phoneNumber = '+848540036';
-  //   // const appVerifier = '123456';
-  //   const appVerifier = window;
-  //   firebase
-  //     .auth()
-  //     .signInWithPhoneNumber(phoneNumber, appVerifier)
-  //     .then((confirmationResult) => {
-  //       // SMS sent. Prompt user to type the code from the message, then sign the
-  //       // user in with confirmationResult.confirm(code).
-  //       // window.confirmationResult = confirmationResult;
-  //       // ...
-  //     })
-  //     .catch((error) => {
-  //       // Error; SMS not sent
-  //       // ...
-  //     });
-  // };
   const handleLoginGoogle = async () => {
     try {
       await loginWithGoogle?.();
-      console.log('okela');
+      // const res = await auth.signInWithPopup(googleProvider);
+      // console.log("data", res)
     } catch (error) {
-      console.log('loi ne');
       console.error(error);
     }
   };
-  // const handleLoginEmail = async () => {
-  //   try {
-  //     await Login?.();
-  //     // const res = await auth.signInWithPopup(googleProvider);
-  //     // console.log("data", res)
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+
   const handleLoginFaceBook = async () => {
     try {
       await loginWithFaceBook?.();
@@ -109,30 +62,6 @@ export default function LoginForm() {
       remember: true
     },
     validationSchema: LoginSchema,
-    //   onSubmit: async (values, { setErrors, setSubmitting, resetForm }) => {
-    //     try {
-    //       await login(values.email, values.password);
-    //       enqueueSnackbar('Login success', {
-    //         variant: 'success',
-    //         action: (key) => (
-    //           <MIconButton size="small" onClick={() => closeSnackbar(key)}>
-    //             <Icon icon={closeFill} />
-    //           </MIconButton>
-    //         )
-    //       });
-    //       if (isMountedRef.current) {
-    //         setSubmitting(false);
-    //       }
-    //     } catch (error) {
-    //       console.error(error);
-    //       resetForm();
-    //       if (isMountedRef.current) {
-    //         setSubmitting(false);
-    //         setErrors({ afterSubmit: error.message });
-    //       }
-    //     }
-    //   }
-    // });
     onSubmit: async (values, { setErrors, setSubmitting, resetForm }) => {
       try {
         await login(values.email, values.password);
@@ -161,7 +90,7 @@ export default function LoginForm() {
       <Stack direction="row" alignItems="center" sx={{ mt: 4, mb: 5 }}>
         <Box sx={{ flexGrow: 1 }}>
           <Typography variant="h4" gutterBottom>
-            Đăng nhập với người đầu tư
+            Đăng nhập với doanh nghiệp
           </Typography>
           <Typography sx={{ color: 'text.secondary' }}>Nhập thông tin bên dưới</Typography>
         </Box>
@@ -174,39 +103,25 @@ export default function LoginForm() {
             fullWidth
             autoComplete="username"
             type="number"
-            label="Phone"
-            onChange={(e) => setPhoneNum(e.target.value)}
-            // {...getFieldProps('email')}
+            label="Email"
+            // onChange={(e) => setPhoneNum(e.target.value)}
+            {...getFieldProps('email')}
             error={Boolean(touched.email && errors.email)}
             helperText={touched.email && errors.email}
           />
 
-          {/* <TextField
+          <TextField
             fullWidth
             autoComplete="current-password"
             type={showPassword ? 'text' : 'password'}
             label="Mật khẩu"
             {...getFieldProps('password')}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={handleShowPassword} edge="end">
-                    <Icon icon={showPassword ? eyeFill : eyeOffFill} />
-                  </IconButton>
-                </InputAdornment>
-              )
-            }}
             error={Boolean(touched.password && errors.password)}
             helperText={touched.password && errors.password}
-          /> */}
+          />
         </Stack>
 
         <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
-          <FormControlLabel
-            control={<Checkbox {...getFieldProps('remember')} checked={values.remember} />}
-            label="Ghi nhớ"
-          />
-
           <Link component={RouterLink} variant="subtitle2" to={PATH_AUTH.resetPassword}>
             Quên mật khẩu?
           </Link>
@@ -223,24 +138,6 @@ export default function LoginForm() {
           Login
         </LoadingButton>
       </Form>
-      {/* 
-      <LoadingButton
-        style={{
-          backgroundColor: '#FFF',
-          color: 'black',
-          marginTop: '2rem',
-          paddingRight: '2rem'
-        }}
-        fullWidth
-        size="large"
-        type="submit"
-        variant="contained"
-        loading={isSubmitting}
-        onClick={handleLoginPhone}
-      >
-        <Icon icon={googleFill} color="green" height={24} />
-        Login with Phone
-      </LoadingButton> */}
       <Stack direction="row" justifyContent="space-between" sx={{ mb: 2 }}>
         <LoadingButton
           style={{
