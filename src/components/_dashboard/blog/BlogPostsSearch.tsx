@@ -29,13 +29,13 @@ import SearchNotFound from '../../SearchNotFound';
 
 const RootStyle = styled('div')(({ theme }) => ({
   '& .MuiAutocomplete-root': {
-    width: 250,
+    width: 270,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.easeInOut,
       duration: theme.transitions.duration.shorter
     }),
     '&.Mui-focused': {
-      width: 270,
+      width: 300,
       '& .MuiAutocomplete-inputRoot': {
         boxShadow: theme.customShadows.z12
       }
@@ -99,7 +99,7 @@ export default function BlogPostsSearch({ sx }: BoxProps) {
         renderInput={(params) => (
           <TextField
             {...params}
-            placeholder="Bạn đang tìm dự án gì...."
+            placeholder="Bạn đang tìm dự án gì đấy ?"
             InputProps={{
               ...params.InputProps,
               startAdornment: (

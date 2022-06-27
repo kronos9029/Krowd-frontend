@@ -41,7 +41,9 @@ import useSettings from 'hooks/useSettings';
 import { Product, ProductFilter, ProductState } from '../@types/products';
 import { filterProducts, getProducts } from 'redux/slices/product';
 import { BlogPostsSearch } from 'components/_dashboard/blog';
-
+// icon
+import { Icon } from '@iconify/react';
+import menu2Fill from '@iconify/icons-eva/menu-2-fill';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
@@ -205,14 +207,14 @@ export default function Projects() {
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
 
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
-    height: 13,
+    height: 10,
     borderRadius: 5,
     [`&.${linearProgressClasses.colorPrimary}`]: {
       backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 300 : 700]
     },
     [`& .${linearProgressClasses.bar}`]: {
       borderRadius: 5,
-      backgroundColor: theme.palette.mode === 'light' ? '#FF7F50' : '#63C1E3'
+      backgroundColor: '#14B7CC'
     }
   }));
   function applyFilter(products: Product[], sortBy: string | null, filters: ProductFilter) {
@@ -257,7 +259,7 @@ export default function Projects() {
   return (
     <RootStyle title="Danh sách | Krowd">
       <Box sx={{ mb: { xs: 5, md: 10, textAlign: 'center', paddingTop: '7rem' } }}>
-        <Typography variant="h3" sx={{ mb: 3, color: isLight ? '#14B7CC' : '#FF7F50' }}>
+        <Typography variant="h2" sx={{ mb: 3, color: isLight ? '#14B7CC' : '#FF7F50' }}>
           Danh sách các dự án
         </Typography>
         <Box
@@ -300,11 +302,16 @@ export default function Projects() {
                 <Tab
                   key={index}
                   value={value.fieldName}
-                  sx={{ minWidth: { lg: '15% !important', md: '12% !important' } }}
+                  sx={{
+                    minWidth: { lg: '15% !important', sm: '12% !important' }
+                  }}
                   label={
                     <Typography
                       sx={{
-                        color: currentFieldIndex === value.fieldName ? '#14B7CC' : '',
+                        color:
+                          currentFieldIndex === value.fieldName && value.fieldName !== 'more'
+                            ? '#14B7CC'
+                            : '',
                         textOverflow: 'ellipsis',
                         whiteSpace: 'nowrap',
                         overflow: 'hidden',
@@ -337,7 +344,7 @@ export default function Projects() {
                     }}
                     variant="h6"
                   >
-                    Khác
+                    <Icon icon={menu2Fill} width={30} /> Khác
                   </Typography>
                 }
               />
@@ -412,27 +419,64 @@ export default function Projects() {
                         overflow: 'hidden',
                         display: '-webkit-box',
                         WebkitBoxOrient: 'vertical',
-                        WebkitLineClamp: 6,
-                        marginBottom: '1rem'
+                        WebkitLineClamp: 5
                       }}
                     >
                       Với vị trí dự án nằm ở trung tâm quận {index + 1} thu hút một số lượng khách
                       ưa chuộng đồ ăn nhanh. Đây hứa hẹn sẽ là dự án nóng cho các nhà đầu tư có niềm
                       đam mê về ăn uống.
                     </Typography>
-                    <BorderLinearProgress variant="determinate" value={ratio} />
-
-                    <Typography
-                      paragraph
+                    <Box
                       sx={{
-                        color: isLight ? '#251E18' : 'black',
-                        paddingTop: '1rem',
-                        textAlign: 'center'
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        paddingTop: '0.5rem'
                       }}
                     >
-                      <strong> {fCurrency(currentBudget)} </strong> trên{' '}
-                      <strong> {fCurrency(totalBudget)} </strong>
-                    </Typography>
+                      <Typography
+                        paragraph
+                        sx={{
+                          color: '#251E18',
+                          marginBottom: '0.2rem'
+                        }}
+                      >
+                        <strong>Đã đầu tư</strong>
+                      </Typography>
+                      <Typography
+                        paragraph
+                        sx={{
+                          color: '#251E18',
+                          marginBottom: '0.2rem'
+                        }}
+                      >
+                        <strong>Mục tiêu</strong>
+                      </Typography>
+                    </Box>
+                    <BorderLinearProgress variant="determinate" value={ratio} />
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        paddingTop: '0.2rem'
+                      }}
+                    >
+                      <Typography
+                        paragraph
+                        sx={{
+                          color: '#14B7CC'
+                        }}
+                      >
+                        <strong>{fCurrency(currentBudget)}</strong>
+                      </Typography>
+                      <Typography
+                        paragraph
+                        sx={{
+                          color: '#FF7F56'
+                        }}
+                      >
+                        <strong>{fCurrency(totalBudget)}</strong>
+                      </Typography>
+                    </Box>
                     <Button
                       style={{
                         color: '#14B7CC',
