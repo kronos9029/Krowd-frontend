@@ -10,17 +10,12 @@ const ICON_SIZE = {
 };
 
 const menuConfig = {
-  vi: [
+  en: [
     {
       title: 'Trang chủ',
       icon: <Icon icon={homeFill} {...ICON_SIZE} />,
       path: '/'
     },
-    // {
-    //   title: 'Nhà đầu tư',
-    //   icon: <Icon icon={roundGrain} {...ICON_SIZE} />,
-    //   path: PATH_PAGE.business
-    // },
     {
       title: 'Dự án',
       icon: <Icon icon="arcticons:projectm" {...ICON_SIZE} />,
@@ -33,7 +28,7 @@ const menuConfig = {
       // path: PATH_DOCS
     }
   ],
-  en: [
+  vi: [
     {
       title: 'Home',
       icon: <Icon icon={homeFill} {...ICON_SIZE} />,

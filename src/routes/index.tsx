@@ -134,8 +134,7 @@ export default function Router() {
             { path: 'new', element: <Chat /> },
             { path: ':conversationKey', element: <Chat /> }
           ]
-        },
-        { path: 'kanban', element: <Kanban /> }
+        }
       ]
     },
 
@@ -214,7 +213,6 @@ const UserAccount = Loadable(lazy(() => import('../pages/dashboard/UserAccount')
 const UserCreate = Loadable(lazy(() => import('../pages/dashboard/UserCreate')));
 const Chat = Loadable(lazy(() => import('../pages/dashboard/Chat')));
 const Mail = Loadable(lazy(() => import('../pages/dashboard/Mail')));
-const Kanban = Loadable(lazy(() => import('../pages/dashboard/Kanban')));
 // Main
 const LandingPage = Loadable(lazy(() => import('../pages/LandingPage')));
 const About = Loadable(lazy(() => import('../pages/About')));

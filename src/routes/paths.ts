@@ -51,7 +51,6 @@ export const PATH_DASHBOARD = {
     new: path(ROOTS_DASHBOARD, '/chat/new'),
     conversation: path(ROOTS_DASHBOARD, '/chat/:conversationKey')
   },
-  kanban: path(ROOTS_DASHBOARD, '/kanban'),
   user: {
     root: path(ROOTS_DASHBOARD, '/user'),
     profile: path(ROOTS_DASHBOARD, '/user/profile'),
@@ -77,6 +76,25 @@ export const PATH_DASHBOARD = {
     system: path(ROOTS_DASHBOARD, '/wallet/system-wallet'),
     transaction: path(ROOTS_DASHBOARD, '/wallet/transaction-wallet'),
     allWallet: path(ROOTS_DASHBOARD, '/wallet/all-wallet')
+  },
+  //Quản lý khác
+  other: {
+    root: path(ROOTS_DASHBOARD, '/other'),
+    list: path(ROOTS_DASHBOARD, '/other/list'),
+    field: path(ROOTS_DASHBOARD, '/other/field'),
+    newRiskType: path(ROOTS_DASHBOARD, '/other/risk_type-new'),
+    newField: path(ROOTS_DASHBOARD, '/other/field-new'),
+    area: path(ROOTS_DASHBOARD, '/other/area'),
+    role: path(ROOTS_DASHBOARD, '/other/role'),
+    risk: path(ROOTS_DASHBOARD, '/other/risk'),
+    investment: path(ROOTS_DASHBOARD, '/other/investment')
+  },
+  // giao dịch
+  transaction: {
+    root: path(ROOTS_DASHBOARD, '/transaction/account-transaction'),
+    walletTransaction: path(ROOTS_DASHBOARD, '/transaction/wallet'),
+    accountTransaction: path(ROOTS_DASHBOARD, '/transaction/account-transaction'),
+    PeriodRevenueHistory: path(ROOTS_DASHBOARD, '/transaction/account')
   },
   blog: {
     root: path(ROOTS_DASHBOARD, '/blog'),

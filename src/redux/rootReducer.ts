@@ -6,8 +6,11 @@ import mailReducer from './slices/mail';
 import chatReducer from './slices/chat';
 import blogReducer from './slices/blog';
 import userReducer from './slices/user';
+
+import fieldKrowdReducer from './slices/krowd_slices/field';
+import RiskReducer from './slices/krowd_slices/riskType';
+import projectReducer from './slices/krowd_slices/project';
 import productReducer from './slices/product';
-import kanbanReducer from './slices/kanban';
 
 // ----------------------------------------------------------------------
 
@@ -24,13 +27,25 @@ const productPersistConfig = {
   keyPrefix: 'redux-',
   whitelist: ['sortBy', 'checkout']
 };
+const businessPersistConfig = {
+  key: 'business',
+  storage,
+  keyPrefix: 'redux-'
+};
+const projectPersistConfig = {
+  key: 'project',
+  storage,
+  keyPrefix: 'redux-'
+};
 
 const rootReducer = combineReducers({
   mail: mailReducer,
   chat: chatReducer,
   blog: blogReducer,
   user: userReducer,
-  kanban: kanbanReducer,
+  fieldKrowd: fieldKrowdReducer,
+  riskKrowd: RiskReducer,
+  project: persistReducer(projectPersistConfig, projectReducer),
   product: persistReducer(productPersistConfig, productReducer)
 });
 

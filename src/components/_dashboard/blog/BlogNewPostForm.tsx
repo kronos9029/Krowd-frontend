@@ -102,7 +102,7 @@ export default function BlogNewPostForm() {
 
   const { errors, values, touched, handleSubmit, isSubmitting, setFieldValue, getFieldProps } =
     formik;
-
+  console.log(formik);
   const handleDrop = useCallback(
     (acceptedFiles) => {
       const file = acceptedFiles[0];

@@ -151,7 +151,11 @@ export default function MainNavbar() {
             /> */}
             <Button
               variant="contained"
-              sx={{ backgroundColor: '#FF7F50', color: '#FFF', marginRight: '1rem' }}
+              sx={{
+                backgroundColor: '#FF7F50',
+                color: '#FFF',
+                marginRight: '1rem'
+              }}
               href="/auth/login"
             >
               {t('Navbar_login')}
@@ -165,7 +169,11 @@ export default function MainNavbar() {
                     id="dropdownMenuButton1"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
-                    style={{ color: '#14b7cc', textDecoration: 'solid', paddingRight: '1rem' }}
+                    style={{
+                      color: '#14b7cc',
+                      textDecoration: 'solid',
+                      paddingRight: '1rem'
+                    }}
                   >
                     <GlobeIcon />
                     {t('language')}
