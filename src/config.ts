@@ -25,6 +25,8 @@ export const auth0Config = {
   clientId: process.env.REACT_APP_AUTH0_CLIENT_ID,
   domain: process.env.REACT_APP_AUTH0_DOMAIN
 };
+export const REACT_APP_API_URL =
+  'https://ec2-13-215-197-250.ap-southeast-1.compute.amazonaws.com/api/v1.0/';
 
 export const mapConfig = process.env.REACT_APP_MAP_MAPBOX;
 

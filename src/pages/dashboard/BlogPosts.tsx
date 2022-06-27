@@ -77,13 +77,13 @@ export default function BlogPosts() {
   };
 
   return (
-    <Page title="Blog: Posts | Krowd">
+    <Page title="Quản lý dự án | Krowd">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="Blog"
+          heading="Dự án của doanh nghiệp"
           links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            { name: 'Blog', href: PATH_DASHBOARD.blog.root },
+            { name: 'Bảng điều khiển', href: PATH_DASHBOARD.root },
+            // { name: 'Blog o day ne', href: PATH_DASHBOARD.blog.root },
             { name: 'Posts' }
           ]}
           action={
@@ -93,7 +93,7 @@ export default function BlogPosts() {
               to={PATH_DASHBOARD.blog.newPost}
               startIcon={<Icon icon={plusFill} />}
             >
-              New Post
+              Tạo mới dự án
             </Button>
           }
         />

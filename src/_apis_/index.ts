@@ -4,4 +4,3 @@ import './blog';
 import './user';
 import './account';
 import './products';
-import './kanban';

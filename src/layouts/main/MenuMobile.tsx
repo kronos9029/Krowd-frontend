@@ -239,18 +239,7 @@ export default function MenuMobile({ isOffset, isHome, navConfig }: MenuProps) {
               <MenuMobileItem key={link.title} item={link} isOpen={open} onOpen={handleOpen} />
             ))}
           </List>
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: '#FF7F50',
-              color: '#FFF',
-              marginLeft: '1rem',
-              marginTop: '1rem'
-            }}
-            href="/auth/login"
-          >
-            {t('Navbar_login')}
-          </Button>
+
           <div className="language-select">
             <div className="d-flex justify-content-end align-items-center language-select-root">
               <div className="dropdown">
@@ -263,8 +252,7 @@ export default function MenuMobile({ isOffset, isHome, navConfig }: MenuProps) {
                   style={{
                     color: '#14b7cc',
                     textDecoration: 'solid',
-                    marginRight: '7rem',
-                    marginTop: '1rem'
+                    marginRight: '7rem'
                   }}
                 >
                   <GlobeIcon />
@@ -300,6 +288,18 @@ export default function MenuMobile({ isOffset, isHome, navConfig }: MenuProps) {
               </div>
             </div>
           </div>
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: '#FF7F50',
+              color: '#FFF',
+              marginLeft: '1rem',
+              marginTop: '20rem'
+            }}
+            href="/auth/login"
+          >
+            {t('Navbar_login')}
+          </Button>
         </Scrollbar>
       </Drawer>
     </>
