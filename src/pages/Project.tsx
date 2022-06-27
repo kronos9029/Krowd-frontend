@@ -11,7 +11,7 @@ import {
   Tabs,
   Stack,
   Box,
-  AppBar
+  Divider
 } from '@mui/material';
 import { MHidden } from '../components/@material-extend';
 import { varFadeInUp, MotionInView } from '../components/animate';
@@ -195,7 +195,10 @@ export default function Projects() {
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
   const { t } = useTranslation();
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setCurrentFieldIndex(newValue);
+    if (newValue !== 'more') {
+      setCurrentFieldIndex(newValue);
+    } else {
+    }
   };
   const theme = useTheme();
   const isLight = theme.palette.mode === 'light';
@@ -253,21 +256,26 @@ export default function Projects() {
   }
   return (
     <RootStyle title="Danh sách | Krowd">
-      <Box sx={{ mb: { xs: 10, md: 10, textAlign: 'center', paddingTop: '7rem' } }}>
+      <Box sx={{ mb: { xs: 5, md: 10, textAlign: 'center', paddingTop: '7rem' } }}>
         <Typography variant="h3" sx={{ mb: 3, color: isLight ? '#14B7CC' : '#FF7F50' }}>
           Danh sách các dự án
         </Typography>
         <Box
-          m={isDesktop ? 5 : 2}
-          sx={{ display: 'flex', justifyContent: isDesktop ? 'right' : 'space-evenly' }}
+          sx={{
+            mx: { lg: 10, sm: 2 },
+            my: { lg: 5, sm: 2 },
+            display: { sm: 'flex', xs: 'grid' },
+            justifyContent: { md: 'right', sm: 'space-evenly', xs: 'center' }
+          }}
         >
-          <MHidden width="smDown">
-            <BlogPostsSearch sx={{ display: 'flex' }} />
-          </MHidden>
+          <BlogPostsSearch sx={{ display: 'flex' }} />
           <Box
-            ml={isDesktop ? 5 : 2}
             component="div"
-            sx={{ display: 'flex', flexDirection: 'row-reverse' }}
+            sx={{
+              ml: { lg: 5, sm: 2 },
+              display: { sm: 'flex', xs: 'grid' },
+              flexDirection: 'row-reverse'
+            }}
           >
             <ShopProductSort />
             <ShopFilterSidebar
@@ -280,22 +288,23 @@ export default function Projects() {
           </Box>
         </Box>
         <MHidden width="smDown">
-          <AppBar position="static" color="default">
+          <Box mx={5} sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs
               value={currentFieldIndex}
               onChange={handleChange}
-              variant="scrollable"
+              variant="fullWidth"
               scrollButtons="auto"
-              indicatorColor="primary"
+              aria-label="basic tabs example"
             >
-              {FieldList.map((value, index) => (
+              {FieldList.slice(0, 5).map((value, index) => (
                 <Tab
                   key={index}
                   value={value.fieldName}
-                  sx={{ minWidth: '15% !important' }}
+                  sx={{ minWidth: { lg: '15% !important', md: '12% !important' } }}
                   label={
                     <Typography
                       sx={{
+                        color: currentFieldIndex === value.fieldName ? '#14B7CC' : '',
                         textOverflow: 'ellipsis',
                         whiteSpace: 'nowrap',
                         overflow: 'hidden',
@@ -311,8 +320,29 @@ export default function Projects() {
                   }
                 />
               ))}
+              <Tab
+                value={'more'}
+                sx={{ minWidth: '15% !important' }}
+                label={
+                  <Typography
+                    sx={{
+                      color: currentFieldIndex === 'more' ? '#14B7CC' : '',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textAlign: 'center',
+                      '&:hover': {
+                        color: 'primary.main'
+                      }
+                    }}
+                    variant="h6"
+                  >
+                    Khác
+                  </Typography>
+                }
+              />
             </Tabs>
-          </AppBar>
+          </Box>
         </MHidden>
         <Grid xs={12} sm={2} md={4}>
           {!isDefault && (
