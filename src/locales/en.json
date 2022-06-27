@@ -7,7 +7,6 @@
         "headline_link_description_1": "Tuyển dụng",
         "headline_link_description_2": "Truyền thông"
     },
-  
     "Navbar_home_page": "Trang chủ",
     "Navbar_2": "Nhà đầu tư",
     "Navbar_project": "Dự án",
@@ -19,7 +18,6 @@
     "Thumbnail_landing_hero_description": "Nhận lãi hàng tháng thông qua cấp vốn cho",
     "Thumbnail_landing_hero_description_1": "doanh nghiệp cả vừa và nhỏ",
     "Thumbnail_landing_hero_description2": "Bất kỳ ai cũng có thể trở thành nhà đầu tư tiềm năng",
-   
     "card_title_1": "Lợi nhuận lên đến",
     "card_description_1": "20% trên năm",
     "card_title_2": "Đầu tư ngắn hạn",
@@ -57,8 +55,6 @@
     "language": "Ngôn ngữ",
     "highlight_project": "Dự án nổi bật",
     "highlight_project_description": "Lựa chọn dự án phù hợp gần đây",
-
-
     "footer_1": "Thông tin pháp lý",
     "footer_title_left": "Nền tảng nhượng quyền thương mại cho doanh nghiệp",
     "footer_title_1": {
@@ -76,7 +72,6 @@
         "headline_link_description_3": "Cảnh báo rủi ro đầu tư",
         "headline_link_description_4": "Hợp đồng pháp lý liên quan"
     },
-   
     "button_click": "xem thêm",
     "Days": "Ngày",
     "Hours": "Giờ",
@@ -87,8 +82,6 @@
     "policy_description_legal_1": "Đầu tư luôn tiềm ẩn những rủi ro có thể kể đến như rủi ro mất đầu tư, rủi ro thanh khoản, đầu tư có thể bị pha loãng... Vui lòng tham khảo nội dung chi tiết của 'Cảnh báo rủi ro đầu tư' trước khi thực hiện đầu tư chỉ nên được thực hiện khi mỗi nhà đầu tư, trên cơ sở từng trường hợp cụ thể, nhận thức rõ ràng về các rủi ro liên quan. Nghĩa vụ thuế khác nhau đối với việc tự thực hiện nghĩa vụ thuế có trách nhiệm đầu tư có trách nhiệm.",
     "policy_description_legal_2": "Trang web này thuộc về Krowd. Chúng tôi cam kết không thực hiện bất kỳ lời mời gọi đầu tư hoặc xúc tiến đầu tư nào cho bất kỳ công ty niêm yết nào trước. Không có gì trên trang web hoặc phương pháp truyền thông của Krowd cho người dùng là lời mời đầu tư, mua hoặc bán hoặc thu hút người dùng. Chúng tôi cũng không cung cấp tư vấn tài chính, pháp lý hoặc thuế cho các nhà đầu tư dưới bất kỳ hình thức nào. Nếu bạn có bất kỳ câu hỏi nào liên quan đến các vấn đề trên, chúng tôi khuyên bạn nên tham khảo ý kiến các chuyên gia tư vấn chuyên nghiệp của từng lĩnh vực.",
     "policy_description_legal_3": "Tất cả thông tin về các công ty khởi nghiệp được cung cấp bởi người sáng lập và Krowd cũng tiến hành các quy trình nội bộ để kiểm duyệt thông tin này. Tuy nhiên, Krowd khuyên các nhà đầu tư nên đọc email và kiểm tra thông tin trực tiếp với người sáng lập. Về bản chất, quy trình kiểm duyệt của chúng tôi không phải là kiểm toán nội bộ, vì vậy có nguy cơ lỗi thông tin và trách nhiệm thuộc về công ty khởi nghiệp trước tiên.",
-
-    
     "Navbar_about_us": "Về chúng tôi",
     "Who": "Chúng tôi",
     "Are": "là",
@@ -102,8 +95,7 @@
     "aboutus_krowd_vision_title_1": "Chúng tôi là ai?",
     "aboutus_krowd_sologan_1": "Krowd sẽ cung cấp cho bạn hỗ trợ nếu bạn có bất kỳ vấn đề, nhóm hỗ trợ của chúng tôi sẽ trả lời trong vòng một ngày và chúng tôi cũng có tài liệu chi tiết.",
     "aboutus_krowd_1": "Huy động vốn từ cộng đồng từ lâu đã trở thành một dòng thu nhập cao đối với những người có thể đáp ứng các yêu cầu về vốn và thời gian cao cần thiết.",
-    "aboutus_krowd_2": "Krowd là nền tảng duy nhất có thể tiếp cận đầu tư chia sẻ doanh thu cho bất kỳ ai với số tiền ít nhất là 500 000 đồng.",
-   
+    "aboutus_krowd_2": "Krowd là nền tảng duy nhất có thể tiếp cận đầu tư chia sẻ doanh thu cho bất kỳ ai với số tiền ít nhất là 500,000 đồng.",
     "Search": "Tìm kiếm",
     "Search_hover": "Bạn muốn tìm gì...",
     "not_found": "Không tìm thấy",

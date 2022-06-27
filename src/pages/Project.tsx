@@ -10,8 +10,10 @@ import {
   Tab,
   Tabs,
   Stack,
-  Box
+  Box,
+  AppBar
 } from '@mui/material';
+import { MHidden } from '../components/@material-extend';
 import { varFadeInUp, MotionInView } from '../components/animate';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import CardMedia from '@mui/material/CardMedia';
@@ -50,11 +52,6 @@ const RootStyle = styled(Page)(({ theme }) => ({
   }
 }));
 
-const ContentStyle = styled(Page)(({ theme }) => ({
-  maxWidth: '1500px',
-  paddingTop: theme.spacing(10),
-  justifyContent: 'center'
-}));
 const Language = [
   {
     code: 'vi',
@@ -67,6 +64,7 @@ const Language = [
     countryCode: 'en'
   }
 ];
+
 const CardStyle = styled(Card)(({ theme }) => {
   const shadowCard = (opacity: number) =>
     theme.palette.mode === 'light'
@@ -108,17 +106,40 @@ const CardStyle = styled(Card)(({ theme }) => {
     }
   };
 });
-
+const FieldList = [
+  {
+    fieldName: 'Ăn uống'
+  },
+  {
+    fieldName: 'Làm đẹp'
+  },
+  {
+    fieldName: 'Giáo dục'
+  },
+  {
+    fieldName: 'Thời trang'
+  },
+  {
+    fieldName: 'Thể hình'
+  },
+  {
+    fieldName: 'Sức khỏe'
+  },
+  {
+    fieldName: 'Y tế'
+  },
+  {
+    fieldName: 'Du lịch'
+  }
+];
 export default function Projects() {
   const { themeStretch } = useSettings();
   const index = Math.floor(Math.random() * 28);
-
   const dispatch = useDispatch();
   const [openFilter, setOpenFilter] = useState(false);
   const { products, sortBy, filters } = useSelector(
     (state: { product: ProductState }) => state.product
   );
-
   const filteredProducts = applyFilter(products, sortBy, filters);
 
   const formik = useFormik<ProductFilter>({
@@ -169,12 +190,12 @@ export default function Projects() {
     resetForm();
   };
 
-  const [value, setValue] = useState('one');
+  const [currentFieldIndex, setCurrentFieldIndex] = useState(FieldList.at(0)?.fieldName);
   const currentLanguageCode = cookies.get('i18next') || 'en';
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
   const { t } = useTranslation();
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue);
+    setCurrentFieldIndex(newValue);
   };
   const theme = useTheme();
   const isLight = theme.palette.mode === 'light';
@@ -233,121 +254,102 @@ export default function Projects() {
   return (
     <RootStyle title="Danh sách | Krowd">
       <Box sx={{ mb: { xs: 10, md: 10, textAlign: 'center', paddingTop: '7rem' } }}>
-        <Typography variant="h4" sx={{ mb: 3, color: isLight ? '#14B7CC' : '#FF7F50' }}>
+        <Typography variant="h3" sx={{ mb: 3, color: isLight ? '#14B7CC' : '#FF7F50' }}>
           Danh sách các dự án
         </Typography>
-        <Typography variant="h3" sx={{ mb: 3, color: isLight ? '#251E18' : 'black' }}>
-          <Grid container spacing={isDesktop ? 10 : 5}>
-            {''}
-            <Grid item xs={12} sm={4} md={3}>
-              <Tabs
-                value={value}
-                onChange={handleChange}
-                textColor="secondary"
-                indicatorColor="secondary"
-                aria-label="secondary tabs example"
-                orientation="vertical"
-              >
-                <Tab
-                  value="one"
-                  label={
-                    <Typography
-                      sx={{
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                        overflow: 'hidden',
-                        textAlign: 'center'
-                      }}
-                      variant="h6"
-                    >
-                      Quán cà phê
-                    </Typography>
-                  }
-                />
-                <Tab
-                  value="two"
-                  label={
-                    <Typography
-                      sx={{
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                        overflow: 'hidden',
-                        textAlign: 'center'
-                      }}
-                      variant="h6"
-                    >
-                      Quán trà sữa
-                    </Typography>
-                  }
-                />
-                <Tab
-                  value="three"
-                  label={
-                    <Typography
-                      sx={{
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                        overflow: 'hidden',
-                        textAlign: 'center'
-                      }}
-                      variant="h6"
-                    >
-                      Cửa hàng
-                    </Typography>
-                  }
-                />
-              </Tabs>
-            </Grid>
-            <Grid item xs={2} md={2}></Grid>
-            <Grid item xs={4} sm={6} md={3}>
-              <BlogPostsSearch />
-            </Grid>
-          </Grid>
-          <ShopFilterSidebar
-            formik={formik}
-            isOpenFilter={openFilter}
-            onResetFilter={handleResetFilter}
-            onOpenFilter={handleOpenFilter}
-            onCloseFilter={handleCloseFilter}
-          />
-          <ShopProductSort />
-          <Grid xs={12} sm={2} md={4}>
-            {!isDefault && (
-              <Typography gutterBottom>
-                <Typography component="span" variant="subtitle1">
-                  {filteredProducts.length}
-                </Typography>
-                &nbsp;Dự án tìm thấy
-              </Typography>
-            )}
-            <Stack
-              direction="row"
-              flexWrap="wrap-reverse"
-              alignItems="center"
-              justifyContent="flex-end"
-              sx={{ mb: 5 }}
+        <Box
+          m={isDesktop ? 5 : 2}
+          sx={{ display: 'flex', justifyContent: isDesktop ? 'right' : 'space-evenly' }}
+        >
+          <MHidden width="smDown">
+            <BlogPostsSearch sx={{ display: 'flex' }} />
+          </MHidden>
+          <Box
+            ml={isDesktop ? 5 : 2}
+            component="div"
+            sx={{ display: 'flex', flexDirection: 'row-reverse' }}
+          >
+            <ShopProductSort />
+            <ShopFilterSidebar
+              formik={formik}
+              isOpenFilter={openFilter}
+              onResetFilter={handleResetFilter}
+              onOpenFilter={handleOpenFilter}
+              onCloseFilter={handleCloseFilter}
+            />
+          </Box>
+        </Box>
+        <MHidden width="smDown">
+          <AppBar position="static" color="default">
+            <Tabs
+              value={currentFieldIndex}
+              onChange={handleChange}
+              variant="scrollable"
+              scrollButtons="auto"
+              indicatorColor="primary"
             >
-              <ShopTagFiltered
-                filters={filters}
-                formik={formik}
-                isShowReset={openFilter}
-                onResetFilter={handleResetFilter}
-                isDefault={isDefault}
-              />
-            </Stack>
-          </Grid>
-        </Typography>
+              {FieldList.map((value, index) => (
+                <Tab
+                  key={index}
+                  value={value.fieldName}
+                  sx={{ minWidth: '15% !important' }}
+                  label={
+                    <Typography
+                      sx={{
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textAlign: 'center',
+                        '&:hover': {
+                          color: 'primary.main'
+                        }
+                      }}
+                      variant="h6"
+                    >
+                      {value.fieldName}
+                    </Typography>
+                  }
+                />
+              ))}
+            </Tabs>
+          </AppBar>
+        </MHidden>
+        <Grid xs={12} sm={2} md={4}>
+          {!isDefault && (
+            <Typography gutterBottom>
+              <Typography component="span" variant="subtitle1">
+                {filteredProducts.length}
+              </Typography>
+              &nbsp;Dự án tìm thấy
+            </Typography>
+          )}
+          <Stack
+            direction="row"
+            flexWrap="wrap-reverse"
+            alignItems="center"
+            justifyContent="flex-end"
+            sx={{ mb: 5 }}
+          >
+            <ShopTagFiltered
+              filters={filters}
+              formik={formik}
+              isShowReset={openFilter}
+              onResetFilter={handleResetFilter}
+              isDefault={isDefault}
+            />
+          </Stack>
+        </Grid>
       </Box>
-      <Container maxWidth="lg">
-        <Grid container spacing={isDesktop ? 12 : 10}>
-          {Array.from(new Array(6)).map((_, index) => {
+      <Container maxWidth={false}>
+        <Grid container alignItems="center" justifyContent="center" spacing={5}>
+          {Array.from(new Array(24)).map((_, index) => {
             let totalBudget = Math.floor(Math.random() * 100000000);
             let currentBudget = Math.floor(Math.random() * totalBudget);
             let ratio = Math.floor((currentBudget / totalBudget) * 100);
             return (
-              <Grid key={`${value} ${index}`} item xs={12} sm={6} md={4}>
+              <Grid key={`${currentFieldIndex} ${index}`} item xs={12} sm={6} md={4} lg={3}>
                 <MotionInView variants={varFadeInUp}>
-                  <CardStyle sx={{ maxWidth: 345, maxHeight: 500, height: '500px' }}>
+                  <CardStyle sx={{ maxWidth: 345, maxHeight: 500, height: 500 }}>
                     <CardMedia
                       style={{
                         paddingTop: '2rem',
@@ -380,7 +382,8 @@ export default function Projects() {
                         overflow: 'hidden',
                         display: '-webkit-box',
                         WebkitBoxOrient: 'vertical',
-                        WebkitLineClamp: 6
+                        WebkitLineClamp: 6,
+                        marginBottom: '1rem'
                       }}
                     >
                       Với vị trí dự án nằm ở trung tâm quận {index + 1} thu hút một số lượng khách
