@@ -108,3 +108,5 @@ export const PATH_DASHBOARD = {
 export const PATH_DOCS = 'https://docs-minimals.vercel.app/introduction';
 export const PATH_DETAILS = '/details';
 export const PATH_SEARCHPAGE = '/project';
+export const PATH_FIELDPAGE = '/all_field';
+// export const PATH_FIELDPAGE_DETAILS = '/all_field/:name';

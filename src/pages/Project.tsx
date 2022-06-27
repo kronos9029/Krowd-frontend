@@ -20,7 +20,7 @@ import CardMedia from '@mui/material/CardMedia';
 // components
 import Page from '../components/Page';
 import { fCurrency } from 'utils/formatNumber';
-import { PATH_DETAILS } from 'routes/paths';
+import { PATH_DETAILS, PATH_FIELDPAGE } from 'routes/paths';
 import i18next from 'i18next';
 import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
@@ -330,6 +330,7 @@ export default function Projects() {
               <Tab
                 value={'more'}
                 sx={{ minWidth: '15% !important' }}
+                href={PATH_FIELDPAGE}
                 label={
                   <Typography
                     sx={{

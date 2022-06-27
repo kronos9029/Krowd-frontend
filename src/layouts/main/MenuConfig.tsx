@@ -10,7 +10,7 @@ const ICON_SIZE = {
 };
 
 const menuConfig = {
-  en: [
+  vi: [
     {
       title: 'Trang chủ',
       icon: <Icon icon={homeFill} {...ICON_SIZE} />,
@@ -28,7 +28,7 @@ const menuConfig = {
       // path: PATH_DOCS
     }
   ],
-  vi: [
+  en: [
     {
       title: 'Home',
       icon: <Icon icon={homeFill} {...ICON_SIZE} />,

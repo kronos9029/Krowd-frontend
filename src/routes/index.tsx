@@ -163,6 +163,7 @@ export default function Router() {
         { path: 'details', element: <Details /> },
         // { path: 'SearchPage', element: <SearchPage /> },
         { path: 'project', element: <Projects /> },
+        { path: 'all_field', element: <Fields /> },
         {
           path: 'components',
           children: [
@@ -220,7 +221,9 @@ const Contact = Loadable(lazy(() => import('../pages/Contact')));
 const Faqs = Loadable(lazy(() => import('../pages/Faqs')));
 const ComingSoon = Loadable(lazy(() => import('../pages/ComingSoon')));
 const Details = Loadable(lazy(() => import('../pages/Details')));
+//Page
 const Projects = Loadable(lazy(() => import('../pages/Project')));
+const Fields = Loadable(lazy(() => import('../pages/Field')));
 // const SearchPage = Loadable(lazy(() => import('../pages/SearchPage')));
 const Maintenance = Loadable(lazy(() => import('../pages/Maintenance')));
 const Pricing = Loadable(lazy(() => import('../pages/Pricing')));
