@@ -21,7 +21,9 @@ import {
   Divider,
   TextField,
   Typography,
-  FormHelperText
+  FormHelperText,
+  LinearProgress,
+  linearProgressClasses
 } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
@@ -63,7 +65,17 @@ const RootStyle = styled('div')(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-
+const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
+  height: 10,
+  borderRadius: 5,
+  [`&.${linearProgressClasses.colorPrimary}`]: {
+    backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 300 : 700]
+  },
+  [`& .${linearProgressClasses.bar}`]: {
+    borderRadius: 5,
+    backgroundColor: '#14B7CC'
+  }
+}));
 const Incrementer = ({ name, available }: { name: string; available: number }) => {
   const [field, , helpers] = useField(name);
   const { value } = field;
@@ -178,6 +190,9 @@ export default function ProductDetailsSummary({
       console.error(error);
     }
   };
+  let totalBudget = Math.floor(Math.random() * 100000000);
+  let currentBudget = Math.floor(Math.random() * totalBudget);
+  let ratio = Math.floor((currentBudget / totalBudget) * 100);
 
   return (
     <RootStyle {...other}>
@@ -302,10 +317,58 @@ export default function ProductDetailsSummary({
             </Typography>
             <Typography sx={{ mt: 0.2 }}>2 month</Typography>
           </Box>
-          <Divider sx={{ borderStyle: 'dashed' }} />
-
           <Box>
-            <KrowdProjectProgress />
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                paddingTop: '0.5rem'
+              }}
+            >
+              <Typography
+                paragraph
+                sx={{
+                  color: '#251E18',
+                  marginBottom: '0.2rem'
+                }}
+              >
+                <strong>Đã đầu tư</strong>
+              </Typography>
+              <Typography
+                paragraph
+                sx={{
+                  color: '#251E18',
+                  marginBottom: '0.2rem'
+                }}
+              >
+                <strong>Mục tiêu</strong>
+              </Typography>
+            </Box>
+            <BorderLinearProgress variant="determinate" value={ratio} />
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                paddingTop: '0.2rem'
+              }}
+            >
+              <Typography
+                paragraph
+                sx={{
+                  color: '#14B7CC'
+                }}
+              >
+                <strong>{fCurrency(currentBudget)}</strong>
+              </Typography>
+              <Typography
+                paragraph
+                sx={{
+                  color: '#FF7F56'
+                }}
+              >
+                <strong>{fCurrency(totalBudget)}</strong>
+              </Typography>
+            </Box>
           </Box>
 
           <Divider sx={{ borderStyle: 'dashed' }} />

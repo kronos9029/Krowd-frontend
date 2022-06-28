@@ -79,7 +79,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   },
   [`& .${linearProgressClasses.bar}`]: {
     borderRadius: 5,
-    backgroundColor: theme.palette.mode === 'light' ? '#FF7F50' : '#af4cab'
+    backgroundColor: theme.palette.mode === 'light' ? '#14B7CC' : '#FF7F56'
   }
 }));
 const Language = [
@@ -94,15 +94,16 @@ const Language = [
     countryCode: 'en'
   }
 ];
+let totalBudget = Math.floor(Math.random() * 100000000);
+let investedBudget = Math.floor(Math.random() * totalBudget);
+let ratio = Math.floor((investedBudget / totalBudget) * 100);
 const HotProject = [
   {
     image: '/static/components/Hot-Bussiness-KFC.png',
     businessName: 'KFC – Gà rán Kentuckey',
     description: `Với vị trí dự án nằm ở trung tâm quận 1 thu hút một 
                   số lượng khách ưa chuộng đồ ăn nhanh. 
-                  Đây hứa hẹn sẽ là dự án nóng cho các nhà đầu tư có niềm đam mê về ăn uống.`,
-    investedBudget: 83000000,
-    totalBudget: 100000000
+                  Đây hứa hẹn sẽ là dự án nóng cho các nhà đầu tư có niềm đam mê về ăn uống.`
   },
   {
     image: '/static/components/Hot-Bussiness-Burger.png',
@@ -111,9 +112,7 @@ const HotProject = [
                   ấn tượng của Burger King phụ thuộc nhiều hơn vào các đối tác nhượng quyền của nó.
                   Và đó là lý do chính khiến họ tiếp tục tìm kiếm và sáng tạo thêm. Cơ hội nhượng
                   quyền trên toàn thế giới, ngay cả ở những thị trường lớn nơi nhà hàng Burger King
-                  đã hoàn toàn thành danh.`,
-    investedBudget: 83000000,
-    totalBudget: 100000000
+                  đã hoàn toàn thành danh.`
   },
   {
     image: '/static/components/Hot-Bussiness2.png',
@@ -123,9 +122,7 @@ const HotProject = [
                   đã phát triển hơn 6.600 địa điểm tại Hoa Kỳ và Canada, trong đó có hơn 2.200 địa
                   điểm tại 22 quốc gia. Công ty dành hai địa điểm làm cửa hàng của công ty. Trong
                   tám năm qua, tổng số cửa hàng của nó tăng trưởng chậm nhưng đều đặn, thêm hơn 300
-                  đơn vị trong ba năm qua.`,
-    investedBudget: 83000000,
-    totalBudget: 100000000
+                  đơn vị trong ba năm qua.`
   }
 ];
 
@@ -192,22 +189,59 @@ export default function LandingMinimalHelps() {
                   bác sĩ được mời từ các quốc gia chuyên về thẩm mỹ */}
                     {value.description}
                   </Typography>
-                  <BorderLinearProgress
-                    sx={{ marginTop: '18px' }}
-                    variant="determinate"
-                    value={83}
-                  />
-                  <Typography
-                    paragraph
-                    sx={{
-                      color: isLight ? '#251E18' : 'black',
-                      paddingTop: '18px',
-                      textAlign: 'center'
-                    }}
-                  >
-                    <strong> {fCurrency(value.investedBudget)} </strong> trên{' '}
-                    <strong> {fCurrency(value.totalBudget)} </strong>
-                  </Typography>
+                  <Box>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        paddingTop: '0.5rem'
+                      }}
+                    >
+                      <Typography
+                        paragraph
+                        sx={{
+                          color: '#251E18',
+                          marginBottom: '0.2rem'
+                        }}
+                      >
+                        <strong>Đã đầu tư</strong>
+                      </Typography>
+                      <Typography
+                        paragraph
+                        sx={{
+                          color: '#251E18',
+                          marginBottom: '0.2rem'
+                        }}
+                      >
+                        <strong>Mục tiêu</strong>
+                      </Typography>
+                    </Box>
+                    <BorderLinearProgress variant="determinate" value={ratio} />
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        paddingTop: '0.2rem'
+                      }}
+                    >
+                      <Typography
+                        paragraph
+                        sx={{
+                          color: '#14B7CC'
+                        }}
+                      >
+                        <strong>{fCurrency(investedBudget)}</strong>
+                      </Typography>
+                      <Typography
+                        paragraph
+                        sx={{
+                          color: '#FF7F56'
+                        }}
+                      >
+                        <strong>{fCurrency(totalBudget)}</strong>
+                      </Typography>
+                    </Box>
+                  </Box>
                   <Button
                     style={{
                       color: '#14B7CC',

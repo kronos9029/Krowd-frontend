@@ -92,7 +92,7 @@ const Language = [
     countryCode: 'en'
   }
 ];
-export default function MainNavbar() {
+export default function MainNavbarLogin() {
   const isOffset = useOffSetTop(-1);
   const { pathname } = useLocation();
   const isHome = pathname === '/';
@@ -141,11 +141,6 @@ export default function MainNavbar() {
               isHome={isHome}
               navConfig={localStorage.getItem('i18nextLng') === 'en' ? navConfig.vi : navConfig.en}
             />
-            {/* <MenuDesktop
-              isOffset={isOffset}
-              isHome={isHome}
-              navConfig={t(`navbar_title_1.title_name}`)}
-            /> */}
             <Button
               variant="contained"
               sx={{
@@ -153,9 +148,9 @@ export default function MainNavbar() {
                 color: '#FFF',
                 marginRight: '1rem'
               }}
-              href="/auth/login"
+              href="/dashboard/app"
             >
-              {t('Navbar_login')}
+              {t('Back_to_dashboard')}
             </Button>
             <div className="language-select">
               <div className="d-flex justify-content-end align-items-center language-select-root">

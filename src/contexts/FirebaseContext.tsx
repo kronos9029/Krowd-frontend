@@ -60,7 +60,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
     () =>
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
-          const docRef = firebase.firestore().collection('users').doc(user.uid);
+          const docRef = firebase.firestore().collection('business').doc(user.uid);
           docRef
             .get()
             .then((doc) => {
@@ -146,7 +146,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
           email: auth.email,
           photoURL: auth.photoURL || profile?.photoURL,
           displayName: auth.displayName || profile?.displayName,
-          role: ADMIN_EMAILS.includes(auth.email) ? 'business' : 'user',
+          role: ADMIN_EMAILS.includes(auth.email) ? 'business' : 'INVESTOR',
           phoneNumber: auth.phoneNumber || profile?.phoneNumber || '',
           country: profile?.country || '',
           address: profile?.address || ''

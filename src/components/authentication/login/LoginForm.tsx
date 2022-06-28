@@ -80,7 +80,6 @@ export default function LoginForm() {
   const handleLoginGoogle = async () => {
     try {
       await loginWithGoogle?.();
-      console.log('okela');
     } catch (error) {
       console.log('loi ne');
       console.error(error);
@@ -166,7 +165,7 @@ export default function LoginForm() {
           <Typography sx={{ color: 'text.secondary' }}>Nhập thông tin bên dưới</Typography>
         </Box>
       </Stack>
-      {/* <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+      <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
           {errors.afterSubmit && <Alert severity="error">{errors.afterSubmit}</Alert>}
 
@@ -179,27 +178,27 @@ export default function LoginForm() {
             // {...getFieldProps('email')}
             error={Boolean(touched.email && errors.email)}
             helperText={touched.email && errors.email}
-          /> */}
+          />
 
-      {/* <TextField
+          <TextField
             fullWidth
             autoComplete="current-password"
             type={showPassword ? 'text' : 'password'}
             label="Mật khẩu"
             {...getFieldProps('password')}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={handleShowPassword} edge="end">
-                    <Icon icon={showPassword ? eyeFill : eyeOffFill} />
-                  </IconButton>
-                </InputAdornment>
-              )
-            }}
+            // InputProps={{
+            //   endAdornment: (
+            //     <InputAdornment position="end">
+            //       <IconButton onClick={handleShowPassword} edge="end">
+            //         <Icon icon={showPassword ? eyeFill : eyeOffFill} />
+            //       </IconButton>
+            //     </InputAdornment>
+            //   )
+            // }}
             error={Boolean(touched.password && errors.password)}
             helperText={touched.password && errors.password}
-          /> */}
-      {/* </Stack>
+          />
+        </Stack>
 
         <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
           <FormControlLabel
@@ -217,12 +216,12 @@ export default function LoginForm() {
           size="large"
           type="submit"
           variant="contained"
-          loading={isSubmitting}
-          onClick={handleLoginEmail}
+          // loading={isSubmitting}
+          // onClick={handleLoginEmail}
         >
           Login
         </LoadingButton>
-      </Form> */}
+      </Form>
       {/* 
       <LoadingButton
         style={{

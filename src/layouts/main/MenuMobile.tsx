@@ -31,6 +31,7 @@ import Scrollbar from '../../components/Scrollbar';
 import { MIconButton } from '../../components/@material-extend';
 //
 import { MenuProps, MenuItemProps } from './MainNavbar';
+import useAuth from 'hooks/useAuth';
 
 // ----------------------------------------------------------------------
 
@@ -190,6 +191,7 @@ export default function MenuMobile({ isOffset, isHome, navConfig }: MenuProps) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const currentLanguageCode = cookies.get('i18next') || 'en';
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
+  const { user } = useAuth();
   const { t } = useTranslation();
   useEffect(() => {
     if (drawerOpen) {
@@ -210,98 +212,195 @@ export default function MenuMobile({ isOffset, isHome, navConfig }: MenuProps) {
     setDrawerOpen(false);
   };
 
-  return (
-    <>
-      <MIconButton
-        onClick={handleDrawerOpen}
-        sx={{
-          ml: 1,
-          ...(isHome && { color: 'common.white' }),
-          ...(isOffset && { color: 'text.primary' })
-        }}
-      >
-        <Icon icon={menu2Fill} />
-      </MIconButton>
+  if (user?.idToken === null) {
+    return (
+      <>
+        <MIconButton
+          onClick={handleDrawerOpen}
+          sx={{
+            ml: 1,
+            ...(isHome && { color: 'common.white' }),
+            ...(isOffset && { color: 'text.primary' })
+          }}
+        >
+          <Icon icon={menu2Fill} />
+        </MIconButton>
 
-      <Drawer
-        open={drawerOpen}
-        onClose={handleDrawerClose}
-        ModalProps={{ keepMounted: true }}
-        PaperProps={{ sx: { pb: 5, width: 260 } }}
-      >
-        <Scrollbar>
-          <Link component={RouterLink} to="/" sx={{ display: 'inline-flex' }}>
-            <Logo sx={{ mx: PADDING, my: 3 }} />
-          </Link>
+        <Drawer
+          open={drawerOpen}
+          onClose={handleDrawerClose}
+          ModalProps={{ keepMounted: true }}
+          PaperProps={{ sx: { pb: 5, width: 260 } }}
+        >
+          <Scrollbar>
+            <Link component={RouterLink} to="/" sx={{ display: 'inline-flex' }}>
+              <Logo sx={{ mx: PADDING, my: 3 }} />
+            </Link>
 
-          <List disablePadding>
-            {navConfig.map((link) => (
-              <MenuMobileItem key={link.title} item={link} isOpen={open} onOpen={handleOpen} />
-            ))}
-          </List>
+            <List disablePadding>
+              {navConfig.map((link) => (
+                <MenuMobileItem key={link.title} item={link} isOpen={open} onOpen={handleOpen} />
+              ))}
+            </List>
 
-          <div className="language-select">
-            <div className="d-flex justify-content-end align-items-center language-select-root">
-              <div className="dropdown">
-                <button
-                  className="btn btn-link dropdown-toggle"
-                  type="button"
-                  id="dropdownMenuButton1"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                  style={{
-                    color: '#14b7cc',
-                    textDecoration: 'solid',
-                    marginRight: '7rem'
-                  }}
-                >
-                  <GlobeIcon />
-                  {t('language')}
-                </button>
-                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                  {Language.map(({ code, name, countryCode }) => (
-                    <li key={countryCode}>
-                      <a
-                        href="#"
-                        className={classNames('dropdown-item', {
-                          disabled: currentLanguageCode === code
-                        })}
-                        onClick={() => {
-                          i18next.changeLanguage(code);
-                          localStorage.setItem('i18nextLng', code);
-                        }}
-                      >
-                        <span
-                          className={`/static/icons/ic_flag_${countryCode}.svg`}
-                          style={{
-                            opacity: currentLanguageCode === code ? 0.5 : 1
+            <div className="language-select">
+              <div className="d-flex justify-content-end align-items-center language-select-root">
+                <div className="dropdown">
+                  <button
+                    className="btn btn-link dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    style={{
+                      color: '#14b7cc',
+                      textDecoration: 'solid',
+                      marginRight: '7rem'
+                    }}
+                  >
+                    <GlobeIcon />
+                    {t('language')}
+                  </button>
+                  <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    {Language.map(({ code, name, countryCode }) => (
+                      <li key={countryCode}>
+                        <a
+                          href="#"
+                          className={classNames('dropdown-item', {
+                            disabled: currentLanguageCode === code
+                          })}
+                          onClick={() => {
+                            i18next.changeLanguage(code);
+                            localStorage.setItem('i18nextLng', code);
                           }}
                         >
-                          <img src={`/static/icons/ic_flag_${countryCode}.svg`} />
-                        </span>
-                        {/* <img src="/static/icons/ic_flag_${countryCode}.svg mx-2" /> */}
-                        {name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+                          <span
+                            className={`/static/icons/ic_flag_${countryCode}.svg`}
+                            style={{
+                              opacity: currentLanguageCode === code ? 0.5 : 1
+                            }}
+                          >
+                            <img src={`/static/icons/ic_flag_${countryCode}.svg`} />
+                          </span>
+                          {/* <img src="/static/icons/ic_flag_${countryCode}.svg mx-2" /> */}
+                          {name}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: '#FF7F50',
-              color: '#FFF',
-              marginLeft: '1rem',
-              marginTop: '20rem'
-            }}
-            href="/auth/login"
-          >
-            {t('Navbar_login')}
-          </Button>
-        </Scrollbar>
-      </Drawer>
-    </>
-  );
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: '#FF7F50',
+                color: '#FFF',
+                marginLeft: '1rem',
+                marginTop: '20rem'
+              }}
+              href="/auth/login"
+            >
+              {t('Navbar_login')}
+            </Button>
+          </Scrollbar>
+        </Drawer>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <MIconButton
+          onClick={handleDrawerOpen}
+          sx={{
+            ml: 1,
+            ...(isHome && { color: 'common.white' }),
+            ...(isOffset && { color: 'text.primary' })
+          }}
+        >
+          <Icon icon={menu2Fill} />
+        </MIconButton>
+
+        <Drawer
+          open={drawerOpen}
+          onClose={handleDrawerClose}
+          ModalProps={{ keepMounted: true }}
+          PaperProps={{ sx: { pb: 5, width: 260 } }}
+        >
+          <Scrollbar>
+            <Link component={RouterLink} to="/" sx={{ display: 'inline-flex' }}>
+              <Logo sx={{ mx: PADDING, my: 3 }} />
+            </Link>
+
+            <List disablePadding>
+              {navConfig.map((link) => (
+                <MenuMobileItem key={link.title} item={link} isOpen={open} onOpen={handleOpen} />
+              ))}
+            </List>
+
+            <div className="language-select">
+              <div className="d-flex justify-content-end align-items-center language-select-root">
+                <div className="dropdown">
+                  <button
+                    className="btn btn-link dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    style={{
+                      color: '#14b7cc',
+                      textDecoration: 'solid',
+                      marginRight: '7rem'
+                    }}
+                  >
+                    <GlobeIcon />
+                    {t('language')}
+                  </button>
+                  <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    {Language.map(({ code, name, countryCode }) => (
+                      <li key={countryCode}>
+                        <a
+                          href="#"
+                          className={classNames('dropdown-item', {
+                            disabled: currentLanguageCode === code
+                          })}
+                          onClick={() => {
+                            i18next.changeLanguage(code);
+                            localStorage.setItem('i18nextLng', code);
+                          }}
+                        >
+                          <span
+                            className={`/static/icons/ic_flag_${countryCode}.svg`}
+                            style={{
+                              opacity: currentLanguageCode === code ? 0.5 : 1
+                            }}
+                          >
+                            <img src={`/static/icons/ic_flag_${countryCode}.svg`} />
+                          </span>
+                          {/* <img src="/static/icons/ic_flag_${countryCode}.svg mx-2" /> */}
+                          {name}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: '#FF7F50',
+                color: '#FFF',
+                marginLeft: '1rem',
+                marginTop: '20rem'
+              }}
+              href="/dashboard/app"
+            >
+              {t('Back_to_dashboard')}
+            </Button>
+          </Scrollbar>
+        </Drawer>
+      </>
+    );
+  }
 }
