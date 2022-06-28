@@ -304,7 +304,6 @@ export default function ProductDetailsSummary({
             </Typography>
             <Typography sx={{ mt: 0.2 }}>1.7</Typography>
           </Box>
-
           <Box
             sx={{
               mb: 2,
@@ -317,19 +316,19 @@ export default function ProductDetailsSummary({
             </Typography>
             <Typography sx={{ mt: 0.2 }}>2 month</Typography>
           </Box>
-          <Box>
+          <Divider sx={{ borderStyle: 'dashed' }} />
+          <Box my={1}>
             <Box
               sx={{
                 display: 'flex',
                 justifyContent: 'space-between',
-                paddingTop: '0.5rem'
+                mt: 2
               }}
             >
               <Typography
                 paragraph
                 sx={{
-                  color: '#251E18',
-                  marginBottom: '0.2rem'
+                  color: '#251E18'
                 }}
               >
                 <strong>Đã đầu tư</strong>
@@ -337,19 +336,18 @@ export default function ProductDetailsSummary({
               <Typography
                 paragraph
                 sx={{
-                  color: '#251E18',
-                  marginBottom: '0.2rem'
+                  color: '#251E18'
                 }}
               >
                 <strong>Mục tiêu</strong>
               </Typography>
             </Box>
-            <BorderLinearProgress variant="determinate" value={ratio} />
+            <BorderLinearProgress sx={{ my: 0 }} variant="determinate" value={ratio} />
             <Box
               sx={{
                 display: 'flex',
                 justifyContent: 'space-between',
-                paddingTop: '0.2rem'
+                mt: 2
               }}
             >
               <Typography
@@ -373,7 +371,7 @@ export default function ProductDetailsSummary({
 
           <Divider sx={{ borderStyle: 'dashed' }} />
 
-          <Box sx={{ mt: 1, textAlign: 'center' }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-evenly', my: 1, textAlign: 'center' }}>
             {SOCIALS.map((social) => (
               <Tooltip key={social.name} title={social.name}>
                 <MIconButton>{social.icon}</MIconButton>

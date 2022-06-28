@@ -120,10 +120,8 @@ export function getProjectList() {
       const response = await axios.get(
         'https://ec2-13-215-197-250.ap-southeast-1.compute.amazonaws.com/api/v1.0/businesses'
       );
-      // const response = await axios.get(REACT_APP_API_URL + 'businesses');
 
       dispatch(slice.actions.getProjectListSuccess(response.data));
-      // console.log('aaaaa', response.data);
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
@@ -151,9 +149,7 @@ export function getProjectId(projectId: string) {
         `https://ec2-13-215-197-250.ap-southeast-1.compute.amazonaws.com/api/v1.0/projects/${projectId}`
       );
       dispatch(slice.actions.getProjectListIDSuccess(response.data));
-      console.log('t tra duoc data project o day', response.data);
     } catch (error) {
-      console.log('t tra duoc loi data ne');
       dispatch(slice.actions.hasError(error));
     }
   };
