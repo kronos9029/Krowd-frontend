@@ -5,7 +5,7 @@ import { dispatch, store } from '../../store';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
 import closeFill from '@iconify/icons-eva/close-fill';
-import { Project, ProjectStatus } from '../../../@types/krowd/project';
+import { business, Project, ProjectStatus } from '../../../@types/krowd/project';
 import { REACT_APP_API_URL } from '../../../config';
 // ----------------------------------------------------------------------
 

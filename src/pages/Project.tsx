@@ -418,6 +418,19 @@ export default function Projects() {
                   >
                     {row.name}
                   </Typography>
+                  {/* <Typography
+                    sx={{
+                      color: isLight ? '#14B7CC' : 'white',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textAlign: 'center'
+                    }}
+                    variant="h5"
+                    paragraph
+                  >
+                    {row.field.name}
+                  </Typography> */}
                   <Typography
                     style={{ textAlign: 'left' }}
                     sx={{

@@ -172,7 +172,7 @@ export default function ComponentsDetails() {
                     <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
                       Thuộc doanh nghiệp
                     </Typography>
-                    <Typography sx={{ mt: 0.2 }}>{projectID?.businessId}</Typography>
+                    <Typography sx={{ mt: 0.2 }}>{projectID?.business}</Typography>
                   </Box>
 
                   <Box
