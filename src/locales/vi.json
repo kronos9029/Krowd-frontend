@@ -14,7 +14,7 @@
     "Navbar_project": "Project",
     "Navbar_business": "Business",
     "Navbar_login": "Login",
-    "Back_to_dashboard": "Dashboard",
+    "Back_to_dashboard": "Console",
     "Thumbnail_landing_hero_title": "",
     "Thumbnail_landing_hero_title_1": "Franchising",
     "Thumbnail_landing_hero_title_2": "with",
@@ -28,7 +28,7 @@
     "card_title_2": "Short-term investment",
     "card_description_2": "< 12 months",
     "card_title_3": "Investment capital only",
-    "card_description_3": "22 USD",
+    "card_description_3": "20$",
     "landingHuge_title": "WHAT IS FRANCHISING?",
     "landingHuge_description1": "Franchising is a commercial activity whereby the franchisor permits and requires the franchisee to conduct the purchase and sale of goods and provision of services according to certain conditions.",
     "landingHuge_description2": "Franchising involves the transfer of technology, trademarks or other intellectual property objects.",
@@ -38,7 +38,7 @@
     "invest_step_title_2": "Top-ups",
     "invest_step_title_3": "Invest",
     "invest_step_1": "Just provide us with the necessary information, or simply Facebook, Gmail, you already have your own account on Krowd's platform.",
-    "invest_step_2": "You need to load into the head capital to account with the Minimum money is 20USD to be into a home headart.",
+    "invest_step_2": "You need to load into the head capital to account with the Minimum money is 20$ to be into a home headart.",
     "invest_step_3": "Find investment opportunities that are right for you and start participating.",
     "question_appear": "Q&A WITH KROWD:",
     "question_appear_1": "Is the 'franchise investment' model popular in Vietnam?",
@@ -94,7 +94,7 @@
     "aboutus_krowd_vision_title_1": "SO WHO ARE WE?",
     "aboutus_krowd_sologan_1": "Krowd will give you support if you have any issues, our support team will respond within a day and we also have detailed documentation.",
     "aboutus_krowd_1": "Crowdfunding has long been a high-yield stream of income for those that can meet the high capital and time requirements necessary.",
-    "aboutus_krowd_2": "Krowd is the only platform making revenue sharing investment accessible for anyone with as little as 22USD.",
+    "aboutus_krowd_2": "Krowd is the only platform making revenue sharing investment accessible for anyone with as little as 20$.",
     "button_click": "See more",
     "Days": "Days",
     "Hours": "Hours",
@@ -105,5 +105,4 @@
     "not_found": "Not found",
     "No_results_found": "No results found for",
     "Try_checking": "Try checking for typos or using complete words."
-
 }

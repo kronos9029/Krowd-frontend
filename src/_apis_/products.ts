@@ -76,7 +76,7 @@ const products = [...Array(24)].map((_, index) => ({
     starCount: random(9999),
     reviewCount: random(9999)
   })),
-  reviews: [...Array(8)].map((_, index) => ({
+  reviews: [...Array(20)].map((_, index) => ({
     id: mockData.id(index),
     name: mockData.name.fullName(index),
     avatarUrl: `/static/mock-images/avatars/avatar_${index + 1}.jpg`,

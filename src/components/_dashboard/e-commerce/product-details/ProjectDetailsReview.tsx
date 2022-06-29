@@ -37,7 +37,19 @@ export default function ProjectDetailsReview({ product }: ProjectDetailsReviewPr
 
   return (
     <>
-      <Grid container spacing={3}>
+      <Grid
+        container
+        width={'100%'}
+        mt={0}
+        mx={0}
+        spacing={3}
+        sx={{ justifyContent: 'space-around' }}
+      >
+        <Box sx={{ my: 3, fontWeight: '900' }}>
+          <Typography variant="subtitle1" sx={{ ml: 1, fontSize: '20px' }}>
+            Danh sách các thành viên trong dự án
+          </Typography>
+        </Box>
         <ProjectDetailsReviewList product={product} />
       </Grid>
     </>
