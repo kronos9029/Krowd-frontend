@@ -80,7 +80,7 @@ const CardStyle = styled(Card)(({ theme }) => {
     minHeight: 300,
     margin: 'auto',
     textAlign: 'left',
-    padding: theme.spacing(0, 3, 0),
+
     boxShadow: `-40px 40px 80px 0 ${shadowCard(0.48)}`,
     [theme.breakpoints.up('md')]: {
       borderRadius: theme.shape.borderRadiusMd,
@@ -213,57 +213,80 @@ export default function Projects() {
   // }
   return (
     <RootStyle title="Danh sách | Krowd">
-      <Box sx={{ mb: { xs: 5, md: 10, textAlign: 'center', paddingTop: '7rem' } }}>
-        <Typography variant="h2" sx={{ mb: 3, color: isLight ? '#14B7CC' : '#FF7F50' }}>
-          Danh sách các dự án
-        </Typography>
-        <Box
-          sx={{
-            mx: { lg: 10, sm: 2 },
-            my: { lg: 5, sm: 2 },
-            display: { sm: 'flex', xs: 'grid' },
-            justifyContent: { md: 'right', sm: 'space-evenly', xs: 'center' }
-          }}
-        >
-          <BlogPostsSearch sx={{ display: 'flex' }} />
+      <Container maxWidth="lg">
+        <Box sx={{ mb: { xs: 5, md: 10, paddingTop: '7rem' } }}>
+          <Typography variant="h2" sx={{ mb: 3 }}>
+            Danh sách các dự án
+          </Typography>
           <Box
-            component="div"
             sx={{
-              ml: { lg: 5, sm: 2 },
+              my: { lg: 5, sm: 2 },
               display: { sm: 'flex', xs: 'grid' },
-              flexDirection: 'row-reverse'
+              justifyContent: { md: 'left', sm: 'space-evenly', xs: 'center' }
             }}
           >
-            <ShopProductSort />
-            {/* <ShopFilterSidebar
+            <BlogPostsSearch sx={{ display: 'flex' }} />
+            <Box
+              component="div"
+              sx={{
+                ml: { lg: 5, sm: 2 },
+                display: { sm: 'flex', xs: 'grid' },
+                flexDirection: 'row-reverse'
+              }}
+            >
+              <ShopProductSort />
+              {/* <ShopFilterSidebar
               formik={formik}
               isOpenFilter={openFilter}
               onResetFilter={handleResetFilter}
               onOpenFilter={handleOpenFilter}
               onCloseFilter={handleCloseFilter}
             /> */}
+            </Box>
           </Box>
-        </Box>
-        <MHidden width="smDown">
-          <Box mx={5} sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs
-              value={currentFieldIndex}
-              onChange={handleChange}
-              variant="fullWidth"
-              scrollButtons="auto"
-              aria-label="basic tabs example"
-            >
-              {fieldList.slice(0, 5).map((value, index) => (
+          <MHidden width="smDown">
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <Tabs
+                value={currentFieldIndex}
+                onChange={handleChange}
+                variant="fullWidth"
+                scrollButtons="auto"
+                aria-label="basic tabs example"
+              >
+                {fieldList.slice(0, 5).map((value, index) => (
+                  <Tab
+                    key={index}
+                    value={value.id}
+                    sx={{
+                      minWidth: { lg: '15% !important', sm: '12% !important' }
+                    }}
+                    label={
+                      <Typography
+                        sx={{
+                          color: currentFieldIndex === value.id ? '#14B7CC' : '',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textAlign: 'center',
+                          '&:hover': {
+                            color: 'primary.main'
+                          }
+                        }}
+                        variant="h6"
+                      >
+                        {value.name}
+                      </Typography>
+                    }
+                  />
+                ))}
                 <Tab
-                  key={index}
-                  value={value.id}
-                  sx={{
-                    minWidth: { lg: '15% !important', sm: '12% !important' }
-                  }}
+                  value={'more'}
+                  sx={{ minWidth: '15% !important' }}
+                  href={PATH_FIELDPAGE}
                   label={
                     <Typography
                       sx={{
-                        color: currentFieldIndex === value.id ? '#14B7CC' : '',
+                        color: currentFieldIndex === 'more' ? '#14B7CC' : '',
                         textOverflow: 'ellipsis',
                         whiteSpace: 'nowrap',
                         overflow: 'hidden',
@@ -274,45 +297,22 @@ export default function Projects() {
                       }}
                       variant="h6"
                     >
-                      {value.name}
+                      <Icon icon={menu2Fill} width={30} /> Tất cả danh mục
                     </Typography>
                   }
                 />
-              ))}
-              <Tab
-                value={'more'}
-                sx={{ minWidth: '15% !important' }}
-                href={PATH_FIELDPAGE}
-                label={
-                  <Typography
-                    sx={{
-                      color: currentFieldIndex === 'more' ? '#14B7CC' : '',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      textAlign: 'center',
-                      '&:hover': {
-                        color: 'primary.main'
-                      }
-                    }}
-                    variant="h6"
-                  >
-                    <Icon icon={menu2Fill} width={30} /> Tất cả danh mục
-                  </Typography>
-                }
-              />
-            </Tabs>
-          </Box>
-        </MHidden>
-        <Grid xs={12} sm={2} md={4}>
-          {!isDefault && (
-            <Typography gutterBottom>
-              <Typography component="span" variant="subtitle1">
-                {/* {filteredProducts.length} */}
+              </Tabs>
+            </Box>
+          </MHidden>
+          <Grid xs={12} sm={2} md={4}>
+            {!isDefault && (
+              <Typography gutterBottom>
+                <Typography component="span" variant="subtitle1">
+                  {/* {filteredProducts.length} */}
+                </Typography>
               </Typography>
-            </Typography>
-          )}
-          {/* <Stack
+            )}
+            {/* <Stack
             direction="row"
             flexWrap="wrap-reverse"
             alignItems="center"
@@ -327,130 +327,122 @@ export default function Projects() {
               isDefault={isDefault}
             />
           </Stack> */}
-        </Grid>
-      </Box>
-      <Container maxWidth={false}>
+          </Grid>
+        </Box>
+
         <Grid container alignItems="center" justifyContent="center" spacing={5}>
           {projectLists.listOfProject?.map((row, index) => (
-            <Grid key={`${currentFieldIndex} ${index}`} item xs={12} sm={6} md={4} lg={3}>
+            <Grid key={`${currentFieldIndex} ${index}`} item xs={12} sm={6} md={6} lg={4}>
               <MotionInView variants={varFadeInUp}>
-                <CardStyle sx={{ maxWidth: 370, maxHeight: 500, height: 500 }}>
-                  <CardMedia
-                    style={{
-                      paddingTop: '2rem',
-                      display: 'center'
-                    }}
-                    component="img"
-                    height="194"
-                    src={row.image}
-                  />
-                  <Typography
+                <Button
+                  onClick={() => handleGetProjectById(row.id)}
+                  href={PATH_DETAILS}
+                  disableRipple={true}
+                  disableElevation={true}
+                  disableTouchRipple={true}
+                  disableFocusRipple={true}
+                >
+                  <CardStyle
                     sx={{
-                      color: isLight ? '#14B7CC' : 'white',
-                      overflow: 'hidden',
-                      paddingTop: '1rem',
-                      textAlign: 'center'
-                    }}
-                    variant="h6"
-                    paragraph
-                  >
-                    {row.name}
-                  </Typography>
-                  {/* <Typography
-                    sx={{
-                      color: isLight ? '#14B7CC' : 'white',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      textAlign: 'center'
-                    }}
-                    variant="h5"
-                    paragraph
-                  >
-                    {row.field.name}
-                  </Typography> */}
-                  <Box minHeight={'7em'}>
-                    <Typography
-                      style={{ textAlign: 'left' }}
-                      sx={{
-                        color: isLight ? '#251E18' : 'black',
-                        textOverflow: 'ellipsis',
-                        // whiteSpace: 'nowrap',
-                        overflow: 'hidden',
-                        display: '-webkit-box',
-                        WebkitBoxOrient: 'vertical',
-                        WebkitLineClamp: 3
-                      }}
-                    >
-                      {row.description}
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      paddingTop: '0.5rem'
+                      width: 360,
+                      maxHeight: 450,
+                      height: 450
+                      // '&:hover': { width: 420 }
                     }}
                   >
-                    <Typography
-                      paragraph
-                      sx={{
-                        color: '#251E18',
-                        marginBottom: '0.2rem'
+                    <CardMedia
+                      style={{
+                        display: 'center'
                       }}
-                    >
-                      <strong>Đã đầu tư</strong>
-                    </Typography>
-                    <Typography
-                      paragraph
-                      sx={{
-                        color: '#251E18',
-                        marginBottom: '0.2rem'
-                      }}
-                    >
-                      <strong>Mục tiêu</strong>
-                    </Typography>
-                  </Box>
-                  <BorderLinearProgress
-                    variant="determinate"
-                    value={(row.investedCapital / row.investmentTargetCapital) * 100}
-                  />
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      paddingTop: '0.2rem'
-                    }}
-                  >
-                    <Typography
-                      paragraph
-                      sx={{
-                        color: '#14B7CC'
-                      }}
-                    >
-                      <strong>{fCurrency(row.investedCapital)}</strong>
-                    </Typography>
-                    <Typography
-                      paragraph
-                      sx={{
-                        color: '#FF7F56'
-                      }}
-                    >
-                      <strong>{fCurrency(row.investmentTargetCapital)}</strong>
-                    </Typography>
-                  </Box>
-                  <Button
-                    style={{
-                      color: '#14B7CC',
-                      display: 'flex',
-                      float: 'right'
-                    }}
-                    onClick={() => handleGetProjectById(row.id)}
-                    href={PATH_DETAILS}
-                  >
-                    {t('button_click')}
-                  </Button>
-                </CardStyle>
+                      component="img"
+                      height={240}
+                      src={row.image}
+                    />
+                    <Box px={3}>
+                      <Typography
+                        sx={{
+                          // color: isLight ? '#14B7CC' : 'white',
+                          overflow: 'hidden',
+                          paddingTop: '1rem',
+                          whiteSpace: 'nowrap'
+                        }}
+                        variant="subtitle1"
+                      >
+                        {row.name}
+                      </Typography>
+                      <Box minHeight={'5em'}>
+                        <Typography
+                          style={{ textAlign: 'left' }}
+                          sx={{
+                            color: isLight ? '#251E18' : 'black',
+                            textOverflow: 'ellipsis',
+                            overflow: 'hidden',
+                            display: '-webkit-box',
+                            WebkitBoxOrient: 'vertical',
+                            WebkitLineClamp: 3
+                          }}
+                          variant="body2"
+                        >
+                          {row.description}
+                        </Typography>
+                      </Box>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          paddingTop: '0.5rem'
+                        }}
+                      >
+                        <Typography
+                          paragraph
+                          sx={{
+                            color: '#251E18',
+                            marginBottom: '0.2rem'
+                          }}
+                        >
+                          <strong>Đã đầu tư</strong>
+                        </Typography>
+                        <Typography
+                          paragraph
+                          sx={{
+                            color: '#251E18',
+                            marginBottom: '0.2rem'
+                          }}
+                        >
+                          <strong>Mục tiêu</strong>
+                        </Typography>
+                      </Box>
+                      <BorderLinearProgress
+                        variant="determinate"
+                        value={(row.investedCapital / row.investmentTargetCapital) * 100}
+                      />
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          paddingTop: '0.2rem'
+                        }}
+                      >
+                        <Typography
+                          paragraph
+                          sx={{
+                            color: '#14B7CC'
+                          }}
+                        >
+                          <strong>{fCurrency(row.investedCapital)}</strong>
+                        </Typography>
+                        <Typography
+                          paragraph
+                          sx={{
+                            color: '#FF7F56'
+                          }}
+                        >
+                          <strong>{fCurrency(row.investmentTargetCapital)}</strong>
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </CardStyle>
+                </Button>
               </MotionInView>
             </Grid>
           ))}
