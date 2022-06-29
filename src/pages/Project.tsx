@@ -111,48 +111,18 @@ const CardStyle = styled(Card)(({ theme }) => {
     }
   };
 });
-const FieldList = [
-  {
-    fieldName: 'Ăn uống'
-  },
-  {
-    fieldName: 'Làm đẹp'
-  },
-  {
-    fieldName: 'Giáo dục'
-  },
-  {
-    fieldName: 'Thời trang'
-  },
-  {
-    fieldName: 'Thể hình'
-  },
-  {
-    fieldName: 'Sức khỏe'
-  },
-  {
-    fieldName: 'Y tế'
-  },
-  {
-    fieldName: 'Du lịch'
-  }
-];
 export default function Projects() {
-  const { themeStretch } = useSettings();
-  const index = Math.floor(Math.random() * 28);
   const dispatch = useDispatch();
-  const [openFilter, setOpenFilter] = useState(false);
-  // const { products, sortBy, filters } = useSelector(
-  //   (state: { product: ProductState }) => state.product
-  // );
+  // Redux
+  const { projectLists } = useSelector((state: RootState) => state.project);
+  const { fieldList } = useSelector((state: RootState) => state.fieldKrowd);
   const { projects, sortBy, filters } = useSelector(
     (state: { project: ProjectState }) => state.project
   );
-  const { projectLists } = useSelector((state: RootState) => state.project);
-  const { fieldList } = useSelector((state: RootState) => state.fieldKrowd);
-
-  // const filteredProducts = applyFilter(projects, sortBy, filters);
-
+  // State
+  const [openFilter, setOpenFilter] = useState(false);
+  const [currentFieldIndex, setCurrentFieldIndex] = useState('');
+  // Formik
   const formik = useFormik<ProjectFilter>({
     initialValues: {
       status: filters.status,
@@ -169,19 +139,15 @@ export default function Projects() {
     }
   });
 
-  const { values, resetForm, handleSubmit, isSubmitting, initialValues } = formik;
-
+  const { values, resetForm, handleSubmit } = formik;
   const isDefault = !values.status && values.areaId === 'HCM';
   useEffect(() => {
     dispatch(getProducts());
     dispatch(getAllProject('ADMIN'));
     dispatch(getFieldList());
-  }, [dispatch]);
-
-  useEffect(() => {
-    // dispatch(filterProducts(values));
     dispatch(filterProjects(values));
-  }, [dispatch]);
+    setCurrentFieldIndex(fieldList[0]?.id);
+  }, [dispatch, fieldList[0]?.id]);
 
   const handleGetProjectById = (activeProjectId: string) => {
     dispatch(getProjectId(activeProjectId));
@@ -199,7 +165,6 @@ export default function Projects() {
     resetForm();
   };
 
-  const [currentFieldIndex, setCurrentFieldIndex] = useState('All');
   const currentLanguageCode = cookies.get('i18next') || 'en';
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
   const { t } = useTranslation();
@@ -288,41 +253,17 @@ export default function Projects() {
               scrollButtons="auto"
               aria-label="basic tabs example"
             >
-              <Tab
-                value={'All'}
-                sx={{ minWidth: '15% !important' }}
-                label={
-                  <Typography
-                    sx={{
-                      color: currentFieldIndex === 'All' ? '#14B7CC' : '',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      textAlign: 'center',
-                      '&:hover': {
-                        color: 'primary.main'
-                      }
-                    }}
-                    variant="h6"
-                  >
-                    All
-                  </Typography>
-                }
-              />
               {fieldList.slice(0, 5).map((value, index) => (
                 <Tab
                   key={index}
-                  value={value.name}
+                  value={value.id}
                   sx={{
                     minWidth: { lg: '15% !important', sm: '12% !important' }
                   }}
                   label={
                     <Typography
                       sx={{
-                        color:
-                          currentFieldIndex === value.name && value.name !== 'more'
-                            ? '#14B7CC'
-                            : '',
+                        color: currentFieldIndex === value.id ? '#14B7CC' : '',
                         textOverflow: 'ellipsis',
                         whiteSpace: 'nowrap',
                         overflow: 'hidden',
@@ -356,7 +297,7 @@ export default function Projects() {
                     }}
                     variant="h6"
                   >
-                    <Icon icon={menu2Fill} width={30} /> Khác
+                    <Icon icon={menu2Fill} width={30} /> Tất cả danh mục
                   </Typography>
                 }
               />
@@ -369,7 +310,6 @@ export default function Projects() {
               <Typography component="span" variant="subtitle1">
                 {/* {filteredProducts.length} */}
               </Typography>
-              &nbsp;Dự án tìm thấy
             </Typography>
           )}
           {/* <Stack
@@ -394,7 +334,7 @@ export default function Projects() {
           {projectLists.listOfProject?.map((row, index) => (
             <Grid key={`${currentFieldIndex} ${index}`} item xs={12} sm={6} md={4} lg={3}>
               <MotionInView variants={varFadeInUp}>
-                <CardStyle sx={{ maxWidth: 345, maxHeight: 500, height: 500 }}>
+                <CardStyle sx={{ maxWidth: 370, maxHeight: 500, height: 500 }}>
                   <CardMedia
                     style={{
                       paddingTop: '2rem',
@@ -407,13 +347,11 @@ export default function Projects() {
                   <Typography
                     sx={{
                       color: isLight ? '#14B7CC' : 'white',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
                       overflow: 'hidden',
                       paddingTop: '1rem',
                       textAlign: 'center'
                     }}
-                    variant="h5"
+                    variant="h6"
                     paragraph
                   >
                     {row.name}
@@ -431,20 +369,22 @@ export default function Projects() {
                   >
                     {row.field.name}
                   </Typography> */}
-                  <Typography
-                    style={{ textAlign: 'left' }}
-                    sx={{
-                      color: isLight ? '#251E18' : 'black',
-                      textOverflow: 'ellipsis',
-                      // whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      display: '-webkit-box',
-                      WebkitBoxOrient: 'vertical',
-                      WebkitLineClamp: 5
-                    }}
-                  >
-                    {row.description} .Đây hứa hẹn sẽ là dự án nóng cho các nhà đầu tư.
-                  </Typography>
+                  <Box minHeight={'7em'}>
+                    <Typography
+                      style={{ textAlign: 'left' }}
+                      sx={{
+                        color: isLight ? '#251E18' : 'black',
+                        textOverflow: 'ellipsis',
+                        // whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        display: '-webkit-box',
+                        WebkitBoxOrient: 'vertical',
+                        WebkitLineClamp: 5
+                      }}
+                    >
+                      {row.description} .Đây hứa hẹn sẽ là dự án nóng cho các nhà đầu tư.
+                    </Typography>
+                  </Box>
                   <Box
                     sx={{
                       display: 'flex',

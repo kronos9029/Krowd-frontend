@@ -120,18 +120,18 @@ export default function ComponentsDetails() {
   return (
     <Page title="Chi tiết dự án | Krowd">
       <Container maxWidth={themeStretch ? false : 'lg'} sx={{ paddingBottom: '4rem' }}>
-        <Typography
-          sx={{
-            paddingTop: '7rem',
-            textAlign: 'center',
-            color: 'rgb(20, 183, 204)'
-          }}
-          variant="h2"
-        >
-          Chi tiết dự án
-        </Typography>
         {product && (
           <>
+            <Typography
+              sx={{
+                paddingTop: '7rem',
+                textAlign: 'center',
+                color: 'rgb(20, 183, 204)'
+              }}
+              variant="h2"
+            >
+              {projectID?.name}
+            </Typography>
             <Card sx={{ my: 3 }}>
               <Grid container>
                 <Grid p={{ xs: 1, sm: 5 }} item xs={12} md={6} lg={6}>
@@ -140,14 +140,8 @@ export default function ComponentsDetails() {
                     <LargeImgStyle alt="large image" src={projectID?.image} />
                   </Box>
                 </Grid>
-                {/* <Grid item xs={12} md={6} lg={5}>
-                  <ProjectDetailsHero product={product} />
-                  <Box sx={{ cursor: 'zoom-in', paddingTop: '100%', position: 'relative' }}>
-                    <LargeImgStyle alt="large image" src={projectID?.image} />
-                  </Box>
-                </Grid> */}
                 <Grid item xs={12} md={6} lg={6} sx={{ pr: 3, pl: 3, pt: 5, pb: 3 }}>
-                  <Typography
+                  {/* <Typography
                     variant="overline"
                     sx={{
                       mb: 1,
@@ -156,12 +150,8 @@ export default function ComponentsDetails() {
                     }}
                   >
                     {projectID?.status}
-                  </Typography>
-
-                  <Typography variant="h5" paragraph>
-                    {projectID?.name}
-                  </Typography>
-
+                  </Typography> */}
+                  <Divider sx={{ borderStyle: 'dashed' }} />
                   <Box
                     sx={{
                       my: 3,
@@ -172,7 +162,7 @@ export default function ComponentsDetails() {
                     <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
                       Thuộc doanh nghiệp
                     </Typography>
-                    <Typography sx={{ mt: 0.2 }}>{projectID?.business}</Typography>
+                    <Typography sx={{ mt: 0.2 }}>{projectID?.business?.name}</Typography>
                   </Box>
 
                   <Box
@@ -208,21 +198,12 @@ export default function ComponentsDetails() {
                     }}
                   >
                     <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
-                      Doanh thu chia sẻ (%)
+                      Doanh thu chia sẻ
                     </Typography>
-                    <Typography sx={{ mt: 0.2 }}>{projectID?.multiplier}</Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      mb: 3,
-                      display: 'flex',
-                      justifyContent: 'space-between'
-                    }}
-                  >
-                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
-                      Thành viên đã tham gia
+                    <Typography sx={{ mt: 0.2 }}>
+                      {projectID?.multiplier}
+                      <span> (%)</span>
                     </Typography>
-                    <Typography sx={{ mt: 0.2 }}>12</Typography>
                   </Box>
                   <Box
                     sx={{
@@ -234,12 +215,15 @@ export default function ComponentsDetails() {
                     <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
                       Hệ số nhân
                     </Typography>
-                    <Typography sx={{ mt: 0.2 }}>{projectID?.multiplier}</Typography>
+                    <Typography sx={{ mt: 0.2 }}>
+                      <span>x </span>
+                      {projectID?.multiplier}
+                    </Typography>
                   </Box>
 
                   <Box
                     sx={{
-                      mb: 2,
+                      mb: 3,
                       display: 'flex',
                       justifyContent: 'space-between'
                     }}
@@ -247,14 +231,31 @@ export default function ComponentsDetails() {
                     <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
                       Thời hạn
                     </Typography>
-                    <Typography sx={{ mt: 0.2 }}>2 month</Typography>
+                    <Typography sx={{ mt: 0.2 }}>
+                      {projectID?.duration} <span> tháng</span>
+                    </Typography>
                   </Box>
-                  <Box>
+                  <Box
+                    sx={{
+                      mb: 4,
+                      display: 'flex',
+                      justifyContent: 'space-between'
+                    }}
+                  >
+                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
+                      Số kì thanh toán
+                    </Typography>
+                    <Typography sx={{ mt: 0.2 }}>
+                      {projectID?.numOfStage} <span> kì</span>
+                    </Typography>
+                  </Box>
+                  <Divider sx={{ borderStyle: 'dashed' }} />
+                  <Box mt={'1rem'}>
                     <Box
                       sx={{
                         display: 'flex',
                         justifyContent: 'space-between',
-                        paddingTop: '0.5rem'
+                        my: '0.5rem'
                       }}
                     >
                       <Typography
@@ -276,12 +277,19 @@ export default function ComponentsDetails() {
                         <strong>Mục tiêu</strong>
                       </Typography>
                     </Box>
-                    <BorderLinearProgress variant="determinate" value={projectID?.sharedRevenue} />
+                    <BorderLinearProgress
+                      variant="determinate"
+                      value={
+                        (projectID &&
+                          (projectID.investedCapital / projectID.sharedRevenue) * 100) ??
+                        0
+                      }
+                    />
                     <Box
                       sx={{
                         display: 'flex',
                         justifyContent: 'space-between',
-                        paddingTop: '0.2rem'
+                        my: '0.5rem'
                       }}
                     >
                       <Typography
@@ -290,7 +298,7 @@ export default function ComponentsDetails() {
                           color: '#14B7CC'
                         }}
                       >
-                        <strong>{projectID?.remainAmount}</strong>
+                        <strong>{projectID?.investedCapital}</strong>
                       </Typography>
                       <Typography
                         paragraph

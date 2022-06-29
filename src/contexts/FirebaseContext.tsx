@@ -64,13 +64,11 @@ function AuthProvider({ children }: { children: ReactNode }) {
           docRef
             .get()
             .then((doc) => {
-              console.log('Dang o day ne');
               if (doc.exists) {
                 setProfile(doc.data());
               }
             })
             .catch((error) => {
-              console.log('loi o dong 2 firebaseContext ne');
               console.error(error);
             });
           dispatch({
@@ -78,7 +76,6 @@ function AuthProvider({ children }: { children: ReactNode }) {
             payload: { isAuthenticated: true, user }
           });
         } else {
-          console.log('loi o dong 3 firebaseContext ne');
           dispatch({
             type: Types.Initial,
             payload: { isAuthenticated: false, user: null }
