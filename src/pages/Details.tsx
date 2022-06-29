@@ -3,10 +3,22 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 // material
 import { alpha, styled } from '@mui/material/styles';
-import { Box, Tab, Card, Grid, Divider, Skeleton, Container, Typography } from '@mui/material';
+import {
+  Box,
+  Tab,
+  Card,
+  Grid,
+  Divider,
+  Skeleton,
+  Container,
+  Typography,
+  LinearProgress,
+  linearProgressClasses,
+  Tooltip
+} from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 // redux
-import { useDispatch, useSelector } from 'redux/store';
+import { RootState, useDispatch, useSelector } from 'redux/store';
 import { getProduct, addCart, onGotoStep } from 'redux/slices/product';
 // routes
 // @types
@@ -23,22 +35,12 @@ import {
   ProjectDetailsHero
 } from '../components/_dashboard/e-commerce/product-details';
 import ProjectPackage from 'components/_dashboard/general-analytics/ProjectPackage';
-
-// ----------------------------------------------------------------------
-
-const IconWrapperStyle = styled('div')(({ theme }) => ({
-  margin: 'auto',
-  display: 'flex',
-  borderRadius: '50%',
-  alignItems: 'center',
-  width: theme.spacing(8),
-  justifyContent: 'center',
-  height: theme.spacing(8),
-  marginBottom: theme.spacing(3),
-  color: theme.palette.primary.main,
-  backgroundColor: `${alpha(theme.palette.primary.main, 0.08)}`
-}));
-
+import twitterFill from '@iconify/icons-eva/twitter-fill';
+import linkedinFill from '@iconify/icons-eva/linkedin-fill';
+import facebookFill from '@iconify/icons-eva/facebook-fill';
+import instagramFilled from '@iconify/icons-ant-design/instagram-filled';
+import { MIconButton } from 'components/@material-extend';
+import { fCurrency } from 'utils/formatNumber';
 // ----------------------------------------------------------------------
 
 const SkeletonLoad = (
@@ -55,6 +57,31 @@ const SkeletonLoad = (
     </Grid>
   </Grid>
 );
+const SOCIALS = [
+  {
+    name: 'Facebook',
+    icon: <Icon icon={facebookFill} width={20} height={20} color="#1877F2" />
+  },
+  {
+    name: 'Instagram',
+    icon: <Icon icon={instagramFilled} width={20} height={20} color="#D7336D" />
+  },
+  {
+    name: 'Linkedin',
+    icon: <Icon icon={linkedinFill} width={20} height={20} color="#006097" />
+  },
+  {
+    name: 'Twitter',
+    icon: <Icon icon={twitterFill} width={20} height={20} color="#1C9CEA" />
+  }
+];
+const LargeImgStyle = styled('img')(({ theme }) => ({
+  top: 0,
+  width: '100%',
+  height: '100%',
+  objectFit: 'cover',
+  position: 'absolute'
+}));
 
 export default function ComponentsDetails() {
   const { themeStretch } = useSettings();
@@ -65,18 +92,12 @@ export default function ComponentsDetails() {
   const { product, error, checkout } = useSelector(
     (state: { product: ProductState }) => state.product
   );
+  const { activeProjectId: projectID } = useSelector((state: RootState) => state.project);
 
   useEffect(() => {
     dispatch(getProduct(name));
   }, [dispatch, name]);
 
-  const handleAddCart = (product: CartItem) => {
-    dispatch(addCart(product));
-  };
-
-  const handleGotoStep = (step: number) => {
-    dispatch(onGotoStep(step));
-  };
   const projectPackage = {
     id: null,
     name: null,
@@ -84,6 +105,17 @@ export default function ComponentsDetails() {
     investValue: null,
     voucherDescription: ['Ưu đãi khi mua gói 1', 'Ưu đãi khi mua gói 2', 'Ưu đãi khi mua gói 3']
   };
+  const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
+    height: 10,
+    borderRadius: 5,
+    [`&.${linearProgressClasses.colorPrimary}`]: {
+      backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 300 : 700]
+    },
+    [`& .${linearProgressClasses.bar}`]: {
+      borderRadius: 5,
+      backgroundColor: '#14B7CC'
+    }
+  }));
   return (
     <Page title="Chi tiết dự án | Krowd">
       <Container maxWidth={themeStretch ? false : 'lg'} sx={{ paddingBottom: '4rem' }}>
@@ -102,16 +134,178 @@ export default function ComponentsDetails() {
           <>
             <Card>
               <Grid container>
-                <Grid item xs={12} md={6} lg={7}>
-                  <ProjectDetailsHero product={product} />
-                </Grid>
                 <Grid item xs={12} md={6} lg={5}>
-                  <ProductDetailsSummary
-                    product={product}
-                    cart={checkout.cart}
-                    onAddCart={handleAddCart}
-                    onGotoStep={handleGotoStep}
-                  />
+                  {/* <ProjectDetailsHero product={product} /> */}
+                  <Box sx={{ cursor: 'zoom-in', paddingTop: '100%', position: 'relative' }}>
+                    <LargeImgStyle alt="large image" src={projectID?.image} />
+                  </Box>
+                </Grid>
+                <Grid item xs={12} md={6} lg={7} sx={{ pr: 3, pl: 3 }}>
+                  <Typography
+                    variant="overline"
+                    sx={{
+                      mb: 1,
+                      display: 'block',
+                      color: projectID?.status === 'Đang hoạt động' ? 'error.main' : 'info.main'
+                    }}
+                  >
+                    {projectID?.status}
+                  </Typography>
+
+                  <Typography variant="h5" paragraph>
+                    {projectID?.name}
+                  </Typography>
+
+                  <Box
+                    sx={{
+                      my: 3,
+                      display: 'flex',
+                      justifyContent: 'space-between'
+                    }}
+                  >
+                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
+                      Thuộc doanh nghiệp
+                    </Typography>
+                    <Typography sx={{ mt: 0.2 }}>{projectID?.businessId}</Typography>
+                  </Box>
+
+                  <Box
+                    sx={{
+                      mb: 3,
+                      display: 'flex',
+                      justifyContent: 'space-between'
+                    }}
+                  >
+                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
+                      Thuộc Khu vực:
+                    </Typography>
+                    <Typography sx={{ mt: 0.2 }}>{projectID?.name}</Typography>
+                  </Box>
+
+                  <Box
+                    sx={{
+                      mb: 3,
+                      display: 'flex',
+                      justifyContent: 'space-between'
+                    }}
+                  >
+                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
+                      Địa chỉ:
+                    </Typography>
+                    <Typography sx={{ mt: 0.2 }}>{projectID?.address}</Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      mb: 3,
+                      display: 'flex',
+                      justifyContent: 'space-between'
+                    }}
+                  >
+                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
+                      Doanh thu chia sẻ (%)
+                    </Typography>
+                    <Typography sx={{ mt: 0.2 }}>{projectID?.multiplier}</Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      mb: 3,
+                      display: 'flex',
+                      justifyContent: 'space-between'
+                    }}
+                  >
+                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
+                      Thành viên đã tham gia
+                    </Typography>
+                    <Typography sx={{ mt: 0.2 }}>12</Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      mb: 3,
+                      display: 'flex',
+                      justifyContent: 'space-between'
+                    }}
+                  >
+                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
+                      Hệ số nhân
+                    </Typography>
+                    <Typography sx={{ mt: 0.2 }}>{projectID?.multiplier}</Typography>
+                  </Box>
+
+                  <Box
+                    sx={{
+                      mb: 2,
+                      display: 'flex',
+                      justifyContent: 'space-between'
+                    }}
+                  >
+                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
+                      Thời hạn
+                    </Typography>
+                    <Typography sx={{ mt: 0.2 }}>2 month</Typography>
+                  </Box>
+                  <Box>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        paddingTop: '0.5rem'
+                      }}
+                    >
+                      <Typography
+                        paragraph
+                        sx={{
+                          color: '#251E18',
+                          marginBottom: '0.2rem'
+                        }}
+                      >
+                        <strong>Đã đầu tư</strong>
+                      </Typography>
+                      <Typography
+                        paragraph
+                        sx={{
+                          color: '#251E18',
+                          marginBottom: '0.2rem'
+                        }}
+                      >
+                        <strong>Mục tiêu</strong>
+                      </Typography>
+                    </Box>
+                    <BorderLinearProgress variant="determinate" value={projectID?.sharedRevenue} />
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        paddingTop: '0.2rem'
+                      }}
+                    >
+                      <Typography
+                        paragraph
+                        sx={{
+                          color: '#14B7CC'
+                        }}
+                      >
+                        <strong>{projectID?.remainAmount}</strong>
+                      </Typography>
+                      <Typography
+                        paragraph
+                        sx={{
+                          color: '#FF7F56'
+                        }}
+                      >
+                        <strong>{projectID?.sharedRevenue}</strong>
+                      </Typography>
+                    </Box>
+                  </Box>
+
+                  <Divider sx={{ borderStyle: 'dashed' }} />
+
+                  <Box sx={{ mt: 1, textAlign: 'center' }}>
+                    {SOCIALS.map((social) => (
+                      <Tooltip key={social.name} title={social.name}>
+                        <MIconButton>{social.icon}</MIconButton>
+                      </Tooltip>
+                    ))}
+                  </Box>
                 </Grid>
               </Grid>
             </Card>

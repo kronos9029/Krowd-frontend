@@ -34,7 +34,6 @@ export default function FieldCard({ item }: ComponentCardProps) {
             sx={{
               p: 1,
               boxShadow: (theme) => theme.customShadows.z8
-              //   '&:hover img': { transform: 'scale(1.1)' }
             }}
           >
             <CardActionArea

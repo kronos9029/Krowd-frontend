@@ -6,8 +6,10 @@ import minusFill from '@iconify/icons-eva/minus-fill';
 import twitterFill from '@iconify/icons-eva/twitter-fill';
 import linkedinFill from '@iconify/icons-eva/linkedin-fill';
 import facebookFill from '@iconify/icons-eva/facebook-fill';
-import { useFormik, Form, FormikProvider, useField } from 'formik';
 import instagramFilled from '@iconify/icons-ant-design/instagram-filled';
+
+import { useFormik, Form, FormikProvider, useField } from 'formik';
+
 import roundAddShoppingCart from '@iconify/icons-ic/round-add-shopping-cart';
 // material
 import { useTheme, styled } from '@mui/material/styles';
@@ -198,14 +200,6 @@ export default function ProductDetailsSummary({
     <RootStyle {...other}>
       <FormikProvider value={formik}>
         <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-          {/* <Label
-            variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
-            color={inventoryType === 'Đang hoạt động' ? 'success' : 'error'}
-            sx={{ textTransform: 'uppercase' }}
-          >
-            {sentenceCase(inventoryType || '')}
-          </Label> */}
-
           <Typography
             variant="overline"
             sx={{
@@ -220,15 +214,6 @@ export default function ProductDetailsSummary({
           <Typography variant="h5" paragraph>
             {name}
           </Typography>
-
-          {/* <Typography variant="h4" sx={{ mb: 3 }}>
-            <Box component="span" sx={{ color: 'text.disabled', textDecoration: 'line-through' }}>
-              {priceSale && fCurrency(priceSale)}
-            </Box>
-            &nbsp;{fCurrency(price)}
-          </Typography> */}
-
-          <Divider sx={{ borderStyle: 'dashed' }} />
 
           <Box
             sx={{

@@ -1,18 +1,8 @@
 // material
 import { alpha, useTheme, styled } from '@mui/material/styles';
-import {
-  Grid,
-  Card,
-  Container,
-  Typography,
-  useMediaQuery,
-  Button,
-  Tab,
-  Tabs,
-  Stack,
-  Box,
-  Divider
-} from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
+
+import { Box, Grid, Paper, Typography, CardActionArea, Avatar } from '@mui/material';
 import { MHidden } from '../components/@material-extend';
 import { varFadeInUp, MotionInView } from '../components/animate';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
@@ -33,7 +23,7 @@ import { Formik, useFormik } from 'formik';
 import { useEffect, useState } from 'react';
 import { filter, includes, orderBy } from 'lodash';
 // redux
-import { useDispatch, useSelector } from 'redux/store';
+import { RootState, useDispatch, useSelector } from 'redux/store';
 // routes
 // utils
 import fakeRequest from 'utils/fakeRequest';
@@ -47,6 +37,8 @@ import menu2Fill from '@iconify/icons-eva/menu-2-fill';
 import HeaderBreadcrumbs from 'components/HeaderBreadcrumbs';
 import FieldCard from './FieldCard';
 import { paramCase } from 'change-case';
+import { getFieldList } from 'redux/slices/krowd_slices/field';
+import { Link } from 'react-router-dom';
 // ----------------------------------------------------------------------
 export const FOUNDATION_LIST = [
   'Ăn Uống',
@@ -106,6 +98,7 @@ const Language = [
 
 export default function Fields() {
   const dispatch = useDispatch();
+  const { fieldList } = useSelector((state: RootState) => state.fieldKrowd);
 
   const currentLanguageCode = cookies.get('i18next') || 'en';
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
@@ -114,6 +107,9 @@ export default function Fields() {
   const theme = useTheme();
   const isLight = theme.palette.mode === 'light';
 
+  useEffect(() => {
+    dispatch(getFieldList());
+  }, [dispatch]);
   return (
     <RootStyle title="Danh sách | Krowd">
       <Box sx={{ mb: { xs: 5, md: 10, textAlign: 'center', paddingTop: '7rem' } }}>
@@ -130,8 +126,35 @@ export default function Fields() {
         <Grid item xs={2} lg={2}></Grid>
         <Grid item xs={8} sm={12} md={12} lg={8}>
           <Grid container spacing={0.5}>
-            {FOUNDATION_LIST.map((item) => (
-              <FieldCard key={item.name} item={item} />
+            {fieldList.map((item) => (
+              <Grid key={item.id} item xs={12} sm={6} md={2}>
+                <MotionInView variants={varFadeInUp}>
+                  {/* <Link component={RouterLink} to={'#'} underline="none"> */}
+                  <Paper
+                    sx={{
+                      p: 1,
+                      boxShadow: (theme) => theme.customShadows.z8
+                    }}
+                  >
+                    <CardActionArea
+                      sx={{
+                        p: 2,
+                        borderRadius: 1,
+                        color: 'primary.main',
+                        bgcolor: 'background.neutral'
+                      }}
+                    >
+                      <Avatar src={item.name} sx={{ width: '100%', height: '100%' }} />
+                    </CardActionArea>
+
+                    <Typography variant="subtitle2" sx={{ mt: 1, p: 1, textAlign: 'center' }}>
+                      {item.name}
+                    </Typography>
+                  </Paper>
+                  {/* </Link> */}
+                </MotionInView>
+              </Grid>
+              // <FieldCard key={item.name} item={item} />
             ))}
           </Grid>
         </Grid>

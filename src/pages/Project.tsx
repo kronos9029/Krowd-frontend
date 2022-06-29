@@ -33,7 +33,7 @@ import { Formik, useFormik } from 'formik';
 import { useEffect, useState } from 'react';
 import { filter, includes, orderBy } from 'lodash';
 // redux
-import { useDispatch, useSelector } from 'redux/store';
+import { RootState, useDispatch, useSelector } from 'redux/store';
 // routes
 // utils
 import fakeRequest from 'utils/fakeRequest';
@@ -44,6 +44,9 @@ import { BlogPostsSearch } from 'components/_dashboard/blog';
 // icon
 import { Icon } from '@iconify/react';
 import menu2Fill from '@iconify/icons-eva/menu-2-fill';
+import { getAllProject, filterProjects, getProjectId } from 'redux/slices/krowd_slices/project';
+import { Project, ProjectFilter, ProjectState } from '../@types/krowd/project';
+import { getFieldList } from 'redux/slices/krowd_slices/field';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
@@ -139,18 +142,21 @@ export default function Projects() {
   const index = Math.floor(Math.random() * 28);
   const dispatch = useDispatch();
   const [openFilter, setOpenFilter] = useState(false);
-  const { products, sortBy, filters } = useSelector(
-    (state: { product: ProductState }) => state.product
+  // const { products, sortBy, filters } = useSelector(
+  //   (state: { product: ProductState }) => state.product
+  // );
+  const { projects, sortBy, filters } = useSelector(
+    (state: { project: ProjectState }) => state.project
   );
-  const filteredProducts = applyFilter(products, sortBy, filters);
+  const { projectLists } = useSelector((state: RootState) => state.project);
+  const { fieldList } = useSelector((state: RootState) => state.fieldKrowd);
 
-  const formik = useFormik<ProductFilter>({
+  // const filteredProducts = applyFilter(projects, sortBy, filters);
+
+  const formik = useFormik<ProjectFilter>({
     initialValues: {
-      gender: filters.gender,
-      category: filters.category,
-      colors: filters.colors,
-      priceRange: filters.priceRange,
-      rating: filters.rating
+      status: filters.status,
+      areaId: filters.areaId
     },
     onSubmit: async (values, { setSubmitting }) => {
       try {
@@ -165,20 +171,21 @@ export default function Projects() {
 
   const { values, resetForm, handleSubmit, isSubmitting, initialValues } = formik;
 
-  const isDefault =
-    !values.priceRange &&
-    !values.rating &&
-    values.gender.length === 0 &&
-    values.colors.length === 0 &&
-    values.category === 'All';
+  const isDefault = !values.status && values.areaId === 'HCM';
   useEffect(() => {
     dispatch(getProducts());
+    dispatch(getAllProject('ADMIN'));
+    dispatch(getFieldList());
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(filterProducts(values));
+    // dispatch(filterProducts(values));
+    dispatch(filterProjects(values));
   }, [dispatch]);
 
+  const handleGetProjectById = (activeProjectId: string) => {
+    dispatch(getProjectId(activeProjectId));
+  };
   const handleOpenFilter = () => {
     setOpenFilter(true);
   };
@@ -192,7 +199,7 @@ export default function Projects() {
     resetForm();
   };
 
-  const [currentFieldIndex, setCurrentFieldIndex] = useState(FieldList.at(0)?.fieldName);
+  const [currentFieldIndex, setCurrentFieldIndex] = useState('All');
   const currentLanguageCode = cookies.get('i18next') || 'en';
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
   const { t } = useTranslation();
@@ -217,45 +224,28 @@ export default function Projects() {
       backgroundColor: '#14B7CC'
     }
   }));
-  function applyFilter(products: Product[], sortBy: string | null, filters: ProductFilter) {
-    // SORT BY
-    if (sortBy === 'featured') {
-      products = orderBy(products, ['sold'], ['desc']);
-    }
-    if (sortBy === 'newest') {
-      products = orderBy(products, ['createdAt'], ['desc']);
-    }
-    if (sortBy === 'priceDesc') {
-      products = orderBy(products, ['price'], ['desc']);
-    }
-    if (sortBy === 'priceAsc') {
-      products = orderBy(products, ['price'], ['asc']);
-    }
-    // FILTER Project
-    if (filters.gender.length > 0) {
-      products = filter(products, (_product) => includes(filters.gender, _product.gender));
-    }
-    if (filters.category !== 'All') {
-      products = filter(products, (_product) => _product.category === filters.category);
-    }
-    if (filters.colors.length > 0) {
-      products = filter(products, (_product) =>
-        _product.colors.some((color) => filters.colors.includes(color))
-      );
-    }
-    if (filters.priceRange) {
-      products = filter(products, (_product) => {
-        if (filters.priceRange === 'below') {
-          return _product.price < 25;
-        }
-        if (filters.priceRange === 'between') {
-          return _product.price >= 25 && _product.price <= 75;
-        }
-        return _product.price > 75;
-      });
-    }
-    return products;
-  }
+  // function applyFilter(projects: Project[], sortBy: string | null, filters: ProjectFilter) {
+  //   // SORT BY
+  //   if (sortBy === 'featured') {
+  //     projects = orderBy(projects, ['sold'], ['desc']);
+  //   }
+  //   if (sortBy === 'newest') {
+  //     projects = orderBy(projects, ['createdAt'], ['desc']);
+  //   }
+  //   if (sortBy === 'priceDesc') {
+  //     projects = orderBy(projects, ['price'], ['desc']);
+  //   }
+  //   if (sortBy === 'priceAsc') {
+  //     projects = orderBy(projects, ['price'], ['asc']);
+  //   }
+  //   if (filters.status.length > 0) {
+  //     projects = filter(projects, (_product) => includes(filters.status, _product.status));
+  //   }
+  //   if (filters.areaId !== 'All') {
+  //     projects = filter(projects, (_product) => _product.areaId === filters.areaId);
+  //   }
+  //   return projects;
+  // }
   return (
     <RootStyle title="Danh sách | Krowd">
       <Box sx={{ mb: { xs: 5, md: 10, textAlign: 'center', paddingTop: '7rem' } }}>
@@ -280,13 +270,13 @@ export default function Projects() {
             }}
           >
             <ShopProductSort />
-            <ShopFilterSidebar
+            {/* <ShopFilterSidebar
               formik={formik}
               isOpenFilter={openFilter}
               onResetFilter={handleResetFilter}
               onOpenFilter={handleOpenFilter}
               onCloseFilter={handleCloseFilter}
-            />
+            /> */}
           </Box>
         </Box>
         <MHidden width="smDown">
@@ -298,10 +288,31 @@ export default function Projects() {
               scrollButtons="auto"
               aria-label="basic tabs example"
             >
-              {FieldList.slice(0, 5).map((value, index) => (
+              <Tab
+                value={'All'}
+                sx={{ minWidth: '15% !important' }}
+                label={
+                  <Typography
+                    sx={{
+                      color: currentFieldIndex === 'All' ? '#14B7CC' : '',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textAlign: 'center',
+                      '&:hover': {
+                        color: 'primary.main'
+                      }
+                    }}
+                    variant="h6"
+                  >
+                    All
+                  </Typography>
+                }
+              />
+              {fieldList.slice(0, 5).map((value, index) => (
                 <Tab
                   key={index}
-                  value={value.fieldName}
+                  value={value.name}
                   sx={{
                     minWidth: { lg: '15% !important', sm: '12% !important' }
                   }}
@@ -309,7 +320,7 @@ export default function Projects() {
                     <Typography
                       sx={{
                         color:
-                          currentFieldIndex === value.fieldName && value.fieldName !== 'more'
+                          currentFieldIndex === value.name && value.name !== 'more'
                             ? '#14B7CC'
                             : '',
                         textOverflow: 'ellipsis',
@@ -322,7 +333,7 @@ export default function Projects() {
                       }}
                       variant="h6"
                     >
-                      {value.fieldName}
+                      {value.name}
                     </Typography>
                   }
                 />
@@ -356,12 +367,12 @@ export default function Projects() {
           {!isDefault && (
             <Typography gutterBottom>
               <Typography component="span" variant="subtitle1">
-                {filteredProducts.length}
+                {/* {filteredProducts.length} */}
               </Typography>
               &nbsp;Dự án tìm thấy
             </Typography>
           )}
-          <Stack
+          {/* <Stack
             direction="row"
             flexWrap="wrap-reverse"
             alignItems="center"
@@ -375,124 +386,121 @@ export default function Projects() {
               onResetFilter={handleResetFilter}
               isDefault={isDefault}
             />
-          </Stack>
+          </Stack> */}
         </Grid>
       </Box>
       <Container maxWidth={false}>
         <Grid container alignItems="center" justifyContent="center" spacing={5}>
-          {Array.from(new Array(24)).map((_, index) => {
-            let totalBudget = Math.floor(Math.random() * 100000000);
-            let currentBudget = Math.floor(Math.random() * totalBudget);
-            let ratio = Math.floor((currentBudget / totalBudget) * 100);
-            return (
-              <Grid key={`${currentFieldIndex} ${index}`} item xs={12} sm={6} md={4} lg={3}>
-                <MotionInView variants={varFadeInUp}>
-                  <CardStyle sx={{ maxWidth: 345, maxHeight: 500, height: 500 }}>
-                    <CardMedia
-                      style={{
-                        paddingTop: '2rem',
-                        display: 'center'
-                      }}
-                      component="img"
-                      height="194"
-                      src={`/static/mock-images/covers/cover_${index + 1}.jpg`}
-                    />
+          {projectLists.listOfProject?.map((row, index) => (
+            <Grid key={`${currentFieldIndex} ${index}`} item xs={12} sm={6} md={4} lg={3}>
+              <MotionInView variants={varFadeInUp}>
+                <CardStyle sx={{ maxWidth: 345, maxHeight: 500, height: 500 }}>
+                  <CardMedia
+                    style={{
+                      paddingTop: '2rem',
+                      display: 'center'
+                    }}
+                    component="img"
+                    height="194"
+                    src={row.image}
+                  />
+                  <Typography
+                    sx={{
+                      color: isLight ? '#14B7CC' : 'white',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      paddingTop: '1rem',
+                      textAlign: 'center'
+                    }}
+                    variant="h5"
+                    paragraph
+                  >
+                    {row.name}
+                  </Typography>
+                  <Typography
+                    style={{ textAlign: 'left' }}
+                    sx={{
+                      color: isLight ? '#251E18' : 'black',
+                      textOverflow: 'ellipsis',
+                      // whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      display: '-webkit-box',
+                      WebkitBoxOrient: 'vertical',
+                      WebkitLineClamp: 5
+                    }}
+                  >
+                    {row.description} .Đây hứa hẹn sẽ là dự án nóng cho các nhà đầu tư.
+                  </Typography>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      paddingTop: '0.5rem'
+                    }}
+                  >
                     <Typography
-                      sx={{
-                        color: isLight ? '#14B7CC' : 'white',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                        overflow: 'hidden',
-                        paddingTop: '1rem',
-                        textAlign: 'center'
-                      }}
-                      variant="h5"
                       paragraph
+                      sx={{
+                        color: '#251E18',
+                        marginBottom: '0.2rem'
+                      }}
                     >
-                      Dự án KFC quận {index + 1}
+                      <strong>Đã đầu tư</strong>
                     </Typography>
                     <Typography
-                      style={{ textAlign: 'left' }}
+                      paragraph
                       sx={{
-                        color: isLight ? '#251E18' : 'black',
-                        textOverflow: 'ellipsis',
-                        // whiteSpace: 'nowrap',
-                        overflow: 'hidden',
-                        display: '-webkit-box',
-                        WebkitBoxOrient: 'vertical',
-                        WebkitLineClamp: 5
+                        color: '#251E18',
+                        marginBottom: '0.2rem'
                       }}
                     >
-                      Với vị trí dự án nằm ở trung tâm quận {index + 1} thu hút một số lượng khách
-                      ưa chuộng đồ ăn nhanh. Đây hứa hẹn sẽ là dự án nóng cho các nhà đầu tư có niềm
-                      đam mê về ăn uống.
+                      <strong>Mục tiêu</strong>
                     </Typography>
-                    <Box
+                  </Box>
+                  <BorderLinearProgress
+                    variant="determinate"
+                    value={(row.remainAmount / row.sharedRevenue) * 100}
+                  />
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      paddingTop: '0.2rem'
+                    }}
+                  >
+                    <Typography
+                      paragraph
                       sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        paddingTop: '0.5rem'
+                        color: '#14B7CC'
                       }}
                     >
-                      <Typography
-                        paragraph
-                        sx={{
-                          color: '#251E18',
-                          marginBottom: '0.2rem'
-                        }}
-                      >
-                        <strong>Đã đầu tư</strong>
-                      </Typography>
-                      <Typography
-                        paragraph
-                        sx={{
-                          color: '#251E18',
-                          marginBottom: '0.2rem'
-                        }}
-                      >
-                        <strong>Mục tiêu</strong>
-                      </Typography>
-                    </Box>
-                    <BorderLinearProgress variant="determinate" value={ratio} />
-                    <Box
+                      <strong>{fCurrency(row.remainAmount)}</strong>
+                    </Typography>
+                    <Typography
+                      paragraph
                       sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        paddingTop: '0.2rem'
+                        color: '#FF7F56'
                       }}
                     >
-                      <Typography
-                        paragraph
-                        sx={{
-                          color: '#14B7CC'
-                        }}
-                      >
-                        <strong>{fCurrency(currentBudget)}</strong>
-                      </Typography>
-                      <Typography
-                        paragraph
-                        sx={{
-                          color: '#FF7F56'
-                        }}
-                      >
-                        <strong>{fCurrency(totalBudget)}</strong>
-                      </Typography>
-                    </Box>
-                    <Button
-                      style={{
-                        color: '#14B7CC',
-                        display: 'flex',
-                        float: 'right'
-                      }}
-                      href={PATH_DETAILS}
-                    >
-                      {t('button_click')}
-                    </Button>
-                  </CardStyle>
-                </MotionInView>
-              </Grid>
-            );
-          })}
+                      <strong>{fCurrency(row.sharedRevenue)}</strong>
+                    </Typography>
+                  </Box>
+                  <Button
+                    style={{
+                      color: '#14B7CC',
+                      display: 'flex',
+                      float: 'right'
+                    }}
+                    onClick={() => handleGetProjectById(row.id)}
+                    href={PATH_DETAILS}
+                  >
+                    {t('button_click')}
+                  </Button>
+                </CardStyle>
+              </MotionInView>
+            </Grid>
+          ))}
         </Grid>
       </Container>
     </RootStyle>

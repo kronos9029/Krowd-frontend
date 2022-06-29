@@ -33,23 +33,23 @@ export const SORT_BY_OPTIONS = [
   { value: 'priceDesc', label: 'Price: High-Low' },
   { value: 'priceAsc', label: 'Price: Low-High' }
 ];
-export const FILTER_GENDER_OPTIONS = ['a', 'b', 'c'];
-export const FILTER_CATEGORY_OPTIONS = ['All', 'Thước uống', 'Cửa hàng', 'Đồ ăn'];
-export const FILTER_RATING_OPTIONS = ['up4Star', 'up3Star', 'up2Star', 'up1Star'];
-export const FILTER_PRICE_OPTIONS = [
+// export const FILTER_GENDER_OPTIONS = ['a', 'b', 'c'];
+export const FILTER_AREA_OPTIONS = ['All', 'HCM', 'VT', 'Soc Trang'];
+// export const FILTER_RATING_OPTIONS = ['up4Star', 'up3Star', 'up2Star', 'up1Star'];
+export const FILTER_STATUS_OPTIONS = [
   { value: 'between', label: 'Đang hoạt động' },
   { value: 'above', label: 'Đang kêu gọi đầu tư' }
 ];
-export const FILTER_COLOR_OPTIONS = [
-  '#14B7CC',
-  '#000000',
-  '#FFFFFF',
-  '#FFC0CB',
-  '#FF4842',
-  '#1890FF',
-  '#94D82D',
-  '#FFC107'
-];
+// export const FILTER_COLOR_OPTIONS = [
+//   '#14B7CC',
+//   '#000000',
+//   '#FFFFFF',
+//   '#FFC0CB',
+//   '#FF4842',
+//   '#1890FF',
+//   '#94D82D',
+//   '#FFC107'
+// ];
 
 // ----------------------------------------------------------------------
 
@@ -109,7 +109,7 @@ export default function ShopFilterSidebar({
 
             <Scrollbar>
               <Stack spacing={3} sx={{ p: 3 }}>
-                <div>
+                {/* <div>
                   <Typography variant="subtitle1" gutterBottom>
                     Doanh nghiệp
                   </Typography>
@@ -128,14 +128,14 @@ export default function ShopFilterSidebar({
                       />
                     ))}
                   </FormGroup>
-                </div>
+                </div> */}
 
                 <div>
                   <Typography variant="subtitle1" gutterBottom>
                     Thuộc loại
                   </Typography>
                   <RadioGroup {...getFieldProps('category')}>
-                    {FILTER_CATEGORY_OPTIONS.map((item) => (
+                    {FILTER_AREA_OPTIONS.map((item) => (
                       <FormControlLabel key={item} value={item} control={<Radio />} label={item} />
                     ))}
                   </RadioGroup>
@@ -159,7 +159,7 @@ export default function ShopFilterSidebar({
                     Trạng thái
                   </Typography>
                   <RadioGroup {...getFieldProps('priceRange')}>
-                    {FILTER_PRICE_OPTIONS.map((item) => (
+                    {FILTER_STATUS_OPTIONS.map((item) => (
                       <FormControlLabel
                         key={item.value}
                         value={item.value}

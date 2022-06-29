@@ -75,11 +75,11 @@ const slice = createSlice({
     },
 
     //  SORT & FILTER PRODUCTS
-    sortByProducts(state, action) {
+    sortByProjects(state, action) {
       state.sortBy = action.payload;
     },
 
-    filterProducts(state, action) {
+    filterProjects(state, action) {
       state.filters.areaId = action.payload.areaId;
       state.filters.status = action.payload.status;
     }
@@ -90,7 +90,7 @@ const slice = createSlice({
 export default slice.reducer;
 
 // Actions
-export const { sortByProducts, filterProducts } = slice.actions;
+export const { sortByProjects, filterProjects } = slice.actions;
 // ----------------------------------------------------------------------
 
 // ----------------------------------------------------------------------

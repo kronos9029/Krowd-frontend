@@ -9,6 +9,7 @@ import { Chip, Typography, Stack, Button } from '@mui/material';
 import getColorName from '../../../../utils/getColorName';
 //
 import { ProductFilter, FormikPropsShopView } from '../../../../@types/products';
+import { ProjectFilter } from '../../../../@types/krowd/project';
 
 // ----------------------------------------------------------------------
 
@@ -53,7 +54,7 @@ function labelPriceRange(range: string) {
 
 type ShopTagFilteredProps = {
   formik: FormikPropsShopView;
-  filters: ProductFilter;
+  filters: ProjectFilter;
   isShowReset: boolean;
   isDefault: boolean;
   onResetFilter: VoidFunction;
@@ -68,24 +69,12 @@ export default function ShopTagFiltered({
 }: ShopTagFilteredProps) {
   const theme = useTheme();
   const { values, handleSubmit, setFieldValue, initialValues } = formik;
-  const { gender, category, colors, priceRange, rating } = filters;
+  const { areaId, status } = filters;
   const isShow = values !== initialValues && !isShowReset;
-
-  const handleRemoveGender = (value: string) => {
-    const newValue = filter(gender, (_item) => _item !== value);
-    handleSubmit();
-    setFieldValue('gender', newValue);
-  };
 
   const handleRemoveCategory = () => {
     handleSubmit();
-    setFieldValue('category', 'All');
-  };
-
-  const handleRemoveColor = (value: string) => {
-    const newValue = filter(colors, (_item) => _item !== value);
-    handleSubmit();
-    setFieldValue('colors', newValue);
+    setFieldValue('area', 'All');
   };
 
   const handleRemovePrice = () => {
@@ -95,7 +84,7 @@ export default function ShopTagFiltered({
 
   return (
     <RootStyle>
-      {gender.length > 0 && (
+      {/* {gender.length > 0 && (
         <WrapperStyle>
           <LabelStyle>Doanh nghiệp:</LabelStyle>
           <Stack direction="row" flexWrap="wrap" sx={{ p: 0.75 }}>
@@ -110,17 +99,17 @@ export default function ShopTagFiltered({
             ))}
           </Stack>
         </WrapperStyle>
-      )}
+      )} */}
 
-      {category !== 'All' && (
+      {areaId !== 'All' && (
         <WrapperStyle>
           <LabelStyle>Thuộc loại:</LabelStyle>
           <Stack direction="row" flexWrap="wrap" sx={{ p: 0.75 }}>
-            <Chip size="small" label={category} onDelete={handleRemoveCategory} sx={{ m: 0.5 }} />
+            <Chip size="small" label={areaId} onDelete={handleRemoveCategory} sx={{ m: 0.5 }} />
           </Stack>
         </WrapperStyle>
       )}
-
+      {/* 
       {colors.length > 0 && (
         <WrapperStyle>
           <LabelStyle>Khu vực:</LabelStyle>
@@ -146,17 +135,12 @@ export default function ShopTagFiltered({
             ))}
           </Stack>
         </WrapperStyle>
-      )}
-      {priceRange && (
+      )} */}
+      {status && (
         <WrapperStyle>
           <LabelStyle>Trạng thái:</LabelStyle>
           <Stack direction="row" flexWrap="wrap" sx={{ p: 0.75 }}>
-            <Chip
-              size="small"
-              label={labelPriceRange(priceRange)}
-              onDelete={handleRemovePrice}
-              sx={{ m: 0.5 }}
-            />
+            <Chip size="small" label={status} onDelete={handleRemovePrice} sx={{ m: 0.5 }} />
           </Stack>
         </WrapperStyle>
       )}

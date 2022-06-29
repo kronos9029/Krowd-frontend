@@ -25,8 +25,6 @@ const LargeImgStyle = styled('img')(({ theme }) => ({
   position: 'absolute'
 }));
 
-// ----------------------------------------------------------------------
-
 type LargeItemProps = {
   item: string;
   onOpenLightbox: (value: string) => void;
