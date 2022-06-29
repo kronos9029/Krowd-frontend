@@ -379,10 +379,10 @@ export default function Projects() {
                         overflow: 'hidden',
                         display: '-webkit-box',
                         WebkitBoxOrient: 'vertical',
-                        WebkitLineClamp: 5
+                        WebkitLineClamp: 3
                       }}
                     >
-                      {row.description} .Đây hứa hẹn sẽ là dự án nóng cho các nhà đầu tư.
+                      {row.description}
                     </Typography>
                   </Box>
                   <Box
