@@ -281,7 +281,7 @@ export default function ComponentsDetails() {
                       variant="determinate"
                       value={
                         (projectID &&
-                          (projectID.investedCapital / projectID.sharedRevenue) * 100) ??
+                          (projectID.investedCapital / projectID.investmentTargetCapital) * 100) ??
                         0
                       }
                     />

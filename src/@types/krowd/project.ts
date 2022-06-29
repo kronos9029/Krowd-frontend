@@ -1,7 +1,7 @@
 import { FormikProps } from 'formik';
 
 export type ProjectStatus =
-  | 'Chưa duyệt'
+  | {'0':'Chưa duyệt'}
   | 'Từ chối'
   | 'Đang kêu gọi đầu tư'
   | 'Đang hoạt động'

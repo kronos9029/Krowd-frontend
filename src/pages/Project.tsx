@@ -413,7 +413,7 @@ export default function Projects() {
                   </Box>
                   <BorderLinearProgress
                     variant="determinate"
-                    value={(row.remainAmount / row.sharedRevenue) * 100}
+                    value={(row.investedCapital / row.investmentTargetCapital) * 100}
                   />
                   <Box
                     sx={{
