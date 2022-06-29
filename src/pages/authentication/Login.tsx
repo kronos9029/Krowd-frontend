@@ -85,30 +85,8 @@ export default function Login() {
       <Container maxWidth="sm">
         <ContentStyle>
           <Stack direction="column" justifyContent="space-between" sx={{ mb: 3 }}>
-            <TabContext value={value}>
-              <Box sx={{ px: 3, bgcolor: 'background.neutral' }}>
-                <TabList onChange={(e, value) => setValue(value)}>
-                  <Tab disableRipple value="1" label="Người đầu tư" />
-                  <Tab
-                    disableRipple
-                    value="2"
-                    label="Doanh nghiệp"
-                    sx={{ '& .MuiTab-wrapper': { whiteSpace: 'nowrap' }, paddingLeft: '1rem' }}
-                  />
-                </TabList>
-              </Box>
-              <Grid>
-                <TabPanel value="1">
-                  <LoginForm />
-                </TabPanel>
-              </Grid>
-
-              <TabPanel value="2">
-                <LoginFormBusiness />
-              </TabPanel>
-            </TabContext>
+            <LoginForm />
           </Stack>
-
           <MHidden width="smUp">
             <Typography variant="body2" align="center" sx={{ mt: 3 }}>
               Bạn chưa có tài khoản?&nbsp;

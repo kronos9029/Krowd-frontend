@@ -306,7 +306,7 @@ export default function ComponentsDetails() {
                           color: '#FF7F56'
                         }}
                       >
-                        <strong>{projectID?.sharedRevenue}</strong>
+                        <strong>{projectID?.investmentTargetCapital}</strong>
                       </Typography>
                     </Box>
                   </Box>

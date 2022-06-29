@@ -428,7 +428,7 @@ export default function Projects() {
                         color: '#14B7CC'
                       }}
                     >
-                      <strong>{fCurrency(row.remainAmount)}</strong>
+                      <strong>{fCurrency(row.investedCapital)}</strong>
                     </Typography>
                     <Typography
                       paragraph
@@ -436,7 +436,7 @@ export default function Projects() {
                         color: '#FF7F56'
                       }}
                     >
-                      <strong>{fCurrency(row.sharedRevenue)}</strong>
+                      <strong>{fCurrency(row.investmentTargetCapital)}</strong>
                     </Typography>
                   </Box>
                   <Button
