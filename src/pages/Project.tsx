@@ -1,18 +1,6 @@
 // material
 import { alpha, useTheme, styled } from '@mui/material/styles';
-import {
-  Grid,
-  Card,
-  Container,
-  Typography,
-  useMediaQuery,
-  Button,
-  Tab,
-  Tabs,
-  Stack,
-  Box,
-  Divider
-} from '@mui/material';
+import { Grid, Card, Container, Typography, useMediaQuery, Tab, Tabs, Box } from '@mui/material';
 import { MHidden } from '../components/@material-extend';
 import { varFadeInUp, MotionInView } from '../components/animate';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
@@ -47,6 +35,7 @@ import menu2Fill from '@iconify/icons-eva/menu-2-fill';
 import { getAllProject, filterProjects, getProjectId } from 'redux/slices/krowd_slices/project';
 import { Project, ProjectFilter, ProjectState } from '../@types/krowd/project';
 import { getFieldList } from 'redux/slices/krowd_slices/field';
+import { Link } from 'react-router-dom';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
@@ -81,17 +70,17 @@ const CardStyle = styled(Card)(({ theme }) => {
     margin: 'auto',
     textAlign: 'left',
 
-    boxShadow: `-40px 40px 80px 0 ${shadowCard(0.48)}`,
+    boxShadow: `-40px 40px 80px 0 ${shadowCard(0.2)}`,
     [theme.breakpoints.up('md')]: {
       borderRadius: theme.shape.borderRadiusMd,
       backgroundColor: '#f4f6f8',
-      boxShadow: `-20px 20px 40px 0 ${shadowCard(0.35)}`
+      boxShadow: `-20px 20px 40px 0 ${shadowCard(0.15)}`
     },
     '&.cardCenter': {
       [theme.breakpoints.up('md')]: {
         marginTop: -80,
         backgroundColor: theme.palette.background.paper,
-        boxShadow: `-40px 40px 80px 0 ${shadowCard(0.4)}`,
+        boxShadow: `-40px 40px 80px 0 ${shadowCard(0.1)}`,
         '&:before': {
           top: 0,
           left: 0,
@@ -105,7 +94,7 @@ const CardStyle = styled(Card)(({ theme }) => {
           height: 'calc(100% - 40px)',
           borderRadius: theme.shape.borderRadiusMd,
           backgroundColor: theme.palette.background.paper,
-          boxShadow: `-20px 20px 40px 0 ${shadowCard(0.12)}`
+          boxShadow: `-20px 20px 40px 0 ${shadowCard(0.05)}`
         }
       }
     }
@@ -143,7 +132,7 @@ export default function Projects() {
   const isDefault = !values.status && values.areaId === 'HCM';
   useEffect(() => {
     dispatch(getProducts());
-    dispatch(getAllProject('ADMIN'));
+    dispatch(getAllProject('INVESTOR'));
     dispatch(getFieldList());
     dispatch(filterProjects(values));
     setCurrentFieldIndex(fieldList[0]?.id);
@@ -220,12 +209,12 @@ export default function Projects() {
           </Typography>
           <Box
             sx={{
-              my: { lg: 5, sm: 2 },
+              my: { lg: 4, sm: 2 },
               display: { sm: 'flex', xs: 'grid' },
-              justifyContent: { md: 'left', sm: 'space-evenly', xs: 'center' }
+              justifyContent: { md: 'space-between', sm: 'space-evenly', xs: 'center' }
             }}
           >
-            <BlogPostsSearch sx={{ display: 'flex' }} />
+            <BlogPostsSearch sx={{ display: 'flex' }} border="none" />
             <Box
               component="div"
               sx={{
@@ -258,7 +247,7 @@ export default function Projects() {
                     key={index}
                     value={value.id}
                     sx={{
-                      minWidth: { lg: '15% !important', sm: '12% !important' }
+                      minWidth: { lg: '14% !important', sm: '12% !important' }
                     }}
                     label={
                       <Typography
@@ -281,7 +270,7 @@ export default function Projects() {
                 ))}
                 <Tab
                   value={'more'}
-                  sx={{ minWidth: '15% !important' }}
+                  sx={{ minWidth: '14% !important' }}
                   href={PATH_FIELDPAGE}
                   label={
                     <Typography
@@ -312,21 +301,6 @@ export default function Projects() {
                 </Typography>
               </Typography>
             )}
-            {/* <Stack
-            direction="row"
-            flexWrap="wrap-reverse"
-            alignItems="center"
-            justifyContent="flex-end"
-            sx={{ mb: 5 }}
-          >
-            <ShopTagFiltered
-              filters={filters}
-              formik={formik}
-              isShowReset={openFilter}
-              onResetFilter={handleResetFilter}
-              isDefault={isDefault}
-            />
-          </Stack> */}
           </Grid>
         </Box>
 
@@ -334,20 +308,17 @@ export default function Projects() {
           {projectLists.listOfProject?.map((row, index) => (
             <Grid key={`${currentFieldIndex} ${index}`} item xs={12} sm={6} md={6} lg={4}>
               <MotionInView variants={varFadeInUp}>
-                <Button
+                <Link
                   onClick={() => handleGetProjectById(row.id)}
-                  href={PATH_DETAILS}
-                  disableRipple={true}
-                  disableElevation={true}
-                  disableTouchRipple={true}
-                  disableFocusRipple={true}
+                  to={PATH_DETAILS}
+                  style={{ textDecoration: 'none' }}
                 >
                   <CardStyle
                     sx={{
                       width: 360,
-                      maxHeight: 450,
-                      height: 450
-                      // '&:hover': { width: 420 }
+                      maxHeight: 500,
+                      height: 480,
+                      '&:hover': { opacity: 0.9 }
                     }}
                   >
                     <CardMedia
@@ -359,22 +330,21 @@ export default function Projects() {
                       src={row.image}
                     />
                     <Box px={3}>
-                      <Typography
-                        sx={{
-                          // color: isLight ? '#14B7CC' : 'white',
-                          overflow: 'hidden',
-                          paddingTop: '1rem',
-                          whiteSpace: 'nowrap'
-                        }}
-                        variant="subtitle1"
-                      >
-                        {row.name}
-                      </Typography>
-                      <Box minHeight={'5em'}>
+                      <Box minHeight={'9em'}>
+                        <Typography
+                          sx={{
+                            // color: isLight ? '#14B7CC' : 'white',
+                            overflow: 'hidden',
+                            paddingTop: '1rem'
+                          }}
+                          variant="subtitle1"
+                        >
+                          {row.name}
+                        </Typography>
                         <Typography
                           style={{ textAlign: 'left' }}
                           sx={{
-                            color: isLight ? '#251E18' : 'black',
+                            color: '#251E18',
                             textOverflow: 'ellipsis',
                             overflow: 'hidden',
                             display: '-webkit-box',
@@ -442,7 +412,7 @@ export default function Projects() {
                       </Box>
                     </Box>
                   </CardStyle>
-                </Button>
+                </Link>
               </MotionInView>
             </Grid>
           ))}

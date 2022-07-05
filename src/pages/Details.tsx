@@ -14,25 +14,24 @@ import {
   Typography,
   LinearProgress,
   linearProgressClasses,
-  Tooltip
+  Tooltip,
+  Chip
 } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 // redux
 import { RootState, useDispatch, useSelector } from 'redux/store';
-import { getProduct, addCart, onGotoStep } from 'redux/slices/product';
+import { getProduct } from 'redux/slices/product';
 // routes
 // @types
-import { CartItem, ProductState } from '../@types/products';
+import { ProductState } from '../@types/products';
 // hooks
 import useSettings from 'hooks/useSettings';
 // components
 import Page from 'components/Page';
 import Markdown from 'components/Markdown';
 import {
-  ProductDetailsSummary,
   ProjectDetailsReview,
-  ProductDetailsCarousel,
-  ProjectDetailsHero
+  ProductDetailsCarousel
 } from '../components/_dashboard/e-commerce/product-details';
 import ProjectPackage from 'components/_dashboard/general-analytics/ProjectPackage';
 import twitterFill from '@iconify/icons-eva/twitter-fill';
@@ -41,6 +40,7 @@ import facebookFill from '@iconify/icons-eva/facebook-fill';
 import instagramFilled from '@iconify/icons-ant-design/instagram-filled';
 import { MIconButton } from 'components/@material-extend';
 import { fCurrency } from 'utils/formatNumber';
+import { ProjectStatus } from '../@types/krowd/project';
 
 // ----------------------------------------------------------------------
 
@@ -120,142 +120,62 @@ export default function ComponentsDetails() {
   return (
     <Page title="Chi tiết dự án | Krowd">
       <Container maxWidth={themeStretch ? false : 'lg'} sx={{ paddingBottom: '4rem' }}>
-        {product && (
+        {product && projectID && (
           <>
-            <Typography
-              sx={{
-                paddingTop: '7rem',
-                textAlign: 'center',
-                color: 'rgb(20, 183, 204)'
-              }}
-              variant="h2"
-            >
-              {projectID?.name}
-            </Typography>
-            <Card sx={{ my: 3 }}>
+            <Box pt={'7rem'} sx={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+              <Typography>
+                <img style={{ width: '60px' }} src={projectID.business.image} />
+              </Typography>
+              <Typography variant="h2">{projectID.name}</Typography>
+            </Box>
+            <Box my={2}>
+              <Typography variant="body2" color={'#9E9E9E'}>
+                {projectID.description}
+              </Typography>
+            </Box>
+            <Box my={2} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Box sx={{ display: 'flex', gap: '12px' }}>
+                <Chip
+                  label={<Typography variant="overline">{projectID.field.name}</Typography>}
+                  variant="filled"
+                  sx={{ borderRadius: '3px', color: 'rgba(0,0,0,0.6)' }}
+                />
+                <Chip
+                  label={<Typography variant="overline">{projectID.field.description}</Typography>}
+                  variant="filled"
+                  sx={{ borderRadius: '3px', color: 'rgba(0,0,0,0.6)' }}
+                />
+              </Box>
+              <Box sx={{ display: 'flex' }}>
+                <Chip
+                  label={
+                    <Typography variant="overline">
+                      {ProjectStatus[projectID.status].statusString}
+                    </Typography>
+                  }
+                  variant="filled"
+                  sx={{
+                    borderRadius: '3px',
+                    backgroundColor: `${ProjectStatus[projectID.status].color}`,
+                    color: '#ffffff'
+                  }}
+                />
+              </Box>
+            </Box>
+            <Card sx={{ my: 3, borderRadius: '0px' }}>
               <Grid container>
-                <Grid p={{ xs: 1, sm: 5 }} item xs={12} md={6} lg={6}>
-                  {/* <ProjectDetailsHero product={product} /> */}
+                <Grid item xs={12} md={6} lg={6}>
                   <Box sx={{ cursor: 'zoom-in', paddingTop: '100%', position: 'relative' }}>
-                    <LargeImgStyle alt="large image" src={projectID?.image} />
+                    <LargeImgStyle alt="large image" src={projectID.image} />
                   </Box>
                 </Grid>
-                <Grid item xs={12} md={6} lg={6} sx={{ pr: 3, pl: 3, pt: 5, pb: 3 }}>
-                  {/* <Typography
-                    variant="overline"
-                    sx={{
-                      mb: 1,
-                      display: 'block',
-                      color: projectID?.status === 'Đang hoạt động' ? 'error.main' : 'info.main'
-                    }}
-                  >
-                    {projectID?.status}
-                  </Typography> */}
-                  <Divider sx={{ borderStyle: 'dashed' }} />
-                  <Box
-                    sx={{
-                      my: 3,
-                      display: 'flex',
-                      justifyContent: 'space-between'
-                    }}
-                  >
-                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
-                      Thuộc doanh nghiệp
-                    </Typography>
-                    <Typography sx={{ mt: 0.2 }}>{projectID?.business?.name}</Typography>
-                  </Box>
-
-                  <Box
-                    sx={{
-                      mb: 3,
-                      display: 'flex',
-                      justifyContent: 'space-between'
-                    }}
-                  >
-                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
-                      Thuộc Khu vực:
-                    </Typography>
-                    <Typography sx={{ mt: 0.2 }}>{projectID?.name}</Typography>
-                  </Box>
-
-                  <Box
-                    sx={{
-                      mb: 3,
-                      display: 'flex',
-                      justifyContent: 'space-between'
-                    }}
-                  >
-                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
-                      Địa chỉ:
-                    </Typography>
-                    <Typography sx={{ mt: 0.2 }}>{projectID?.address}</Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      mb: 3,
-                      display: 'flex',
-                      justifyContent: 'space-between'
-                    }}
-                  >
-                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
-                      Doanh thu chia sẻ
-                    </Typography>
-                    <Typography sx={{ mt: 0.2 }}>
-                      {projectID?.multiplier}
-                      <span> (%)</span>
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      mb: 3,
-                      display: 'flex',
-                      justifyContent: 'space-between'
-                    }}
-                  >
-                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
-                      Hệ số nhân
-                    </Typography>
-                    <Typography sx={{ mt: 0.2 }}>
-                      <span>x </span>
-                      {projectID?.multiplier}
-                    </Typography>
-                  </Box>
-
-                  <Box
-                    sx={{
-                      mb: 3,
-                      display: 'flex',
-                      justifyContent: 'space-between'
-                    }}
-                  >
-                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
-                      Thời hạn
-                    </Typography>
-                    <Typography sx={{ mt: 0.2 }}>
-                      {projectID?.duration} <span> tháng</span>
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      mb: 4,
-                      display: 'flex',
-                      justifyContent: 'space-between'
-                    }}
-                  >
-                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
-                      Số kì thanh toán
-                    </Typography>
-                    <Typography sx={{ mt: 0.2 }}>
-                      {projectID?.numOfStage} <span> kì</span>
-                    </Typography>
-                  </Box>
-                  <Divider sx={{ borderStyle: 'dashed' }} />
-                  <Box mt={'1rem'}>
+                <Grid px={3} pt={5} item xs={12} md={6} lg={6}>
+                  <Box>
                     <Box
                       sx={{
                         display: 'flex',
                         justifyContent: 'space-between',
-                        my: '0.5rem'
+                        mb: '0.5rem'
                       }}
                     >
                       <Typography
@@ -298,7 +218,7 @@ export default function ComponentsDetails() {
                           color: '#14B7CC'
                         }}
                       >
-                        <strong>{projectID?.investedCapital}</strong>
+                        <strong>{fCurrency(projectID.investedCapital)}</strong>
                       </Typography>
                       <Typography
                         paragraph
@@ -306,19 +226,109 @@ export default function ComponentsDetails() {
                           color: '#FF7F56'
                         }}
                       >
-                        <strong>{projectID?.investmentTargetCapital}</strong>
+                        <strong>{fCurrency(projectID.investmentTargetCapital)}</strong>
                       </Typography>
                     </Box>
                   </Box>
-
                   <Divider sx={{ borderStyle: 'dashed' }} />
 
-                  <Box sx={{ mt: 1, textAlign: 'center' }}>
-                    {SOCIALS.map((social) => (
-                      <Tooltip key={social.name} title={social.name}>
-                        <MIconButton>{social.icon}</MIconButton>
-                      </Tooltip>
-                    ))}
+                  <Box
+                    sx={{
+                      my: 3,
+                      display: 'flex',
+                      justifyContent: 'space-between'
+                    }}
+                  >
+                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
+                      Doanh thu chia sẻ
+                    </Typography>
+                    <Typography sx={{ mt: 0.2 }}>
+                      {projectID.multiplier}
+                      <span> (%)</span>
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      mb: 3,
+                      display: 'flex',
+                      justifyContent: 'space-between'
+                    }}
+                  >
+                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
+                      Hệ số nhân
+                    </Typography>
+                    <Typography sx={{ mt: 0.2 }}>
+                      <span>x </span>
+                      {projectID.multiplier}
+                    </Typography>
+                  </Box>
+
+                  <Box
+                    sx={{
+                      mb: 3,
+                      display: 'flex',
+                      justifyContent: 'space-between'
+                    }}
+                  >
+                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
+                      Thời hạn
+                    </Typography>
+                    <Typography sx={{ mt: 0.2 }}>
+                      {projectID.duration} <span> tháng</span>
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      mb: 4,
+                      display: 'flex',
+                      justifyContent: 'space-between'
+                    }}
+                  >
+                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
+                      Số kì thanh toán
+                    </Typography>
+                    <Typography sx={{ mt: 0.2 }}>
+                      {projectID.numOfStage} <span> kì</span>
+                    </Typography>
+                  </Box>
+                  <Divider sx={{ borderStyle: 'dashed' }} />
+                  <Box
+                    sx={{
+                      my: 3,
+                      display: 'flex',
+                      justifyContent: 'space-between'
+                    }}
+                  >
+                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
+                      Doanh nghiệp
+                    </Typography>
+                    <Typography sx={{ mt: 0.2 }}>{projectID.business.name}</Typography>
+                  </Box>
+
+                  <Box
+                    sx={{
+                      mb: 3,
+                      display: 'flex',
+                      justifyContent: 'space-between'
+                    }}
+                  >
+                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
+                      Khu vực
+                    </Typography>
+                    <Typography sx={{ mt: 0.2 }}>{projectID.name}</Typography>
+                  </Box>
+
+                  <Box
+                    sx={{
+                      mb: 3,
+                      display: 'flex',
+                      justifyContent: 'space-between'
+                    }}
+                  >
+                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
+                      Địa chỉ
+                    </Typography>
+                    <Typography sx={{ mt: 0.2 }}>{projectID.address}</Typography>
                   </Box>
                 </Grid>
               </Grid>

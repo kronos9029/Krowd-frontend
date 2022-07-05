@@ -21,7 +21,7 @@ const Language = [
 ];
 
 const RootStyle = styled('div')(({ theme }) => ({
-  paddingTop: theme.spacing(20),
+  paddingTop: theme.spacing(12),
   [theme.breakpoints.up('md')]: {
     paddingBottom: theme.spacing(1)
   }

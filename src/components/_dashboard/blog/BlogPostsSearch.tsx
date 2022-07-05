@@ -29,21 +29,21 @@ import SearchNotFound from '../../SearchNotFound';
 
 const RootStyle = styled('div')(({ theme }) => ({
   '& .MuiAutocomplete-root': {
-    width: 270,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.easeInOut,
-      duration: theme.transitions.duration.shorter
-    }),
+    width: 300,
+    // transition: theme.transitions.create('width', {
+    //   easing: theme.transitions.easing.easeInOut,
+    //   duration: theme.transitions.duration.shorter
+    // }),
     '&.Mui-focused': {
-      width: 300,
       '& .MuiAutocomplete-inputRoot': {
-        boxShadow: theme.customShadows.z12
+        // boxShadow: theme.customShadows.z12
       }
     }
   },
   '& .MuiAutocomplete-inputRoot': {
     '& fieldset': {
-      borderWidth: `2px !important`,
+      // borderWidth: `2px !important`,
+      border: 'none',
       borderColor: `#314459 !important`
     }
   },
@@ -111,8 +111,7 @@ export default function BlogPostsSearch({ sx }: BoxProps) {
                       sx={{
                         ml: 1,
                         width: 20,
-                        height: 20,
-                        color: 'text.disabled'
+                        height: 20
                       }}
                     />
                   </InputAdornment>
