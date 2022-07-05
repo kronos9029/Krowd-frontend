@@ -38,7 +38,7 @@ import twitterFill from '@iconify/icons-eva/twitter-fill';
 import linkedinFill from '@iconify/icons-eva/linkedin-fill';
 import facebookFill from '@iconify/icons-eva/facebook-fill';
 import instagramFilled from '@iconify/icons-ant-design/instagram-filled';
-import { MIconButton } from 'components/@material-extend';
+import { MHidden, MIconButton } from 'components/@material-extend';
 import { fCurrency } from 'utils/formatNumber';
 import { ProjectStatus } from '../@types/krowd/project';
 
@@ -122,9 +122,9 @@ export default function ComponentsDetails() {
       <Container maxWidth={themeStretch ? false : 'lg'} sx={{ paddingBottom: '4rem' }}>
         {product && projectID && (
           <>
-            <Box pt={'7rem'} sx={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+            <Box my={2} pt={'6rem'} sx={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
               <Typography>
-                <img style={{ width: '60px' }} src={projectID.business.image} />
+                <img style={{ width: '80px' }} src={projectID.business.image} />
               </Typography>
               <Typography variant="h2">{projectID.name}</Typography>
             </Box>
@@ -140,11 +140,15 @@ export default function ComponentsDetails() {
                   variant="filled"
                   sx={{ borderRadius: '3px', color: 'rgba(0,0,0,0.6)' }}
                 />
-                <Chip
-                  label={<Typography variant="overline">{projectID.field.description}</Typography>}
-                  variant="filled"
-                  sx={{ borderRadius: '3px', color: 'rgba(0,0,0,0.6)' }}
-                />
+                <MHidden width="smDown">
+                  <Chip
+                    label={
+                      <Typography variant="overline">{projectID.field.description}</Typography>
+                    }
+                    variant="filled"
+                    sx={{ borderRadius: '3px', color: 'rgba(0,0,0,0.6)' }}
+                  />
+                </MHidden>
               </Box>
               <Box sx={{ display: 'flex' }}>
                 <Chip
@@ -162,14 +166,28 @@ export default function ComponentsDetails() {
                 />
               </Box>
             </Box>
-            <Card sx={{ my: 3, borderRadius: '0px' }}>
+            <Card sx={{ my: 3 }}>
               <Grid container>
-                <Grid item xs={12} md={6} lg={6}>
+                <Grid
+                  px={{ lg: 5, md: 5, sm: 5 }}
+                  py={{ lg: 5, md: 3, sm: 3 }}
+                  item
+                  xs={12}
+                  md={6}
+                  lg={6}
+                >
                   <Box sx={{ cursor: 'zoom-in', paddingTop: '100%', position: 'relative' }}>
                     <LargeImgStyle alt="large image" src={projectID.image} />
                   </Box>
                 </Grid>
-                <Grid px={3} pt={5} item xs={12} md={6} lg={6}>
+                <Grid
+                  px={{ lg: 5, md: 5, sm: 5, xs: 2 }}
+                  py={{ lg: 5, md: 3, sm: 3, xs: 3 }}
+                  item
+                  xs={12}
+                  md={6}
+                  lg={6}
+                >
                   <Box>
                     <Box
                       sx={{
