@@ -37,9 +37,9 @@ export default function LandingPage() {
         <LandingMinimal />
         <LandingStartup />
         <LandingHugePackElements />
+        <LandingAdvertisement />
         <LandingThreeSteps />
         <LandingPricingFAQs />
-        <LandingAdvertisement />
         <LandingDarkMode />
       </ContentStyle>
     </RootStyle>

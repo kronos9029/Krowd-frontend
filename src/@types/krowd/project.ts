@@ -1,11 +1,13 @@
 import { FormikProps } from 'formik';
 
+import DoNotDisturbAltIcon from '@mui/icons-material/DoNotDisturbAlt';
+import { jsx } from '@emotion/react';
 export const ProjectStatus = [
   { statusString: 'Chưa duyệt', color: undefined },
   { statusString: 'Từ chối', color: undefined },
-  { statusString: 'Đang kêu gọi đầu tư', color: '#FF7F50' },
-  { statusString: 'Hết thời gian kêu gọi', color: '#FF3519' },
-  { statusString: 'Đang hoạt động', color: '#19C157' },
+  { statusString: 'Mở đầu tư', color: '#14B7CC' },
+  { statusString: 'Quá hạn', color: '#FF3519' },
+  { statusString: 'Thành công', color: '#19C157' },
   { statusString: 'Đóng dự án', color: undefined }
 ];
 export type FormikPropsShopView = FormikProps<ProjectFilter>;

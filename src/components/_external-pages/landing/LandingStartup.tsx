@@ -80,7 +80,9 @@ export default function LandingMinimalHelps() {
         </Box>
         <Grid container>
           {projectList &&
-            projectList.listOfProject.slice(0, 3).map((p) => <ProjectCard key={p.id} row={p} />)}
+            projectList.listOfProject
+              .filter((value) => value.status === 2)
+              .map((p) => <ProjectCard key={p.id} row={p} />)}
         </Grid>
       </Container>
     </RootStyle>

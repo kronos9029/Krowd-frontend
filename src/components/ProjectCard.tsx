@@ -1,15 +1,25 @@
-import { Grid, CardMedia, Box, Typography, Card, alpha } from '@mui/material';
+import {
+  Grid,
+  CardMedia,
+  Box,
+  Container,
+  Typography,
+  CardActionArea,
+  Card,
+  alpha,
+  Chip
+} from '@mui/material';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import { styled } from '@mui/material/styles';
 import { MotionInView, varFadeInUp } from 'components/animate';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getProjectId } from 'redux/slices/krowd_slices/project';
 import { dispatch } from 'redux/store';
 import { PATH_DETAILS } from 'routes/paths';
 import { fCurrency } from 'utils/formatNumber';
-import { Project } from '../@types/krowd/project';
-
+import { Project, ProjectStatus } from '../@types/krowd/project';
+import CheckIcon from '@mui/icons-material/Check';
 const CardStyle = styled(Card)(({ theme }) => {
   const shadowCard = (opacity: number) =>
     theme.palette.mode === 'light'
@@ -17,7 +27,6 @@ const CardStyle = styled(Card)(({ theme }) => {
       : alpha(theme.palette.common.black, opacity);
   return {
     maxWidth: 390,
-    minHeight: 300,
     margin: 'auto',
     textAlign: 'left',
 
@@ -64,7 +73,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 }));
 
 function ProjectCard({ row }: { row: Project }) {
-  console.log('gggg');
+  const [isHover, setIsHover] = useState(false);
   const handleGetProjectById = (activeProjectId: string) => {
     dispatch(getProjectId(activeProjectId));
   };
@@ -77,118 +86,170 @@ function ProjectCard({ row }: { row: Project }) {
           style={{ textDecoration: 'none' }}
         >
           <CardStyle
+            onMouseOver={() => setIsHover(true)}
+            onMouseOut={() => setIsHover(false)}
             sx={{
               width: 360,
               maxHeight: 500,
-              height: 480,
-              '&:hover': { opacity: 0.9 }
+              height: 500
+              // '&:hover': { opacity: 0.9 }
             }}
           >
-            <Card
-              sx={{
-                minWidth: 50,
-                minHeight: 50,
-                boxShadow: '40px 40px 80px 0 20%',
-                position: 'absolute',
-                top: '42%',
-                left: '5%',
-                display: 'flex',
-                alignItems: 'center'
-              }}
-            >
-              <img style={{ width: '4em' }} src={row.business.image} />
-            </Card>
-            <CardMedia
-              style={{
-                display: 'center'
-              }}
-              component="img"
-              height={240}
-              src={row.image}
-            />
-
-            <Box px={3}>
-              <Box minHeight={'9em'}>
-                <Typography
-                  sx={{
-                    // color: isLight ? '#14B7CC' : 'white',
-                    overflow: 'hidden',
-                    paddingTop: '1.8rem'
-                  }}
-                  variant="subtitle1"
-                >
-                  {row.name}
-                </Typography>
-                <Typography
-                  style={{ textAlign: 'left' }}
-                  sx={{
-                    color: '#251E18',
-                    textOverflow: 'ellipsis',
-                    overflow: 'hidden',
-                    display: '-webkit-box',
-                    WebkitBoxOrient: 'vertical',
-                    WebkitLineClamp: 3
-                  }}
-                  variant="body2"
-                >
-                  {row.description}
-                </Typography>
-              </Box>
-              <Box
+            <CardActionArea>
+              <Card
                 sx={{
+                  minWidth: 50,
+                  minHeight: 50,
+                  boxShadow: '40px 40px 80px 0 20%',
+                  position: 'absolute',
+                  top: isHover ? '39%' : '42%',
+                  left: '5%',
                   display: 'flex',
-                  justifyContent: 'space-between',
-                  paddingTop: '0.5rem'
+                  alignItems: 'center'
                 }}
               >
-                <Typography
-                  paragraph
-                  sx={{
-                    color: '#251E18',
-                    marginBottom: '0.2rem'
-                  }}
-                >
-                  <strong>Đã đầu tư</strong>
-                </Typography>
-                <Typography
-                  paragraph
-                  sx={{
-                    color: '#251E18',
-                    marginBottom: '0.2rem'
-                  }}
-                >
-                  <strong>Mục tiêu</strong>
-                </Typography>
-              </Box>
-              <BorderLinearProgress
-                variant="determinate"
-                value={(row.investedCapital / row.investmentTargetCapital) * 100}
+                <img style={{ width: '4em' }} src={row.business.image} />
+              </Card>
+              <CardMedia
+                style={{
+                  display: 'center'
+                }}
+                component="img"
+                height={240}
+                src={row.image}
               />
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  paddingTop: '0.2rem'
-                }}
-              >
-                <Typography
-                  paragraph
+              <Box sx={{ position: 'absolute', top: '1%', right: '1%' }}>
+                <Chip
+                  label={
+                    <>
+                      {row.status === 4 ? (
+                        <CheckIcon sx={{ fontSize: '16px', color: '#ffffff' }} />
+                      ) : undefined}
+                      <Typography variant="overline" fontSize={11} ml={row.status === 4 ? 1 : 0}>
+                        {ProjectStatus[row.status].statusString}
+                      </Typography>
+                    </>
+                  }
+                  variant="filled"
                   sx={{
-                    color: '#14B7CC'
+                    borderRadius: '3px',
+                    backgroundColor: `${ProjectStatus[row.status].color}`,
+                    color: '#ffffff'
                   }}
-                >
-                  <strong>{fCurrency(row.investedCapital)}</strong>
-                </Typography>
-                <Typography
-                  paragraph
-                  sx={{
-                    color: '#FF7F56'
-                  }}
-                >
-                  <strong>{fCurrency(row.investmentTargetCapital)}</strong>
-                </Typography>
+                />
               </Box>
-            </Box>
+              <Box px={3}>
+                <Box minHeight={'10em'}>
+                  <Typography
+                    sx={{
+                      color: 'text.primary',
+                      overflow: 'hidden',
+                      paddingTop: '1.8rem'
+                    }}
+                    variant="subtitle1"
+                  >
+                    {row.name}
+                  </Typography>
+                  <Typography
+                    style={{ textAlign: 'left' }}
+                    sx={{
+                      color: '#251E18',
+                      textOverflow: 'ellipsis',
+                      overflow: 'hidden',
+                      display: '-webkit-box',
+                      WebkitBoxOrient: 'vertical',
+                      WebkitLineClamp: 5
+                    }}
+                    variant="body2"
+                  >
+                    {row.description}
+                  </Typography>
+                </Box>
+                <Box mt={isHover ? 3 : 2}>
+                  <Box sx={{ display: !isHover ? 'block' : 'none' }}>
+                    <Box>
+                      <Typography
+                        paragraph
+                        variant="subtitle2"
+                        sx={{
+                          color: 'text.disabled',
+                          marginBottom: '0.3rem'
+                        }}
+                      >
+                        {row.address}
+                      </Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex' }}>
+                      <Chip
+                        label={<Typography variant="caption">{row.field.name}</Typography>}
+                        variant="filled"
+                        sx={{ borderRadius: '3px', color: 'rgba(0,0,0,0.6)' }}
+                      />
+                      <Chip
+                        label={<Typography variant="caption">{row.field.description}</Typography>}
+                        variant="filled"
+                        sx={{ ml: 1, borderRadius: '3px', color: 'rgba(0,0,0,0.6)' }}
+                      />
+                    </Box>
+                  </Box>
+                  <Box sx={{ display: isHover ? 'block' : 'none' }}>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between'
+                      }}
+                    >
+                      <Typography
+                        paragraph
+                        sx={{
+                          color: '#251E18',
+                          marginBottom: '0.2rem'
+                        }}
+                      >
+                        <strong>Đã đầu tư</strong>
+                      </Typography>
+                      <Typography
+                        paragraph
+                        sx={{
+                          color: '#251E18',
+                          marginBottom: '0.2rem'
+                        }}
+                      >
+                        <strong>Mục tiêu</strong>
+                      </Typography>
+                    </Box>
+                    <BorderLinearProgress
+                      variant="determinate"
+                      value={(row.investedCapital / row.investmentTargetCapital) * 100}
+                    />
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        paddingTop: '0.2rem'
+                      }}
+                    >
+                      <Typography
+                        paragraph
+                        sx={{
+                          color: '#14B7CC'
+                        }}
+                      >
+                        <strong>{fCurrency(row.investedCapital)}</strong>
+                      </Typography>
+                      <Typography
+                        paragraph
+                        sx={{
+                          color: '#FF7F56'
+                        }}
+                      >
+                        <strong>{fCurrency(row.investmentTargetCapital)}</strong>
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Box>
+              </Box>
+            </CardActionArea>
           </CardStyle>
         </Link>
       </MotionInView>

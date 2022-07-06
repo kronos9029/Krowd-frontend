@@ -12,7 +12,7 @@ import { OverlayBackground } from 'assets';
 const RootStyle = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
     paddingBottom: theme.spacing(12),
-    backgroundColor:
+    backgroundImage:
       theme.palette.mode === 'light'
         ? `linear-gradient(180deg, ${alpha(theme.palette.grey[300], 0)} 0%, ${
             theme.palette.grey[300]
