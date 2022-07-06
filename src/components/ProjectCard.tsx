@@ -84,6 +84,20 @@ function ProjectCard({ row }: { row: Project }) {
               '&:hover': { opacity: 0.9 }
             }}
           >
+            <Card
+              sx={{
+                minWidth: 50,
+                minHeight: 50,
+                boxShadow: '40px 40px 80px 0 20%',
+                position: 'absolute',
+                top: '42%',
+                left: '5%',
+                display: 'flex',
+                alignItems: 'center'
+              }}
+            >
+              <img style={{ width: '4em' }} src={row.business.image} />
+            </Card>
             <CardMedia
               style={{
                 display: 'center'
@@ -92,13 +106,14 @@ function ProjectCard({ row }: { row: Project }) {
               height={240}
               src={row.image}
             />
+
             <Box px={3}>
               <Box minHeight={'9em'}>
                 <Typography
                   sx={{
                     // color: isLight ? '#14B7CC' : 'white',
                     overflow: 'hidden',
-                    paddingTop: '1rem'
+                    paddingTop: '1.8rem'
                   }}
                   variant="subtitle1"
                 >

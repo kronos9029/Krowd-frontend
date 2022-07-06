@@ -146,7 +146,7 @@ export default function Projects() {
   return (
     <RootStyle title="Danh sách | Krowd">
       <Container maxWidth="lg">
-        <Box sx={{ mb: { xs: 5, md: 10, paddingTop: '7rem' } }}>
+        <Box sx={{ mb: { xs: 5, md: 5, paddingTop: '7rem' } }}>
           <Typography variant="h2" sx={{ mb: 3 }}>
             Đầu tư ngay
           </Typography>
@@ -158,7 +158,7 @@ export default function Projects() {
           </Typography>
           <Box
             sx={{
-              my: { lg: 4, sm: 2 },
+              my: { lg: 2, sm: 2 },
               display: { sm: 'flex', xs: 'grid' },
               justifyContent: { md: 'space-between', sm: 'space-evenly', xs: 'center' }
             }}
@@ -182,77 +182,13 @@ export default function Projects() {
             /> */}
             </Box>
           </Box>
-          <MHidden width="smDown">
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs
-                value={selectedField}
-                onChange={handleChange}
-                variant="fullWidth"
-                scrollButtons="auto"
-                aria-label="basic tabs example"
-              >
-                {fieldList.slice(0, 5).map((value, index) => (
-                  <Tab
-                    key={index}
-                    value={value.id}
-                    sx={{
-                      minWidth: { lg: '14% !important', sm: '12% !important' }
-                    }}
-                    label={
-                      <Typography
-                        sx={{
-                          color: selectedField === value.id ? '#14B7CC' : '',
-                          textOverflow: 'ellipsis',
-                          whiteSpace: 'nowrap',
-                          overflow: 'hidden',
-                          textAlign: 'center',
-                          '&:hover': {
-                            color: 'primary.main'
-                          }
-                        }}
-                        variant="h6"
-                      >
-                        {value.name}
-                      </Typography>
-                    }
-                  />
-                ))}
-                <Tab
-                  value={'more'}
-                  sx={{ minWidth: '14% !important' }}
-                  href={PATH_FIELDPAGE}
-                  label={
-                    <Typography
-                      sx={{
-                        color: selectedField === 'more' ? '#14B7CC' : '',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                        overflow: 'hidden',
-                        textAlign: 'center',
-                        '&:hover': {
-                          color: 'primary.main'
-                        }
-                      }}
-                      variant="h6"
-                    >
-                      <Icon icon={menu2Fill} width={30} /> Tất cả danh mục
-                    </Typography>
-                  }
-                />
-              </Tabs>
-            </Box>
-          </MHidden>
-          <Grid xs={12} sm={2} md={4}>
-            {!isDefault && (
-              <Typography gutterBottom>
-                <Typography component="span" variant="subtitle1">
-                  {/* {filteredProducts.length} */}
-                </Typography>
-              </Typography>
-            )}
-          </Grid>
         </Box>
-
+        <Box sx={{ display: 'flex', alignItems: 'end', my: 3 }}>
+          <Typography variant="h3">Các cơ hội cho bạn</Typography>
+          <Typography color={'text.disabled'} fontWeight={1000} variant="h3" sx={{ ml: 1 }}>
+            {projectList && projectList.numOfProject}
+          </Typography>
+        </Box>
         <Grid container alignItems="center" justifyContent="center" spacing={5}>
           {projectList && projectList.listOfProject.map((p) => <ProjectCard key={p.id} row={p} />)}
         </Grid>
