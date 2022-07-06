@@ -36,6 +36,7 @@ import { getAllProject, filterProjects, getProjectId } from 'redux/slices/krowd_
 import { Project, ProjectFilter, ProjectState } from '../@types/krowd/project';
 import { getFieldList } from 'redux/slices/krowd_slices/field';
 import { Link } from 'react-router-dom';
+import ProjectCard from '../components/ProjectCard';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
@@ -59,58 +60,20 @@ const Language = [
   }
 ];
 
-const CardStyle = styled(Card)(({ theme }) => {
-  const shadowCard = (opacity: number) =>
-    theme.palette.mode === 'light'
-      ? alpha(theme.palette.common.black, opacity)
-      : alpha(theme.palette.common.black, opacity);
-  return {
-    maxWidth: 390,
-    minHeight: 300,
-    margin: 'auto',
-    textAlign: 'left',
-
-    boxShadow: `-40px 40px 80px 0 ${shadowCard(0.2)}`,
-    [theme.breakpoints.up('md')]: {
-      borderRadius: theme.shape.borderRadiusMd,
-      backgroundColor: '#f4f6f8',
-      boxShadow: `-20px 20px 40px 0 ${shadowCard(0.15)}`
-    },
-    '&.cardCenter': {
-      [theme.breakpoints.up('md')]: {
-        marginTop: -80,
-        backgroundColor: theme.palette.background.paper,
-        boxShadow: `-40px 40px 80px 0 ${shadowCard(0.1)}`,
-        '&:before': {
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          zIndex: -1,
-          content: "''",
-          margin: 'auto',
-          position: 'absolute',
-          width: 'calc(100% - 40px)',
-          height: 'calc(100% - 40px)',
-          borderRadius: theme.shape.borderRadiusMd,
-          backgroundColor: theme.palette.background.paper,
-          boxShadow: `-20px 20px 40px 0 ${shadowCard(0.05)}`
-        }
-      }
-    }
-  };
-});
 export default function Projects() {
   const dispatch = useDispatch();
+  const currentLanguageCode = cookies.get('i18next') || 'en';
+  const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
+  const { t } = useTranslation();
   // Redux
-  const { projectLists } = useSelector((state: RootState) => state.project);
+  const { projectList } = useSelector((state: RootState) => state.project);
   const { fieldList } = useSelector((state: RootState) => state.fieldKrowd);
   const { projects, sortBy, filters } = useSelector(
     (state: { project: ProjectState }) => state.project
   );
   // State
   const [openFilter, setOpenFilter] = useState(false);
-  const [currentFieldIndex, setCurrentFieldIndex] = useState('');
+  const [selectedField, setSelectedField] = useState('');
   // Formik
   const formik = useFormik<ProjectFilter>({
     initialValues: {
@@ -135,12 +98,9 @@ export default function Projects() {
     dispatch(getAllProject('INVESTOR'));
     dispatch(getFieldList());
     dispatch(filterProjects(values));
-    setCurrentFieldIndex(fieldList[0]?.id);
+    setSelectedField(fieldList[0]?.id);
   }, [dispatch, fieldList[0]?.id]);
 
-  const handleGetProjectById = (activeProjectId: string) => {
-    dispatch(getProjectId(activeProjectId));
-  };
   const handleOpenFilter = () => {
     setOpenFilter(true);
   };
@@ -154,30 +114,13 @@ export default function Projects() {
     resetForm();
   };
 
-  const currentLanguageCode = cookies.get('i18next') || 'en';
-  const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
-  const { t } = useTranslation();
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     if (newValue !== 'more') {
-      setCurrentFieldIndex(newValue);
+      setSelectedField(newValue);
     } else {
     }
   };
-  const theme = useTheme();
-  const isLight = theme.palette.mode === 'light';
-  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
 
-  const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
-    height: 10,
-    borderRadius: 5,
-    [`&.${linearProgressClasses.colorPrimary}`]: {
-      backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 300 : 700]
-    },
-    [`& .${linearProgressClasses.bar}`]: {
-      borderRadius: 5,
-      backgroundColor: '#14B7CC'
-    }
-  }));
   // function applyFilter(projects: Project[], sortBy: string | null, filters: ProjectFilter) {
   //   // SORT BY
   //   if (sortBy === 'featured') {
@@ -205,7 +148,13 @@ export default function Projects() {
       <Container maxWidth="lg">
         <Box sx={{ mb: { xs: 5, md: 10, paddingTop: '7rem' } }}>
           <Typography variant="h2" sx={{ mb: 3 }}>
-            Danh sách các dự án
+            Đầu tư ngay
+          </Typography>
+          <Typography color={'text.disabled'} fontWeight={400} variant="subtitle2">
+            Duyệt qua các cơ hội đầu tư hiện tại trên Krowd.
+          </Typography>
+          <Typography color={'text.disabled'} fontWeight={400} variant="subtitle2" sx={{ mb: 3 }}>
+            Tất cả các công ty đều được kiểm tra và vượt qua thẩm định.
           </Typography>
           <Box
             sx={{
@@ -236,7 +185,7 @@ export default function Projects() {
           <MHidden width="smDown">
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs
-                value={currentFieldIndex}
+                value={selectedField}
                 onChange={handleChange}
                 variant="fullWidth"
                 scrollButtons="auto"
@@ -252,7 +201,7 @@ export default function Projects() {
                     label={
                       <Typography
                         sx={{
-                          color: currentFieldIndex === value.id ? '#14B7CC' : '',
+                          color: selectedField === value.id ? '#14B7CC' : '',
                           textOverflow: 'ellipsis',
                           whiteSpace: 'nowrap',
                           overflow: 'hidden',
@@ -275,7 +224,7 @@ export default function Projects() {
                   label={
                     <Typography
                       sx={{
-                        color: currentFieldIndex === 'more' ? '#14B7CC' : '',
+                        color: selectedField === 'more' ? '#14B7CC' : '',
                         textOverflow: 'ellipsis',
                         whiteSpace: 'nowrap',
                         overflow: 'hidden',
@@ -305,117 +254,7 @@ export default function Projects() {
         </Box>
 
         <Grid container alignItems="center" justifyContent="center" spacing={5}>
-          {projectLists.listOfProject?.map((row, index) => (
-            <Grid key={`${currentFieldIndex} ${index}`} item xs={12} sm={6} md={6} lg={4}>
-              <MotionInView variants={varFadeInUp}>
-                <Link
-                  onClick={() => handleGetProjectById(row.id)}
-                  to={PATH_DETAILS}
-                  style={{ textDecoration: 'none' }}
-                >
-                  <CardStyle
-                    sx={{
-                      width: 360,
-                      maxHeight: 500,
-                      height: 480,
-                      '&:hover': { opacity: 0.9 }
-                    }}
-                  >
-                    <CardMedia
-                      style={{
-                        display: 'center'
-                      }}
-                      component="img"
-                      height={240}
-                      src={row.image}
-                    />
-                    <Box px={3}>
-                      <Box minHeight={'9em'}>
-                        <Typography
-                          sx={{
-                            // color: isLight ? '#14B7CC' : 'white',
-                            overflow: 'hidden',
-                            paddingTop: '1rem'
-                          }}
-                          variant="subtitle1"
-                        >
-                          {row.name}
-                        </Typography>
-                        <Typography
-                          style={{ textAlign: 'left' }}
-                          sx={{
-                            color: '#251E18',
-                            textOverflow: 'ellipsis',
-                            overflow: 'hidden',
-                            display: '-webkit-box',
-                            WebkitBoxOrient: 'vertical',
-                            WebkitLineClamp: 3
-                          }}
-                          variant="body2"
-                        >
-                          {row.description}
-                        </Typography>
-                      </Box>
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          paddingTop: '0.5rem'
-                        }}
-                      >
-                        <Typography
-                          paragraph
-                          sx={{
-                            color: '#251E18',
-                            marginBottom: '0.2rem'
-                          }}
-                        >
-                          <strong>Đã đầu tư</strong>
-                        </Typography>
-                        <Typography
-                          paragraph
-                          sx={{
-                            color: '#251E18',
-                            marginBottom: '0.2rem'
-                          }}
-                        >
-                          <strong>Mục tiêu</strong>
-                        </Typography>
-                      </Box>
-                      <BorderLinearProgress
-                        variant="determinate"
-                        value={(row.investedCapital / row.investmentTargetCapital) * 100}
-                      />
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          paddingTop: '0.2rem'
-                        }}
-                      >
-                        <Typography
-                          paragraph
-                          sx={{
-                            color: '#14B7CC'
-                          }}
-                        >
-                          <strong>{fCurrency(row.investedCapital)}</strong>
-                        </Typography>
-                        <Typography
-                          paragraph
-                          sx={{
-                            color: '#FF7F56'
-                          }}
-                        >
-                          <strong>{fCurrency(row.investmentTargetCapital)}</strong>
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </CardStyle>
-                </Link>
-              </MotionInView>
-            </Grid>
-          ))}
+          {projectList && projectList.listOfProject.map((p) => <ProjectCard key={p.id} row={p} />)}
         </Grid>
       </Container>
     </RootStyle>

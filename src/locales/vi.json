@@ -11,7 +11,7 @@
     "Navbar_about_us": "About us",
     "Navbar_home_page": "Home page",
     "Navbar_2": "Investor",
-    "Navbar_project": "Project",
+    "Navbar_invest": "Invest",
     "Navbar_business": "Business",
     "Navbar_login": "Login",
     "Back_to_dashboard": "Console",
@@ -62,7 +62,7 @@
     "policy_description_legal_2": "This site belongs to Krowd. We are committed not to make any investment solicitation or investment promotion for any of the listed companies in advance. Nothing on the website or Krowd's communication methods to users is an invitation to invest, buy or sell or solicit users. We also do not provide financial, legal or tax advice to investors of any kind. If you have any questions regarding the above issues, we recommend that you consult the professional consultants of each field.",
     "policy_description_legal_3": "All information about startups is provided by the founder, and Krowd also conducts internal processes to moderate this information. However, Krowd recommends that investors read the email and check the information directly with the founder. In essence, our moderation process is not an internal audit, so there is a risk of information errors and the responsibility lies with the startup company first.",
     "highlight_project": "Highlight Project",
-    "highlight_project_description": "Choose the right project recently",
+    "highlight_project_description": "Most traction in 3 days",
     "footer_1": "Legal",
     "footer_title_left": "Franchise Platform for Business",
     "footer_title_1": {

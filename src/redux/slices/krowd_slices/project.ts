@@ -12,7 +12,7 @@ import { REACT_APP_API_URL } from '../../../config';
 type ProjectState = {
   isLoading: boolean;
   error: boolean;
-  projectLists: {
+  projectList: {
     numOfProject: number;
     listOfProject: Project[];
   };
@@ -30,7 +30,7 @@ const initialState: ProjectState = {
   isLoading: false,
   error: false,
   activeProjectId: null,
-  projectLists: { numOfProject: 0, listOfProject: [] },
+  projectList: { numOfProject: 0, listOfProject: [] },
   projects: [],
   project: null,
   sortBy: null,
@@ -58,7 +58,7 @@ const slice = createSlice({
     // GET MANAGE USERS
     getProjectListSuccess(state, action) {
       state.isLoading = false;
-      state.projectLists = action.payload;
+      state.projectList = action.payload;
     },
 
     getProjectListIDSuccess(state, action) {
@@ -66,11 +66,11 @@ const slice = createSlice({
       state.activeProjectId = action.payload;
     },
     delProjectListIDSuccess(state, action) {
-      state.projectLists = action.payload;
+      state.projectList = action.payload;
     },
     getProjectByBusinessIDSuccess(state, action) {
       state.isLoading = false;
-      state.projectLists = action.payload;
+      state.projectList = action.payload;
     },
 
     //  SORT & FILTER PRODUCTS
