@@ -36,7 +36,7 @@ import { getAllProject, filterProjects, getProjectId } from 'redux/slices/krowd_
 import { Project, ProjectFilter, ProjectState } from '../@types/krowd/project';
 import { getFieldList } from 'redux/slices/krowd_slices/field';
 import { Link } from 'react-router-dom';
-import ProjectCard from '../components/ProjectCard';
+import ProjectCard from '../components/_external-pages/project/ProjectCard';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
@@ -154,13 +154,17 @@ export default function Projects() {
             Duyệt qua các cơ hội đầu tư hiện tại trên Krowd.
           </Typography>
           <Typography color={'text.disabled'} fontWeight={400} variant="subtitle2" sx={{ mb: 3 }}>
-            Tất cả các công ty đều được kiểm tra và vượt qua thẩm định.
+            Tất cả các công ty đều được{' '}
+            <Link to="#" style={{ textDecoration: 'none' }}>
+              kiểm tra & vượt qua thẩm định.
+            </Link>
           </Typography>
           <Box
             sx={{
               my: { lg: 2, sm: 2 },
-              display: { sm: 'flex', xs: 'grid' },
-              justifyContent: { md: 'space-between', sm: 'space-evenly', xs: 'center' }
+              display: { sm: 'flex' },
+              justifyContent: { sm: 'space-between' },
+              alignItems: 'center'
             }}
           >
             <BlogPostsSearch sx={{ display: 'flex' }} border="none" />
@@ -168,7 +172,8 @@ export default function Projects() {
               component="div"
               sx={{
                 ml: { lg: 5, sm: 2 },
-                display: { sm: 'flex', xs: 'grid' },
+                mt: { sm: 0, xs: 3 },
+                display: { sm: 'flex' },
                 flexDirection: 'row-reverse'
               }}
             >

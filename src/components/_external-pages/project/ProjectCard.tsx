@@ -18,8 +18,9 @@ import { getProjectId } from 'redux/slices/krowd_slices/project';
 import { dispatch } from 'redux/store';
 import { PATH_DETAILS } from 'routes/paths';
 import { fCurrency } from 'utils/formatNumber';
-import { Project, ProjectStatus } from '../@types/krowd/project';
+import { Project, ProjectStatus } from '../../../@types/krowd/project';
 import CheckIcon from '@mui/icons-material/Check';
+const ACTIVE_STATUS = 4;
 const CardStyle = styled(Card)(({ theme }) => {
   const shadowCard = (opacity: number) =>
     theme.palette.mode === 'light'
@@ -77,6 +78,7 @@ function ProjectCard({ row }: { row: Project }) {
   const handleGetProjectById = (activeProjectId: string) => {
     dispatch(getProjectId(activeProjectId));
   };
+  const isActiveProject = row.status === ACTIVE_STATUS;
   return (
     <Grid item key={row.id} xs={12} sm={6} md={6} lg={4}>
       <MotionInView variants={varFadeInUp}>
@@ -122,10 +124,10 @@ function ProjectCard({ row }: { row: Project }) {
                 <Chip
                   label={
                     <>
-                      {row.status === 4 ? (
+                      {isActiveProject ? (
                         <CheckIcon sx={{ fontSize: '16px', color: '#ffffff' }} />
                       ) : undefined}
-                      <Typography variant="overline" fontSize={11} ml={row.status === 4 ? 1 : 0}>
+                      <Typography variant="overline" fontSize={11} ml={isActiveProject ? 1 : 0}>
                         {ProjectStatus[row.status].statusString}
                       </Typography>
                     </>

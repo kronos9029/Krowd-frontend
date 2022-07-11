@@ -32,7 +32,8 @@ import Page from 'components/Page';
 import Markdown from 'components/Markdown';
 import {
   ProjectDetailsReview,
-  ProductDetailsCarousel
+  ProductDetailsCarousel,
+  ProjectDetailsHero
 } from '../components/_dashboard/e-commerce/product-details';
 import ProjectPackage from 'components/_dashboard/general-analytics/ProjectPackage';
 import twitterFill from '@iconify/icons-eva/twitter-fill';
@@ -41,7 +42,9 @@ import facebookFill from '@iconify/icons-eva/facebook-fill';
 import instagramFilled from '@iconify/icons-ant-design/instagram-filled';
 import { MHidden, MIconButton } from 'components/@material-extend';
 import { fCurrency } from 'utils/formatNumber';
-import { ProjectStatus } from '../@types/krowd/project';
+import { Project, ProjectStatus } from '../@types/krowd/project';
+import ProjectDetailCard from 'components/_external-pages/project-detail/ProjectDetailCard';
+import ProjectDetailHeading from 'components/_external-pages/project-detail/ProjectDetailHeading';
 
 // ----------------------------------------------------------------------
 
@@ -77,11 +80,6 @@ const SOCIALS = [
     icon: <Icon icon={twitterFill} width={20} height={20} color="#1C9CEA" />
   }
 ];
-const LargeImgStyle = styled('img')(({ theme }) => ({
-  top: 0,
-  width: '100%'
-  // position: 'absolute'
-}));
 const PackageAnchor = styled('div')(() => ({
   display: 'block',
   position: 'relative',
@@ -111,270 +109,14 @@ export default function ComponentsDetails() {
     investValue: null,
     voucherDescription: ['Ưu đãi khi mua gói 1', 'Ưu đãi khi mua gói 2', 'Ưu đãi khi mua gói 3']
   };
-  const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
-    height: 10,
-    borderRadius: 5,
-    [`&.${linearProgressClasses.colorPrimary}`]: {
-      backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 300 : 700]
-    },
-    [`& .${linearProgressClasses.bar}`]: {
-      borderRadius: 5,
-      backgroundColor: '#14B7CC'
-    }
-  }));
+
   return (
     <Page title="Chi tiết dự án | Krowd">
       <Container maxWidth={themeStretch ? false : 'lg'} sx={{ paddingBottom: '4rem' }}>
         {product && projectID && (
           <>
-            <Box my={2} pt={'6rem'} sx={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-              <Typography>
-                <img style={{ width: '80px' }} src={projectID.business.image} />
-              </Typography>
-              <Typography variant="h2">{projectID.name}</Typography>
-            </Box>
-            <Box my={2}>
-              <Typography variant="body2" color={'#9E9E9E'}>
-                {projectID.description}
-              </Typography>
-            </Box>
-            <Box my={2} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-              <Box sx={{ display: 'flex', gap: '12px' }}>
-                <Chip
-                  label={<Typography variant="overline">{projectID.field.name}</Typography>}
-                  variant="filled"
-                  sx={{ borderRadius: '3px', color: 'rgba(0,0,0,0.6)' }}
-                />
-                <MHidden width="smDown">
-                  <Chip
-                    label={
-                      <Typography variant="overline">{projectID.field.description}</Typography>
-                    }
-                    variant="filled"
-                    sx={{ borderRadius: '3px', color: 'rgba(0,0,0,0.6)' }}
-                  />
-                </MHidden>
-              </Box>
-              <Box sx={{ display: 'flex' }}>
-                <Chip
-                  label={
-                    <Typography variant="overline">
-                      {ProjectStatus[projectID.status].statusString}
-                    </Typography>
-                  }
-                  variant="filled"
-                  sx={{
-                    borderRadius: '3px',
-                    backgroundColor: `${ProjectStatus[projectID.status].color}`,
-                    color: '#ffffff'
-                  }}
-                />
-              </Box>
-            </Box>
-            <Grid container>
-              <Grid
-                // px={{ lg: 3, md: 5, sm: 5, xs: 2 }}
-                sx={{ pr: 5 }}
-                py={{ lg: 5, md: 3, sm: 3 }}
-                item
-                xs={12}
-                sm={12}
-                md={7}
-                lg={8}
-              >
-                <Box sx={{ cursor: 'zoom-in', position: 'relative' }}>
-                  <LargeImgStyle alt="large image" src={projectID.image} />
-                </Box>
-              </Grid>
-              <Grid
-                px={{ lg: 5, md: 5, sm: 5, xs: 2 }}
-                py={{ lg: 5, md: 3, sm: 3, xs: 3 }}
-                item
-                xs={12}
-                sm={12}
-                md={5}
-                lg={4}
-              >
-                <Box>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      mb: '0.5rem'
-                    }}
-                  >
-                    <Typography
-                      paragraph
-                      sx={{
-                        color: '#251E18',
-                        marginBottom: '0.2rem'
-                      }}
-                    >
-                      <strong>Đã đầu tư</strong>
-                    </Typography>
-                    <Typography
-                      paragraph
-                      sx={{
-                        color: '#251E18',
-                        marginBottom: '0.2rem'
-                      }}
-                    >
-                      <strong>Mục tiêu</strong>
-                    </Typography>
-                  </Box>
-                  <BorderLinearProgress
-                    variant="determinate"
-                    value={
-                      (projectID &&
-                        (projectID.investedCapital / projectID.investmentTargetCapital) * 100) ??
-                      0
-                    }
-                  />
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      my: '0.5rem'
-                    }}
-                  >
-                    <Typography
-                      paragraph
-                      sx={{
-                        color: '#14B7CC'
-                      }}
-                    >
-                      <strong>{fCurrency(projectID.investedCapital)}</strong>
-                    </Typography>
-                    <Typography
-                      paragraph
-                      sx={{
-                        color: '#FF7F56'
-                      }}
-                    >
-                      <strong>{fCurrency(projectID.investmentTargetCapital)}</strong>
-                    </Typography>
-                  </Box>
-                </Box>
-                <Divider sx={{ borderStyle: 'dashed', color: 'text.disabled' }} variant="middle" />
-
-                <Box
-                  sx={{
-                    my: 1.5,
-                    display: 'flex',
-                    justifyContent: 'space-between'
-                  }}
-                >
-                  <Typography sx={{ mt: 0.2, fontSize: '25px', fontWeight: '900' }}>
-                    {projectID.multiplier}
-                    <span>%</span>
-                    <Typography>Doanh thu chia sẻ</Typography>
-                  </Typography>
-                </Box>
-                <Divider sx={{ borderStyle: 'dashed', color: 'text.disabled' }} variant="middle" />
-
-                <Box
-                  sx={{
-                    my: 1.5,
-                    display: 'flex',
-                    justifyContent: 'space-between'
-                  }}
-                >
-                  <Typography sx={{ mt: 0.2, fontSize: '25px', fontWeight: '900' }}>
-                    <span>x</span>
-                    {projectID.multiplier}
-                    <Typography>Hệ số nhân</Typography>
-                  </Typography>
-                </Box>
-                <Divider sx={{ borderStyle: 'dashed', color: 'text.disabled' }} variant="middle" />
-
-                <Box
-                  sx={{
-                    my: 1.5,
-                    display: 'flex',
-                    justifyContent: 'space-between'
-                  }}
-                >
-                  <Typography sx={{ mt: 0.2, fontSize: '25px', fontWeight: '900' }}>
-                    {projectID.duration} <span> tháng </span>
-                    <Typography>Thanh toán đầu tư</Typography>
-                  </Typography>
-                </Box>
-                <Divider sx={{ borderStyle: 'dashed', color: 'text.disabled' }} variant="middle" />
-
-                <Box
-                  sx={{
-                    my: 1.5,
-                    display: 'flex',
-                    justifyContent: 'space-between'
-                  }}
-                >
-                  <Typography sx={{ mt: 0.2, fontSize: '25px', fontWeight: '900' }}>
-                    {projectID.numOfStage} <span> kì</span>
-                    <Typography>Số kì thanh toán</Typography>
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    my: 1.5,
-                    display: 'flex',
-                    justifyContent: 'space-between'
-                  }}
-                >
-                  <Button
-                    sx={{ backgroundColor: '#FF7F50', '&:hover': { backgroundColor: '#FF7F50' } }}
-                    disableElevation
-                    disableRipple
-                    fullWidth={true}
-                    variant="contained"
-                    size="large"
-                    href="#__investmentPackage"
-                  >
-                    Đầu tư ngay
-                  </Button>
-                </Box>
-                {/*                 <Divider sx={{ borderStyle: 'dashed', color: 'text.disabled' }} variant="middle" />
-                 */}
-                {/* <Box
-                    sx={{
-                      my: 3,
-                      display: 'flex',
-                      justifyContent: 'space-between'
-                    }}
-                  >
-                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
-                      Doanh nghiệp
-                    </Typography>
-                    <Typography sx={{ mt: 0.2 }}>{projectID.business.name}</Typography>
-                  </Box>
-
-                  <Box
-                    sx={{
-                      mb: 3,
-                      display: 'flex',
-                      justifyContent: 'space-between'
-                    }}
-                  >
-                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
-                      Khu vực
-                    </Typography>
-                    <Typography sx={{ mt: 0.2 }}>{projectID.name}</Typography>
-                  </Box>
-
-                  <Box
-                    sx={{
-                      mb: 3,
-                      display: 'flex',
-                      justifyContent: 'space-between'
-                    }}
-                  >
-                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
-                      Địa chỉ
-                    </Typography>
-                    <Typography sx={{ mt: 0.2 }}>{projectID.address}</Typography>
-                  </Box> */}
-              </Grid>
-            </Grid>
-
+            <ProjectDetailHeading p={projectID} />
+            <ProjectDetailCard p={projectID} />
             {/* Nổi bật */}
             <Card>
               <Box sx={{ py: 1, my: 2, mx: '25%', borderBottom: 2, borderColor: 'divider' }}>

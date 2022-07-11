@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import React, { useEffect } from 'react';
 import { dispatch, RootState, useSelector } from 'redux/store';
 import { getAllProject } from 'redux/slices/krowd_slices/project';
-import ProjectCard from 'components/ProjectCard';
+import ProjectCard from 'components/_external-pages/project/ProjectCard';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
@@ -54,11 +54,20 @@ export default function LandingMinimalHelps() {
       }}
     >
       <Container maxWidth="lg">
-        <Box sx={{ mb: { xs: 10, md: 5, textAlign: 'left', paddingTop: '3rem' } }}>
+        <Box
+          sx={{ mb: { xs: 5, md: 5 }, textAlign: { sm: 'left', xs: 'center' }, paddingTop: '3rem' }}
+        >
           <Typography variant="h2" sx={{ mb: 3, color: 'text.primary' }}>
             {t('highlight_project')}
           </Typography>
-          <Box sx={{ display: 'flex', alignItems: 'middle', gap: '10' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: { sm: 'left', xs: 'center' },
+              alignItems: 'middle',
+              gap: '10'
+            }}
+          >
             <Typography>
               <img
                 style={{
@@ -78,7 +87,7 @@ export default function LandingMinimalHelps() {
             </Typography>
           </Box>
         </Box>
-        <Grid container>
+        <Grid container spacing={3}>
           {projectList &&
             projectList.listOfProject
               .filter((value) => value.status === 2)
