@@ -14,34 +14,34 @@ import {
   Typography,
   LinearProgress,
   linearProgressClasses,
-  Tooltip
+  Tooltip,
+  Chip,
+  Button
 } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 // redux
 import { RootState, useDispatch, useSelector } from 'redux/store';
-import { getProduct, addCart, onGotoStep } from 'redux/slices/product';
+import { getProduct } from 'redux/slices/product';
 // routes
 // @types
-import { CartItem, ProductState } from '../@types/products';
+import { ProductState } from '../@types/products';
 // hooks
 import useSettings from 'hooks/useSettings';
 // components
 import Page from 'components/Page';
 import Markdown from 'components/Markdown';
 import {
-  ProductDetailsSummary,
   ProjectDetailsReview,
-  ProductDetailsCarousel,
-  ProjectDetailsHero
+  ProductDetailsCarousel
 } from '../components/_dashboard/e-commerce/product-details';
 import ProjectPackage from 'components/_dashboard/general-analytics/ProjectPackage';
 import twitterFill from '@iconify/icons-eva/twitter-fill';
 import linkedinFill from '@iconify/icons-eva/linkedin-fill';
 import facebookFill from '@iconify/icons-eva/facebook-fill';
 import instagramFilled from '@iconify/icons-ant-design/instagram-filled';
-import { MIconButton } from 'components/@material-extend';
+import { MHidden, MIconButton } from 'components/@material-extend';
 import { fCurrency } from 'utils/formatNumber';
-import { getProjectId } from 'redux/slices/krowd_slices/project';
+import { ProjectStatus } from '../@types/krowd/project';
 
 // ----------------------------------------------------------------------
 
@@ -79,22 +79,30 @@ const SOCIALS = [
 ];
 const LargeImgStyle = styled('img')(({ theme }) => ({
   top: 0,
-  width: '100%',
-  height: '100%',
-  objectFit: 'cover',
-  position: 'absolute'
+  width: '100%'
+  // position: 'absolute'
+}));
+const PackageAnchor = styled('div')(() => ({
+  display: 'block',
+  position: 'relative',
+  top: '-100px',
+  visibility: 'hidden'
 }));
 
 export default function ComponentsDetails() {
   const { themeStretch } = useSettings();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [value, setValue] = useState('1');
   const [valuePackage, setValuePackage] = useState('Basic');
-  // const { name = 'nike-air-force-1-ndestrukt' } = useParams();
-  // const { product, error, checkout } = useSelector(
-  //   (state: { product: ProductState }) => state.product
-  // );
+  const { name = 'nike-air-force-1-ndestrukt' } = useParams();
+  const { product, error, checkout } = useSelector(
+    (state: { product: ProductState }) => state.product
+  );
   const { activeProjectId: projectID } = useSelector((state: RootState) => state.project);
+
+  useEffect(() => {
+    dispatch(getProduct(name));
+  }, [dispatch, name]);
 
   const projectPackage = {
     id: null,
@@ -117,142 +125,82 @@ export default function ComponentsDetails() {
   return (
     <Page title="Chi tiết dự án | Krowd">
       <Container maxWidth={themeStretch ? false : 'lg'} sx={{ paddingBottom: '4rem' }}>
-        {/* {product && ( */}
-        <>
-          <Typography
-            sx={{
-              paddingTop: '7rem',
-              textAlign: 'center',
-              color: 'rgb(20, 183, 204)'
-            }}
-            variant="h2"
-          >
-            {projectID?.name}
-          </Typography>
-          <Card sx={{ my: 3 }}>
+        {product && projectID && (
+          <>
+            <Box my={2} pt={'6rem'} sx={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+              <Typography>
+                <img style={{ width: '80px' }} src={projectID.business.image} />
+              </Typography>
+              <Typography variant="h2">{projectID.name}</Typography>
+            </Box>
+            <Box my={2}>
+              <Typography variant="body2" color={'#9E9E9E'}>
+                {projectID.description}
+              </Typography>
+            </Box>
+            <Box my={2} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Box sx={{ display: 'flex', gap: '12px' }}>
+                <Chip
+                  label={<Typography variant="overline">{projectID.field.name}</Typography>}
+                  variant="filled"
+                  sx={{ borderRadius: '3px', color: 'rgba(0,0,0,0.6)' }}
+                />
+                <MHidden width="smDown">
+                  <Chip
+                    label={
+                      <Typography variant="overline">{projectID.field.description}</Typography>
+                    }
+                    variant="filled"
+                    sx={{ borderRadius: '3px', color: 'rgba(0,0,0,0.6)' }}
+                  />
+                </MHidden>
+              </Box>
+              <Box sx={{ display: 'flex' }}>
+                <Chip
+                  label={
+                    <Typography variant="overline">
+                      {ProjectStatus[projectID.status].statusString}
+                    </Typography>
+                  }
+                  variant="filled"
+                  sx={{
+                    borderRadius: '3px',
+                    backgroundColor: `${ProjectStatus[projectID.status].color}`,
+                    color: '#ffffff'
+                  }}
+                />
+              </Box>
+            </Box>
             <Grid container>
-              <Grid p={{ xs: 1, sm: 5 }} item xs={12} md={6} lg={6}>
-                {/* <ProjectDetailsHero product={product} /> */}
-                <Box sx={{ cursor: 'zoom-in', paddingTop: '100%', position: 'relative' }}>
-                  <LargeImgStyle alt="large image" src={projectID?.image} />
+              <Grid
+                // px={{ lg: 3, md: 5, sm: 5, xs: 2 }}
+                sx={{ pr: 5 }}
+                py={{ lg: 5, md: 3, sm: 3 }}
+                item
+                xs={12}
+                sm={12}
+                md={7}
+                lg={8}
+              >
+                <Box sx={{ cursor: 'zoom-in', position: 'relative' }}>
+                  <LargeImgStyle alt="large image" src={projectID.image} />
                 </Box>
               </Grid>
-              <Grid item xs={12} md={6} lg={6} sx={{ pr: 3, pl: 3, pt: 5, pb: 3 }}>
-                {/* <Typography
-                    variant="overline"
-                    sx={{
-                      mb: 1,
-                      display: 'block',
-                      color: projectID?.status === 'Đang hoạt động' ? 'error.main' : 'info.main'
-                    }}
-                  >
-                    {projectID?.status}
-                  </Typography> */}
-                <Divider sx={{ borderStyle: 'dashed' }} />
-                <Box
-                  sx={{
-                    my: 3,
-                    display: 'flex',
-                    justifyContent: 'space-between'
-                  }}
-                >
-                  <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
-                    Thuộc doanh nghiệp
-                  </Typography>
-                  <Typography sx={{ mt: 0.2 }}>{projectID?.business?.name}</Typography>
-                </Box>
-
-                <Box
-                  sx={{
-                    mb: 3,
-                    display: 'flex',
-                    justifyContent: 'space-between'
-                  }}
-                >
-                  <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
-                    Thuộc Khu vực:
-                  </Typography>
-                  <Typography sx={{ mt: 0.2 }}>{projectID?.name}</Typography>
-                </Box>
-
-                <Box
-                  sx={{
-                    mb: 3,
-                    display: 'flex',
-                    justifyContent: 'space-between'
-                  }}
-                >
-                  <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
-                    Địa chỉ:
-                  </Typography>
-                  <Typography sx={{ mt: 0.2 }}>{projectID?.address}</Typography>
-                </Box>
-                <Box
-                  sx={{
-                    mb: 3,
-                    display: 'flex',
-                    justifyContent: 'space-between'
-                  }}
-                >
-                  <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
-                    Doanh thu chia sẻ
-                  </Typography>
-                  <Typography sx={{ mt: 0.2 }}>
-                    {projectID?.multiplier}
-                    <span> (%)</span>
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    mb: 3,
-                    display: 'flex',
-                    justifyContent: 'space-between'
-                  }}
-                >
-                  <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
-                    Hệ số nhân
-                  </Typography>
-                  <Typography sx={{ mt: 0.2 }}>
-                    <span>x </span>
-                    {projectID?.multiplier}
-                  </Typography>
-                </Box>
-
-                <Box
-                  sx={{
-                    mb: 3,
-                    display: 'flex',
-                    justifyContent: 'space-between'
-                  }}
-                >
-                  <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
-                    Thời hạn
-                  </Typography>
-                  <Typography sx={{ mt: 0.2 }}>
-                    {projectID?.duration} <span> tháng</span>
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    mb: 4,
-                    display: 'flex',
-                    justifyContent: 'space-between'
-                  }}
-                >
-                  <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
-                    Số kì thanh toán
-                  </Typography>
-                  <Typography sx={{ mt: 0.2 }}>
-                    {projectID?.numOfStage} <span> kì</span>
-                  </Typography>
-                </Box>
-                <Divider sx={{ borderStyle: 'dashed' }} />
-                <Box mt={'1rem'}>
+              <Grid
+                px={{ lg: 5, md: 5, sm: 5, xs: 2 }}
+                py={{ lg: 5, md: 3, sm: 3, xs: 3 }}
+                item
+                xs={12}
+                sm={12}
+                md={5}
+                lg={4}
+              >
+                <Box>
                   <Box
                     sx={{
                       display: 'flex',
                       justifyContent: 'space-between',
-                      my: '0.5rem'
+                      mb: '0.5rem'
                     }}
                   >
                     <Typography
@@ -295,7 +243,7 @@ export default function ComponentsDetails() {
                         color: '#14B7CC'
                       }}
                     >
-                      <strong>{projectID?.investedCapital}</strong>
+                      <strong>{fCurrency(projectID.investedCapital)}</strong>
                     </Typography>
                     <Typography
                       paragraph
@@ -303,102 +251,208 @@ export default function ComponentsDetails() {
                         color: '#FF7F56'
                       }}
                     >
-                      <strong>{projectID?.investmentTargetCapital}</strong>
+                      <strong>{fCurrency(projectID.investmentTargetCapital)}</strong>
                     </Typography>
                   </Box>
                 </Box>
+                <Divider sx={{ borderStyle: 'dashed', color: 'text.disabled' }} variant="middle" />
 
-                <Divider sx={{ borderStyle: 'dashed' }} />
-
-                <Box sx={{ mt: 1, textAlign: 'center' }}>
-                  {SOCIALS.map((social) => (
-                    <Tooltip key={social.name} title={social.name}>
-                      <MIconButton>{social.icon}</MIconButton>
-                    </Tooltip>
-                  ))}
-                </Box>
-              </Grid>
-            </Grid>
-          </Card>
-
-          {/* Nổi bật */}
-          <Card>
-            <Box sx={{ py: 1, my: 2, mx: '25%', borderBottom: 2, borderColor: 'divider' }}>
-              <Typography
-                variant="h3"
-                sx={{
-                  textAlign: 'center',
-                  fontSize: '20px'
-                }}
-              >
-                Nổi bật
-              </Typography>
-            </Box>
-            <Grid container px={2}>
-              <Grid item xs={12} md={5} lg={5}>
-                {/* <ProductDetailsCarousel product={product} /> */}
-              </Grid>
-              <Grid item xs={12} md={7} lg={7}>
-                <Typography
-                  variant="subtitle1"
-                  sx={{ ml: 1, fontSize: '20px', mb: { lg: 3, xs: 1 }, mt: { lg: 1, xs: 2 } }}
+                <Box
+                  sx={{
+                    my: 1.5,
+                    display: 'flex',
+                    justifyContent: 'space-between'
+                  }}
                 >
-                  Nội dung chi tiết
-                </Typography>
-                <Typography sx={{ ml: 1, fontSize: '15px', my: 3 }}>
-                  6/8 The Emerald Golf View có vị trí mặt tiền đại lộ Bình Dương (TP. Thuận An, Bình
-                  Dương) ngay sân golf Sông Bé và siêu thị Nhật Bản Aeon Mall, trực diện cổng chính
-                  VSIP1.
-                </Typography>
-                <Typography sx={{ ml: 1, fontSize: '15px', my: 3 }}>
-                  Dự án bán đất nền khu dân cư Lê Phong Thuận Giao trực thuộc tỉnh Bình Dương là một
-                  dự án lớn có tầm tại công ty chúng tôi. Đất nền Thuận Giao Bình Dương là sự lựa
-                  chọn hàng đầu về an cư lạc nghiệp.
-                </Typography>
-                <Typography sx={{ ml: 1, fontSize: '15px', my: 3 }}>
-                  Dự án bán đất nền khu dân cư Lê Phong Thuận Giao trực thuộc tỉnh Bình Dương là một
-                  dự án lớn có tầm tại công ty chúng tôi. Đất nền Thuận Giao Bình Dương là sự lựa
-                  chọn hàng đầu về an cư lạc nghiệp.
-                </Typography>
+                  <Typography sx={{ mt: 0.2, fontSize: '25px', fontWeight: '900' }}>
+                    {projectID.multiplier}
+                    <span>%</span>
+                    <Typography>Doanh thu chia sẻ</Typography>
+                  </Typography>
+                </Box>
+                <Divider sx={{ borderStyle: 'dashed', color: 'text.disabled' }} variant="middle" />
+
+                <Box
+                  sx={{
+                    my: 1.5,
+                    display: 'flex',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <Typography sx={{ mt: 0.2, fontSize: '25px', fontWeight: '900' }}>
+                    <span>x</span>
+                    {projectID.multiplier}
+                    <Typography>Hệ số nhân</Typography>
+                  </Typography>
+                </Box>
+                <Divider sx={{ borderStyle: 'dashed', color: 'text.disabled' }} variant="middle" />
+
+                <Box
+                  sx={{
+                    my: 1.5,
+                    display: 'flex',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <Typography sx={{ mt: 0.2, fontSize: '25px', fontWeight: '900' }}>
+                    {projectID.duration} <span> tháng </span>
+                    <Typography>Thanh toán đầu tư</Typography>
+                  </Typography>
+                </Box>
+                <Divider sx={{ borderStyle: 'dashed', color: 'text.disabled' }} variant="middle" />
+
+                <Box
+                  sx={{
+                    my: 1.5,
+                    display: 'flex',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <Typography sx={{ mt: 0.2, fontSize: '25px', fontWeight: '900' }}>
+                    {projectID.numOfStage} <span> kì</span>
+                    <Typography>Số kì thanh toán</Typography>
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    my: 1.5,
+                    display: 'flex',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <Button
+                    sx={{ backgroundColor: '#FF7F50', '&:hover': { backgroundColor: '#FF7F50' } }}
+                    disableElevation
+                    disableRipple
+                    fullWidth={true}
+                    variant="contained"
+                    size="large"
+                    href="#__investmentPackage"
+                  >
+                    Đầu tư ngay
+                  </Button>
+                </Box>
+                {/*                 <Divider sx={{ borderStyle: 'dashed', color: 'text.disabled' }} variant="middle" />
+                 */}
+                {/* <Box
+                    sx={{
+                      my: 3,
+                      display: 'flex',
+                      justifyContent: 'space-between'
+                    }}
+                  >
+                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
+                      Doanh nghiệp
+                    </Typography>
+                    <Typography sx={{ mt: 0.2 }}>{projectID.business.name}</Typography>
+                  </Box>
+
+                  <Box
+                    sx={{
+                      mb: 3,
+                      display: 'flex',
+                      justifyContent: 'space-between'
+                    }}
+                  >
+                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
+                      Khu vực
+                    </Typography>
+                    <Typography sx={{ mt: 0.2 }}>{projectID.name}</Typography>
+                  </Box>
+
+                  <Box
+                    sx={{
+                      mb: 3,
+                      display: 'flex',
+                      justifyContent: 'space-between'
+                    }}
+                  >
+                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
+                      Địa chỉ
+                    </Typography>
+                    <Typography sx={{ mt: 0.2 }}>{projectID.address}</Typography>
+                  </Box> */}
               </Grid>
             </Grid>
-          </Card>
 
-          {/*Change tab view at here */}
-          <Card sx={{ my: 3 }}>
-            <TabContext value={value}>
-              <Box sx={{ bgcolor: 'background.neutral' }}>
-                <TabList onChange={(e, value) => setValue(value)} variant="fullWidth">
-                  <Tab disableRipple value="1" label="Mô tả chi tiết" />
-                  <Tab
-                    disableRipple
-                    value="2"
-                    label="Thành viên"
-                    sx={{ '& .MuiTab-wrapper': { whiteSpace: 'nowrap' } }}
-                  />
-                  <Tab
-                    disableRipple
-                    value="3"
-                    label="Bình luận"
-                    sx={{ '& .MuiTab-wrapper': { whiteSpace: 'nowrap' } }}
-                  />
-                  <Tab
-                    disableRipple
-                    value="4"
-                    label="Cập nhật"
-                    sx={{ '& .MuiTab-wrapper': { whiteSpace: 'nowrap' } }}
-                  />
-                  <Tab
-                    disableRipple
-                    value="5"
-                    label="Giai đoạn"
-                    sx={{ '& .MuiTab-wrapper': { whiteSpace: 'nowrap' } }}
-                  />
-                </TabList>
+            {/* Nổi bật */}
+            <Card>
+              <Box sx={{ py: 1, my: 2, mx: '25%', borderBottom: 2, borderColor: 'divider' }}>
+                <Typography
+                  variant="h3"
+                  sx={{
+                    textAlign: 'center',
+                    fontSize: '20px'
+                  }}
+                >
+                  Nổi bật
+                </Typography>
               </Box>
+              <Grid container px={2}>
+                <Grid item xs={12} md={5} lg={5}>
+                  <ProductDetailsCarousel product={product} />
+                </Grid>
+                <Grid item xs={12} md={7} lg={7}>
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ ml: 1, fontSize: '20px', mb: { lg: 3, xs: 1 }, mt: { lg: 1, xs: 2 } }}
+                  >
+                    Nội dung chi tiết
+                  </Typography>
+                  <Typography sx={{ ml: 1, fontSize: '15px', my: 3 }}>
+                    6/8 The Emerald Golf View có vị trí mặt tiền đại lộ Bình Dương (TP. Thuận An,
+                    Bình Dương) ngay sân golf Sông Bé và siêu thị Nhật Bản Aeon Mall, trực diện cổng
+                    chính VSIP1.
+                  </Typography>
+                  <Typography sx={{ ml: 1, fontSize: '15px', my: 3 }}>
+                    Dự án bán đất nền khu dân cư Lê Phong Thuận Giao trực thuộc tỉnh Bình Dương là
+                    một dự án lớn có tầm tại công ty chúng tôi. Đất nền Thuận Giao Bình Dương là sự
+                    lựa chọn hàng đầu về an cư lạc nghiệp.
+                  </Typography>
+                  <Typography sx={{ ml: 1, fontSize: '15px', my: 3 }}>
+                    Dự án bán đất nền khu dân cư Lê Phong Thuận Giao trực thuộc tỉnh Bình Dương là
+                    một dự án lớn có tầm tại công ty chúng tôi. Đất nền Thuận Giao Bình Dương là sự
+                    lựa chọn hàng đầu về an cư lạc nghiệp.
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Card>
 
-              <Divider />
-              {/* 
+            {/*Change tab view at here */}
+            <Card sx={{ my: 3 }}>
+              <TabContext value={value}>
+                <Box sx={{ bgcolor: 'background.neutral' }}>
+                  <TabList onChange={(e, value) => setValue(value)} variant="fullWidth">
+                    <Tab disableRipple value="1" label="Mô tả chi tiết" />
+                    <Tab
+                      disableRipple
+                      value="2"
+                      label="Thành viên"
+                      sx={{ '& .MuiTab-wrapper': { whiteSpace: 'nowrap' } }}
+                    />
+                    <Tab
+                      disableRipple
+                      value="3"
+                      label="Bình luận"
+                      sx={{ '& .MuiTab-wrapper': { whiteSpace: 'nowrap' } }}
+                    />
+                    <Tab
+                      disableRipple
+                      value="4"
+                      label="Cập nhật"
+                      sx={{ '& .MuiTab-wrapper': { whiteSpace: 'nowrap' } }}
+                    />
+                    <Tab
+                      disableRipple
+                      value="5"
+                      label="Giai đoạn"
+                      sx={{ '& .MuiTab-wrapper': { whiteSpace: 'nowrap' } }}
+                    />
+                  </TabList>
+                </Box>
+
+                <Divider />
+
                 <TabPanel value="1">
                   <Box sx={{ p: 3 }}>
                     <Markdown children={product.description} />
@@ -421,73 +475,82 @@ export default function ComponentsDetails() {
                   <Box sx={{ p: 3 }}>
                     <Markdown children={product.description} />
                   </Box>
-                </TabPanel> */}
-            </TabContext>
-          </Card>
+                </TabPanel>
+              </TabContext>
+            </Card>
 
-          <Typography variant="h6" sx={{ ml: 1, fontSize: '15px', textAlign: 'center', my: 3 }}>
-            Các loại gói đầu tư
-          </Typography>
-          <Card>
-            <TabContext value={valuePackage}>
-              <Box sx={{ px: 3, bgcolor: 'background.neutral' }}>
-                <TabList onChange={(e, valuePackage) => setValuePackage(valuePackage)}>
-                  <Tab
-                    sx={{ paddingRight: '1rem' }}
-                    disableRipple
-                    value="Basic"
-                    label="Gói cơ bản"
-                  />
-                  <Tab
-                    disableRipple
-                    value="Higher"
-                    label="Gói nâng cao"
-                    sx={{ '& .MuiTab-wrapper': { whiteSpace: 'nowrap' }, paddingRight: '1rem' }}
-                  />
-                </TabList>
-              </Box>
-              <TabPanel value="Basic">
-                <Box sx={{ p: 3 }}>
-                  <Grid container spacing={3} sx={{ mb: 5, pb: 5, mt: 3, pt: 3 }}>
-                    <Grid item xs={12} sm={6} md={4}>
-                      <ProjectPackage projectPackage={projectPackage} />
-                    </Grid>
-
-                    <Grid item xs={12} sm={6} md={4}>
-                      <ProjectPackage projectPackage={projectPackage} />
-                    </Grid>
-
-                    <Grid item xs={12} sm={12} md={4}>
-                      <ProjectPackage projectPackage={projectPackage} />
-                    </Grid>
-                  </Grid>
+            <Typography
+              variant="h6"
+              sx={{
+                ml: 1,
+                fontSize: '15px',
+                textAlign: 'center',
+                my: 3
+              }}
+            >
+              <PackageAnchor id="__investmentPackage" />
+              Các loại gói đầu tư
+            </Typography>
+            <Card>
+              <TabContext value={valuePackage}>
+                <Box sx={{ px: 3, bgcolor: 'background.neutral' }}>
+                  <TabList onChange={(e, valuePackage) => setValuePackage(valuePackage)}>
+                    <Tab
+                      sx={{ paddingRight: '1rem' }}
+                      disableRipple
+                      value="Basic"
+                      label="Gói cơ bản"
+                    />
+                    <Tab
+                      disableRipple
+                      value="Higher"
+                      label="Gói nâng cao"
+                      sx={{ '& .MuiTab-wrapper': { whiteSpace: 'nowrap' }, paddingRight: '1rem' }}
+                    />
+                  </TabList>
                 </Box>
-              </TabPanel>
-              <TabPanel value="Higher">
-                <Box sx={{ p: 3 }}>
-                  <Grid container spacing={3} sx={{ mb: 5, pb: 5, mt: 3, pt: 3 }}>
-                    <Grid item xs={12} sm={6} md={4}>
-                      <ProjectPackage projectPackage={projectPackage} />
+                <TabPanel value="Basic">
+                  <Box sx={{ p: 3 }}>
+                    <Grid container spacing={3} sx={{ mb: 5, pb: 5, mt: 3, pt: 3 }}>
+                      <Grid item xs={12} sm={6} md={4}>
+                        <ProjectPackage projectPackage={projectPackage} />
+                      </Grid>
+
+                      <Grid item xs={12} sm={6} md={4}>
+                        <ProjectPackage projectPackage={projectPackage} />
+                      </Grid>
+
+                      <Grid item xs={12} sm={12} md={4}>
+                        <ProjectPackage projectPackage={projectPackage} />
+                      </Grid>
                     </Grid>
+                  </Box>
+                </TabPanel>
+                <TabPanel value="Higher">
+                  <Box sx={{ p: 3 }}>
+                    <Grid container spacing={3} sx={{ mb: 5, pb: 5, mt: 3, pt: 3 }}>
+                      <Grid item xs={12} sm={6} md={4}>
+                        <ProjectPackage projectPackage={projectPackage} />
+                      </Grid>
 
-                    <Grid item xs={12} sm={6} md={4}>
-                      <ProjectPackage projectPackage={projectPackage} />
+                      <Grid item xs={12} sm={6} md={4}>
+                        <ProjectPackage projectPackage={projectPackage} />
+                      </Grid>
+
+                      <Grid item xs={12} sm={12} md={4}>
+                        <ProjectPackage projectPackage={projectPackage} />
+                      </Grid>
                     </Grid>
+                  </Box>
+                </TabPanel>
+              </TabContext>
+            </Card>
+          </>
+        )}
 
-                    <Grid item xs={12} sm={12} md={4}>
-                      <ProjectPackage projectPackage={projectPackage} />
-                    </Grid>
-                  </Grid>
-                </Box>
-              </TabPanel>
-            </TabContext>
-          </Card>
-        </>
-        {/* )} */}
+        {!product && SkeletonLoad}
 
-        {/* {!product && SkeletonLoad} */}
-
-        {/* {error && <Typography variant="h6">404 Product not found</Typography>} */}
+        {error && <Typography variant="h6">404 Product not found</Typography>}
       </Container>
       <hr />
     </Page>

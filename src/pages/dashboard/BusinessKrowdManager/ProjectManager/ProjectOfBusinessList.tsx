@@ -90,7 +90,7 @@ export default function ProjectList() {
   const { themeStretch } = useSettings();
   const dispatch = useDispatch();
 
-  const { projectLists } = useSelector((state: RootState) => state.project);
+  const { projectList } = useSelector((state: RootState) => state.project);
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
   const [selected, setSelected] = useState<string[]>([]);
@@ -132,11 +132,10 @@ export default function ProjectList() {
     setPage(0);
   };
 
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - projectLists.numOfProject) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - projectList.numOfProject) : 0;
 
   const filteredUsers = applySortFilter(
-    projectLists.listOfProject,
+    projectList.listOfProject,
     getComparator(order, orderBy),
     filterName
   );
@@ -168,7 +167,7 @@ export default function ProjectList() {
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={projectLists.numOfProject}
+                  rowCount={projectList.numOfProject}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                 />
@@ -265,7 +264,7 @@ export default function ProjectList() {
           <TablePagination
             rowsPerPageOptions={[]}
             component="div"
-            count={projectLists.numOfProject}
+            count={projectList.numOfProject}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={(e, page) => setPage(page)}

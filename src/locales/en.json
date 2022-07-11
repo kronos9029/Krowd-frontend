@@ -9,7 +9,7 @@
     },
     "Navbar_home_page": "Trang chủ",
     "Navbar_2": "Nhà đầu tư",
-    "Navbar_project": "Dự án",
+    "Navbar_invest": "Đầu tư",
     "Navbar_business": "Doanh Nghiệp",
     "Navbar_login": "Đăng nhập",
     "Back_to_dashboard": "Bảng điều khiển",
@@ -55,7 +55,7 @@
     "app_title_description_1": "CẦU NỐI GẮN KẾT GIỮA DOANH NGHIỆP VÀ CÁC NHÀ ĐẦU TƯ. TẢI ỨNG DỤNG HOÀN TOÀN MIỄN PHÍ TẠI:",
     "language": "Ngôn ngữ",
     "highlight_project": "Dự án nổi bật",
-    "highlight_project_description": "Lựa chọn dự án phù hợp gần đây",
+    "highlight_project_description": "Lượt đầu tư nhiều nhất trong 3 ngày",
     "footer_1": "Thông tin pháp lý",
     "footer_title_left": "Nền tảng nhượng quyền thương mại cho doanh nghiệp",
     "footer_title_1": {

@@ -27,11 +27,7 @@ const productPersistConfig = {
   keyPrefix: 'redux-',
   whitelist: ['sortBy', 'checkout']
 };
-const businessPersistConfig = {
-  key: 'business',
-  storage,
-  keyPrefix: 'redux-'
-};
+
 const projectPersistConfig = {
   key: 'project',
   storage,

@@ -21,7 +21,7 @@ const Language = [
 ];
 
 const RootStyle = styled('div')(({ theme }) => ({
-  paddingTop: theme.spacing(20),
+  paddingTop: theme.spacing(12),
   [theme.breakpoints.up('md')]: {
     paddingBottom: theme.spacing(1)
   }
@@ -36,19 +36,19 @@ const CenterItemContainerMd = styled(Container)(({ theme }) => ({
 const CardStyle = styled(Card)(({ theme }) => {
   return {
     maxWidth: 420,
-    minHeight: 300,
+    minHeight: 200,
     textAlign: 'center',
     color: '#000000',
-    backgroundColor: '#14b7cc0a',
-    padding: theme.spacing(10, 5, 0),
+    backgroundColor: '#ffffff',
+    padding: theme.spacing(3.2, 5, 2),
     // boxShadow: '-20px 20px 40px 0 rgb(0 0 0 / 35%)',
     [theme.breakpoints.up('md')]: {
-      backgroundColor: '#14b7cc0a'
+      backgroundColor: '#ffffff'
     },
     '&.card_title_2': {
       [theme.breakpoints.up('md')]: {
         // backgroundColor: theme.palette.background.paper
-        backgroundColor: '#14b7cc0a'
+        backgroundColor: '#ffffff'
         // boxShadow: '-20px 20px 40px 0 rgb(0 0 0 / 35%)',
         // '&:before': {
         //   top: 0,

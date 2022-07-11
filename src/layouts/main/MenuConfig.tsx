@@ -17,7 +17,7 @@ const menuConfig = {
       path: '/'
     },
     {
-      title: 'Dự án',
+      title: 'Đầu tư',
       icon: <Icon icon="arcticons:projectm" {...ICON_SIZE} />,
       path: PATH_PAGE.project
     },
@@ -40,7 +40,7 @@ const menuConfig = {
     //   path: PATH_PAGE.business
     // },
     {
-      title: 'Project',
+      title: 'Invest',
       icon: <Icon icon="arcticons:projectm" {...ICON_SIZE} />,
       path: PATH_PAGE.project
     },

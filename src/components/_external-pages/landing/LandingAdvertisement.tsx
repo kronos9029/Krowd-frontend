@@ -10,11 +10,14 @@ import { OverlayBackground } from 'assets';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
-  paddingTop: theme.spacing(5),
-  backgroundImage: `url(${OverlayBackground})`,
-  backgroundSize: 'cover',
   [theme.breakpoints.up('md')]: {
-    paddingBottom: theme.spacing(12)
+    paddingBottom: theme.spacing(12),
+    backgroundImage:
+      theme.palette.mode === 'light'
+        ? `linear-gradient(180deg, ${alpha(theme.palette.grey[300], 0)} 0%, ${
+            theme.palette.grey[300]
+          } 100%)`
+        : 'none'
   }
 }));
 
@@ -102,20 +105,16 @@ export default function LandingMinimalHelps() {
   return (
     <RootStyle
       sx={{
-        color: isLight ? 'white' : 'text.primary',
-        backgroundColor: bgLight ? '#14B7CC' : '#14B7CC',
+        color: 'text.primary',
         paddingBottom: '5rem'
       }}
     >
-      <Box sx={{ textAlign: 'center', padding: '1rem 0' }}>
-        <Typography
-          variant="h2"
-          sx={{ mb: 3, color: isLight ? '#FAF4EF' : '#FAF4EF', marginTop: '1rem' }}
-        >
-          {t('advertise_title')}
-        </Typography>
-      </Box>
       <Container maxWidth="lg">
+        <Box sx={{ textAlign: 'left', padding: '1rem 0' }}>
+          <Typography variant="h3" sx={{ mb: 3, marginTop: '1rem' }}>
+            {t('advertise_title')}
+          </Typography>
+        </Box>
         <Grid container spacing={isDesktop ? 10 : 5}>
           {Advertisements.map((value, index) => {
             const isLeftCard = index === 0 ? '1.75rem' : 0;

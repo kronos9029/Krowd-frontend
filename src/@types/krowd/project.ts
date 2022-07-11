@@ -1,13 +1,15 @@
 import { FormikProps } from 'formik';
 
-export type ProjectStatus =
-  | 'Chưa duyệt'
-  | 'Từ chối'
-  | 'Đang kêu gọi đầu tư'
-  | 'Đang hoạt động'
-  | 'Hết thời gian kêu gọi'
-  | 'Đóng dự án'
-  | '';
+import DoNotDisturbAltIcon from '@mui/icons-material/DoNotDisturbAlt';
+import { jsx } from '@emotion/react';
+export const ProjectStatus = [
+  { statusString: 'Chưa duyệt', color: undefined },
+  { statusString: 'Từ chối', color: undefined },
+  { statusString: 'Mở đầu tư', color: '#14B7CC' },
+  { statusString: 'Quá hạn', color: '#FF3519' },
+  { statusString: 'Thành công', color: '#19C157' },
+  { statusString: 'Đóng dự án', color: undefined }
+];
 export type FormikPropsShopView = FormikProps<ProjectFilter>;
 
 export type Project = {
@@ -83,7 +85,7 @@ export type Project = {
   businessLicense: string;
   approvedDate: string;
   approvedBy: string;
-  status: ProjectStatus;
+  status: number;
   createDate: string;
   createBy: string;
   updateDate: string;

@@ -12,7 +12,7 @@ import { REACT_APP_API_URL } from '../../../config';
 type ProjectState = {
   isLoading: boolean;
   error: boolean;
-  projectLists: {
+  projectList: {
     numOfProject: number;
     listOfProject: Project[];
   };
@@ -22,7 +22,7 @@ type ProjectState = {
   sortBy: Project | null;
   filters: {
     areaId: string;
-    status: ProjectStatus[];
+    status: number[];
   };
 };
 
@@ -30,7 +30,7 @@ const initialState: ProjectState = {
   isLoading: false,
   error: false,
   activeProjectId: null,
-  projectLists: { numOfProject: 0, listOfProject: [] },
+  projectList: { numOfProject: 0, listOfProject: [] },
   projects: [],
   project: null,
   sortBy: null,
@@ -58,7 +58,7 @@ const slice = createSlice({
     // GET MANAGE USERS
     getProjectListSuccess(state, action) {
       state.isLoading = false;
-      state.projectLists = action.payload;
+      state.projectList = action.payload;
     },
 
     getProjectListIDSuccess(state, action) {
@@ -66,12 +66,11 @@ const slice = createSlice({
       state.activeProjectId = action.payload;
     },
     delProjectListIDSuccess(state, action) {
-      state.projectLists = action.payload;
+      state.projectList = action.payload;
     },
     getProjectByBusinessIDSuccess(state, action) {
       state.isLoading = false;
-      console.log('t di qua day roi');
-      state.projectLists = action.payload;
+      state.projectList = action.payload;
     },
 
     //  SORT & FILTER PRODUCTS
@@ -95,7 +94,7 @@ export const { sortByProjects, filterProjects } = slice.actions;
 
 // ----------------------------------------------------------------------
 
-export function getAllProject(temp_field_role: 'ADMIN') {
+export function getAllProject(temp_field_role: 'ADMIN' | 'INVESTOR') {
   return async () => {
     const { dispatch } = store;
 
@@ -144,7 +143,6 @@ export function getProjectId(projectId: string) {
   return async () => {
     dispatch(slice.actions.startLoading());
     try {
-      console.log('t vo goi api ne');
       const response = await axios.get(
         `https://ec2-13-215-197-250.ap-southeast-1.compute.amazonaws.com/api/v1.0/projects/${projectId}`
       );
