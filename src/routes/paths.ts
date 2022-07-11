@@ -77,6 +77,13 @@ export const PATH_DASHBOARD = {
     transaction: path(ROOTS_DASHBOARD, '/wallet/transaction-wallet'),
     allWallet: path(ROOTS_DASHBOARD, '/wallet/all-wallet')
   },
+  //Quản lý dự án business
+  projectsBusiness: {
+    root: path(ROOTS_DASHBOARD, '/projectsBusiness'),
+    projectBusinessKrowd: path(ROOTS_DASHBOARD, '/projectsBusiness/projectBusinessKrowd'),
+    projectBusinessDetails: path(ROOTS_DASHBOARD, '/projectsBusiness/projectDetails'),
+    projectBusinessById: path(ROOTS_DASHBOARD, '/projectsBusiness/nike-air-force-1-ndestrukt')
+  },
   //Quản lý khác
   other: {
     root: path(ROOTS_DASHBOARD, '/other'),

@@ -30,7 +30,7 @@ import fakeRequest from 'utils/fakeRequest';
 import useSettings from 'hooks/useSettings';
 import { Product, ProductFilter, ProductState } from '../@types/products';
 import { filterProducts, getProducts } from 'redux/slices/product';
-import { BlogPostsSearch } from 'components/_dashboard/blog';
+import { BlogPostsSearch } from 'components/_dashboard/project';
 // icon
 import { Icon } from '@iconify/react';
 import menu2Fill from '@iconify/icons-eva/menu-2-fill';

@@ -40,13 +40,15 @@ import fakeRequest from 'utils/fakeRequest';
 import useSettings from 'hooks/useSettings';
 import { Product, ProductFilter, ProductState } from '../@types/products';
 import { filterProducts, getProducts } from 'redux/slices/product';
-import { BlogPostsSearch } from 'components/_dashboard/blog';
+import { BlogPostsSearch } from 'components/_dashboard/project';
 // icon
 import { Icon } from '@iconify/react';
 import menu2Fill from '@iconify/icons-eva/menu-2-fill';
 import { getAllProject, filterProjects, getProjectId } from 'redux/slices/krowd_slices/project';
 import { Project, ProjectFilter, ProjectState } from '../@types/krowd/project';
 import { getFieldList } from 'redux/slices/krowd_slices/field';
+import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
@@ -151,6 +153,7 @@ export default function Projects() {
 
   const handleGetProjectById = (activeProjectId: string) => {
     dispatch(getProjectId(activeProjectId));
+    console.log(activeProjectId);
   };
   const handleOpenFilter = () => {
     setOpenFilter(true);
@@ -334,13 +337,10 @@ export default function Projects() {
           {projectLists.listOfProject?.map((row, index) => (
             <Grid key={`${currentFieldIndex} ${index}`} item xs={12} sm={6} md={6} lg={4}>
               <MotionInView variants={varFadeInUp}>
-                <Button
+                <Link
                   onClick={() => handleGetProjectById(row.id)}
-                  href={PATH_DETAILS}
-                  disableRipple={true}
-                  disableElevation={true}
-                  disableTouchRipple={true}
-                  disableFocusRipple={true}
+                  to={PATH_DETAILS}
+                  style={{ textDecoration: 'none' }}
                 >
                   <CardStyle
                     sx={{
@@ -442,7 +442,7 @@ export default function Projects() {
                       </Box>
                     </Box>
                   </CardStyle>
-                </Button>
+                </Link>
               </MotionInView>
             </Grid>
           ))}

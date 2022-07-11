@@ -212,7 +212,7 @@ export default function MenuMobile({ isOffset, isHome, navConfig }: MenuProps) {
     setDrawerOpen(false);
   };
 
-  if (user?.idToken === null) {
+  if (user?.idToken == null) {
     return (
       <>
         <MIconButton

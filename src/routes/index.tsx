@@ -109,12 +109,21 @@ export default function Router() {
           ]
         },
         {
+          path: 'projectsBusiness',
+          children: [
+            { element: <Navigate to="/dashboard/projectsBusiness" replace /> },
+            { path: 'projectBusinessKrowd', element: <ProjectOfBusinessList /> }
+            // { path: 'projectDetails', element: <KrowdProjectDetails /> }
+            // { path: 'projectBusinessDetails', element: <ProjectKrowdAdminDetails /> }
+          ]
+        },
+        {
           path: 'blog',
           children: [
             { element: <Navigate to="/dashboard/blog/posts" replace /> },
             { path: 'posts', element: <BlogPosts /> },
             { path: 'post/:title', element: <BlogPost /> },
-            { path: 'new-post', element: <BlogNewPost /> }
+            { path: 'new-post', element: <KrowdNewProject /> }
           ]
         },
         {
@@ -206,7 +215,7 @@ const EcommerceCheckout = Loadable(lazy(() => import('../pages/dashboard/Ecommer
 const EcommerceInvoice = Loadable(lazy(() => import('../pages/dashboard/EcommerceInvoice')));
 const BlogPosts = Loadable(lazy(() => import('../pages/dashboard/BlogPosts')));
 const BlogPost = Loadable(lazy(() => import('../pages/dashboard/BlogPost')));
-const BlogNewPost = Loadable(lazy(() => import('../pages/dashboard/BlogNewPost')));
+const KrowdNewProject = Loadable(lazy(() => import('../pages/dashboard/KrowdNewProject')));
 const UserProfile = Loadable(lazy(() => import('../pages/dashboard/UserProfile')));
 const UserCards = Loadable(lazy(() => import('../pages/dashboard/UserCards')));
 const UserList = Loadable(lazy(() => import('../pages/dashboard/UserList')));
@@ -232,3 +241,7 @@ const Page500 = Loadable(lazy(() => import('../pages/Page500')));
 const NotFound = Loadable(lazy(() => import('../pages/Page404')));
 // Components
 const ComponentsOverview = Loadable(lazy(() => import('../pages/ComponentsOverview')));
+///
+const ProjectOfBusinessList = Loadable(
+  lazy(() => import('../pages/dashboard/BusinessKrowdManager/ProjectManager/ProjectOfBusinessList'))
+);

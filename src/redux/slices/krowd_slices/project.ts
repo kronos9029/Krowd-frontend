@@ -149,7 +149,9 @@ export function getProjectId(projectId: string) {
         `https://ec2-13-215-197-250.ap-southeast-1.compute.amazonaws.com/api/v1.0/projects/${projectId}`
       );
       dispatch(slice.actions.getProjectListIDSuccess(response.data));
+      console.log('t tra duoc data project o day', response.data);
     } catch (error) {
+      console.log('t tra duoc loi data ne');
       dispatch(slice.actions.hasError(error));
     }
   };

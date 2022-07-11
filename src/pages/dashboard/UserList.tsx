@@ -194,7 +194,6 @@ export default function UserList() {
                   rowCount={userList.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
-                  onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
                   {filteredUsers

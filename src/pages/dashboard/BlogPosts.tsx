@@ -18,7 +18,7 @@ import { Post, BlogState } from '../../@types/blog';
 // components
 import Page from '../../components/Page';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
-import { BlogPostCard, BlogPostsSort, BlogPostsSearch } from '../../components/_dashboard/blog';
+import { BlogPostCard, BlogPostsSort, BlogPostsSearch } from '../../components/_dashboard/project';
 
 // ----------------------------------------------------------------------
 

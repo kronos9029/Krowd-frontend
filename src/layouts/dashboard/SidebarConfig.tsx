@@ -24,12 +24,12 @@ const sidebarConfig = [
   {
     subheader: 'Thống kê của bạn',
     items: [
-      {
-        title: 'app',
-        path: PATH_DASHBOARD.general.app,
-        icon: ICONS.dashboard
-      },
-      { title: 'Chung', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics },
+      // {
+      //   title: 'app',
+      //   path: PATH_DASHBOARD.general.app,
+      //   icon: ICONS.dashboard
+      // },
+      // { title: 'Chung', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics },
       { title: 'Ví của bạn', path: PATH_DASHBOARD.general.banking, icon: ICONS.banking },
       { title: 'Tổng quan ngày', path: PATH_DASHBOARD.general.booking, icon: ICONS.booking }
     ]

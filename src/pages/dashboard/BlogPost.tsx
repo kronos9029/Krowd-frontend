@@ -22,7 +22,7 @@ import {
   BlogPostRecent,
   BlogPostCommentList,
   BlogPostCommentForm
-} from '../../components/_dashboard/blog';
+} from '../../components/_dashboard/project';
 
 // ----------------------------------------------------------------------
 
