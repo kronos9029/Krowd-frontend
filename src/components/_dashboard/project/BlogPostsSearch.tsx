@@ -109,7 +109,6 @@ export default function BlogPostsSearch({ sx }: BoxProps) {
                       component={Icon}
                       icon={searchFill}
                       sx={{
-                        ml: 1,
                         width: 20,
                         height: 20
                       }}

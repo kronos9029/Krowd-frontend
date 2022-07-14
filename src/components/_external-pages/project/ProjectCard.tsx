@@ -18,8 +18,9 @@ import { getProjectId } from 'redux/slices/krowd_slices/project';
 import { dispatch } from 'redux/store';
 import { PATH_DETAILS } from 'routes/paths';
 import { fCurrency } from 'utils/formatNumber';
-import { Project, ProjectStatus } from '../@types/krowd/project';
+import { Project, ProjectStatus } from '../../../@types/krowd/project';
 import CheckIcon from '@mui/icons-material/Check';
+const ACTIVE_STATUS = 4;
 const CardStyle = styled(Card)(({ theme }) => {
   const shadowCard = (opacity: number) =>
     theme.palette.mode === 'light'

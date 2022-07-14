@@ -22,7 +22,6 @@ import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState } from 'react';
 import { dispatch, RootState, useSelector } from 'redux/store';
 import { getAllProject } from 'redux/slices/krowd_slices/project';
-import ProjectCard from 'components/ProjectCard';
 import { Icon } from '@iconify/react';
 import { BlogPostsSearch, BlogPostsSort } from 'components/_dashboard/project';
 import ExpandLess from '@mui/icons-material/ExpandLess';
@@ -30,6 +29,7 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import { getFieldList } from 'redux/slices/krowd_slices/field';
 import FieldCard from 'components/FieldCard';
 import { Post } from '../../../@types/blog';
+import { ProjectCard } from '../project';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
@@ -130,7 +130,14 @@ export default function LandingMinimalHelps() {
           <Typography variant="h2" sx={{ mb: 3, color: 'text.primary' }}>
             {t('highlight_project')}
           </Typography>
-          <Box sx={{ display: 'flex', alignItems: 'middle', gap: '10' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: { sm: 'left', xs: 'center' },
+              alignItems: 'middle',
+              gap: '10'
+            }}
+          >
             <Typography>
               <img
                 style={{
