@@ -10,13 +10,6 @@ import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
 // ----------------------------------------------------------------------
 
-const MOCK_FAQS = [...Array(3)].map((_, index) => ({
-  id: mockData.id(index),
-  value: `panel${index + 1}`,
-  heading: `Questions ${index + 1}`,
-  detail2: mockData.text.header2(index),
-  detail: mockData.text.description(index)
-}));
 const Language = [
   {
     code: 'vi',

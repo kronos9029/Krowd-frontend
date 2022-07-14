@@ -28,6 +28,7 @@ const menuConfig = {
       // path: PATH_DOCS
     }
   ],
+
   vi: [
     {
       title: 'Home',

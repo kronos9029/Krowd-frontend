@@ -120,6 +120,7 @@ export default function QuillEditorToolbar({ id, isSimple, ...other }: EditorToo
           <button type="button" className="ql-italic" />
           <button type="button" className="ql-underline" />
           <button type="button" className="ql-strike" />
+          <button type="button" className="ql-table" />
         </div>
 
         {!isSimple && (

@@ -231,7 +231,7 @@ const Faqs = Loadable(lazy(() => import('../pages/Faqs')));
 const ComingSoon = Loadable(lazy(() => import('../pages/ComingSoon')));
 const Details = Loadable(lazy(() => import('../pages/Details')));
 //Page
-const Projects = Loadable(lazy(() => import('../pages/Project')));
+const Projects = Loadable(lazy(() => import('../pages/project/Project')));
 const Fields = Loadable(lazy(() => import('../pages/Field')));
 // const SearchPage = Loadable(lazy(() => import('../pages/SearchPage')));
 const Maintenance = Loadable(lazy(() => import('../pages/Maintenance')));

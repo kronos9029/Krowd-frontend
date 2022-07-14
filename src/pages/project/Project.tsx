@@ -1,12 +1,12 @@
 // material
 import { alpha, useTheme, styled } from '@mui/material/styles';
 import { Grid, Card, Container, Typography, useMediaQuery, Tab, Tabs, Box } from '@mui/material';
-import { MHidden } from '../components/@material-extend';
-import { varFadeInUp, MotionInView } from '../components/animate';
+import { MHidden } from '../../components/@material-extend';
+import { varFadeInUp, MotionInView } from '../../components/animate';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import CardMedia from '@mui/material/CardMedia';
 // components
-import Page from '../components/Page';
+import Page from '../../components/Page';
 import { fCurrency } from 'utils/formatNumber';
 import { PATH_DETAILS, PATH_FIELDPAGE } from 'routes/paths';
 import i18next from 'i18next';
@@ -26,17 +26,18 @@ import { RootState, useDispatch, useSelector } from 'redux/store';
 // utils
 import fakeRequest from 'utils/fakeRequest';
 import useSettings from 'hooks/useSettings';
-import { Product, ProductFilter, ProductState } from '../@types/products';
+import { Product, ProductFilter, ProductState } from '../../@types/products';
 import { filterProducts, getProducts } from 'redux/slices/product';
 import { BlogPostsSearch } from 'components/_dashboard/project';
 // icon
 import { Icon } from '@iconify/react';
 import menu2Fill from '@iconify/icons-eva/menu-2-fill';
 import { getAllProject, filterProjects, getProjectId } from 'redux/slices/krowd_slices/project';
-import { Project, ProjectFilter, ProjectState } from '../@types/krowd/project';
+import { Project, ProjectFilter, ProjectState } from '../../@types/krowd/project';
 import { getFieldList } from 'redux/slices/krowd_slices/field';
 import { Link } from 'react-router-dom';
-import ProjectCard from '../components/ProjectCard';
+import ProjectCard from '../../components/ProjectCard';
+import TemporaryDrawer from 'components/_external-pages/landing/demo';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({

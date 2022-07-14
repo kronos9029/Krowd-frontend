@@ -29,7 +29,6 @@ const CardStyle = styled(Card)(({ theme }) => {
     maxWidth: 390,
     margin: 'auto',
     textAlign: 'left',
-
     boxShadow: `-40px 40px 80px 0 ${shadowCard(0.2)}`,
     [theme.breakpoints.up('md')]: {
       borderRadius: theme.shape.borderRadiusMd,
@@ -78,7 +77,7 @@ function ProjectCard({ row }: { row: Project }) {
     dispatch(getProjectId(activeProjectId));
   };
   return (
-    <Grid item key={row.id} xs={12} sm={6} md={6} lg={4}>
+    <Grid sx={{ p: 2 }} item key={row.id} xs={12} sm={12} md={6} lg={4}>
       <MotionInView variants={varFadeInUp}>
         <Link
           onClick={() => handleGetProjectById(row.id)}

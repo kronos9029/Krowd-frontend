@@ -1,5 +1,5 @@
 // material
-import { MenuItem, TextField } from '@mui/material';
+import { MenuItem, TextField, Typography } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -14,6 +14,7 @@ export default function BlogPostsSort({ query, options, onSort }: BlogPostsSortP
     <TextField select size="small" value={query} onChange={(e) => onSort(e.target.value)}>
       {options.map((option) => (
         <MenuItem key={option.value} value={option.value}>
+          Sort By: {''}
           {option.label}
         </MenuItem>
       ))}
