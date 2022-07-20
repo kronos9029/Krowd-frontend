@@ -37,7 +37,7 @@ import Scrollbar from '../../../../components/Scrollbar';
 import SearchNotFound from '../../../../components/SearchNotFound';
 import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
 import { UserListHead } from '../../../../components/_dashboard/user/list';
-import { Project, ProjectStatus } from '../../../../@types/krowd/project';
+import { Project1, ProjectStatus } from '../../../../@types/krowd/project';
 // import ProjectMoreMenu from 'components/_dashboard/e-commerce/product-details/ProjectMoreMenu';
 // import { ShopTagFiltered } from 'components/_dashboard/e-commerce/projectKrowd';
 
@@ -73,7 +73,7 @@ function getComparator(order: string, orderBy: string) {
     : (a: Anonymous, b: Anonymous) => -descendingComparator(a, b, orderBy);
 }
 
-function applySortFilter(array: Project[], comparator: (a: any, b: any) => number, query: string) {
+function applySortFilter(array: Project1[], comparator: (a: any, b: any) => number, query: string) {
   const stabilizedThis = array.map((el, index) => [el, index] as const);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
@@ -116,9 +116,9 @@ export default function ProjectList() {
     });
   };
 
-  const handleGetProjectById = (activeProjectId: string) => {
-    dispatch(getProjectId(activeProjectId));
-  };
+  // const handleGetProjectById = (activeProjectId: string) => {
+  //   dispatch(getProjectId(activeProjectId));
+  // };
 
   // Sort filter
   const handleRequestSort = (property: string) => {

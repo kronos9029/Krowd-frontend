@@ -9,8 +9,11 @@ import {
   styled,
   Typography
 } from '@mui/material';
-import { Project } from '../../../@types/krowd/project';
+import { Project1 } from '../../../@types/krowd/project';
 import { fCurrency } from 'utils/formatNumber';
+import { Link } from 'react-scroll';
+import { ProjectDetailAlbumCarousel } from 'components/_external-pages/project-detail/index';
+import { RootState, useSelector } from 'redux/store';
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -23,17 +26,16 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     backgroundColor: '#14B7CC'
   }
 }));
-const LargeImgStyle = styled('img')(({ theme }) => ({
-  top: 0,
-  width: '100%'
-  // position: 'absolute'
-}));
 
-function ProjectDetailCard({ p }: { p: Project }) {
+type ProjectDetailCardProps = {
+  project: Project1;
+  album: string[];
+};
+function ProjectDetailCard({ project: p, album }: ProjectDetailCardProps) {
   return (
     <Grid container>
       <Grid
-        // px={{ lg: 3, md: 5, sm: 5, xs: 2 }}
+        px={{ lg: 0, md: 0, sm: 5, xs: 2 }}
         sx={{ pr: 5 }}
         py={{ lg: 5, md: 3, sm: 3 }}
         item
@@ -42,9 +44,7 @@ function ProjectDetailCard({ p }: { p: Project }) {
         md={7}
         lg={8}
       >
-        <Box sx={{ cursor: 'zoom-in', position: 'relative' }}>
-          <LargeImgStyle alt="large image" src={p.image} />
-        </Box>
+        {album && <ProjectDetailAlbumCarousel album={album} />}
       </Grid>
       <Grid
         px={{ lg: 5, md: 5, sm: 5, xs: 2 }}
@@ -111,7 +111,7 @@ function ProjectDetailCard({ p }: { p: Project }) {
             </Typography>
           </Box>
         </Box>
-        <Divider sx={{ borderStyle: 'dashed', color: 'text.disabled' }} variant="middle" />
+        <Divider sx={{ color: 'text.disabled' }} />
 
         <Box
           sx={{
@@ -123,10 +123,12 @@ function ProjectDetailCard({ p }: { p: Project }) {
           <Typography sx={{ mt: 0.2, fontSize: '25px', fontWeight: '900' }}>
             {p.multiplier}
             <span>%</span>
-            <Typography>Doanh thu chia sẻ</Typography>
+            <Typography color="text.disabled" variant="subtitle2">
+              Doanh thu chia sẻ
+            </Typography>
           </Typography>
         </Box>
-        <Divider sx={{ borderStyle: 'dashed', color: 'text.disabled' }} variant="middle" />
+        <Divider sx={{ color: 'text.disabled' }} />
 
         <Box
           sx={{
@@ -138,10 +140,12 @@ function ProjectDetailCard({ p }: { p: Project }) {
           <Typography sx={{ mt: 0.2, fontSize: '25px', fontWeight: '900' }}>
             <span>x</span>
             {p.multiplier}
-            <Typography>Hệ số nhân</Typography>
+            <Typography color="text.disabled" variant="subtitle2">
+              Hệ số nhân
+            </Typography>
           </Typography>
         </Box>
-        <Divider sx={{ borderStyle: 'dashed', color: 'text.disabled' }} variant="middle" />
+        <Divider sx={{ color: 'text.disabled' }} />
 
         <Box
           sx={{
@@ -152,10 +156,12 @@ function ProjectDetailCard({ p }: { p: Project }) {
         >
           <Typography sx={{ mt: 0.2, fontSize: '25px', fontWeight: '900' }}>
             {p.duration} <span> tháng </span>
-            <Typography>Thanh toán đầu tư</Typography>
+            <Typography color="text.disabled" variant="subtitle2">
+              Thanh toán đầu tư
+            </Typography>
           </Typography>
         </Box>
-        <Divider sx={{ borderStyle: 'dashed', color: 'text.disabled' }} variant="middle" />
+        <Divider sx={{ color: 'text.disabled' }} />
 
         <Box
           sx={{
@@ -166,7 +172,9 @@ function ProjectDetailCard({ p }: { p: Project }) {
         >
           <Typography sx={{ mt: 0.2, fontSize: '25px', fontWeight: '900' }}>
             {p.numOfStage} <span> kì</span>
-            <Typography>Số kì thanh toán</Typography>
+            <Typography color="text.disabled" variant="subtitle2">
+              Số kì thanh toán
+            </Typography>
           </Typography>
         </Box>
         <Box
@@ -176,21 +184,30 @@ function ProjectDetailCard({ p }: { p: Project }) {
             justifyContent: 'space-between'
           }}
         >
-          <Button
-            sx={{ backgroundColor: '#FF7F50', '&:hover': { backgroundColor: '#FF7F50' } }}
-            disableElevation
-            disableRipple
-            fullWidth={true}
-            variant="contained"
-            size="large"
-            href="#__investmentPackage"
-          >
-            Đầu tư ngay
-          </Button>
+          <Link to="__investmentPackage" style={{ width: '100%' }}>
+            <Button
+              sx={{ backgroundColor: '#FF7F50', '&:hover': { backgroundColor: '#FF7F50' } }}
+              disableElevation
+              disableRipple
+              fullWidth={true}
+              variant="contained"
+              size="large"
+            >
+              Đầu tư ngay
+            </Button>
+          </Link>
         </Box>
-        {/*                 <Divider sx={{ borderStyle: 'dashed', color: 'text.disabled' }} variant="middle" />
-         */}
-        {/* <Box
+      </Grid>
+    </Grid>
+  );
+}
+export default ProjectDetailCard;
+{
+  /*                 <Divider sx={{  color: 'text.disabled' }} />
+   */
+}
+{
+  /* <Box
                     sx={{
                       my: 3,
                       display: 'flex',
@@ -227,9 +244,5 @@ function ProjectDetailCard({ p }: { p: Project }) {
                       Địa chỉ
                     </Typography>
                     <Typography sx={{ mt: 0.2 }}>{p.address}</Typography>
-                  </Box> */}
-      </Grid>
-    </Grid>
-  );
+                  </Box> */
 }
-export default ProjectDetailCard;

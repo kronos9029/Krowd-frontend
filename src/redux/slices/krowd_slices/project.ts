@@ -5,7 +5,7 @@ import { dispatch, store } from '../../store';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
 import closeFill from '@iconify/icons-eva/close-fill';
-import { business, Project, ProjectStatus } from '../../../@types/krowd/project';
+import { business, Project1, ProjectStatus } from '../../../@types/krowd/project';
 import { REACT_APP_API_URL } from '../../../config';
 // ----------------------------------------------------------------------
 
@@ -14,12 +14,12 @@ type ProjectState = {
   error: boolean;
   projectList: {
     numOfProject: number;
-    listOfProject: Project[];
+    listOfProject: Project1[];
   };
-  activeProjectId: Project | null;
-  projects: Project[];
-  project: Project | null;
-  sortBy: Project | null;
+  activeProjectId: Project1 | null;
+  projects: Project1[];
+  project: Project1 | null;
+  sortBy: Project1 | null;
   filters: {
     areaId: string;
     status: number[];
@@ -100,7 +100,7 @@ export function getAllProject(temp_field_role: 'ADMIN' | 'INVESTOR') {
 
     dispatch(slice.actions.startLoading());
     try {
-      const response: { data: { products: Project[] } } = await axios.get(
+      const response: { data: { products: Project1[] } } = await axios.get(
         REACT_APP_API_URL + 'projects',
         {
           params: { temp_field_role }
@@ -139,17 +139,31 @@ export function getProjectListById(projectId: string) {
     }
   };
 }
-export function getProjectId(projectId: string) {
+// export function getProjectId(projectId: string) {
+//   return async () => {
+//     dispatch(slice.actions.startLoading());
+//     try {
+//       const response = await axios.get(
+//         `https://ec2-13-215-197-250.ap-southeast-1.compute.amazonaws.com/api/v1.0/projects/${projectId}`
+//       );
+//       dispatch(slice.actions.getProjectListIDSuccess(response.data));
+//     } catch (error) {
+//       dispatch(slice.actions.hasError(error));
+//     }
+//   };
+// }
+export function getProjectId(projectId: string, temp_field_role: 'ADMIN') {
   return async () => {
     dispatch(slice.actions.startLoading());
     try {
       const response = await axios.get(
-        `https://ec2-13-215-197-250.ap-southeast-1.compute.amazonaws.com/api/v1.0/projects/${projectId}`
+        `https://ec2-13-215-197-250.ap-southeast-1.compute.amazonaws.com/api/v1.0/projects/${projectId}`,
+        {
+          params: { temp_field_role }
+        }
       );
       dispatch(slice.actions.getProjectListIDSuccess(response.data));
-      console.log('t tra duoc data project o day', response.data);
     } catch (error) {
-      console.log('t tra duoc loi data ne');
       dispatch(slice.actions.hasError(error));
     }
   };

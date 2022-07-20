@@ -33,7 +33,7 @@ import { BlogPostsSearch } from 'components/_dashboard/project';
 import { Icon } from '@iconify/react';
 import menu2Fill from '@iconify/icons-eva/menu-2-fill';
 import { getAllProject, filterProjects, getProjectId } from 'redux/slices/krowd_slices/project';
-import { Project, ProjectFilter, ProjectState } from '../../@types/krowd/project';
+import { ProjectFilter, ProjectState } from '../../@types/krowd/project';
 import { getFieldList } from 'redux/slices/krowd_slices/field';
 import { Link } from 'react-router-dom';
 import { ProjectCard } from 'components/_external-pages/project';
@@ -196,7 +196,10 @@ export default function Projects() {
           </Typography>
         </Box>
         <Grid container alignItems="center" justifyContent="center" spacing={5}>
-          {projectList && projectList.listOfProject.map((p) => <ProjectCard key={p.id} row={p} />)}
+          {projectList &&
+            projectList.listOfProject
+              .filter((p) => p.status === 2)
+              .map((p) => <ProjectCard key={p.id} row={p} />)}
         </Grid>
       </Container>
     </RootStyle>

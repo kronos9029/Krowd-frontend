@@ -10,19 +10,23 @@ import {
   Collapse,
   List,
   Button,
-  Divider
+  Divider,
+  Stack,
+  Chip
 } from '@mui/material';
-//
-import caretDownFilled from '@iconify/icons-ant-design/caret-down-filled';
-import caretUpFilled from '@iconify/icons-ant-design/caret-up-filled';
 import { orderBy } from 'lodash';
-
 import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState } from 'react';
 import { dispatch, RootState, useSelector } from 'redux/store';
 import { getAllProject } from 'redux/slices/krowd_slices/project';
+//Icon
 import { Icon } from '@iconify/react';
+import barChartOutlined from '@iconify/icons-ant-design/bar-chart-outlined';
+import caretDownFilled from '@iconify/icons-ant-design/caret-down-filled';
+import caretUpFilled from '@iconify/icons-ant-design/caret-up-filled';
+import fileProtectOutlined from '@iconify/icons-ant-design/file-protect-outlined';
+//
 import { BlogPostsSearch, BlogPostsSort } from 'components/_dashboard/project';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
@@ -30,6 +34,7 @@ import { getFieldList } from 'redux/slices/krowd_slices/field';
 import FieldCard from 'components/FieldCard';
 import { Post } from '../../../@types/blog';
 import { ProjectCard } from '../project';
+import { Link } from 'react-router-dom';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
@@ -43,7 +48,6 @@ const RootStyle = styled('div')(({ theme }) => ({
         : 'none'
   }
 }));
-
 const Language = [
   {
     code: 'vi',
@@ -63,7 +67,6 @@ const SORT_OPTIONS = [
   { value: 'Mosttraction', label: 'Most traction' },
   { value: 'Closingsoon', label: 'Closing soon' }
 ];
-
 // ----------------------------------------------------------------------
 
 export default function LandingMinimalHelps() {
@@ -83,10 +86,11 @@ export default function LandingMinimalHelps() {
     dispatch(getAllProject('INVESTOR'));
   }, [dispatch]);
 
-  const [openHighLight, setOpenHighLight] = React.useState(false);
-  const [openRevenue, setOpenRevenue] = React.useState(false);
-  const [openCategory, setOpenCategory] = React.useState(false);
-  const [openMore, setOpenMore] = React.useState(false);
+  const [openHighLight, setOpenHighLight] = useState(false);
+  const [openRevenue, setOpenRevenue] = useState(false);
+  const [openCategory, setOpenCategory] = useState(false);
+  const [openMore, setOpenMore] = useState(false);
+  const [selectedFilter, setSelectFilter] = useState<String[]>([]);
   const getHighLight = () => {
     setOpenHighLight(!openHighLight);
     setOpenCategory(false);
@@ -115,8 +119,28 @@ export default function LandingMinimalHelps() {
     setOpenRevenue(false);
     setOpenMore(false);
   };
-  const handleClick = (f: VoidFunction) => {
-    f();
+  const handleClick = (func: VoidFunction) => {
+    func();
+  };
+  const addToSelectedFilterList = (newValue: String) => {
+    const index = selectedFilter.indexOf(newValue);
+    let newList = [];
+    if (index === -1) {
+      newList = [...selectedFilter, newValue];
+    } else {
+      selectedFilter.splice(index, 1);
+      newList = [...selectedFilter];
+    }
+    setSelectFilter(newList);
+    console.log(selectedFilter);
+  };
+  const handleDelete = (value: String) => {
+    const index = selectedFilter.indexOf(value);
+    let newList = [];
+    selectedFilter.splice(index, 1);
+    newList = [...selectedFilter];
+    setSelectFilter(newList);
+    console.log(selectedFilter);
   };
 
   return (
@@ -138,15 +162,8 @@ export default function LandingMinimalHelps() {
               gap: '10'
             }}
           >
-            <Typography>
-              <img
-                style={{
-                  width: '30px',
-                  display: 'inline',
-                  paddingBottom: '1.5rem'
-                }}
-                src={'/static/home/profits.png'}
-              />
+            <Typography color="primary.main">
+              <Icon icon={barChartOutlined} width={40} display="inline" />
             </Typography>
             <Typography
               fontWeight={400}
@@ -162,14 +179,24 @@ export default function LandingMinimalHelps() {
           {projectList &&
             projectList.listOfProject
               .filter((value) => value.status === 2)
-              .slice(3)
+              .slice(0, 3)
               .map((p) => <ProjectCard key={p.id} row={p} />)}
         </Grid>
 
-        <Box sx={{ display: 'flex', alignItems: 'end', my: 3, pt: 2 }}>
-          <Typography variant="h3">Các cơ hội cho bạn</Typography>
-          <Typography color={'text.disabled'} fontWeight={1000} variant="h3" sx={{ ml: 1 }}>
-            {projectList && projectList.numOfProject}
+        <Box sx={{ display: 'flex', alignItems: 'start', my: 3, pt: 2 }}>
+          <Typography color="primary.main">
+            <Icon icon={fileProtectOutlined} width={40} display="inline" />
+          </Typography>
+          <Typography
+            fontWeight={400}
+            variant="h4"
+            sx={{ mb: 1, color: 'text.disabled', marginLeft: '1rem' }}
+          >
+            Tất cả các giao dịch được xem xét kỹ lưỡng bởi{' '}
+            <Link to="#" style={{ textDecoration: 'none' }}>
+              nhóm đầu tư của chúng tôi
+            </Link>
+            .
           </Typography>
         </Box>
 
@@ -182,12 +209,12 @@ export default function LandingMinimalHelps() {
               <Grid container sx={{ mb: 3 }}>
                 <Grid item xs={12} md={2}>
                   <Button
-                    sx={{ color: openCategory ? 'blue' : 'black' }}
+                    sx={{ color: openCategory ? 'primary.main' : 'text.secondary' }}
                     onClick={() => handleClick(getCategory)}
                   >
                     <Typography
                       sx={{
-                        color: openCategory ? 'blue' : 'text.secondary'
+                        color: openCategory ? 'primary.main' : 'text.secondary'
                       }}
                       mr={0.5}
                     >
@@ -202,13 +229,11 @@ export default function LandingMinimalHelps() {
                 </Grid>
                 <Grid item xs={12} md={2}>
                   <Button
-                    sx={{ color: openHighLight ? 'blue' : 'black' }}
+                    sx={{ color: openHighLight ? 'primary.main' : 'text.secondary' }}
                     onClick={() => handleClick(getHighLight)}
                   >
                     <Typography
-                      sx={{
-                        color: openHighLight ? 'blue' : 'text.secondary'
-                      }}
+                      sx={{ color: openHighLight ? 'primary.main' : 'text.secondary' }}
                       mr={0.5}
                     >
                       Nổi bật
@@ -222,12 +247,12 @@ export default function LandingMinimalHelps() {
                 </Grid>
                 <Grid item xs={12} md={2}>
                   <Button
-                    sx={{ color: openRevenue ? 'blue' : 'black' }}
+                    sx={{ color: openRevenue ? 'primary.main' : 'text.secondary' }}
                     onClick={() => handleClick(getRevenue)}
                   >
                     <Typography
                       sx={{
-                        color: openRevenue ? 'blue' : 'text.secondary'
+                        color: openRevenue ? 'primary.main' : 'text.secondary'
                       }}
                       mr={0.5}
                     >
@@ -242,12 +267,12 @@ export default function LandingMinimalHelps() {
                 </Grid>
                 <Grid item xs={12} md={2}>
                   <Button
-                    sx={{ color: openMore ? 'blue' : 'black' }}
+                    sx={{ color: openMore ? 'primary.main' : 'text.secondary' }}
                     onClick={() => handleClick(getMore)}
                   >
                     <Typography
                       sx={{
-                        color: openMore ? 'blue' : 'text.secondary'
+                        color: openMore ? 'primary.main' : 'text.secondary'
                       }}
                       mr={0.5}
                     >
@@ -271,7 +296,20 @@ export default function LandingMinimalHelps() {
           <Collapse in={openCategory} timeout="auto" unmountOnExit>
             <Grid container sx={{ backgroundColor: '#f7f7f7' }} mb={5}>
               <Grid container sx={{ py: 3, ml: 3 }}>
-                {fieldList && fieldList.map((p) => <FieldCard key={p.id} row={p} />)}
+                {fieldList &&
+                  fieldList.map((f) => {
+                    const isSelected = selectedFilter.indexOf(f.name);
+                    return (
+                      <List key={f.id} component="div" disablePadding>
+                        <ListItemButton onClick={() => addToSelectedFilterList(f.name)}>
+                          <ListItemText
+                            primary={f.name}
+                            sx={{ color: isSelected !== -1 ? 'primary.main' : 'text.secondary' }}
+                          />
+                        </ListItemButton>
+                      </List>
+                    );
+                  })}
               </Grid>
             </Grid>
           </Collapse>
@@ -454,18 +492,25 @@ export default function LandingMinimalHelps() {
                     </ListItemButton>
                   </List>
                 </Grid>
-                <Grid container sx={{ py: 3 }} md={12} lg={12}>
-                  <List component="div" disablePadding>
-                    <Typography sx={{ fontWeight: '700' }}>Company location</Typography>
-                    <BlogPostsSearch />
-                  </List>
-                </Grid>
               </Grid>
             </Grid>
           </Collapse>
         </Box>
+        {selectedFilter && (
+          <Box mt={1} mb={3}>
+            <Stack direction="row" spacing={1}>
+              {selectedFilter.map((v, i) => (
+                <Chip key={i} label={v} onDelete={handleDelete} />
+              ))}
+            </Stack>
+          </Box>
+        )}
         <Grid container alignItems="center" justifyContent="center" spacing={5}>
-          {projectList && projectList.listOfProject.map((p) => <ProjectCard key={p.id} row={p} />)}
+          {projectList &&
+            projectList.listOfProject
+              .filter((value) => value.status === 2)
+              .slice(0, 9)
+              .map((p) => <ProjectCard key={p.id} row={p} />)}
         </Grid>
       </Container>
     </RootStyle>

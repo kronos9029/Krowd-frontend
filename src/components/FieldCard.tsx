@@ -5,7 +5,7 @@ import { dispatch } from 'redux/store';
 import { PATH_DETAILS } from 'routes/paths';
 import { Field } from '../@types/krowd/fields';
 const handleGetProjectById = (activeProjectId: string) => {
-  dispatch(getProjectId(activeProjectId));
+  dispatch(getProjectId(activeProjectId, 'ADMIN'));
 };
 function FieldCard({ row }: { row: Field }) {
   return (

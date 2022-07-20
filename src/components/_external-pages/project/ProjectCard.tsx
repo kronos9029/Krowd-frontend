@@ -18,7 +18,7 @@ import { getProjectId } from 'redux/slices/krowd_slices/project';
 import { dispatch } from 'redux/store';
 import { PATH_DETAILS } from 'routes/paths';
 import { fCurrency } from 'utils/formatNumber';
-import { Project, ProjectStatus } from '../../../@types/krowd/project';
+import { Project1, ProjectStatus } from '../../../@types/krowd/project';
 import CheckIcon from '@mui/icons-material/Check';
 const ACTIVE_STATUS = 4;
 const CardStyle = styled(Card)(({ theme }) => {
@@ -72,10 +72,10 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   }
 }));
 
-function ProjectCard({ row }: { row: Project }) {
+function ProjectCard({ row }: { row: Project1 }) {
   const [isHover, setIsHover] = useState(false);
   const handleGetProjectById = (activeProjectId: string) => {
-    dispatch(getProjectId(activeProjectId));
+    dispatch(getProjectId(activeProjectId, 'ADMIN'));
   };
   return (
     <Grid sx={{ p: 2 }} item key={row.id} xs={12} sm={12} md={6} lg={4}>

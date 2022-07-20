@@ -1,8 +1,8 @@
 import { Box, Chip, Typography } from '@mui/material';
 import { MHidden } from 'components/@material-extend';
-import { Project, ProjectStatus } from '../../../@types/krowd/project';
+import { Project1, ProjectStatus } from '../../../@types/krowd/project';
 
-function ProjectDetailHeading({ p }: { p: Project }) {
+function ProjectDetailHeading({ p }: { p: Project1 }) {
   return (
     <>
       <Box my={2} pt={'6rem'} sx={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
