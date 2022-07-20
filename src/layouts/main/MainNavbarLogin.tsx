@@ -101,7 +101,7 @@ export default function MainNavbarLogin() {
   const { t } = useTranslation();
 
   return (
-    <AppBar sx={{ boxShadow: 0, bgcolor: '#FFFFFF' }}>
+    <AppBar sx={{ boxShadow: 0, bgcolor: '#FFFFFF', position: 'relative' }}>
       <ToolbarStyle
         disableGutters
         sx={{

@@ -3,7 +3,7 @@ import appleFilled from '@iconify/icons-ant-design/apple-filled';
 // material
 import { alpha, styled } from '@mui/material/styles';
 // utils
-import { Box, Button, Card, Stack, Typography } from '@mui/material';
+import { Box, Button, Card, Link, Stack, Typography } from '@mui/material';
 // utils
 import { fNumber, fShortenNumber } from '../../../utils/formatNumber';
 // ----------------------------------------------------------------------
@@ -13,8 +13,8 @@ const RootStyle = styled(Card)(({ theme }) => ({
   textAlign: 'left',
   padding: theme.spacing(3, 3, 0),
   height: '600px',
-  color: theme.palette.info.darker,
-  backgroundColor: theme.palette.info.lighter
+  color: 'text.primary',
+  backgroundColor: '#fbfbfc'
 }));
 
 const IconWrapperStyle = styled('div')(({ theme }) => ({
@@ -55,21 +55,6 @@ export default function ProjectPackage({ projectPackage }: ProjectPackageProps) 
       <Typography variant="h2" sx={{ paddingTop: '2rem' }}>
         {fNumber(investValue || 500000)}đ
       </Typography>
-      {/* <Button
-        sx={{
-          width: '100%',
-          marginTop: '2rem',
-          pt: 2,
-          pb: 2,
-          textAlign: 'center',
-          backgroundColor: '#14B7CC',
-          opacity: 0.72
-        }}
-      >
-        <Typography variant="h3" sx={{ color: '#ffffff' }}>
-          Chọn gói
-        </Typography>{' '}
-      </Button> */}
       <Typography variant="h6" sx={{ opacity: 0.72, pt: 3, pb: 3 }}>
         Mô tả thêm voucher
       </Typography>

@@ -7,7 +7,7 @@ const FixQL = styled('div')(() => ({
   '.ql-align-right': {
     textAlign: 'right'
   },
-  '.ql-align-jutify': {
+  '.ql-align-justify': {
     textAlign: 'justify'
   },
   blockquote: {
@@ -33,19 +33,19 @@ const FixQL = styled('div')(() => ({
     height: '500px'
   }
 }));
-const PitchTopAnchor = styled('div')(() => ({
+const NavbarTopAnchor = styled('div')(() => ({
   display: 'block',
   position: 'relative',
   top: '-100px',
   visibility: 'hidden'
 }));
-const PitchBottomAnchor = styled('div')(() => ({
+const NavbarBottomAnchor = styled('div')(() => ({
   display: 'block',
   position: 'relative',
   top: '10px',
   visibility: 'hidden'
 }));
-const PitchTopClickAnchor = styled('div')(() => ({
+const NavbarTopClickAnchor = styled('div')(() => ({
   display: 'block',
   position: 'relative',
   top: '-140px',
@@ -68,19 +68,19 @@ function ProjectDetailPitch({ pitchs }: PitchListProps) {
         pitchs.map(
           (v, i) =>
             v && (
-              <Box key={i}>
-                <PitchTopAnchor id={`__pitchTop_${v.id}`}></PitchTopAnchor>
-                <Box py={2}>
-                  <Typography variant="h3" color={'text.secondary'} height={50}>
-                    {v.title}
+              <Box key={i} my={5} py={5}>
+                <NavbarTopAnchor id={`__navbarTop_${v.id}`}></NavbarTopAnchor>
+                <Box pb={4}>
+                  <Typography variant="h4" color={'#666'} height={50}>
+                    {`${i + 1}. ${v.title}`}
                     <Box width={'10%'}>
-                      <PitchTopClickAnchor id={`__pitchTopClick_${v.id}`}></PitchTopClickAnchor>
-                      <Divider variant="fullWidth" sx={{ my: 1 }} />
+                      <NavbarTopClickAnchor id={`__navbarTopClick_${v.id}`}></NavbarTopClickAnchor>
+                      <Divider variant="fullWidth" sx={{ my: 1, opacity: 0.1 }} />
                     </Box>
                   </Typography>
                 </Box>
                 {v.content && <FixQL>{parse(v.content)}</FixQL>}
-                <PitchBottomAnchor id={`__pitchBottom_${v.id}`}></PitchBottomAnchor>
+                <NavbarBottomAnchor id={`__navbarBottom_${v.id}`}></NavbarBottomAnchor>
               </Box>
             )
         )}

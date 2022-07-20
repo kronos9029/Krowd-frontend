@@ -8,55 +8,55 @@ type PitchProps = {
   content: string;
   description: string;
 };
-type NavbarState = {
+
+type NavbarProps = {
   pitchs: PitchProps[] | undefined;
+  bottomNav: (string | null)[];
 };
 
-function ProjectDetailNavbar({ pitchs }: NavbarState) {
+function ProjectDetailNavbar({ pitchs, bottomNav }: NavbarProps) {
   const [isShow, setIsShow] = useState(false);
-  const [selectedPitch, setSelectedPitch] = useState(pitchs?.at(0)?.id);
+  const [selectedNavbar, setSelectedNavbar] = useState(pitchs?.at(0)?.id);
   var lastScrollTop = 0;
   const trackScrolling = useCallback(() => {
-    const currentIndex = pitchs!.findIndex((p) => p.id === selectedPitch);
-    const firstElement = document.getElementById(`__pitchTop_${pitchs?.at(0)?.id}`);
+    const currentIndex = pitchs!.findIndex((p) => p.id === selectedNavbar);
+    const firstElement = document.getElementById(`__navbarTop_${pitchs?.at(0)?.id}`);
     var st = window.pageYOffset || document.documentElement.scrollTop;
     if (isTopFirstElement(firstElement)) {
-      setSelectedPitch('');
+      setSelectedNavbar('');
       setIsShow(false);
     } else {
       setIsShow(true);
       if (st > lastScrollTop) {
         if (currentIndex < pitchs!.length - 1) {
           const nextPitch = pitchs?.at(currentIndex + 1)?.id;
-          const wrappedElementId = `__pitchTop_${nextPitch}`;
+          const wrappedElementId = `__navbarTop_${nextPitch}`;
           const wrappedElement = document.getElementById(wrappedElementId);
           if (isTop(wrappedElement)) {
-            console.log(nextPitch);
-            setSelectedPitch(nextPitch!);
+            setSelectedNavbar(nextPitch!);
             setIsShow(true);
           }
         }
       } else {
         if (currentIndex > 0) {
           const prevPitch = pitchs?.at(currentIndex - 1)?.id;
-          const wrappedElementId = `__pitchBottom_${prevPitch}`;
+          const wrappedElementId = `__navbarBottom_${prevPitch}`;
           const wrappedElement = document.getElementById(wrappedElementId);
           if (isBottom(wrappedElement)) {
-            console.log(prevPitch);
-            setSelectedPitch(prevPitch!);
+            setSelectedNavbar(prevPitch!);
           }
         }
       }
     }
     lastScrollTop = st <= 0 ? 0 : st;
-  }, [selectedPitch]);
+  }, [selectedNavbar]);
   useEffect(() => {
     document.addEventListener('scroll', trackScrolling);
     return () => {
       document.removeEventListener('scroll', trackScrolling);
     };
   }, [trackScrolling]);
-  const handleClickPitch = (newValue: string) => setSelectedPitch(newValue);
+  const handleClickPitch = (newValue: string) => setSelectedNavbar(newValue);
 
   const isTop = (el: HTMLElement | null) => el && el.getBoundingClientRect().top <= 15;
 
@@ -67,17 +67,17 @@ function ProjectDetailNavbar({ pitchs }: NavbarState) {
   return (
     <>
       {isShow && (
-        <Box position={'fixed'} top={'10%'} left={'5%'} width={'fit-content'}>
+        <Box position={'fixed'} top={'10%'} left={'10%'} width={'fit-content'}>
           <Box>
             {pitchs &&
               pitchs.map((v, i) => {
-                const isSelected = selectedPitch === v.id;
+                const isSelected = selectedNavbar === v.id;
                 return (
                   <Box key={i} py={1}>
                     <ScrollLink
                       spy={true}
                       onClick={() => handleClickPitch(v.id)}
-                      to={`__pitchTopClick_${v.id}`}
+                      to={`__navbarTopClick_${v.id}`}
                       style={{ cursor: 'pointer' }}
                     >
                       <Typography
@@ -93,7 +93,28 @@ function ProjectDetailNavbar({ pitchs }: NavbarState) {
               })}
           </Box>
           <Divider variant="fullWidth" sx={{ my: 1 }} />
-          <Box></Box>
+          <Box>
+            {bottomNav &&
+              bottomNav.length > 0 &&
+              bottomNav.map((nav, i) => (
+                <Box py={1} key={i}>
+                  <ScrollLink
+                    spy={true}
+                    onClick={() => (nav ? handleClickPitch(nav) : {})}
+                    to={`__navbarTopClick_${nav}`}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <Typography
+                      color={selectedNavbar === nav ? 'text.primary' : 'text.disabled'}
+                      variant="overline"
+                      fontSize={12}
+                    >
+                      {nav}
+                    </Typography>
+                  </ScrollLink>
+                </Box>
+              ))}
+          </Box>
         </Box>
       )}
     </>

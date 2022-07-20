@@ -24,9 +24,9 @@ type ExtensionProps = {
   description: string | null;
 };
 type ExtensionListProps = {
-  extensionList: ExtensionProps[];
+  extensions: ExtensionProps[];
 };
-function ProjectDetailExtension({ extensionList }: ExtensionListProps) {
+function ProjectDetailExtension({ extensions }: ExtensionListProps) {
   const [expanded, setExpanded] = useState(-1);
 
   const handleChange = (panel: number, isCollapse: boolean) => {
@@ -43,7 +43,7 @@ function ProjectDetailExtension({ extensionList }: ExtensionListProps) {
         </Box>
       </Box>
       <Box>
-        {extensionList.map((v, i) => {
+        {extensions.map((v, i) => {
           const isHaveDescription = v.description !== null;
           const isExpanded = expanded === i;
           return (
