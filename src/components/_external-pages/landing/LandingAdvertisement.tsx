@@ -110,8 +110,8 @@ export default function LandingMinimalHelps() {
       }}
     >
       <Container maxWidth="lg">
-        <Box sx={{ textAlign: 'left', padding: '1rem 0' }}>
-          <Typography variant="h3" sx={{ mb: 3, marginTop: '1rem' }}>
+        <Box sx={{ textAlign: 'center', padding: '1rem 0' }}>
+          <Typography variant="h2" sx={{ mb: 3, my: '3rem' }}>
             {t('advertise_title')}
           </Typography>
         </Box>
