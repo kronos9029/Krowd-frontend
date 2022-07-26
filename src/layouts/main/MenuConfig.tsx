@@ -9,8 +9,8 @@ const ICON_SIZE = {
   height: 22
 };
 
-const menuConfig = {
-  en: [
+const navConfig = {
+  vi: [
     {
       title: 'Trang chủ',
       icon: <Icon icon={homeFill} {...ICON_SIZE} />,
@@ -29,7 +29,7 @@ const menuConfig = {
     }
   ],
 
-  vi: [
+  en: [
     {
       title: 'Home',
       icon: <Icon icon={homeFill} {...ICON_SIZE} />,
@@ -60,4 +60,4 @@ const menuConfig = {
   ]
 };
 
-export default menuConfig;
+export default navConfig;

@@ -10,25 +10,25 @@ import MainNavbarLogin from './MainNavbarLogin';
 
 export default function MainLayout() {
   const { user } = useAuth();
-  if (user?.idToken === null) {
-    return (
-      <>
-        <MainNavbar />
-        <div>
-          <Outlet />
-        </div>
-        <MainFooter />
-      </>
-    );
-  } else {
-    return (
-      <>
-        <MainNavbarLogin />
-        <div>
-          <Outlet />
-        </div>
-        <MainFooter />
-      </>
-    );
-  }
+  // if (user?.idToken === null) {
+  //   return (
+  //     <>
+  //       <MainNavbar />
+  //       <div>
+  //         <Outlet />
+  //       </div>
+  //       <MainFooter />
+  //     </>
+  //   );
+  // } else {
+  return (
+    <>
+      <MainNavbar />
+      <div>
+        <Outlet />
+      </div>
+      <MainFooter />
+    </>
+  );
+  // }
 }

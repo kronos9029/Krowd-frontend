@@ -1,7 +1,7 @@
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
-import { Box, Button, AppBar, Toolbar, Container, Typography } from '@mui/material';
+import { Box, Button, AppBar, Toolbar, Container, Typography, Link } from '@mui/material';
 // hooks
 import useOffSetTop from '../../hooks/useOffSetTop';
 // components
@@ -15,7 +15,7 @@ import navConfig from './MenuConfig';
 import i18next from 'i18next';
 import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 // ----------------------------------------------------------------------
 
@@ -82,12 +82,12 @@ export type MenuProps = {
 };
 const Language = [
   {
-    code: 'en',
+    code: 'vi',
     name: 'Tiếng việt',
     countryCode: 'vn'
   },
   {
-    code: 'vi',
+    code: 'en',
     name: 'English',
     countryCode: 'en'
   }
@@ -96,10 +96,21 @@ export default function MainNavbar() {
   const isOffset = useOffSetTop(-1);
   const { pathname } = useLocation();
   const isHome = pathname === '/';
-  const currentLanguageCode = cookies.get('i18next') || 'en';
-  const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
+  const initialLanguage = cookies.get('i18next') || 'vi';
+  const [currentLanguage, setCurrentLanguage] = useState('');
   const { t } = useTranslation();
+  useEffect(() => {
+    setCurrentLanguage(initialLanguage);
+    localStorage.setItem('i18nextLng', initialLanguage);
+  });
 
+  const setLanguage = (newLang: string) => {
+    localStorage.setItem('i18nextLng', newLang);
+    const current = localStorage.getItem('i18nextLng')!;
+    i18next.changeLanguage(current);
+    setCurrentLanguage(current);
+    console.log(currentLanguage);
+  };
   return (
     <AppBar sx={{ boxShadow: 0, bgcolor: '#FFFFFF' }}>
       <ToolbarStyle
@@ -139,7 +150,7 @@ export default function MainNavbar() {
             <MenuDesktop
               isOffset={isOffset}
               isHome={isHome}
-              navConfig={localStorage.getItem('i18nextLng') === 'en' ? navConfig.vi : navConfig.en}
+              navConfig={currentLanguage === 'vi' ? navConfig.vi : navConfig.en}
             />
             {/* <MenuDesktop
               isOffset={isOffset}
@@ -176,31 +187,31 @@ export default function MainNavbar() {
                     {t('language')}
                   </button>
                   <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    {Language.map(({ code, name, countryCode }) => (
-                      <li key={countryCode}>
-                        <a
-                          href="#"
-                          className={classNames('dropdown-item', {
-                            disabled: currentLanguageCode === code
-                          })}
-                          onClick={() => {
-                            i18next.changeLanguage(code);
-                            localStorage.setItem('i18nextLng', code);
-                          }}
-                        >
-                          <span
-                            className={`/static/icons/ic_flag_${countryCode}.svg`}
-                            style={{
-                              opacity: currentLanguageCode === code ? 0.5 : 1
-                            }}
+                    {Language.map(({ code, name, countryCode }) => {
+                      return (
+                        <li key={countryCode}>
+                          <Link
+                            underline="none"
+                            sx={{ cursor: 'pointer' }}
+                            className={classNames('dropdown-item', {
+                              disabled: currentLanguage === code
+                            })}
+                            onClick={() => setLanguage(code)}
                           >
-                            <img src={`/static/icons/ic_flag_${countryCode}.svg`} />
-                          </span>
-                          {/* <img src="/static/icons/ic_flag_${countryCode}.svg mx-2" /> */}
-                          {name}
-                        </a>
-                      </li>
-                    ))}
+                            <span
+                              className={`/static/icons/ic_flag_${countryCode}.svg`}
+                              style={{
+                                opacity: currentLanguage === code ? 0.5 : 1
+                              }}
+                            >
+                              <img src={`/static/icons/ic_flag_${countryCode}.svg`} />
+                            </span>
+                            {/* <img src="/static/icons/ic_flag_${countryCode}.svg mx-2" /> */}
+                            {name}
+                          </Link>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               </div>
@@ -210,7 +221,7 @@ export default function MainNavbar() {
             <MenuMobile
               isOffset={isOffset}
               isHome={isHome}
-              navConfig={localStorage.getItem('i18nextLng') === 'en' ? navConfig.vi : navConfig.en}
+              navConfig={currentLanguage === 'vi' ? navConfig.vi : navConfig.en}
             />
           </MHidden>
         </Container>
