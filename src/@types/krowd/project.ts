@@ -219,6 +219,7 @@ export type Project1 = {
       link: string;
       content: string;
       description: string;
+      priority: number;
     }[];
   }[];
   memberList: any[];

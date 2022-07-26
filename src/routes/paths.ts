@@ -82,6 +82,7 @@ export const PATH_DASHBOARD = {
     root: path(ROOTS_DASHBOARD, '/projectsBusiness'),
     projectBusinessKrowd: path(ROOTS_DASHBOARD, '/projectsBusiness/projectBusinessKrowd'),
     projectBusinessDetails: path(ROOTS_DASHBOARD, '/projectsBusiness/projectDetails'),
+    newProjectBusiness: path(ROOTS_DASHBOARD, '/projectsBusiness/new-project'),
     projectBusinessById: path(ROOTS_DASHBOARD, '/projectsBusiness/nike-air-force-1-ndestrukt')
   },
   //Quản lý khác

@@ -16,7 +16,7 @@ import EmptyContent from '../../EmptyContent';
 const HeroStyle = styled('div')(({ theme }) => ({
   paddingTop: '56%',
   position: 'relative',
-  backgroundSize: 'cover',
+  backgroundSize: 'image',
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
   '&:before': {
@@ -32,13 +32,13 @@ const HeroStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 type PreviewHeroProps = {
-  title: string;
-  cover?: string | null;
+  name: string;
+  image?: string | null;
 };
 
-function PreviewHero({ title, cover }: PreviewHeroProps) {
+function PreviewHero({ name, image }: PreviewHeroProps) {
   return (
-    <HeroStyle sx={{ backgroundImage: `url(${cover})` }}>
+    <HeroStyle sx={{ backgroundImage: `url(${image})` }}>
       <Container
         sx={{
           top: 0,
@@ -51,7 +51,7 @@ function PreviewHero({ title, cover }: PreviewHeroProps) {
         }}
       >
         <Typography variant="h2" component="h1">
-          {title}
+          {name}
         </Typography>
       </Container>
     </HeroStyle>
@@ -70,10 +70,10 @@ export default function BlogNewPostPreview({
   onClosePreview
 }: BlogNewPostPreviewProps) {
   const { values, handleSubmit, isSubmitting, isValid } = formik;
-  const { title, description, content } = values;
-  const cover = isString(values.cover) ? values.cover : values.cover?.preview;
-  const hasContent = title || description || content || cover;
-  const hasHero = title || cover;
+  const { name, description } = values;
+  const image = isString(values.image) ? values.image : values.image?.preview;
+  const hasContent = name || description || image;
+  const hasHero = name || image;
 
   return (
     <DialogAnimate fullScreen open={isOpenPreview} onClose={onClosePreview}>
@@ -93,9 +93,9 @@ export default function BlogNewPostPreview({
         </LoadingButton>
       </DialogActions>
 
-      {hasContent ? (
+      {/* {hasContent ? (
         <Scrollbar>
-          {hasHero && <PreviewHero title={title} cover={cover} />}
+          {hasHero && <PreviewHero name={name} image={image} />}
           <Container>
             <Box sx={{ mt: 5, mb: 10 }}>
               <Typography variant="h6" sx={{ mb: 5 }}>
@@ -106,8 +106,8 @@ export default function BlogNewPostPreview({
           </Container>
         </Scrollbar>
       ) : (
-        <EmptyContent title="Empty content" />
-      )}
+        <EmptyContent name="Empty content" />
+      )} */}
     </DialogAnimate>
   );
 }

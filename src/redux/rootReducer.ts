@@ -8,6 +8,7 @@ import blogReducer from './slices/blog';
 import userReducer from './slices/user';
 
 import fieldKrowdReducer from './slices/krowd_slices/field';
+import areaKrowdReducer from './slices/krowd_slices/area';
 import RiskReducer from './slices/krowd_slices/riskType';
 import projectReducer from './slices/krowd_slices/project';
 import productReducer from './slices/product';
@@ -40,6 +41,7 @@ const rootReducer = combineReducers({
   blog: blogReducer,
   user: userReducer,
   fieldKrowd: fieldKrowdReducer,
+  areaKrowd: areaKrowdReducer,
   riskKrowd: RiskReducer,
   project: persistReducer(projectPersistConfig, projectReducer),
   product: persistReducer(productPersistConfig, productReducer)

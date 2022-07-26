@@ -49,34 +49,6 @@ export default function LoginForm() {
 
   const { loginWithGoogle, loginWithFaceBook, login, loginWithPhone } = useAuth();
 
-  // const handleLoginPhone = () => {
-  //   // window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
-  //   const appVerifier2 = new firebase.auth.RecaptchaVerifier('sign-in-button', {
-  //     size: 'invisible',
-  //     callback: function () {
-  //       // reCAPTCHA solved, allow signInWithPhoneNumber.
-  //       onSignInSubmit();
-  //     }
-  //   });
-  // };
-  // const onSignInSubmit = () => {
-  //   const phoneNumber = '+848540036';
-  //   // const appVerifier = '123456';
-  //   const appVerifier = window;
-  //   firebase
-  //     .auth()
-  //     .signInWithPhoneNumber(phoneNumber, appVerifier)
-  //     .then((confirmationResult) => {
-  //       // SMS sent. Prompt user to type the code from the message, then sign the
-  //       // user in with confirmationResult.confirm(code).
-  //       // window.confirmationResult = confirmationResult;
-  //       // ...
-  //     })
-  //     .catch((error) => {
-  //       // Error; SMS not sent
-  //       // ...
-  //     });
-  // };
   const handleLoginGoogle = async () => {
     try {
       await loginWithGoogle?.();
@@ -162,10 +134,9 @@ export default function LoginForm() {
           <Typography variant="h4" gutterBottom>
             Đăng nhập với người đầu tư
           </Typography>
-          <Typography sx={{ color: 'text.secondary' }}>Nhập thông tin bên dưới</Typography>
         </Box>
       </Stack>
-      <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+      {/* <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
           {errors.afterSubmit && <Alert severity="error">{errors.afterSubmit}</Alert>}
 
@@ -221,25 +192,8 @@ export default function LoginForm() {
         >
           Login
         </LoadingButton>
-      </Form>
-      {/* 
-      <LoadingButton
-        style={{
-          backgroundColor: '#FFF',
-          color: 'black',
-          marginTop: '2rem',
-          paddingRight: '2rem'
-        }}
-        fullWidth
-        size="large"
-        type="submit"
-        variant="contained"
-        loading={isSubmitting}
-        onClick={handleLoginPhone}
-      >
-        <Icon icon={googleFill} color="green" height={24} />
-        Login with Phone
-      </LoadingButton> */}
+      </Form> */}
+
       <Stack direction="row" justifyContent="space-between" sx={{ mb: 2 }}>
         <LoadingButton
           style={{

@@ -94,7 +94,7 @@ export const { sortByProjects, filterProjects } = slice.actions;
 
 // ----------------------------------------------------------------------
 
-export function getAllProject(temp_field_role: 'ADMIN' | 'INVESTOR') {
+export function getAllProject(temp_field_role: 'ADMIN' | 'INVESTOR' | 'BUSI') {
   return async () => {
     const { dispatch } = store;
 

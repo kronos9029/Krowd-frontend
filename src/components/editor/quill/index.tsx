@@ -16,7 +16,7 @@ const RootStyle = styled(Box)(({ theme }) => ({
     fontFamily: theme.typography.fontFamily
   },
   '& .ql-editor': {
-    minHeight: 200,
+    minHeight: 500,
     '&.ql-blank::before': {
       fontStyle: 'normal',
       color: theme.palette.text.disabled
@@ -82,7 +82,7 @@ export default function QuillEditor({
         onChange={onChange}
         modules={modules}
         formats={formats}
-        placeholder="Write something awesome..."
+        placeholder="Mô tả thông tin chi tiết dự án...."
         {...other}
       />
     </RootStyle>

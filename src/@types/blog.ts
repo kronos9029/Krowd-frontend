@@ -3,16 +3,21 @@ import { FormikProps } from 'formik';
 // ----------------------------------------------------------------------
 
 export type NewPostFormValues = {
-  title: string;
+  name: string;
+  businessId: string;
+  managerId: string;
+  fieldId: string;
+  areaId: string;
+  address: string;
   description: string;
-  content: string;
-  cover: File | any;
-  tags: string[];
-  publish: boolean;
-  comments: boolean;
-  metaTitle: string;
-  metaDescription: string;
-  metaKeywords: string[];
+  investmentTargetCapital: string;
+  investedCapital: string;
+  sharedRevenue: string;
+  multiplier: string;
+  duration: string;
+  numOfStage: string;
+  businessLicense: string;
+  image: File | any;
 };
 
 export type NewPostViewFormikInstance = FormikProps<NewPostFormValues>;

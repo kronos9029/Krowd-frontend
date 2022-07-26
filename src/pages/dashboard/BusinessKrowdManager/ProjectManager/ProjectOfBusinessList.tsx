@@ -38,6 +38,7 @@ import SearchNotFound from '../../../../components/SearchNotFound';
 import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
 import { UserListHead } from '../../../../components/_dashboard/user/list';
 import { Project1, ProjectStatus } from '../../../../@types/krowd/project';
+import ProjectMoreMenu from './ProjectMoreMenu';
 // import ProjectMoreMenu from 'components/_dashboard/e-commerce/product-details/ProjectMoreMenu';
 // import { ShopTagFiltered } from 'components/_dashboard/e-commerce/projectKrowd';
 
@@ -46,9 +47,7 @@ import { Project1, ProjectStatus } from '../../../../@types/krowd/project';
 const TABLE_HEAD = [
   { id: 'name', label: 'Tên', alignRight: false },
   { id: 'managerId', label: 'Người quản lý', alignRight: false },
-  { id: 'businessLicense', label: 'Giấy phép kinh doanh', alignRight: false },
-  { id: 'fieldId', label: 'Lĩnh vực', alignRight: true },
-  { id: 'createDate', label: 'Ngày tạo', alignRight: false },
+  { id: 'business', label: 'Doanh nghiệp', alignRight: false },
   { id: 'status', label: 'Trạng thái', alignRight: false },
   { id: '' }
 ];
@@ -86,7 +85,7 @@ function applySortFilter(array: Project1[], comparator: (a: any, b: any) => numb
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function ProjectList() {
+export default function ProjectOfBusinessList() {
   const { themeStretch } = useSettings();
   const dispatch = useDispatch();
 
@@ -116,9 +115,9 @@ export default function ProjectList() {
     });
   };
 
-  // const handleGetProjectById = (activeProjectId: string) => {
-  //   dispatch(getProjectId(activeProjectId));
-  // };
+  const handleGetProjectById = (activeProjectId: string) => {
+    dispatch(getProjectId(activeProjectId, 'ADMIN'));
+  };
 
   // Sort filter
   const handleRequestSort = (property: string) => {
@@ -151,7 +150,7 @@ export default function ProjectList() {
             <Button
               variant="contained"
               component={RouterLink}
-              to={PATH_DASHBOARD.blog.newPost}
+              to={PATH_DASHBOARD.projectsBusiness.newProjectBusiness}
               startIcon={<Icon icon={plusFill} />}
             >
               Tạo mới dự án
@@ -161,7 +160,7 @@ export default function ProjectList() {
 
         <Card>
           <Scrollbar>
-            <TableContainer sx={{ minWidth: 1300 }}>
+            <TableContainer>
               <Table>
                 <UserListHead
                   order={order}
@@ -197,54 +196,40 @@ export default function ProjectList() {
                           selected={isItemSelected}
                           aria-checked={isItemSelected}
                         >
-                          <TableCell component="th" scope="row" padding="none">
-                            <Stack
-                              sx={{ maxWidth: '250px' }}
-                              direction="row"
-                              alignItems="center"
-                              spacing={2}
-                            >
+                          <TableCell width={'450px'} component="th" scope="row" padding="none">
+                            <Stack direction="row" alignItems="center" spacing={2}>
                               <Link to={PATH_DETAILS} style={{ textDecoration: 'none' }}>
                                 <Avatar alt={name} src={image} />
                               </Link>
-
                               <Typography variant="subtitle2">{name}</Typography>
                             </Stack>
                           </TableCell>
                           <TableCell component="th" scope="row" sx={{ textAlign: 'left' }}>
                             <Typography>{manager.lastName}</Typography>
                           </TableCell>
-                          <TableCell component="th" padding="none">
-                            <Typography sx={{ textAlign: 'center' }} variant="subtitle2">
-                              {businessLicense}
-                            </Typography>
+                          <TableCell component="th" scope="row" sx={{ textAlign: 'left' }}>
+                            <Typography>{business.name}</Typography>
                           </TableCell>
-
-                          <TableCell scope="row" padding="none">
-                            <Typography noWrap>{field.name}</Typography>
-                          </TableCell>
-                          <TableCell align="left">
-                            <Typography noWrap>{createDate || '-'}</Typography>
-                          </TableCell>
-
-                          {/* <TableCell
+                          <TableCell
                             sx={{ color: `${ProjectStatus.at(status)?.color}`, fontWeight: 'bold' }}
                             align="left"
                           >
-                            {ProjectStatus.at(status)?.name}
+                            {ProjectStatus.at(status)?.statusString}
                           </TableCell>
+
                           <TableCell>
                             <ProjectMoreMenu
                               onView={() => handleGetProjectById(id)}
-                              onDelete={() => handleDeleteBusinessById(id)}
+                              // onDelete={() => handleDeleteBusinessById(id)}
                             />
-                          </TableCell> */}
+                          </TableCell>
                         </TableRow>
                       );
                     })}
                   {emptyRows > 0 && (
                     <TableRow style={{ height: 53 * emptyRows }}>
                       <TableCell colSpan={6} />
+                      <img />
                     </TableRow>
                   )}
                 </TableBody>

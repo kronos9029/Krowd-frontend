@@ -7,7 +7,7 @@ import useSettings from '../../hooks/useSettings';
 // components
 import Page from '../../components/Page';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
-import { BlogNewPostForm } from '../../components/_dashboard/project';
+import { BusinessProjectForm } from '../../components/_dashboard/project';
 
 // ----------------------------------------------------------------------
 
@@ -19,9 +19,9 @@ export default function KrowdNewProject() {
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
           heading="Tạo mới dự án"
-          links={[{ name: 'Bảng điều khiển', href: PATH_DASHBOARD.root }, { name: 'New Post' }]}
+          links={[{ name: 'Bảng điều khiển', href: PATH_DASHBOARD.root }, { name: 'Dự án mới' }]}
         />
-        <BlogNewPostForm />
+        <BusinessProjectForm />
       </Container>
     </Page>
   );

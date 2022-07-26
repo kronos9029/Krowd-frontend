@@ -7,6 +7,7 @@ type PitchProps = {
   link: string;
   content: string;
   description: string;
+  priority: number;
 };
 
 type NavbarProps = {

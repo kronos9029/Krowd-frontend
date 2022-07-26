@@ -1,4 +1,4 @@
-export { default as BlogNewPostForm } from './BlogNewPostForm';
+export { default as BusinessProjectForm } from './BusinessProjectForm';
 export { default as BlogPostCard } from './BlogPostCard';
 export { default as BlogPostCommentForm } from './BlogPostCommentForm';
 export { default as BlogPostCommentItem } from './BlogPostCommentItem';

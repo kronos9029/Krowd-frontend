@@ -112,8 +112,9 @@ export default function Router() {
           path: 'projectsBusiness',
           children: [
             { element: <Navigate to="/dashboard/projectsBusiness" replace /> },
-            { path: 'projectBusinessKrowd', element: <ProjectOfBusinessList /> }
-            // { path: 'projectDetails', element: <KrowdProjectDetails /> }
+            { path: 'projectBusinessKrowd', element: <ProjectOfBusinessList /> },
+            { path: 'projectDetails', element: <ProjectOfBusinessDetails /> },
+            { path: 'new-project', element: <KrowdNewProject /> }
             // { path: 'projectBusinessDetails', element: <ProjectKrowdAdminDetails /> }
           ]
         },
@@ -244,4 +245,9 @@ const ComponentsOverview = Loadable(lazy(() => import('../pages/ComponentsOvervi
 ///
 const ProjectOfBusinessList = Loadable(
   lazy(() => import('../pages/dashboard/BusinessKrowdManager/ProjectManager/ProjectOfBusinessList'))
+);
+const ProjectOfBusinessDetails = Loadable(
+  lazy(
+    () => import('../pages/dashboard/BusinessKrowdManager/ProjectManager/ProjectOfBusinessDetails')
+  )
 );
