@@ -17,6 +17,8 @@ export type NewPostFormValues = {
   duration: string;
   numOfStage: string;
   businessLicense: string;
+  startDate:string,
+  endDate:string,
   image: File | any;
 };
 

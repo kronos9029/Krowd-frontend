@@ -22,7 +22,7 @@ import {
   Box
 } from '@mui/material';
 // utils
-import fakeRequest from '../../../utils/fakeRequest';
+import { useNavigate } from 'react-router-dom';
 // @types
 import { NewPostFormValues } from '../../../@types/blog';
 //
@@ -33,6 +33,8 @@ import { dispatch, RootState, useSelector } from 'redux/store';
 import { getFieldList } from 'redux/slices/krowd_slices/field';
 import { getAreasList } from 'redux/slices/krowd_slices/area';
 import Autocomplete from '@mui/material/Autocomplete';
+import { PATH_DASHBOARD } from 'routes/paths';
+import axios from 'axios';
 
 // ----------------------------------------------------------------------
 
@@ -62,6 +64,7 @@ const LabelStyle = styled(Typography)(({ theme }) => ({
 
 export default function BusinessProjectForm() {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const { fieldList } = useSelector((state: RootState) => state.fieldKrowd);
   const { areaList } = useSelector((state: RootState) => state.areaKrowd);
@@ -85,7 +88,7 @@ export default function BusinessProjectForm() {
     fieldId: Yup.string().required('Yêu cầu nhập fieldId'),
     areaId: Yup.string().required('Yêu cầu nhập areaId'),
     address: Yup.string().required('Yêu cầu nhập địa chỉ'),
-    description: Yup.string().min(1000).required('Yêu cầu nhập mô tả'),
+    description: Yup.string().min(10).required('Yêu cầu nhập mô tả'),
     investmentTargetCapital: Yup.string().required('Yêu cầu nhập vốn mục tiêu đầu tư'),
     investedCapital: Yup.string().required('Yêu cầu nhập vốn đầu tư'),
     sharedRevenue: Yup.string().required('Yêu cầu nhập doanh thu được chia sẻ'),
@@ -101,8 +104,8 @@ export default function BusinessProjectForm() {
   const formik = useFormik<NewPostFormValues>({
     initialValues: {
       name: '',
-      businessId: 'ID chính nó',
-      managerId: '',
+      businessId: '9E74278A-F610-11EC-B939-0242AC120002',
+      managerId: '00A551DC-0781-11ED-B939-0242AC120002',
       fieldId: '',
       areaId: '',
       address: '',
@@ -114,6 +117,8 @@ export default function BusinessProjectForm() {
       duration: '',
       numOfStage: '',
       businessLicense: '',
+      startDate: '29/05/2022 00:00:00',
+      endDate: '30/05/2022 00:00:00',
       image: null
       // tags: ['Logan'],
       // publish: true,
@@ -124,34 +129,74 @@ export default function BusinessProjectForm() {
     },
     validationSchema: NewProjectSchema,
     onSubmit: async (values, { setSubmitting, resetForm }) => {
+      //     try {
+      //       await axios.post(
+      //         `https://ec2-13-215-197-250.ap-southeast-1.compute.amazonaws.com/api/v1.0/projects`,
+      //         values
+      //       );
+      //       resetForm();
+      //       setSubmitting(true);
+      //       enqueueSnackbar('Tạo mới thành công', {
+      //         variant: 'success'
+      //       });
+      //       navigate(PATH_DASHBOARD.projectsBusiness.projectBusinessKrowd);
+      //     } catch (error) {
+      //       console.error(error);
+      //       setSubmitting(false);
+      //     }
+      //   }
+      // });
       try {
-        await fakeRequest(500);
+        const formData = new FormData();
+        formData.append('businessId', '9E74278A-F610-11EC-B939-0242AC120002');
+        formData.append('managerId', '00A551DC-0781-11ED-B939-0242AC120002');
+        formData.append('name', values.name);
+        formData.append('fieldId', values.fieldId);
+        formData.append('areaId', values.areaId);
+        formData.append('address', values.address);
+        formData.append('description', values.description);
+        formData.append('investmentTargetCapital', values.investmentTargetCapital);
+        formData.append('investedCapital', values.investedCapital);
+        formData.append('sharedRevenue', values.sharedRevenue);
+        formData.append('multiplier', values.multiplier);
+        formData.append('duration', values.duration);
+        formData.append('startDate', '29/05/2022 00:00:00');
+        formData.append('endDate', '30/05/2022 00:00:00');
+        formData.append('numOfStage', values.numOfStage);
+        formData.append('businessLicense', values.businessLicense);
+        formData.append('image', values.image);
+        await fetch(
+          `https://ec2-13-215-197-250.ap-southeast-1.compute.amazonaws.com/api/v1.0/projects`,
+          { method: 'POST', mode: 'cors', body: formData }
+        );
+        console.log('fromdata', values.name);
         resetForm();
-        handleClosePreview();
-        setSubmitting(false);
-        enqueueSnackbar('Post success', { variant: 'success' });
+        setSubmitting(true);
+        enqueueSnackbar('Tạo mới thành công', {
+          variant: 'success'
+        });
+        navigate(PATH_DASHBOARD.projectsBusiness.projectBusinessKrowd);
       } catch (error) {
         console.error(error);
         setSubmitting(false);
       }
     }
   });
-
   const { errors, values, touched, handleSubmit, isSubmitting, setFieldValue, getFieldProps } =
     formik;
   console.log(formik);
-  const handleDrop = useCallback(
-    (acceptedFiles) => {
-      const file = acceptedFiles[0];
-      if (file) {
-        setFieldValue('image', {
-          ...file,
-          preview: URL.createObjectURL(file)
-        });
-      }
-    },
-    [setFieldValue]
-  );
+  // const handleDrop = useCallback(
+  //   (acceptedFiles) => {
+  //     const file = acceptedFiles[0];
+  //     if (file) {
+  //       setFieldValue('image', {
+  //         ...file,
+  //         preview: URL.createObjectURL(file)
+  //       });
+  //     }
+  //   },
+  //   [setFieldValue]
+  // );
 
   return (
     <>
@@ -172,7 +217,7 @@ export default function BusinessProjectForm() {
                   />
                   <TextField
                     fullWidth
-                    label="Mã doanh nghiệp"
+                    label="Mã doanh nghiệp :9161615736481"
                     {...getFieldProps('businessLicense')}
                     error={Boolean(touched.businessLicense && errors.businessLicense)}
                     helperText={touched.businessLicense && errors.businessLicense}
@@ -196,7 +241,14 @@ export default function BusinessProjectForm() {
                   </Stack>
                   <div>
                     <LabelStyle sx={{ py: 1 }}>Ảnh</LabelStyle>
-                    <UploadSingleFile
+                    <TextField fullWidth label="Ảnh" type={'file'} {...getFieldProps('image')} />
+                    {/* <TextField
+                      type="file"
+                      name="images"
+                      id="imgid"
+                      className="imgcls"
+                    /> */}
+                    {/* <UploadSingleFile
                       maxSize={3145728}
                       accept="image/*"
                       file={values.image}
@@ -207,7 +259,7 @@ export default function BusinessProjectForm() {
                       <FormHelperText error sx={{ px: 2 }}>
                         {touched.image && errors.image}
                       </FormHelperText>
-                    )}
+                    )} */}
                   </div>
                 </Stack>
               </Card>
@@ -287,7 +339,7 @@ export default function BusinessProjectForm() {
                   />
                 </Stack>
               </Card> */}
-              <Card sx={{ p: 3 }}>
+              {/* <Card sx={{ p: 3 }}>
                 <LabelStyle sx={{ pb: 1 }}>Quản lý</LabelStyle>
                 <Stack spacing={3}>
                   <Autocomplete
@@ -317,7 +369,7 @@ export default function BusinessProjectForm() {
                     )}
                   />
                 </Stack>
-              </Card>
+              </Card> */}
 
               <Card sx={{ p: 3 }}>
                 <Stack spacing={3}>
@@ -326,14 +378,15 @@ export default function BusinessProjectForm() {
                     onChange={(event, newValue) => {
                       setFieldValue('fieldId', newValue);
                     }}
-                    options={fieldList}
+                    options={fieldList.map((option) => option.id)}
+                    // options={fieldList}
                     // options={fieldList.map((option) => option.id)}
-                    getOptionLabel={(option) => option.name}
-                    renderOption={(props, option) => (
-                      <Box component="li" {...props}>
-                        {option.name}
-                      </Box>
-                    )}
+                    // getOptionLabel={(option) => option.name}
+                    // renderOption={(props, option) => (
+                    //   <Box component="li" {...props}>
+                    //     {option.name}
+                    //   </Box>
+                    // )}
                     renderInput={(params) => (
                       <TextField
                         {...params}

@@ -542,239 +542,251 @@ export default function ProjectOfBusinessDetails() {
           </Grid>
         </Grid>
         <Divider sx={{ my: 8 }} />
-
-        <Typography sx={{ py: 4 }}>MEDIA</Typography>
-        <Card>
-          <Scrollbar>
-            <TableContainer>
-              <Table>
-                <UserListHead
-                  order={order}
-                  orderBy={orderBy}
-                  headLabel={TABLE_HEAD}
-                  rowCount={1}
-                  numSelected={selected.length}
-                  onRequestSort={handleRequestSort}
-                />
-                <TableBody>
-                  {medias &&
-                    medias.map((row) => {
-                      const { id, title, description, content, link, priority } = row;
-                      const isItemSelected = selected.indexOf(title) !== -1;
-                      return (
-                        <TableRow
-                          hover
-                          key={id}
-                          tabIndex={-1}
-                          role="checkbox"
-                          selected={isItemSelected}
-                          aria-checked={isItemSelected}
-                        >
-                          <TableCell width={'450px'} component="th" scope="row" padding="none">
-                            <Stack direction="row" alignItems="left" spacing={2}>
-                              <Typography variant="subtitle2">{id}</Typography>
-                            </Stack>
-                          </TableCell>
-                          <TableCell width={'450px'} component="th" scope="row" padding="none">
-                            <Stack direction="row" spacing={2}>
-                              <Typography variant="subtitle2">{title}</Typography>
-                            </Stack>
-                          </TableCell>
-                          <TableCell width={'450px'} component="th" scope="row" padding="none">
-                            <Stack direction="row" alignItems="center" spacing={2}>
-                              <Typography variant="subtitle2">{priority}</Typography>
-                            </Stack>
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
-                  {medias && medias?.length === 0 && (
-                    <TableRow>
-                      <TableCell width={'150px'}></TableCell>
-                      <TableCell sx={{ textAlign: 'center' }}>
-                        <img src="https://minimals.cc/assets/illustrations/illustration_empty_content.svg" />
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Scrollbar>
-        </Card>
-        <Typography sx={{ py: 4 }}>FAQ</Typography>
-        <Card>
-          <Scrollbar>
-            <TableContainer>
-              <Table>
-                <UserListHead
-                  order={order}
-                  orderBy={orderBy}
-                  headLabel={TABLE_HEAD}
-                  rowCount={1}
-                  numSelected={selected.length}
-                  onRequestSort={handleRequestSort}
-                />
-                <TableBody>
-                  {faqs &&
-                    faqs.map((row) => {
-                      const { id, title, description, content, link, priority } = row;
-                      const isItemSelected = selected.indexOf(title) !== -1;
-                      return (
-                        <TableRow
-                          hover
-                          key={id}
-                          tabIndex={-1}
-                          role="checkbox"
-                          selected={isItemSelected}
-                          aria-checked={isItemSelected}
-                        >
-                          <TableCell width={'450px'} component="th" scope="row" padding="none">
-                            <Stack direction="row" alignItems="left" spacing={2}>
-                              <Typography variant="subtitle2">{id}</Typography>
-                            </Stack>
-                          </TableCell>
-                          <TableCell width={'450px'} component="th" scope="row" padding="none">
-                            <Stack direction="row" spacing={2}>
-                              <Typography variant="subtitle2">{title}</Typography>
-                            </Stack>
-                          </TableCell>
-                          <TableCell width={'450px'} component="th" scope="row" padding="none">
-                            <Stack direction="row" alignItems="center" spacing={2}>
-                              <Typography variant="subtitle2">{priority}</Typography>
-                            </Stack>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={6}>
+            <Typography sx={{ py: 4 }}>MEDIA</Typography>
+            <Card>
+              <Scrollbar>
+                <TableContainer>
+                  <Table>
+                    <UserListHead
+                      order={order}
+                      orderBy={orderBy}
+                      headLabel={TABLE_HEAD}
+                      rowCount={1}
+                      numSelected={selected.length}
+                      onRequestSort={handleRequestSort}
+                    />
+                    <TableBody>
+                      {medias &&
+                        medias.map((row) => {
+                          const { id, title, description, content, link, priority } = row;
+                          const isItemSelected = selected.indexOf(title) !== -1;
+                          return (
+                            <TableRow
+                              hover
+                              key={id}
+                              tabIndex={-1}
+                              role="checkbox"
+                              selected={isItemSelected}
+                              aria-checked={isItemSelected}
+                            >
+                              <TableCell width={'450px'} component="th" scope="row" padding="none">
+                                <Stack direction="row" alignItems="left" spacing={2}>
+                                  <Typography variant="subtitle2">{id}</Typography>
+                                </Stack>
+                              </TableCell>
+                              <TableCell width={'450px'} component="th" scope="row" padding="none">
+                                <Stack direction="row" spacing={2}>
+                                  <Typography variant="subtitle2">{title}</Typography>
+                                </Stack>
+                              </TableCell>
+                              <TableCell width={'450px'} component="th" scope="row" padding="none">
+                                <Stack direction="row" alignItems="center" spacing={2}>
+                                  <Typography variant="subtitle2">{priority}</Typography>
+                                </Stack>
+                              </TableCell>
+                            </TableRow>
+                          );
+                        })}
+                      {medias && medias?.length === 0 && (
+                        <TableRow>
+                          <TableCell width={'150px'}></TableCell>
+                          <TableCell sx={{ textAlign: 'center' }}>
+                            <img src="https://minimals.cc/assets/illustrations/illustration_empty_content.svg" />
                           </TableCell>
                         </TableRow>
-                      );
-                    })}
-                  {faqs && faqs?.length === 0 && (
-                    <TableRow>
-                      <TableCell width={'150px'}></TableCell>
-                      <TableCell sx={{ textAlign: 'center' }}>
-                        <img src="https://minimals.cc/assets/illustrations/illustration_empty_content.svg" />
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Scrollbar>
-        </Card>
-        <Typography sx={{ py: 4 }}>REVIEW</Typography>
-        <Card>
-          <Scrollbar>
-            <TableContainer>
-              <Table>
-                <UserListHead
-                  order={order}
-                  orderBy={orderBy}
-                  headLabel={TABLE_HEAD}
-                  rowCount={1}
-                  numSelected={selected.length}
-                  onRequestSort={handleRequestSort}
-                />
-                <TableBody>
-                  {reviews &&
-                    reviews.map((row) => {
-                      const { id, title, description, content, link, priority } = row;
-                      const isItemSelected = selected.indexOf(title) !== -1;
-                      return (
-                        <TableRow
-                          hover
-                          key={id}
-                          tabIndex={-1}
-                          role="checkbox"
-                          selected={isItemSelected}
-                          aria-checked={isItemSelected}
-                        >
-                          <TableCell width={'450px'} component="th" scope="row" padding="none">
-                            <Stack direction="row" alignItems="left" spacing={2}>
-                              <Typography variant="subtitle2">{id}</Typography>
-                            </Stack>
-                          </TableCell>
-                          <TableCell width={'450px'} component="th" scope="row" padding="none">
-                            <Stack direction="row" spacing={2}>
-                              <Typography variant="subtitle2">{title}</Typography>
-                            </Stack>
-                          </TableCell>
-                          <TableCell width={'450px'} component="th" scope="row" padding="none">
-                            <Stack direction="row" alignItems="center" spacing={2}>
-                              <Typography variant="subtitle2">{priority}</Typography>
-                            </Stack>
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
-                  {reviews && reviews?.length === 0 && (
-                    <TableRow>
-                      <TableCell width={'150px'}></TableCell>
-                      <TableCell sx={{ textAlign: 'center' }}>
-                        <img src="https://minimals.cc/assets/illustrations/illustration_empty_content.svg" />
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Scrollbar>
-        </Card>
-        <Typography sx={{ py: 4 }}>ABOUT</Typography>
-        <Card>
-          <Scrollbar>
-            <TableContainer>
-              <Table>
-                <UserListHead
-                  order={order}
-                  orderBy={orderBy}
-                  headLabel={TABLE_HEAD}
-                  rowCount={1}
-                  numSelected={selected.length}
-                  onRequestSort={handleRequestSort}
-                />
-                <TableBody>
-                  {abouts &&
-                    abouts.map((row) => {
-                      const { id, title, description, content, link, priority } = row;
-                      const isItemSelected = selected.indexOf(title) !== -1;
-                      return (
-                        <TableRow
-                          hover
-                          key={id}
-                          tabIndex={-1}
-                          role="checkbox"
-                          selected={isItemSelected}
-                          aria-checked={isItemSelected}
-                        >
-                          <TableCell width={'450px'} component="th" scope="row" padding="none">
-                            <Stack direction="row" alignItems="left" spacing={2}>
-                              <Typography variant="subtitle2">{id}</Typography>
-                            </Stack>
-                          </TableCell>
-                          <TableCell width={'450px'} component="th" scope="row" padding="none">
-                            <Stack direction="row" spacing={2}>
-                              <Typography variant="subtitle2">{title}</Typography>
-                            </Stack>
-                          </TableCell>
-                          <TableCell width={'450px'} component="th" scope="row" padding="none">
-                            <Stack direction="row" alignItems="center" spacing={2}>
-                              <Typography variant="subtitle2">{priority}</Typography>
-                            </Stack>
+                      )}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Scrollbar>
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Typography sx={{ py: 4 }}>FAQ</Typography>
+            <Card>
+              <Scrollbar>
+                <TableContainer>
+                  <Table>
+                    <UserListHead
+                      order={order}
+                      orderBy={orderBy}
+                      headLabel={TABLE_HEAD}
+                      rowCount={1}
+                      numSelected={selected.length}
+                      onRequestSort={handleRequestSort}
+                    />
+                    <TableBody>
+                      {faqs &&
+                        faqs.map((row) => {
+                          const { id, title, description, content, link, priority } = row;
+                          const isItemSelected = selected.indexOf(title) !== -1;
+                          return (
+                            <TableRow
+                              hover
+                              key={id}
+                              tabIndex={-1}
+                              role="checkbox"
+                              selected={isItemSelected}
+                              aria-checked={isItemSelected}
+                            >
+                              <TableCell width={'450px'} component="th" scope="row" padding="none">
+                                <Stack direction="row" alignItems="left" spacing={2}>
+                                  <Typography variant="subtitle2">{id}</Typography>
+                                </Stack>
+                              </TableCell>
+                              <TableCell width={'450px'} component="th" scope="row" padding="none">
+                                <Stack direction="row" spacing={2}>
+                                  <Typography variant="subtitle2">{title}</Typography>
+                                </Stack>
+                              </TableCell>
+                              <TableCell width={'450px'} component="th" scope="row" padding="none">
+                                <Stack direction="row" alignItems="center" spacing={2}>
+                                  <Typography variant="subtitle2">{priority}</Typography>
+                                </Stack>
+                              </TableCell>
+                            </TableRow>
+                          );
+                        })}
+                      {faqs && faqs?.length === 0 && (
+                        <TableRow>
+                          <TableCell width={'150px'}></TableCell>
+                          <TableCell sx={{ textAlign: 'center' }}>
+                            <img src="https://minimals.cc/assets/illustrations/illustration_empty_content.svg" />
                           </TableCell>
                         </TableRow>
-                      );
-                    })}
-                  {abouts && abouts?.length === 0 && (
-                    <TableRow>
-                      <TableCell width={'150px'}></TableCell>
-                      <TableCell sx={{ textAlign: 'center' }}>
-                        <img src="https://minimals.cc/assets/illustrations/illustration_empty_content.svg" />
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Scrollbar>
-        </Card>
+                      )}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Scrollbar>
+            </Card>
+          </Grid>
+        </Grid>
+        <Divider sx={{ my: 8 }} />
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={6}>
+            <Typography sx={{ py: 4 }}>REVIEW</Typography>
+            <Card>
+              <Scrollbar>
+                <TableContainer>
+                  <Table>
+                    <UserListHead
+                      order={order}
+                      orderBy={orderBy}
+                      headLabel={TABLE_HEAD}
+                      rowCount={1}
+                      numSelected={selected.length}
+                      onRequestSort={handleRequestSort}
+                    />
+                    <TableBody>
+                      {reviews &&
+                        reviews.map((row) => {
+                          const { id, title, description, content, link, priority } = row;
+                          const isItemSelected = selected.indexOf(title) !== -1;
+                          return (
+                            <TableRow
+                              hover
+                              key={id}
+                              tabIndex={-1}
+                              role="checkbox"
+                              selected={isItemSelected}
+                              aria-checked={isItemSelected}
+                            >
+                              <TableCell width={'450px'} component="th" scope="row" padding="none">
+                                <Stack direction="row" alignItems="left" spacing={2}>
+                                  <Typography variant="subtitle2">{id}</Typography>
+                                </Stack>
+                              </TableCell>
+                              <TableCell width={'450px'} component="th" scope="row" padding="none">
+                                <Stack direction="row" spacing={2}>
+                                  <Typography variant="subtitle2">{title}</Typography>
+                                </Stack>
+                              </TableCell>
+                              <TableCell width={'450px'} component="th" scope="row" padding="none">
+                                <Stack direction="row" alignItems="center" spacing={2}>
+                                  <Typography variant="subtitle2">{priority}</Typography>
+                                </Stack>
+                              </TableCell>
+                            </TableRow>
+                          );
+                        })}
+                      {reviews && reviews?.length === 0 && (
+                        <TableRow>
+                          <TableCell width={'150px'}></TableCell>
+                          <TableCell sx={{ textAlign: 'center' }}>
+                            <img src="https://minimals.cc/assets/illustrations/illustration_empty_content.svg" />
+                          </TableCell>
+                        </TableRow>
+                      )}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Scrollbar>
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Typography sx={{ py: 4 }}>ABOUT</Typography>
+            <Card>
+              <Scrollbar>
+                <TableContainer>
+                  <Table>
+                    <UserListHead
+                      order={order}
+                      orderBy={orderBy}
+                      headLabel={TABLE_HEAD}
+                      rowCount={1}
+                      numSelected={selected.length}
+                      onRequestSort={handleRequestSort}
+                    />
+                    <TableBody>
+                      {abouts &&
+                        abouts.map((row) => {
+                          const { id, title, description, content, link, priority } = row;
+                          const isItemSelected = selected.indexOf(title) !== -1;
+                          return (
+                            <TableRow
+                              hover
+                              key={id}
+                              tabIndex={-1}
+                              role="checkbox"
+                              selected={isItemSelected}
+                              aria-checked={isItemSelected}
+                            >
+                              <TableCell width={'450px'} component="th" scope="row" padding="none">
+                                <Stack direction="row" alignItems="left" spacing={2}>
+                                  <Typography variant="subtitle2">{id}</Typography>
+                                </Stack>
+                              </TableCell>
+                              <TableCell width={'450px'} component="th" scope="row" padding="none">
+                                <Stack direction="row" spacing={2}>
+                                  <Typography variant="subtitle2">{title}</Typography>
+                                </Stack>
+                              </TableCell>
+                              <TableCell width={'450px'} component="th" scope="row" padding="none">
+                                <Stack direction="row" alignItems="center" spacing={2}>
+                                  <Typography variant="subtitle2">{priority}</Typography>
+                                </Stack>
+                              </TableCell>
+                            </TableRow>
+                          );
+                        })}
+                      {abouts && abouts?.length === 0 && (
+                        <TableRow>
+                          <TableCell width={'150px'}></TableCell>
+                          <TableCell sx={{ textAlign: 'center' }}>
+                            <img src="https://minimals.cc/assets/illustrations/illustration_empty_content.svg" />
+                          </TableCell>
+                        </TableRow>
+                      )}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Scrollbar>
+            </Card>
+          </Grid>
+        </Grid>
         <Typography sx={{ py: 4 }}>EXTENSION</Typography>
         <Card>
           <Scrollbar>
