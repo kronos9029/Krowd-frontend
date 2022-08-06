@@ -70,7 +70,7 @@ export default function ComponentsDetails() {
           </Box>
           <Container maxWidth={'lg'} sx={{ paddingBottom: '4rem' }}>
             <Box>
-              <MHidden width="lgDown">
+              <MHidden width="xlDown">
                 <ProjectDetailNavbar pitchs={pitchs} bottomNav={bottomNav} />
               </MHidden>
               <Grid container justifyContent="space-between">
