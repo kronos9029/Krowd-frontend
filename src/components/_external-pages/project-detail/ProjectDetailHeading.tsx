@@ -1,6 +1,6 @@
 import { Box, Chip, Typography } from '@mui/material';
 import { MHidden } from 'components/@material-extend';
-import { Project1, ProjectStatus } from '../../../@types/krowd/project';
+import { Project1 } from '../../../@types/krowd/project';
 
 function ProjectDetailHeading({ p }: { p: Project1 }) {
   return (
@@ -33,13 +33,10 @@ function ProjectDetailHeading({ p }: { p: Project1 }) {
         </Box>
         <Box sx={{ display: 'flex' }}>
           <Chip
-            label={
-              <Typography variant="overline">{ProjectStatus[p.status].statusString}</Typography>
-            }
+            label={<Typography variant="overline">{p.status}</Typography>}
             variant="filled"
             sx={{
               borderRadius: '3px',
-              backgroundColor: `${ProjectStatus[p.status].color}`,
               color: '#ffffff'
             }}
           />

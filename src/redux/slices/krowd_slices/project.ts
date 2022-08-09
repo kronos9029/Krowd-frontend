@@ -5,7 +5,7 @@ import { dispatch, store } from '../../store';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
 import closeFill from '@iconify/icons-eva/close-fill';
-import { business, Project1, ProjectStatus } from '../../../@types/krowd/project';
+import { business, NewProjectEntityFormValues, Project1 } from '../../../@types/krowd/project';
 import { REACT_APP_API_URL } from '../../../config';
 // ----------------------------------------------------------------------
 
@@ -17,6 +17,7 @@ type ProjectState = {
     listOfProject: Project1[];
   };
   activeProjectId: Project1 | null;
+  activeProjectEntityId: NewProjectEntityFormValues | null;
   projects: Project1[];
   project: Project1 | null;
   sortBy: Project1 | null;
@@ -30,6 +31,7 @@ const initialState: ProjectState = {
   isLoading: false,
   error: false,
   activeProjectId: null,
+  activeProjectEntityId: null,
   projectList: { numOfProject: 0, listOfProject: [] },
   projects: [],
   project: null,
@@ -94,7 +96,7 @@ export const { sortByProjects, filterProjects } = slice.actions;
 
 // ----------------------------------------------------------------------
 
-export function getAllProject(temp_field_role: 'ADMIN' | 'INVESTOR' | 'BUSI') {
+export function getAllProject(temp_field_role: 'ADMIN' | 'INVESTOR' | 'BUSINESS') {
   return async () => {
     const { dispatch } = store;
 

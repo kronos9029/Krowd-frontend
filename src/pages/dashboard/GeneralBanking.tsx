@@ -36,7 +36,7 @@ export default function GeneralBanking() {
             <BankingCurrentBalance />
           </Grid>
 
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} md={12}>
             <Stack spacing={3}>
               <BankingBalanceStatistics />
               <BankingExpensesCategories />
@@ -44,13 +44,13 @@ export default function GeneralBanking() {
             </Stack>
           </Grid>
 
-          <Grid item xs={12} md={4}>
+          {/* <Grid item xs={12} md={4}>
             <Stack spacing={3}>
               <BankingQuickTransfer />
               <BankingContacts />
               <BankingInviteFriends />
             </Stack>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Container>
     </Page>

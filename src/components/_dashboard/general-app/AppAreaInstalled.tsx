@@ -10,23 +10,16 @@ import { BaseOptionChart } from '../../charts';
 
 const CHART_DATA = [
   {
-    year: 2019,
+    year: 2022,
     data: [
-      { name: 'Asia', data: [10, 41, 35, 51, 49, 62, 69, 91, 148] },
-      { name: 'America', data: [10, 34, 13, 56, 77, 88, 99, 77, 45] }
-    ]
-  },
-  {
-    year: 2020,
-    data: [
-      { name: 'Asia', data: [148, 91, 69, 62, 49, 51, 35, 41, 10] },
-      { name: 'America', data: [45, 77, 99, 88, 77, 56, 13, 34, 10] }
+      { name: 'HCM Q9', data: [148, 91, 69, 62, 49, 51, 35, 41, 10, 12, 12, 12] },
+      { name: 'HCM Q12', data: [45, 77, 99, 88, 77, 56, 13, 34, 10, 12, 12, 1] }
     ]
   }
 ];
 
 export default function AppAreaInstalled() {
-  const [seriesData, setSeriesData] = useState(2019);
+  const [seriesData, setSeriesData] = useState(2022);
 
   const handleChangeSeriesData = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSeriesData(Number(event.target.value));
@@ -34,15 +27,28 @@ export default function AppAreaInstalled() {
 
   const chartOptions = merge(BaseOptionChart(), {
     xaxis: {
-      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']
+      categories: [
+        'Tháng 1',
+        'Tháng 2',
+        'Tháng 3',
+        'Tháng 4',
+        'Tháng 5 ',
+        'Tháng 6',
+        'Tháng 7 ',
+        'Tháng 8 ',
+        'Tháng 9 ',
+        'Tháng 10 ',
+        'Tháng 11 ',
+        'Tháng 12 '
+      ]
     }
   });
 
   return (
     <Card>
       <CardHeader
-        title="Area Installed"
-        subheader="(+43%) than last year"
+        title="Dự án đã hoàn thành"
+        subheader=""
         action={
           <TextField
             select

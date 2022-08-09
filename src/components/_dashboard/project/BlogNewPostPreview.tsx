@@ -10,6 +10,7 @@ import { DialogAnimate } from '../../animate';
 import Markdown from '../../Markdown';
 import Scrollbar from '../../Scrollbar';
 import EmptyContent from '../../EmptyContent';
+import ComponentsDetails from 'pages/Details';
 
 // ----------------------------------------------------------------------
 
@@ -59,39 +60,32 @@ function PreviewHero({ name, image }: PreviewHeroProps) {
 }
 
 type BlogNewPostPreviewProps = {
-  formik: NewPostViewFormikInstance;
   isOpenPreview: boolean;
   onClosePreview: VoidFunction;
 };
 
 export default function BlogNewPostPreview({
-  formik,
   isOpenPreview,
   onClosePreview
 }: BlogNewPostPreviewProps) {
-  const { values, handleSubmit, isSubmitting, isValid } = formik;
-  const { name, description } = values;
-  const image = isString(values.image) ? values.image : values.image?.preview;
-  const hasContent = name || description || image;
-  const hasHero = name || image;
+  // const { values, handleSubmit, isSubmitting, isValid } = formik;
+  // const { name, description } = values;
+  // const image = isString(values.image) ? values.image : values.image?.preview;
+  // const hasContent = name || description || image;
+  // const hasHero = name || image;
 
   return (
     <DialogAnimate fullScreen open={isOpenPreview} onClose={onClosePreview}>
-      <DialogActions sx={{ py: 2, px: 3 }}>
-        <Typography variant="subtitle1" sx={{ flexGrow: 1 }}>
-          Preview Post
-        </Typography>
-        <Button onClick={onClosePreview}>Cancel</Button>
-        <LoadingButton
-          type="submit"
-          variant="contained"
-          disabled={!isValid}
-          loading={isSubmitting}
-          onClick={() => handleSubmit()}
-        >
-          Post
-        </LoadingButton>
-      </DialogActions>
+      <Typography variant="h1" sx={{ flexGrow: 1 }}>
+        Xem trước
+      </Typography>
+      <ComponentsDetails />
+      <Button
+        sx={{ backgroundColor: '#FF7F50', color: '#FFFFFF', margin: '2rem' }}
+        onClick={onClosePreview}
+      >
+        Trở vê
+      </Button>
 
       {/* {hasContent ? (
         <Scrollbar>

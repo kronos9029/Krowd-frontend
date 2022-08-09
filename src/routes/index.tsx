@@ -109,12 +109,32 @@ export default function Router() {
           ]
         },
         {
+          path: 'userKrowd',
+          children: [
+            { element: <Navigate to="/dashboard/userKrowd/profile" replace /> },
+            { path: 'posts', element: <UserOfBusiness /> },
+            { path: 'cards', element: <UserCards /> },
+            { path: 'list', element: <UserOfBusiness /> },
+            { path: 'new', element: <UserCreate /> },
+            { path: ':name/edit', element: <UserCreate /> },
+            { path: 'account', element: <UserAccount /> }
+          ]
+        },
+        {
           path: 'projectsBusiness',
           children: [
             { element: <Navigate to="/dashboard/projectsBusiness" replace /> },
             { path: 'projectBusinessKrowd', element: <ProjectOfBusinessList /> },
             { path: 'projectDetails', element: <ProjectOfBusinessDetails /> },
-            { path: 'new-project', element: <KrowdNewProject /> }
+            // { path: 'projectEntityDetails', element: <ProjectEntityDetails /> },
+            { path: 'new-project', element: <KrowdNewProject /> },
+            { path: 'new-projectEntity', element: <KrowdNewProjectEntity /> },
+            { path: 'new-projectHighLight', element: <KrowdNewProjectHighLight /> },
+            { path: 'new-projectExtension', element: <KrowdNewProjectExtension /> },
+            { path: 'new-projectDocument', element: <KrowdNewProjectDocument /> },
+            { path: 'new-projectMedia', element: <KrowdNewProjectMedia /> },
+            { path: 'new-projectFAQ', element: <KrowdNewProjectFAQ /> },
+            { path: 'new-projectOwner', element: <KrowdNewProjectOwner /> }
             // { path: 'projectBusinessDetails', element: <ProjectKrowdAdminDetails /> }
           ]
         },
@@ -122,7 +142,7 @@ export default function Router() {
           path: 'blog',
           children: [
             { element: <Navigate to="/dashboard/blog/posts" replace /> },
-            { path: 'posts', element: <BlogPosts /> },
+            { path: 'posts', element: <UserOfBusiness /> },
             { path: 'post/:title', element: <BlogPost /> },
             { path: 'new-post', element: <KrowdNewProject /> }
           ]
@@ -214,9 +234,29 @@ const EcommerceProductCreate = Loadable(
 );
 const EcommerceCheckout = Loadable(lazy(() => import('../pages/dashboard/EcommerceCheckout')));
 const EcommerceInvoice = Loadable(lazy(() => import('../pages/dashboard/EcommerceInvoice')));
-const BlogPosts = Loadable(lazy(() => import('../pages/dashboard/BlogPosts')));
+const UserOfBusiness = Loadable(lazy(() => import('../pages/dashboard/UserOfBusiness')));
 const BlogPost = Loadable(lazy(() => import('../pages/dashboard/BlogPost')));
 const KrowdNewProject = Loadable(lazy(() => import('../pages/dashboard/KrowdNewProject')));
+//project Entity
+const KrowdNewProjectEntity = Loadable(
+  lazy(() => import('../pages/dashboard/KrowdNewProjectEntity'))
+);
+const KrowdNewProjectHighLight = Loadable(
+  lazy(() => import('../pages/dashboard/KrowdNewProjectHighLight'))
+);
+const KrowdNewProjectExtension = Loadable(
+  lazy(() => import('../pages/dashboard/KrowdNewProjectExtension'))
+);
+const KrowdNewProjectDocument = Loadable(
+  lazy(() => import('../pages/dashboard/KrowdNewProjectDocument'))
+);
+const KrowdNewProjectMedia = Loadable(
+  lazy(() => import('../pages/dashboard/KrowdNewProjectMedia'))
+);
+const KrowdNewProjectFAQ = Loadable(lazy(() => import('../pages/dashboard/KrowdNewProjectFAQ')));
+const KrowdNewProjectOwner = Loadable(
+  lazy(() => import('../pages/dashboard/KrowdNewProjectOwner'))
+);
 const UserProfile = Loadable(lazy(() => import('../pages/dashboard/UserProfile')));
 const UserCards = Loadable(lazy(() => import('../pages/dashboard/UserCards')));
 const UserList = Loadable(lazy(() => import('../pages/dashboard/UserList')));

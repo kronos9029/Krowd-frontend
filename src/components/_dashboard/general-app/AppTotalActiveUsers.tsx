@@ -26,7 +26,7 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 const PERCENT = 2.6;
-const TOTAL_USER = 18765;
+const TOTAL_USER = 1876500000;
 const CHART_DATA = [{ data: [20, 41, 63, 33, 28, 35, 50, 46, 11, 26] }];
 
 export default function AppTotalActiveUsers() {
@@ -52,7 +52,7 @@ export default function AppTotalActiveUsers() {
   return (
     <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
       <Box sx={{ flexGrow: 1 }}>
-        <Typography variant="subtitle2">Total Active Users</Typography>
+        <Typography variant="subtitle2">Tổng doanh thu</Typography>
         <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2, mb: 1 }}>
           <IconWrapperStyle
             sx={{
@@ -70,7 +70,7 @@ export default function AppTotalActiveUsers() {
           </Typography>
         </Stack>
 
-        <Typography variant="h3">{fNumber(TOTAL_USER)}</Typography>
+        <Typography variant="h3">{fNumber(TOTAL_USER)}đ</Typography>
       </Box>
 
       <ReactApexChart

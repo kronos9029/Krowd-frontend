@@ -1,13 +1,25 @@
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
-import { Box, Button, AppBar, Toolbar, Container, Typography, Link } from '@mui/material';
+import {
+  Box,
+  Button,
+  AppBar,
+  Toolbar,
+  Container,
+  Typography,
+  Link,
+  Select,
+  FormControl,
+  MenuItem,
+  Menu
+} from '@mui/material';
 // hooks
 import useOffSetTop from '../../hooks/useOffSetTop';
 // components
 import Logo from '../../components/Logo';
 import Label from '../../components/Label';
-import { MHidden } from '../../components/@material-extend';
+import { MHidden, MIconButton } from '../../components/@material-extend';
 //
 import MenuDesktop from './MenuDesktop';
 import MenuMobile from './MenuMobile';
@@ -15,8 +27,13 @@ import navConfig from './MenuConfig';
 import i18next from 'i18next';
 import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
+import useAuth from 'hooks/useAuth';
+import useIsMountedRef from 'hooks/useIsMountedRef';
+import { useSnackbar } from 'notistack';
+import { PATH_AUTH, PATH_DASHBOARD } from 'routes/paths';
+
 // ----------------------------------------------------------------------
 
 const APP_BAR_MOBILE = 64;
@@ -95,6 +112,30 @@ const Language = [
 export default function MainNavbar() {
   const isOffset = useOffSetTop(-1);
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
+  const isMountedRef = useIsMountedRef();
+  const { enqueueSnackbar } = useSnackbar();
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleLogout = async () => {
+    console.log('aaa');
+    try {
+      await logout?.();
+      if (isMountedRef.current) {
+        navigate('/');
+      }
+    } catch (error) {
+      console.error(error);
+      enqueueSnackbar('Unable to logout', { variant: 'error' });
+    }
+  };
   const isHome = pathname === '/';
   const initialLanguage = cookies.get('i18next') || 'vi';
   const [currentLanguage, setCurrentLanguage] = useState('');
@@ -111,6 +152,7 @@ export default function MainNavbar() {
     setCurrentLanguage(current);
     console.log(currentLanguage);
   };
+
   return (
     <AppBar sx={{ boxShadow: 0, bgcolor: '#FFFFFF' }}>
       <ToolbarStyle
@@ -144,7 +186,7 @@ export default function MainNavbar() {
           >
             Krowd
           </Label>
-          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ flexGrow: 1.4 }} />
 
           <MHidden width="mdDown">
             <MenuDesktop
@@ -152,22 +194,52 @@ export default function MainNavbar() {
               isHome={isHome}
               navConfig={currentLanguage === 'vi' ? navConfig.vi : navConfig.en}
             />
-            {/* <MenuDesktop
-              isOffset={isOffset}
-              isHome={isHome}
-              navConfig={t(`navbar_title_1.title_name}`)}
-            /> */}
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: '#FF7F50',
-                color: '#FFF',
-                marginRight: '1rem'
-              }}
-              href="/auth/login"
-            >
-              {t('Navbar_login')}
-            </Button>
+
+            {(user && (
+              <>
+                <Button
+                  id="basic-button"
+                  aria-controls={open ? 'basic-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? 'true' : undefined}
+                  onClick={handleClick}
+                  variant="contained"
+                >
+                  Đỗ Dương Tâm Đăng
+                </Button>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    'aria-labelledby': 'basic-button'
+                  }}
+                >
+                  <MenuItem onClick={handleClose}>Thông tin cá nhân</MenuItem>
+                  <MenuItem component={Link} href={PATH_DASHBOARD.general.app}>
+                    Bảng điều khiển
+                  </MenuItem>
+                  <MenuItem onClick={handleLogout}>Đăng xuất</MenuItem>
+                </Menu>
+              </>
+            )) || (
+              <Button
+                sx={{
+                  marginRight: '1rem',
+                  bgcolor: 'rgb(255, 127, 80)',
+                  '&:hover': {
+                    bgcolor: 'rgb(255, 127, 80)',
+                    color: '#ffffff'
+                  }
+                }}
+                size="medium"
+                variant="contained"
+                href={PATH_AUTH.login}
+              >
+                {t('Navbar_login')}
+              </Button>
+            )}
             <div className="language-select">
               <div className="d-flex justify-content-end align-items-center language-select-root">
                 <div className="dropdown">
@@ -206,7 +278,6 @@ export default function MainNavbar() {
                             >
                               <img src={`/static/icons/ic_flag_${countryCode}.svg`} />
                             </span>
-                            {/* <img src="/static/icons/ic_flag_${countryCode}.svg mx-2" /> */}
                             {name}
                           </Link>
                         </li>

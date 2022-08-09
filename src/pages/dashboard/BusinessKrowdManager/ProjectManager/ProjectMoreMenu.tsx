@@ -20,7 +20,7 @@ type ProjectMoreMenuProps = {
   //   onDelete: VoidFunction;
 };
 
-export default function ProjectMoreMenu({ onView }: ProjectMoreMenuProps) {
+function ProjectMoreMenu({ onView }: ProjectMoreMenuProps) {
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -38,3 +38,22 @@ export default function ProjectMoreMenu({ onView }: ProjectMoreMenuProps) {
     </>
   );
 }
+function ProjectEntityMoreMenu({ onView }: ProjectMoreMenuProps) {
+  const ref = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <IconButton
+        ref={ref}
+        component={RouterLink}
+        to={`${PATH_DASHBOARD.projectsBusiness.projectBusinessDetails}`}
+        sx={{ color: 'text.secondary' }}
+        onClick={onView}
+      >
+        <Icon icon={eyeFill} width={20} height={20} />
+      </IconButton>
+    </>
+  );
+}
+export default ProjectMoreMenu;

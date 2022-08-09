@@ -227,16 +227,16 @@ export default function BankingRecentTransitions() {
   return (
     <>
       <Card>
-        <CardHeader title="Recent Transitions" sx={{ mb: 3 }} />
+        <CardHeader title="Giao dịch gần đây" sx={{ mb: 3 }} />
         <Scrollbar>
           <TableContainer sx={{ minWidth: 720 }}>
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Description</TableCell>
-                  <TableCell>Date</TableCell>
-                  <TableCell>Amount</TableCell>
-                  <TableCell>Status</TableCell>
+                  <TableCell>Mô tả</TableCell>
+                  <TableCell>Ngày gửi</TableCell>
+                  <TableCell>Số tiền</TableCell>
+                  <TableCell>Trạng thái</TableCell>
                   <TableCell />
                 </TableRow>
               </TableHead>

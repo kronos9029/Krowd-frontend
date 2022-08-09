@@ -9,7 +9,7 @@ import { SeoIllustration } from '../../../assets';
 const RootStyle = styled(Card)(({ theme }) => ({
   boxShadow: 'none',
   textAlign: 'center',
-  backgroundColor: theme.palette.primary.lighter,
+  backgroundColor: 'rgb(125 240 255)',
   [theme.breakpoints.up('md')]: {
     height: '100%',
     display: 'flex',
@@ -36,17 +36,9 @@ export default function AppWelcome({ displayName }: AppWelcomeProps) {
         }}
       >
         <Typography gutterBottom variant="h4">
-          Welcome back,
+          Chào mừng trở lại,
           <br /> {!displayName ? '...' : displayName}!
         </Typography>
-
-        <Typography variant="body2" sx={{ pb: { xs: 3, xl: 5 }, maxWidth: 480, mx: 'auto' }}>
-          If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything
-        </Typography>
-
-        <Button variant="contained" to="#" component={RouterLink}>
-          Go Now
-        </Button>
       </CardContent>
 
       <SeoIllustration

@@ -25,10 +25,10 @@ export default function GeneralAnalytics() {
   const { themeStretch } = useSettings();
 
   return (
-    <Page title="General: Analytics | Krowd">
+    <Page title="Tổng quan ngày | Krowd">
       <Container maxWidth={themeStretch ? false : 'xl'}>
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Hi, Welcome back
+          Chào mừng trở lại
         </Typography>
 
         <Grid container spacing={3}>
@@ -56,19 +56,18 @@ export default function GeneralAnalytics() {
             <AnalyticsCurrentVisits />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={8}>
+          {/* <Grid item xs={12} md={6} lg={8}>
             <AnalyticsConversionRates />
+          </Grid> */}
+          <Grid item xs={12} md={6} lg={8}>
+            <AnalyticsNewsUpdate />
           </Grid>
 
           <Grid item xs={12} md={6} lg={4}>
             <AnalyticsCurrentSubject />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={8}>
-            <AnalyticsNewsUpdate />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
+          {/* <Grid item xs={12} md={6} lg={4}>
             <AnalyticsOrderTimeline />
           </Grid>
 
@@ -78,7 +77,7 @@ export default function GeneralAnalytics() {
 
           <Grid item xs={12} md={6} lg={8}>
             <AnalyticsTasks />
-          </Grid>
+          </Grid> */}
         </Grid>
       </Container>
     </Page>

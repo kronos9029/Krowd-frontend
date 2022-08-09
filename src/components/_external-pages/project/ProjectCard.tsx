@@ -18,7 +18,7 @@ import { getProjectId } from 'redux/slices/krowd_slices/project';
 import { dispatch } from 'redux/store';
 import { PATH_DETAILS } from 'routes/paths';
 import { fCurrency } from 'utils/formatNumber';
-import { Project1, ProjectStatus } from '../../../@types/krowd/project';
+import { Project1 } from '../../../@types/krowd/project';
 import CheckIcon from '@mui/icons-material/Check';
 const ACTIVE_STATUS = 4;
 const CardStyle = styled(Card)(({ theme }) => {
@@ -118,7 +118,7 @@ function ProjectCard({ row }: { row: Project1 }) {
                 height={240}
                 src={row.image}
               />
-              <Box sx={{ position: 'absolute', top: '1%', right: '1%' }}>
+              {/* <Box sx={{ position: 'absolute', top: '1%', right: '1%' }}>
                 <Chip
                   label={
                     <>
@@ -137,7 +137,7 @@ function ProjectCard({ row }: { row: Project1 }) {
                     color: '#ffffff'
                   }}
                 />
-              </Box>
+              </Box> */}
               <Box px={3}>
                 <Box minHeight={'10em'}>
                   <Typography

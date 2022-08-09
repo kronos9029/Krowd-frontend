@@ -62,7 +62,7 @@ function NewsItem({ news }: NewsItemProps) {
 export default function AnalyticsNewsUpdate() {
   return (
     <Card>
-      <CardHeader title="News Update" />
+      <CardHeader title="Các cập nhật mới dự án" />
 
       <Scrollbar>
         <Stack spacing={3} sx={{ p: 3, pr: 0 }}>

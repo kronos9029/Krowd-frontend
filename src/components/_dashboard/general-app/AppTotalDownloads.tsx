@@ -24,7 +24,7 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 const PERCENT = -0.06;
-const TOTAL_DOWNLOAD = 678;
+const TOTAL_DOWNLOAD = 4;
 const CHART_DATA = [{ data: [8, 9, 31, 8, 16, 37, 8, 33, 46, 31] }];
 
 export default function AppTotalDownloads() {
@@ -50,7 +50,7 @@ export default function AppTotalDownloads() {
   return (
     <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
       <Box sx={{ flexGrow: 1 }}>
-        <Typography variant="subtitle2">Total Downloads</Typography>
+        <Typography variant="subtitle2">Dự án đã kết thúc</Typography>
 
         <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2, mb: 1 }}>
           <IconWrapperStyle

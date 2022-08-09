@@ -83,7 +83,25 @@ export const PATH_DASHBOARD = {
     projectBusinessKrowd: path(ROOTS_DASHBOARD, '/projectsBusiness/projectBusinessKrowd'),
     projectBusinessDetails: path(ROOTS_DASHBOARD, '/projectsBusiness/projectDetails'),
     newProjectBusiness: path(ROOTS_DASHBOARD, '/projectsBusiness/new-project'),
-    projectBusinessById: path(ROOTS_DASHBOARD, '/projectsBusiness/nike-air-force-1-ndestrukt')
+    projectBusinessById: path(ROOTS_DASHBOARD, '/projectsBusiness/nike-air-force-1-ndestrukt'),
+    newProjectEntity: path(ROOTS_DASHBOARD, '/projectsBusiness/new-projectEntity'),
+    newProjectHighLight: path(ROOTS_DASHBOARD, '/projectsBusiness/new-projectHighLight'),
+    newProjectExtension: path(ROOTS_DASHBOARD, '/projectsBusiness/new-projectExtension'),
+    newProjectAbout: path(ROOTS_DASHBOARD, '/projectsBusiness/new-projectAbout'),
+    newProjectDocument: path(ROOTS_DASHBOARD, '/projectsBusiness/new-projectDocument'),
+    newProjectMedia: path(ROOTS_DASHBOARD, '/projectsBusiness/new-projectMedia'),
+    newProjectFAQ: path(ROOTS_DASHBOARD, '/projectsBusiness/new-projectFAQ'),
+    newProjectOwner: path(ROOTS_DASHBOARD, '/projectsBusiness/new-projectOwner'),
+    projectEntityDetails: path(ROOTS_DASHBOARD, '/projectsBusiness/projectEntityDetails')
+  },
+  userKrowd: {
+    root: path(ROOTS_DASHBOARD, '/userKrowd'),
+    profile: path(ROOTS_DASHBOARD, '/userKrowd/profile'),
+    cards: path(ROOTS_DASHBOARD, '/userKrowd/cards'),
+    list: path(ROOTS_DASHBOARD, '/userKrowd/list'),
+    newUser: path(ROOTS_DASHBOARD, '/userKrowd/new'),
+    editById: path(ROOTS_DASHBOARD, `/userKrowd/reece-chung/edit`),
+    account: path(ROOTS_DASHBOARD, '/userKrowd/account')
   },
   //Quản lý khác
   other: {

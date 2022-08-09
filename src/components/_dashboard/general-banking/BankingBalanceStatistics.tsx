@@ -12,22 +12,22 @@ const CHART_DATA = [
   {
     year: 'Week',
     data: [
-      { name: 'Income', data: [10, 41, 35, 151, 49, 62, 69, 91, 48] },
-      { name: 'Expenses', data: [10, 34, 13, 56, 77, 88, 99, 77, 45] }
+      { name: 'Thu nhập', data: [10, 41, 35, 151, 49, 62, 69, 91, 48] },
+      { name: 'Giải ngân', data: [10, 34, 13, 56, 77, 88, 99, 77, 45] }
     ]
   },
   {
     year: 'Month',
     data: [
-      { name: 'Income', data: [148, 91, 69, 62, 49, 51, 35, 41, 10] },
-      { name: 'Expenses', data: [45, 77, 99, 88, 77, 56, 13, 34, 10] }
+      { name: 'Thu nhập', data: [148, 91, 69, 62, 49, 51, 35, 41, 10] },
+      { name: 'Giải ngân', data: [45, 77, 99, 88, 77, 56, 13, 34, 10] }
     ]
   },
   {
     year: 'Year',
     data: [
-      { name: 'Income', data: [76, 42, 29, 41, 27, 138, 117, 86, 63] },
-      { name: 'Expenses', data: [80, 55, 34, 114, 80, 130, 15, 28, 55] }
+      { name: 'Thu nhập', data: [76, 42, 29, 41, 27, 138, 117, 86, 63] },
+      { name: 'Giải ngân', data: [80, 55, 34, 114, 80, 130, 15, 28, 55] }
     ]
   }
 ];
@@ -58,8 +58,8 @@ export default function BankingBalanceStatistics() {
   return (
     <Card>
       <CardHeader
-        title="Balance Statistics"
-        subheader="(+43% Income | +12% Expense) than last year"
+        title="Số liệu thống kê"
+        subheader="(+43% Thu nhập | +12% Expense) than last year"
         action={
           <TextField
             select

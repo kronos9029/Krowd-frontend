@@ -16,7 +16,7 @@ import {
   getInvoices,
   getAddressBook,
   getNotifications
-} from '../../redux/slices/user';
+} from '../../redux/slices/userKrowdrac';
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
 // hooks

@@ -33,7 +33,7 @@ import { BlogPostsSearch } from 'components/_dashboard/project';
 import { Icon } from '@iconify/react';
 import menu2Fill from '@iconify/icons-eva/menu-2-fill';
 import { getAllProject, filterProjects, getProjectId } from 'redux/slices/krowd_slices/project';
-import { ProjectFilter, ProjectState } from '../../@types/krowd/project';
+import { ProjectFilter, ProjectState, PROJECT_STATUS } from '../../@types/krowd/project';
 import { getFieldList } from 'redux/slices/krowd_slices/field';
 import { Link } from 'react-router-dom';
 import { ProjectCard } from 'components/_external-pages/project';
@@ -96,7 +96,7 @@ export default function Projects() {
   const isDefault = !values.status && values.areaId === 'HCM';
   useEffect(() => {
     dispatch(getProducts());
-    dispatch(getAllProject('INVESTOR'));
+    dispatch(getAllProject('ADMIN'));
     dispatch(getFieldList());
     dispatch(filterProjects(values));
     setSelectedField(fieldList[0]?.id);
@@ -122,28 +122,6 @@ export default function Projects() {
     }
   };
 
-  // function applyFilter(projects: Project[], sortBy: string | null, filters: ProjectFilter) {
-  //   // SORT BY
-  //   if (sortBy === 'featured') {
-  //     projects = orderBy(projects, ['sold'], ['desc']);
-  //   }
-  //   if (sortBy === 'newest') {
-  //     projects = orderBy(projects, ['createdAt'], ['desc']);
-  //   }
-  //   if (sortBy === 'priceDesc') {
-  //     projects = orderBy(projects, ['price'], ['desc']);
-  //   }
-  //   if (sortBy === 'priceAsc') {
-  //     projects = orderBy(projects, ['price'], ['asc']);
-  //   }
-  //   if (filters.status.length > 0) {
-  //     projects = filter(projects, (_product) => includes(filters.status, _product.status));
-  //   }
-  //   if (filters.areaId !== 'All') {
-  //     projects = filter(projects, (_product) => _product.areaId === filters.areaId);
-  //   }
-  //   return projects;
-  // }
   return (
     <RootStyle title="Danh sách | Krowd">
       <Container maxWidth="lg">
@@ -179,13 +157,6 @@ export default function Projects() {
               }}
             >
               <ShopProductSort />
-              {/* <ShopFilterSidebar
-              formik={formik}
-              isOpenFilter={openFilter}
-              onResetFilter={handleResetFilter}
-              onOpenFilter={handleOpenFilter}
-              onCloseFilter={handleCloseFilter}
-            /> */}
             </Box>
           </Box>
         </Box>
@@ -198,7 +169,7 @@ export default function Projects() {
         <Grid container alignItems="center" justifyContent="center" spacing={5}>
           {projectList &&
             projectList.listOfProject
-              .filter((p) => p.status === 2)
+              .filter((p) => p.status === PROJECT_STATUS.CALLING_FOR_INVESTMENT)
               .map((p) => <ProjectCard key={p.id} row={p} />)}
         </Grid>
       </Container>

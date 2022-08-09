@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { useFormik, Form, FormikProvider } from 'formik';
 // material
-import { LoadingButton } from '@mui/lab';
+import { DatePicker, LoadingButton } from '@mui/lab';
 import { styled } from '@mui/material/styles';
 import {
   Grid,
@@ -24,7 +24,8 @@ import {
 // utils
 import { useNavigate } from 'react-router-dom';
 // @types
-import { NewPostFormValues } from '../../../@types/blog';
+import { NewProjectFormValues } from '../../../@types/krowd/project';
+
 //
 import { QuillEditor } from '../../editor';
 import { UploadSingleFile } from '../../upload';
@@ -35,6 +36,7 @@ import { getAreasList } from 'redux/slices/krowd_slices/area';
 import Autocomplete from '@mui/material/Autocomplete';
 import { PATH_DASHBOARD } from 'routes/paths';
 import axios from 'axios';
+import { fDateTimeSuffix } from 'utils/formatTime';
 
 // ----------------------------------------------------------------------
 
@@ -68,25 +70,41 @@ export default function BusinessProjectForm() {
   const { enqueueSnackbar } = useSnackbar();
   const { fieldList } = useSelector((state: RootState) => state.fieldKrowd);
   const { areaList } = useSelector((state: RootState) => state.areaKrowd);
+  const currentTime = fDateTimeSuffix(new Date(Date.now()));
+  const [valueMin, setValueMin] = useState<Date | null>(new Date(Date.now()));
+  const [value, setValue] = useState<Date | null>(new Date(Date.now()));
+  const [valueEndDate, setValueEndDate] = useState<Date | null>(new Date(''));
+  const [valueMaxDate, setMaxDate] = useState<Date | null>(new Date('2030-12-31 12:00:00'));
+  const [date, setDateExpress] = useState('');
+  const handleChange = (newValue: Date | null) => {
+    setValue(newValue);
+    setFieldValue('startDate', fDateTimeSuffix(newValue!));
+    console.log(formik);
+  };
+  const handleChangeEndDate = (newValue2: Date | null) => {
+    setValueEndDate(newValue2);
+    setFieldValue('endDate', fDateTimeSuffix(newValue2!));
+    console.log(formik);
+  };
   useEffect(() => {
     dispatch(getFieldList());
     dispatch(getAreasList());
   }, [dispatch]);
 
   const handleOpenPreview = () => {
-    setOpen(true);
+    navigate(PATH_DASHBOARD.projectsBusiness.projectBusinessKrowd);
   };
 
   const handleClosePreview = () => {
-    setOpen(false);
+    navigate(PATH_DASHBOARD.projectsBusiness.projectBusinessKrowd);
   };
 
   const NewProjectSchema = Yup.object().shape({
     name: Yup.string().required('Yêu cầu nhập tên'),
-    businessId: Yup.string().required('Yêu cầu nhập businessId'),
-    managerId: Yup.string().required('Yêu cầu nhập managerId'),
-    fieldId: Yup.string().required('Yêu cầu nhập fieldId'),
-    areaId: Yup.string().required('Yêu cầu nhập areaId'),
+    businessId: Yup.string().required('Yêu cầu nhập doanh nghiệp'),
+    managerId: Yup.string().required('Yêu cầu nhập người quản lý'),
+    fieldId: Yup.string().required('Yêu cầu nhập lĩnh vực'),
+    areaId: Yup.string().required('Yêu cầu nhập khu vực'),
     address: Yup.string().required('Yêu cầu nhập địa chỉ'),
     description: Yup.string().min(10).required('Yêu cầu nhập mô tả'),
     investmentTargetCapital: Yup.string().required('Yêu cầu nhập vốn mục tiêu đầu tư'),
@@ -96,12 +114,12 @@ export default function BusinessProjectForm() {
     duration: Yup.string().required('Yêu cầu nhập thời hạn'),
     numOfStage: Yup.string().required('Yêu cầu nhập số kỳ'),
     businessLicense: Yup.string().required('Yêu cầu nhập mã doanh nghiệp'),
-    // startDate: Yup.string().required('Yêu cầu nhập mã doanh nghiệp'),
-    // endDate: Yup.string().required('Yêu cầu nhập mã doanh nghiệp'),
+    startDate: Yup.string().required('Yêu cầu nhập ngày tạo'),
+    endDate: Yup.string().required('Yêu cầu nhập ngày kết thúc'),
     image: Yup.mixed().required('Yêu cầu nhập ảnh')
   });
 
-  const formik = useFormik<NewPostFormValues>({
+  const formik = useFormik<NewProjectFormValues>({
     initialValues: {
       name: '',
       businessId: '9E74278A-F610-11EC-B939-0242AC120002',
@@ -117,8 +135,8 @@ export default function BusinessProjectForm() {
       duration: '',
       numOfStage: '',
       businessLicense: '',
-      startDate: '29/05/2022 00:00:00',
-      endDate: '30/05/2022 00:00:00',
+      startDate: currentTime,
+      endDate: '',
       image: null
       // tags: ['Logan'],
       // publish: true,
@@ -160,8 +178,8 @@ export default function BusinessProjectForm() {
         formData.append('sharedRevenue', values.sharedRevenue);
         formData.append('multiplier', values.multiplier);
         formData.append('duration', values.duration);
-        formData.append('startDate', '29/05/2022 00:00:00');
-        formData.append('endDate', '30/05/2022 00:00:00');
+        formData.append('startDate', values.startDate);
+        formData.append('endDate', values.startDate);
         formData.append('numOfStage', values.numOfStage);
         formData.append('businessLicense', values.businessLicense);
         formData.append('image', values.image);
@@ -185,6 +203,7 @@ export default function BusinessProjectForm() {
   const { errors, values, touched, handleSubmit, isSubmitting, setFieldValue, getFieldProps } =
     formik;
   console.log(formik);
+
   // const handleDrop = useCallback(
   //   (acceptedFiles) => {
   //     const file = acceptedFiles[0];
@@ -209,15 +228,16 @@ export default function BusinessProjectForm() {
                   <LabelStyle>Dự án</LabelStyle>
 
                   <TextField
-                    fullWidth
+                    sx={{ legend: { span: { mt: 1 } } }}
                     label="Tên"
                     {...getFieldProps('name')}
                     error={Boolean(touched.name && errors.name)}
                     helperText={touched.name && errors.name}
+                    variant="outlined"
                   />
                   <TextField
                     fullWidth
-                    label="Mã doanh nghiệp :9161615736481"
+                    label="Mã doanh nghiệp"
                     {...getFieldProps('businessLicense')}
                     error={Boolean(touched.businessLicense && errors.businessLicense)}
                     helperText={touched.businessLicense && errors.businessLicense}
@@ -239,9 +259,16 @@ export default function BusinessProjectForm() {
                       renderInput={(params) => <TextField {...params} label="Khu vực" />}
                     />
                   </Stack>
+                  <TextField
+                    fullWidth
+                    label="Mô tả thông tin"
+                    {...getFieldProps('description')}
+                    error={Boolean(touched.description && errors.description)}
+                    helperText={touched.description && errors.description}
+                  />
                   <div>
                     <LabelStyle sx={{ py: 1 }}>Ảnh</LabelStyle>
-                    <TextField fullWidth label="Ảnh" type={'file'} {...getFieldProps('image')} />
+                    <TextField fullWidth type={'file'} {...getFieldProps('image')} />
                     {/* <TextField
                       type="file"
                       name="images"
@@ -261,6 +288,30 @@ export default function BusinessProjectForm() {
                       </FormHelperText>
                     )} */}
                   </div>
+                  <LabelStyle sx={{ py: 1 }}>Thời gian kêu gọi</LabelStyle>
+                  <Grid container>
+                    <Grid xs={12} md={6}>
+                      <DatePicker
+                        label="Ngày bắt đầu"
+                        inputFormat="dd/MM/yyyy"
+                        value={value}
+                        minDate={valueMin!}
+                        onChange={handleChange}
+                        renderInput={(params) => <TextField {...params} />}
+                      />
+                    </Grid>
+                    <Grid xs={12} md={6}>
+                      <DatePicker
+                        label="Ngày kết thúc"
+                        inputFormat="dd/MM/yyyy"
+                        value={valueEndDate}
+                        minDate={value!}
+                        maxDate={valueMaxDate!}
+                        onChange={handleChangeEndDate}
+                        renderInput={(params) => <TextField {...params} />}
+                      />
+                    </Grid>
+                  </Grid>
                 </Stack>
               </Card>
             </Grid>
@@ -402,33 +453,19 @@ export default function BusinessProjectForm() {
               </Card>
             </Grid>
           </Grid>
-          <div>
-            <LabelStyle sx={{ py: 4 }}>Mô tả thông tin</LabelStyle>
-            <QuillEditor
-              id="post-content"
-              value={values.description}
-              onChange={(val) => setFieldValue('description', val)}
-              error={Boolean(touched.description && errors.description)}
-            />
-            {touched.description && errors.description && (
-              <FormHelperText error sx={{ px: 2, textTransform: 'capitalize' }}>
-                {touched.description && errors.description}
-              </FormHelperText>
-            )}
-          </div>
 
           <Stack direction="row" justifyContent="flex-end" sx={{ mt: 3 }}>
-            {/* <Button
-                  fullWidth
-                  type="button"
-                  color="inherit"
-                  variant="outlined"
-                  size="large"
-                  onClick={handleOpenPreview}
-                  sx={{ mr: 1.5 }}
-                >
-                  Preview
-                </Button> */}
+            <Button
+              fullWidth
+              type="button"
+              color="inherit"
+              variant="outlined"
+              size="large"
+              onClick={handleOpenPreview}
+              sx={{ mr: 1.5 }}
+            >
+              Cancel
+            </Button>
             <LoadingButton
               fullWidth
               type="submit"
@@ -442,11 +479,11 @@ export default function BusinessProjectForm() {
         </Form>
       </FormikProvider>
 
-      <BlogNewPostPreview
+      {/* <BlogNewPostPreview
         formik={formik}
         isOpenPreview={open}
         onClosePreview={handleClosePreview}
-      />
+      /> */}
     </>
   );
 }

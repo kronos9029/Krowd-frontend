@@ -5,12 +5,13 @@ import storage from 'redux-persist/lib/storage';
 import mailReducer from './slices/mail';
 import chatReducer from './slices/chat';
 import blogReducer from './slices/blog';
-import userReducer from './slices/user';
+import userReducer from './slices/userKrowdrac';
 
 import fieldKrowdReducer from './slices/krowd_slices/field';
 import areaKrowdReducer from './slices/krowd_slices/area';
 import RiskReducer from './slices/krowd_slices/riskType';
 import projectReducer from './slices/krowd_slices/project';
+import userKrowdReducer from './slices/krowd_slices/user';
 import productReducer from './slices/product';
 
 // ----------------------------------------------------------------------
@@ -40,6 +41,7 @@ const rootReducer = combineReducers({
   chat: chatReducer,
   blog: blogReducer,
   user: userReducer,
+  userKrowd: userKrowdReducer,
   fieldKrowd: fieldKrowdReducer,
   areaKrowd: areaKrowdReducer,
   riskKrowd: RiskReducer,

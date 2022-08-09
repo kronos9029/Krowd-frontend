@@ -26,38 +26,38 @@ const SidebarBusinessConfig = [
   {
     subheader: 'Thống kê doanh nghiệp',
     items: [
-      // {
-      //   title: 'app',
-      //   path: PATH_DASHBOARD.general.app,
-      //   icon: ICONS.dashboard
-      // },
+      {
+        title: 'Thống kê chung',
+        path: PATH_DASHBOARD.general.app,
+        icon: ICONS.dashboard
+      },
       { title: 'Ví doanh nghiệp', path: PATH_DASHBOARD.general.banking, icon: ICONS.banking },
-      { title: 'Chung', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics },
-      { title: 'Dự án đang đầu tư', path: PATH_DASHBOARD.general.booking, icon: ICONS.booking }
+      { title: 'Tổng quan ngày', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics }
+      // { title: 'Tổng quan tháng', path: PATH_DASHBOARD.general.booking, icon: ICONS.booking }
     ]
   },
   {
     subheader: 'Quản lý',
     items: [
       {
-        title: 'Quản lý dự án update',
+        title: 'Dự án',
         path: PATH_DASHBOARD.projectsBusiness.projectBusinessKrowd,
         icon: ICONS.project
       },
-      { title: 'Người sở hữu dự án', path: PATH_DASHBOARD.blog.posts, icon: ICONS.project },
-      {
-        title: 'Quản lý ví',
-        path: PATH_DASHBOARD.general.app,
-        icon: ICONS.wallet,
-        children: [
-          // { title: 'Ví đầu tư', path: PATH_DASHBOARD.wallet.system },
-          // { title: 'Dự án đang đầu tư', path: PATH_DASHBOARD.wallet.transaction },
-          // { title: 'Ví doanh thu', path: PATH_DASHBOARD.wallet.allWallet }
-          { title: 'Ví đầu tư', path: PATH_DASHBOARD.general.app },
-          { title: 'Dự án đang đầu tư', path: PATH_DASHBOARD.general.app },
-          { title: 'Ví doanh thu', path: PATH_DASHBOARD.general.app }
-        ]
-      }
+      { title: 'Thành viên', path: PATH_DASHBOARD.userKrowd.list, icon: ICONS.project }
+      // {
+      //   title: 'Quản lý ví',
+      //   path: PATH_DASHBOARD.general.app,
+      //   icon: ICONS.wallet,
+      //   children: [
+      //     // { title: 'Ví đầu tư', path: PATH_DASHBOARD.wallet.system },
+      //     // { title: 'Dự án đang đầu tư', path: PATH_DASHBOARD.wallet.transaction },
+      //     // { title: 'Ví doanh thu', path: PATH_DASHBOARD.wallet.allWallet }
+      //     { title: 'Ví đầu tư', path: PATH_DASHBOARD.general.app },
+      //     { title: 'Dự án đang đầu tư', path: PATH_DASHBOARD.general.app },
+      //     { title: 'Ví doanh thu', path: PATH_DASHBOARD.general.app }
+      //   ]
+      // }
     ]
   },
   {

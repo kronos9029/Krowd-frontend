@@ -76,7 +76,8 @@ export default function Login() {
       <MHidden width="mdDown">
         <SectionStyle>
           <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-            Chào mừng trở lại
+            FPT Capstone <br />
+            KROWD System
           </Typography>
           <img src="/static/illustrations/login-krowd.svg" alt="login" />
         </SectionStyle>

@@ -30,7 +30,7 @@ const ScrollButton = () => {
       sx={{
         position: 'fixed',
         width: 'fit-content',
-        left: { xs: '80%', sm: '90%', md: '90%', lg: '95%' },
+        left: { xs: '80%', sm: '90%', md: '90%', lg: '90%', xl: '95%' },
         bottom: '40px',
         fontSize: '3rem',
         height: 'fit-content',

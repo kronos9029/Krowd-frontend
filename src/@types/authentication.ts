@@ -19,6 +19,7 @@ export type AuthState = {
   isAuthenticated: boolean;
   isInitialized: boolean;
   user: AuthUser;
+  errorLoginMessage: string | null;
 };
 
 export type JWTContextType = {
@@ -38,7 +39,7 @@ export type FirebaseContextType = {
   isInitialized: boolean;
   user: AuthUser;
   method: 'firebase';
-  login: (email: string, password: string) => Promise<firebase.auth.UserCredential>;
+  login: (email: string, password: string) => Promise<firebase.auth.UserCredential | null>;
   register: (email: string, password: string, firstName: string, lastName: string) => Promise<void>;
   loginWithGoogle: () => Promise<firebase.auth.UserCredential>;
   loginWithFaceBook: () => Promise<firebase.auth.UserCredential>;
@@ -47,6 +48,7 @@ export type FirebaseContextType = {
   logout: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
   updateProfile: VoidFunction;
+  errorLoginMessage: string | null;
 };
 
 export type AWSCognitoContextType = {

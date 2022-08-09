@@ -38,7 +38,7 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-const TOTAL = 8938;
+const TOTAL = 893800000;
 const PERCENT = -0.5;
 const CHART_DATA = [{ data: [76, 20, 84, 135, 56, 134, 122, 49] }];
 
@@ -72,7 +72,7 @@ export default function BankingExpenses() {
       </IconWrapperStyle>
 
       <Stack spacing={1} sx={{ p: 3 }}>
-        <Typography sx={{ typography: 'subtitle2' }}>Expenses</Typography>
+        <Typography sx={{ typography: 'subtitle2' }}>Giải ngân</Typography>
         <Typography sx={{ typography: 'h3' }}>{fCurrency(TOTAL)}</Typography>
         <Stack direction="row" alignItems="center" flexWrap="wrap">
           <Icon width={20} height={20} icon={PERCENT >= 0 ? trendingUpFill : trendingDownFill} />

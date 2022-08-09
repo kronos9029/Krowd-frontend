@@ -28,6 +28,8 @@ import useIsMountedRef from '../../../hooks/useIsMountedRef';
 import { MIconButton } from '../../@material-extend';
 import Login from 'pages/authentication/Login';
 import firebase from 'firebase/app';
+import { styled } from '@mui/material/styles';
+import { motion } from 'framer-motion';
 
 // ----------------------------------------------------------------------
 type InitialValues = {
@@ -41,14 +43,30 @@ export default function LoginForm() {
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [showPassword, setShowPassword] = useState(false);
-  const [phoneNum, setPhoneNum] = useState('');
   const LoginSchema = Yup.object().shape({
-    email: Yup.string().email('Email phải đúng định dạng').required('Yêu cầu nhập Phone'),
+    email: Yup.string().email('Email phải đúng định dạng').required('Yêu cầu nhập email'),
     password: Yup.string().required('Yêu cầu nhập mật khẩu')
   });
 
-  const { loginWithGoogle, loginWithFaceBook, login, loginWithPhone } = useAuth();
-
+  const { loginWithGoogle, loginWithFaceBook, login, loginWithPhone, errorLoginMessage } =
+    useAuth();
+  const HeroImgStyle = styled(motion.img)(({ theme }) => ({
+    top: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: -1,
+    width: '100%',
+    margin: 'auto',
+    position: 'absolute',
+    opacity: 0.3,
+    [theme.breakpoints.up('md')]: {
+      width: 'auto',
+      height: '100vh'
+    },
+    [theme.breakpoints.down('md')]: {
+      display: 'none'
+    }
+  }));
   const handleLoginGoogle = async () => {
     try {
       await loginWithGoogle?.();
@@ -57,14 +75,6 @@ export default function LoginForm() {
       console.error(error);
     }
   };
-  // const handleLoginEmail = async () => {
-  //   try {
-  //     await Login?.();
-  //     // const res = await auth.signInWithPopup(googleProvider);
-  //     // console.log("data", res)
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
   // };
   const handleLoginFaceBook = async () => {
     try {
@@ -77,46 +87,16 @@ export default function LoginForm() {
     initialValues: {
       email: '',
       password: '',
-      remember: true
+      remember: false
     },
     validationSchema: LoginSchema,
-    //   onSubmit: async (values, { setErrors, setSubmitting, resetForm }) => {
-    //     try {
-    //       await login(values.email, values.password);
-    //       enqueueSnackbar('Login success', {
-    //         variant: 'success',
-    //         action: (key) => (
-    //           <MIconButton size="small" onClick={() => closeSnackbar(key)}>
-    //             <Icon icon={closeFill} />
-    //           </MIconButton>
-    //         )
-    //       });
-    //       if (isMountedRef.current) {
-    //         setSubmitting(false);
-    //       }
-    //     } catch (error) {
-    //       console.error(error);
-    //       resetForm();
-    //       if (isMountedRef.current) {
-    //         setSubmitting(false);
-    //         setErrors({ afterSubmit: error.message });
-    //       }
-    //     }
-    //   }
-    // });
+
     onSubmit: async (values, { setErrors, setSubmitting, resetForm }) => {
       try {
         await login(values.email, values.password);
-        if (isMountedRef.current) {
-          setSubmitting(false);
-        }
       } catch (error) {
         console.error(error);
         resetForm();
-        if (isMountedRef.current) {
-          setSubmitting(false);
-          // setErrors({ afterSubmit: error.message });
-        }
       }
     }
   });
@@ -126,27 +106,25 @@ export default function LoginForm() {
   const handleShowPassword = () => {
     setShowPassword((show) => !show);
   };
-
   return (
     <FormikProvider value={formik}>
       <Stack direction="row" alignItems="center" sx={{ mt: 4, mb: 5 }}>
         <Box sx={{ flexGrow: 1 }}>
-          <Typography variant="h4" gutterBottom>
+          <Typography color={'#ffffffs'} fontWeight={900} variant="h4" gutterBottom>
             Đăng nhập với người đầu tư
           </Typography>
         </Box>
       </Stack>
-      {/* <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+      <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
           {errors.afterSubmit && <Alert severity="error">{errors.afterSubmit}</Alert>}
 
           <TextField
             fullWidth
-            autoComplete="username"
-            type="number"
-            label="Phone"
-            onChange={(e) => setPhoneNum(e.target.value)}
-            // {...getFieldProps('email')}
+            autoComplete="email"
+            type="text"
+            label="Email"
+            {...getFieldProps('email')}
             error={Boolean(touched.email && errors.email)}
             helperText={touched.email && errors.email}
           />
@@ -157,15 +135,13 @@ export default function LoginForm() {
             type={showPassword ? 'text' : 'password'}
             label="Mật khẩu"
             {...getFieldProps('password')}
-            // InputProps={{
-            //   endAdornment: (
-            //     <InputAdornment position="end">
-            //       <IconButton onClick={handleShowPassword} edge="end">
-            //         <Icon icon={showPassword ? eyeFill : eyeOffFill} />
-            //       </IconButton>
-            //     </InputAdornment>
-            //   )
-            // }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={handleShowPassword} edge="end"></IconButton>
+                </InputAdornment>
+              )
+            }}
             error={Boolean(touched.password && errors.password)}
             helperText={touched.password && errors.password}
           />
@@ -187,12 +163,12 @@ export default function LoginForm() {
           size="large"
           type="submit"
           variant="contained"
-          // loading={isSubmitting}
+          loading={isSubmitting}
           // onClick={handleLoginEmail}
         >
           Login
         </LoadingButton>
-      </Form> */}
+      </Form>
 
       <Stack direction="row" justifyContent="space-between" sx={{ mb: 2 }}>
         <LoadingButton
@@ -234,6 +210,7 @@ export default function LoginForm() {
           Login with facebook
         </LoadingButton>
       </Stack>
+      {errorLoginMessage && <Typography>{errorLoginMessage}</Typography>}
     </FormikProvider>
   );
 }

@@ -231,7 +231,7 @@ export default function BankingQuickTransfer() {
   return (
     <>
       <RootStyle>
-        <CardHeader title="Quick Transfer" />
+        <CardHeader title="Chuyển khoản nhanh" />
         <Box sx={{ p: 3 }}>
           <Stack direction="row" alignItems="center" justifyContent="space-between">
             <Typography variant="overline" sx={{ color: 'text.secondary' }}>

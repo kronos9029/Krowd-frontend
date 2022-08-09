@@ -26,7 +26,7 @@ import { useSnackbar } from 'notistack';
 import { MIconButton } from 'components/@material-extend';
 // redux
 import { RootState, useDispatch, useSelector } from '../../../../redux/store';
-import { getAllProject, getProjectId } from 'redux/slices/krowd_slices/project';
+import project, { getAllProject, getProjectId } from 'redux/slices/krowd_slices/project';
 // routes
 import { PATH_DASHBOARD, PATH_DETAILS } from '../../../../routes/paths';
 // hooks
@@ -37,7 +37,7 @@ import Scrollbar from '../../../../components/Scrollbar';
 import SearchNotFound from '../../../../components/SearchNotFound';
 import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
 import { UserListHead } from '../../../../components/_dashboard/user/list';
-import { Project1, ProjectStatus } from '../../../../@types/krowd/project';
+import { Project1 } from '../../../../@types/krowd/project';
 import ProjectMoreMenu from './ProjectMoreMenu';
 // import ProjectMoreMenu from 'components/_dashboard/e-commerce/product-details/ProjectMoreMenu';
 // import { ShopTagFiltered } from 'components/_dashboard/e-commerce/projectKrowd';
@@ -210,13 +210,7 @@ export default function ProjectOfBusinessList() {
                           <TableCell component="th" scope="row" sx={{ textAlign: 'left' }}>
                             <Typography>{business.name}</Typography>
                           </TableCell>
-                          <TableCell
-                            sx={{ color: `${ProjectStatus.at(status)?.color}`, fontWeight: 'bold' }}
-                            align="left"
-                          >
-                            {ProjectStatus.at(status)?.statusString}
-                          </TableCell>
-
+                          <TableCell align="left">{status}</TableCell>
                           <TableCell>
                             <ProjectMoreMenu
                               onView={() => handleGetProjectById(id)}

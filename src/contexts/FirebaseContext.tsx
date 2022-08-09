@@ -20,17 +20,22 @@ if (!firebase.apps.length) {
 const initialState: AuthState = {
   isAuthenticated: false,
   isInitialized: false,
-  user: null
+  user: null,
+  errorLoginMessage: null
 };
 
 enum Types {
   Initial = 'INITIALISE'
 }
-
+enum FirebaseErrorType {
+  USER_NOT_FOUND = 'auth/user-not-found',
+  IS_NOT_VERIFIED_EMAIL = 'auth/is_not_verified_email'
+}
 type FirebaseAuthPayload = {
   [Types.Initial]: {
     isAuthenticated: boolean;
     user: AuthUser;
+    errorLoginMessage: string | null;
   };
 };
 
@@ -38,12 +43,13 @@ type FirebaseActions = ActionMap<FirebaseAuthPayload>[keyof ActionMap<FirebaseAu
 
 const reducer = (state: AuthState, action: FirebaseActions) => {
   if (action.type === 'INITIALISE') {
-    const { isAuthenticated, user } = action.payload;
+    const { isAuthenticated, user, errorLoginMessage } = action.payload;
     return {
       ...state,
       isAuthenticated,
       isInitialized: true,
-      user
+      user,
+      errorLoginMessage
     };
   }
 
@@ -73,21 +79,51 @@ function AuthProvider({ children }: { children: ReactNode }) {
             });
           dispatch({
             type: Types.Initial,
-            payload: { isAuthenticated: true, user }
+            payload: { isAuthenticated: true, user, errorLoginMessage: null }
           });
         } else {
           dispatch({
             type: Types.Initial,
-            payload: { isAuthenticated: false, user: null }
+            payload: { isAuthenticated: false, user: null, errorLoginMessage: null }
           });
         }
       }),
     [dispatch]
   );
-
+  const getErrorMessage = (errorCode: string) => {
+    switch (errorCode) {
+      case FirebaseErrorType.USER_NOT_FOUND:
+        return 'Tài khoản không tồn tại';
+      case FirebaseErrorType.IS_NOT_VERIFIED_EMAIL:
+        return 'Email chưa được xác nhận, vui lòng xác nhận qua email đã đăng ký';
+      default:
+        return null;
+    }
+  };
   const login = (email: string, password: string) =>
-    firebase.auth().signInWithEmailAndPassword(email, password);
-
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then((userCreditial) => {
+        console.log(userCreditial.user?.emailVerified);
+        if (userCreditial.user!.emailVerified === false) {
+          const errorMessage = getErrorMessage(FirebaseErrorType.IS_NOT_VERIFIED_EMAIL);
+          dispatch({
+            type: Types.Initial,
+            payload: { isAuthenticated: false, user: null, errorLoginMessage: errorMessage }
+          });
+          return null;
+        }
+        return userCreditial;
+      })
+      .catch((e) => {
+        const errorMessage = getErrorMessage(e.code);
+        dispatch({
+          type: Types.Initial,
+          payload: { isAuthenticated: false, user: null, errorLoginMessage: errorMessage }
+        });
+        return null;
+      });
   const loginWithGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
     return firebase.auth().signInWithPopup(provider);
@@ -107,21 +143,12 @@ function AuthProvider({ children }: { children: ReactNode }) {
     return firebase.auth().signInWithPopup(provider);
   };
 
-  const register = (email: string, password: string, firstName: string, lastName: string) =>
+  const register = (email: string, password: string) =>
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then((res) => {
-        firebase
-          .firestore()
-          .collection('business')
-          .doc(res.user?.uid)
-          .set({
-            uid: res.user?.uid,
-            email,
-            displayName: `${firstName} ${lastName}`
-          });
-      });
+      .then((value) => value.user?.sendEmailVerification())
+      .then(() => logout());
 
   const logout = async () => {
     await firebase.auth().signOut();
@@ -131,27 +158,25 @@ function AuthProvider({ children }: { children: ReactNode }) {
     await firebase.auth().sendPasswordResetEmail(email);
   };
 
-  const auth = { ...state.user };
-
+  const auth = state.user ? { ...state.user } : null;
+  const { errorLoginMessage } = state;
   return (
     <AuthContext.Provider
       value={{
         ...state,
         method: 'firebase',
-        user: {
-          id: auth.uid,
-          email: auth.email,
-          photoURL: auth.photoURL || profile?.photoURL,
-          displayName: auth.displayName || profile?.displayName,
-          role: ADMIN_EMAILS.includes(auth.email) ? 'business' : 'INVESTOR',
-          phoneNumber: auth.phoneNumber || profile?.phoneNumber || '',
-          country: profile?.country || '',
-          address: profile?.address || ''
-          // state: profile?.state || '',
-          // city: profile?.city || '',
-          // zipCode: profile?.zipCode || '',
-          // about: profile?.about || ''
-        },
+        user: auth
+          ? {
+              id: auth.uid,
+              email: auth.email,
+              photoURL: auth.photoURL || profile?.photoURL,
+              displayName: auth.displayName || profile?.displayName,
+              role: ADMIN_EMAILS.includes(auth.email),
+              phoneNumber: auth.phoneNumber || profile?.phoneNumber || '',
+              country: profile?.country || '',
+              address: profile?.address || ''
+            }
+          : null,
         login,
         register,
         loginWithGoogle,
@@ -160,7 +185,8 @@ function AuthProvider({ children }: { children: ReactNode }) {
         loginWithTwitter,
         logout,
         resetPassword,
-        updateProfile: () => {}
+        updateProfile: () => {},
+        errorLoginMessage: errorLoginMessage
       }}
     >
       {children}

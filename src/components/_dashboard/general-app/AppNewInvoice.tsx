@@ -118,16 +118,17 @@ export default function AppNewInvoice() {
 
   return (
     <Card>
-      <CardHeader title="New Invoice" sx={{ mb: 3 }} />
+      <CardHeader title="Hóa đơn mới gần đây" sx={{ mb: 3 }} />
       <Scrollbar>
         <TableContainer sx={{ minWidth: 720 }}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Invoice ID</TableCell>
-                <TableCell>Category</TableCell>
-                <TableCell>Price</TableCell>
-                <TableCell>Status</TableCell>
+                <TableCell>Mã hóa đơn</TableCell>
+                <TableCell>Người gửi </TableCell>
+                <TableCell>Số tiền </TableCell>
+                {/* <TableCell>Mô tả </TableCell> */}
+                <TableCell>Trạng thái</TableCell>
                 <TableCell />
               </TableRow>
             </TableHead>

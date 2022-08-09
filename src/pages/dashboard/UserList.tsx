@@ -23,7 +23,7 @@ import {
 } from '@mui/material';
 // redux
 import { RootState, useDispatch, useSelector } from '../../redux/store';
-import { getUserList, deleteUser } from '../../redux/slices/user';
+import { getUserList, deleteUser } from '../../redux/slices/userKrowdrac';
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
 // hooks

@@ -47,7 +47,7 @@ export default function BankingContacts() {
               </Typography>
             </Box>
 
-            <Tooltip title="Quick Transfer">
+            <Tooltip title="Chuyển khoản nhanh">
               <MIconButton size="small">
                 <Icon icon={flashFill} width={22} height={22} />
               </MIconButton>
