@@ -90,7 +90,7 @@ const SidebarBusinessConfig = [
         children: [
           { title: 'Lĩnh vực', path: PATH_DASHBOARD.other.field },
           { title: 'Khu vực', path: PATH_DASHBOARD.other.area },
-          { title: 'Vai trò', path: PATH_DASHBOARD.other.role },
+          // { title: 'Vai trò', path: PATH_DASHBOARD.other.role },
           { title: 'Rủi ro', path: PATH_DASHBOARD.other.risk }
           // { title: 'Đầu tư', path: PATH_DASHBOARD.other.investment }
         ]
