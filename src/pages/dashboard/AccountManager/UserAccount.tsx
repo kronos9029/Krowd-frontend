@@ -6,42 +6,63 @@ import shareFill from '@iconify/icons-eva/share-fill';
 import roundVpnKey from '@iconify/icons-ic/round-vpn-key';
 import roundReceipt from '@iconify/icons-ic/round-receipt';
 import roundAccountBox from '@iconify/icons-ic/round-account-box';
+import editFill from '@iconify/icons-eva/edit-fill';
+import UserAccountForm from './UserAccountForm';
 // material
-import { Container, Tab, Box, Tabs } from '@mui/material';
+import { Container, Tab, Box, Tabs, Button } from '@mui/material';
 // redux
-import { RootState, useDispatch, useSelector } from '../../redux/store';
+import { RootState, useDispatch, useSelector } from '../../../redux/store';
 import {
   getCards,
   getProfile,
   getInvoices,
   getAddressBook,
   getNotifications
-} from '../../redux/slices/userKrowdrac';
+} from '../../../redux/slices/userKrowdrac';
 // routes
-import { PATH_DASHBOARD } from '../../routes/paths';
+import { PATH_DASHBOARD } from '../../../routes/paths';
 // hooks
-import useSettings from '../../hooks/useSettings';
+import useSettings from '../../../hooks/useSettings';
 // components
-import Page from '../../components/Page';
-import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
-import {
-  AccountGeneral,
-  AccountBilling,
-  AccountSocialLinks,
-  AccountNotifications,
-  AccountChangePassword
-} from '../../components/_dashboard/user/account';
-
+import Page from '../../../components/Page';
+import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
+import { AccountBilling, AccountGeneral } from '../../../components/_dashboard/user/account';
+import cookies from 'js-cookie';
+import { useTranslation } from 'react-i18next';
 // ----------------------------------------------------------------------
-
+const Language = [
+  {
+    code: 'vi',
+    name: 'English',
+    countryCode: 'vi'
+  },
+  {
+    code: 'en',
+    name: 'Vietnamese',
+    countryCode: 'en'
+  }
+];
 export default function UserAccount() {
   const { themeStretch } = useSettings();
+  const [open, setOpen] = useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const currentLanguageCode = cookies.get('i18next') || 'en';
+  const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { cards, invoices, myProfile, addressBook, notifications } = useSelector(
     (state: RootState) => state.user
   );
 
-  const [currentTab, setCurrentTab] = useState('general');
+  const [currentTab, setCurrentTab] = useState(
+    `${t(`dashboard_account_investor.dashboard_account_investor_general`)}`
+  );
 
   useEffect(() => {
     dispatch(getCards());
@@ -65,44 +86,38 @@ export default function UserAccount() {
 
   const ACCOUNT_TABS = [
     {
-      value: 'general',
+      value: `${t(`dashboard_account_investor.dashboard_account_investor_general`)}`,
       icon: <Icon icon={roundAccountBox} width={20} height={20} />,
       component: <AccountGeneral />
     },
     {
-      value: 'billing',
+      value: `${t(`dashboard_account_investor.dashboard_account_investor_billing`)}`,
       icon: <Icon icon={roundReceipt} width={20} height={20} />,
       component: <AccountBilling cards={cards} addressBook={addressBook} invoices={invoices} />
-    },
-    {
-      value: 'notifications',
-      icon: <Icon icon={bellFill} width={20} height={20} />,
-      component: <AccountNotifications notifications={notifications} />
-    },
-    {
-      value: 'social_links',
-      icon: <Icon icon={shareFill} width={20} height={20} />,
-      component: <AccountSocialLinks myProfile={myProfile} />
-    },
-    {
-      value: 'change_password',
-      icon: <Icon icon={roundVpnKey} width={20} height={20} />,
-      component: <AccountChangePassword />
     }
   ];
 
   return (
-    <Page title="User: Account Settings | Krowd">
+    <Page title="Tài khoản người đầu tư | Krowd">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="Account"
+          heading="Tài khoản của bạn"
           links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            { name: 'User', href: PATH_DASHBOARD.user.root },
-            { name: 'Account Settings' }
+            { name: 'Bảng điều khiển', href: PATH_DASHBOARD.root },
+            { name: 'Quản lý tài khoản' }
           ]}
+          action={
+            <Button
+              variant="contained"
+              startIcon={<Icon icon={editFill} />}
+              onClick={handleClickOpen}
+              color="warning"
+            >
+              Cập nhật tài khoản
+            </Button>
+          }
         />
-
+        <UserAccountForm open={open} onClose={handleClose} />
         <Tabs
           value={currentTab}
           scrollButtons="auto"
@@ -114,7 +129,7 @@ export default function UserAccount() {
             <Tab
               disableRipple
               key={tab.value}
-              label={capitalCase(tab.value)}
+              label={tab.value}
               icon={tab.icon}
               value={tab.value}
             />

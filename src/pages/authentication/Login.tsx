@@ -28,6 +28,7 @@ import { LoginForm, LoginFormBusiness } from '../../components/authentication/lo
 import { useState } from 'react';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 // import { AuthContext } from '../contexts/FirebaseContext';
+import { motion } from 'framer-motion';
 
 // ----------------------------------------------------------------------
 
@@ -36,7 +37,25 @@ const RootStyle = styled(Page)(({ theme }) => ({
     display: 'flex'
   }
 }));
-
+const HeroImgStyle = styled(motion.iframe)(({ theme }) => ({
+  top: 0,
+  right: 10,
+  bottom: 0,
+  zIndex: 9,
+  width: '100%',
+  height: '100%',
+  margin: 'auto',
+  position: 'absolute',
+  objectFit: 'cover',
+  opacity: 0.8,
+  [theme.breakpoints.up('md')]: {
+    width: 'auto',
+    height: '48vh'
+  },
+  [theme.breakpoints.down('md')]: {
+    display: 'none'
+  }
+}));
 const SectionStyle = styled(Card)(({ theme }) => ({
   width: '100%',
   maxWidth: 464,
@@ -75,11 +94,13 @@ export default function Login() {
 
       <MHidden width="mdDown">
         <SectionStyle>
-          <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
+          <Typography variant="h3" sx={{ p: 5, mt: 10, mb: 5 }}>
             FPT Capstone <br />
             KROWD System
           </Typography>
-          <img src="/static/illustrations/login-krowd.svg" alt="login" />
+          <Typography variant="h3" sx={{ p: 25 }}>
+            <HeroImgStyle src="https://embed.lottiefiles.com/animation/38435" />
+          </Typography>
         </SectionStyle>
       </MHidden>
 

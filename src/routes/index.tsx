@@ -62,7 +62,6 @@ export default function Router() {
         },
         { path: 'login-unprotected', element: <Login /> },
         { path: 'register-unprotected', element: <Register /> },
-        { path: 'reset-password', element: <ResetPassword /> },
         { path: 'verify', element: <VerifyCode /> }
       ]
     },
@@ -175,10 +174,11 @@ export default function Router() {
       children: [
         { path: 'coming-soon', element: <ComingSoon /> },
         { path: 'maintenance', element: <Maintenance /> },
-        { path: 'pricing', element: <Pricing /> },
+        { path: 'pricing', element: <KrowdPackage /> },
         { path: 'payment', element: <Payment /> },
         { path: '500', element: <Page500 /> },
         { path: '404', element: <NotFound /> },
+        { path: 'package', element: <EcommerceCheckout /> },
         { path: '*', element: <Navigate to="/404" replace /> }
       ]
     },
@@ -193,7 +193,6 @@ export default function Router() {
         { path: 'details', element: <Details /> },
         // { path: 'SearchPage', element: <SearchPage /> },
         { path: 'project', element: <Projects /> },
-        { path: 'all_field', element: <Fields /> },
         {
           path: 'components',
           children: [
@@ -214,7 +213,6 @@ export default function Router() {
 // Authentication
 const Login = Loadable(lazy(() => import('../pages/authentication/Login')));
 const Register = Loadable(lazy(() => import('../pages/authentication/Register')));
-const ResetPassword = Loadable(lazy(() => import('../pages/authentication/ResetPassword')));
 const VerifyCode = Loadable(lazy(() => import('../pages/authentication/VerifyCode')));
 // Dashboard
 const GeneralApp = Loadable(lazy(() => import('../pages/dashboard/GeneralApp')));
@@ -232,7 +230,7 @@ const EcommerceProductList = Loadable(
 const EcommerceProductCreate = Loadable(
   lazy(() => import('../pages/dashboard/EcommerceProductCreate'))
 );
-const EcommerceCheckout = Loadable(lazy(() => import('../pages/dashboard/EcommerceCheckout')));
+const EcommerceCheckout = Loadable(lazy(() => import('../pages/dashboard/PackageVoucherCheckout')));
 const EcommerceInvoice = Loadable(lazy(() => import('../pages/dashboard/EcommerceInvoice')));
 const UserOfBusiness = Loadable(lazy(() => import('../pages/dashboard/UserOfBusiness')));
 const BlogPost = Loadable(lazy(() => import('../pages/dashboard/BlogPost')));
@@ -260,7 +258,7 @@ const KrowdNewProjectOwner = Loadable(
 const UserProfile = Loadable(lazy(() => import('../pages/dashboard/UserProfile')));
 const UserCards = Loadable(lazy(() => import('../pages/dashboard/UserCards')));
 const UserList = Loadable(lazy(() => import('../pages/dashboard/UserList')));
-const UserAccount = Loadable(lazy(() => import('../pages/dashboard/UserAccount')));
+const UserAccount = Loadable(lazy(() => import('../pages/dashboard/AccountManager/UserAccount')));
 const UserCreate = Loadable(lazy(() => import('../pages/dashboard/UserCreate')));
 const Chat = Loadable(lazy(() => import('../pages/dashboard/Chat')));
 const Mail = Loadable(lazy(() => import('../pages/dashboard/Mail')));
@@ -273,10 +271,9 @@ const ComingSoon = Loadable(lazy(() => import('../pages/ComingSoon')));
 const Details = Loadable(lazy(() => import('../pages/Details')));
 //Page
 const Projects = Loadable(lazy(() => import('../pages/project/Project')));
-const Fields = Loadable(lazy(() => import('../pages/Field')));
 // const SearchPage = Loadable(lazy(() => import('../pages/SearchPage')));
 const Maintenance = Loadable(lazy(() => import('../pages/Maintenance')));
-const Pricing = Loadable(lazy(() => import('../pages/Pricing')));
+const KrowdPackage = Loadable(lazy(() => import('../pages/KrowdPackage')));
 const Payment = Loadable(lazy(() => import('../pages/Payment')));
 const Page500 = Loadable(lazy(() => import('../pages/Page500')));
 const NotFound = Loadable(lazy(() => import('../pages/Page404')));

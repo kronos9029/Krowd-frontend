@@ -30,7 +30,6 @@ export default function ProjectEntitytForm() {
     afterSubmit?: string;
   };
 
-  const { register } = useAuth();
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [showPassword, setShowPassword] = useState(false);
@@ -61,7 +60,6 @@ export default function ProjectEntitytForm() {
     validationSchema: RegisterSchema,
     onSubmit: async (values, { setErrors, setSubmitting }) => {
       try {
-        await register(values.email, values.password, values.firstName, values.lastName);
         enqueueSnackbar('Đăng ký thành công', {
           variant: 'success',
           action: (key) => (

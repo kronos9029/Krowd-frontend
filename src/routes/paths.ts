@@ -30,7 +30,8 @@ export const PATH_PAGE = {
   page404: '/404',
   page500: '/500',
   business: '/components',
-  project: '/project'
+  project: '/project',
+  checkout: '/package'
 };
 
 export const PATH_DASHBOARD = {

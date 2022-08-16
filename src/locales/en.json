@@ -104,5 +104,35 @@
     "comming_soon_2": "We are currently working this page!",
     "not_found": "Not found",
     "No_results_found": "No results found for",
-    "Try_checking": "Try checking for typos or using complete words."
+    "Try_checking": "Try checking for typos or using complete words.",
+    "mainNavbar_menu_item":{
+        "mainNavbar_menu_item_profile":"Personal information",
+        "mainNavbar_menu_item_console":"Console",
+        "mainNavbar_menu_item_logout":"Log out"
+    },
+    "landing_project_highlight": {
+    "landing_highligh_transaction":"All transactions are scrutinized by",
+    "landing_highligh_by_about_us":"our investment team",
+    "landing_highligh_by_category":"Category",
+    "landing_highligh_by_highligh":"Highligh",
+    "landing_highligh_by_revenue":"Revenue",
+    "landing_highligh_by_more":"More",
+    "landing_highligh_business_model":"Business model",
+    "landing_highligh_valucation_cap":"Valucation cap",
+    "landing_highligh_min_investment":"Min. investment"
+    },
+    "landing_project_invest": {
+        "landing_project_invest_now":"Invest now",
+        "landing_project_invest_approeve":"Browse current investment opportunities on Krowd.",
+        "landing_project_invest_business":"All companies are",
+        "landing_project_invest_appraisal":"vetted & pass due diligence.",
+        "landing_project_invest_chance":"Live opportunities"
+    },
+    "landing_project_search": {
+        "landing_project_search_placeholder":"What project are you looking for?"
+    },
+    "dashboard_account_investor": {
+        "dashboard_account_investor_general":"Generall",
+        "dashboard_account_investor_billing":"Billing"
+    }
 }

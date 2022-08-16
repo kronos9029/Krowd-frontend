@@ -21,12 +21,12 @@ import { PATH_DASHBOARD } from '../../../../routes/paths';
 //
 import Scrollbar from '../../../Scrollbar';
 import EmptyContent from '../../../EmptyContent';
-import CheckoutSummary from './CheckoutSummary';
+import CheckoutPackageSummary from './CheckoutPackageSummary';
 import CheckoutProductList from './CheckoutProductList';
 
 // ----------------------------------------------------------------------
 
-export default function CheckoutCart() {
+export default function CheckoutPackage() {
   const dispatch = useDispatch();
   const { checkout } = useSelector((state: { product: ProductState }) => state.product);
   const { cart, total, discount, subtotal } = checkout;
@@ -61,7 +61,6 @@ export default function CheckoutCart() {
         handleNextStep();
       } catch (error) {
         console.error(error);
-        setErrors(error.message);
       }
     }
   });
@@ -78,9 +77,9 @@ export default function CheckoutCart() {
               <CardHeader
                 title={
                   <Typography variant="h6">
-                    Card
+                    Gói đã chọn
                     <Typography component="span" sx={{ color: 'text.secondary' }}>
-                      &nbsp;({totalItems} item)
+                      &nbsp;({totalItems} gói)
                     </Typography>
                   </Typography>
                 }
@@ -98,8 +97,8 @@ export default function CheckoutCart() {
                 </Scrollbar>
               ) : (
                 <EmptyContent
-                  title="Cart is empty"
-                  description="Look like you have no items in your shopping cart."
+                  title="Bạn chưa chọn gói nào"
+                  description="Có vẻ như bạn không có gói nào"
                   img="/static/illustrations/illustration_empty_cart.svg"
                 />
               )}
@@ -108,29 +107,29 @@ export default function CheckoutCart() {
             <Button
               color="inherit"
               component={RouterLink}
-              to={PATH_DASHBOARD.eCommerce.root}
+              to={'/details'}
               startIcon={<Icon icon={arrowIosBackFill} />}
             >
-              Continue Shopping
+              Trở về
             </Button>
           </Grid>
 
           <Grid item xs={12} md={4}>
-            <CheckoutSummary
+            <CheckoutPackageSummary
               total={total}
               enableDiscount
               discount={discount}
               subtotal={subtotal}
-              onApplyDiscount={handleApplyDiscount}
+              // onApplyDiscount={handleApplyDiscount}
             />
             <Button
               fullWidth
               size="large"
               type="submit"
               variant="contained"
-              disabled={values.products.length === 0}
+              // disabled={values.products.length === 0}
             >
-              Check Out
+              Thanh toán
             </Button>
           </Grid>
         </Grid>

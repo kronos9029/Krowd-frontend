@@ -5,7 +5,7 @@ import checkmarkFill from '@iconify/icons-eva/checkmark-fill';
 import { styled } from '@mui/material/styles';
 import { Card, Button, Typography, Box, Stack } from '@mui/material';
 // routes
-import { PATH_DASHBOARD } from '../../../routes/paths';
+import { PATH_DASHBOARD, PATH_PAGE } from '../../../routes/paths';
 //
 import Label from '../../Label';
 
@@ -48,7 +48,8 @@ export default function PricingPlanCard({ card, index }: PricingPlanCardProps) {
     <RootStyle>
       {index === 1 && (
         <Label
-          color="info"
+          color="primary"
+          fontWeight={900}
           sx={{
             top: 16,
             right: 16,
@@ -65,9 +66,7 @@ export default function PricingPlanCard({ card, index }: PricingPlanCardProps) {
 
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', my: 2 }}>
         {index === 1 || index === 2 ? (
-          <Typography variant="subtitle1" sx={{ color: 'text.secondary' }}>
-            $
-          </Typography>
+          <Typography variant="subtitle1" sx={{ color: 'text.secondary' }}></Typography>
         ) : (
           ''
         )}
@@ -83,9 +82,7 @@ export default function PricingPlanCard({ card, index }: PricingPlanCardProps) {
               alignSelf: 'flex-end',
               color: 'text.secondary'
             }}
-          >
-            /mo
-          </Typography>
+          ></Typography>
         ) : (
           ''
         )}
@@ -120,7 +117,7 @@ export default function PricingPlanCard({ card, index }: PricingPlanCardProps) {
       </Stack>
 
       <Button
-        to={PATH_DASHBOARD.root}
+        to={PATH_PAGE.checkout}
         fullWidth
         size="large"
         variant="contained"

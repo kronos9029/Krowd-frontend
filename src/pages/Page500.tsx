@@ -20,20 +20,20 @@ const RootStyle = styled(Page)(({ theme }) => ({
 
 export default function Page500() {
   return (
-    <RootStyle title="500 Internal Server Error | Krowd">
+    <RootStyle title="Không có quyền truy cập | Krowd">
       <Container>
         <Box sx={{ maxWidth: 480, margin: 'auto', textAlign: 'center' }}>
           <Typography variant="h3" paragraph>
-            500 Internal Server Error
+            Bạn không có quyền truy cập
           </Typography>
           <Typography sx={{ color: 'text.secondary' }}>
-            There was an error, please try again later.
+            Hiện tại phần mềm đang bảo trì vui lòng quay lại sau
           </Typography>
 
           <SeverErrorIllustration sx={{ height: 260, my: { xs: 5, sm: 10 } }} />
 
           <Button to="/" size="large" variant="contained" component={RouterLink}>
-            Go to Home
+            Trở về
           </Button>
         </Box>
       </Container>

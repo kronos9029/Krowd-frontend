@@ -3,6 +3,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Typography, Button, Card, CardContent, CardProps } from '@mui/material';
 import { SeoIllustration } from '../../../assets';
+import useAuth from 'hooks/useAuth';
 
 // ----------------------------------------------------------------------
 
@@ -26,6 +27,7 @@ interface AppWelcomeProps extends CardProps {
 }
 
 export default function AppWelcome({ displayName }: AppWelcomeProps) {
+  const { user } = useAuth();
   return (
     <RootStyle>
       <CardContent
@@ -37,7 +39,8 @@ export default function AppWelcome({ displayName }: AppWelcomeProps) {
       >
         <Typography gutterBottom variant="h4">
           Chào mừng trở lại,
-          <br /> {!displayName ? '...' : displayName}!
+          <br /> {user?.firstName} {''}
+          {user?.lastName}
         </Typography>
       </CardContent>
 

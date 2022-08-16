@@ -94,22 +94,17 @@ const ContentStyle = styled((props: StackProps) => <Stack spacing={5} {...props}
 //   }
 // }));
 
-const HeroOverlayStyle = styled(motion.img)(() => ({
-  zIndex: 0,
-  width: '100%',
-  height: '100%',
-  objectFit: 'cover'
-}));
-
-const HeroImgStyle = styled(motion.img)(({ theme }) => ({
+const HeroImgStyle = styled(motion.iframe)(({ theme }) => ({
   top: 0,
-  right: 0,
+  right: 10,
   bottom: 0,
   zIndex: 9,
   width: '100%',
+  height: '100%',
   margin: 'auto',
   position: 'absolute',
-  opacity: 0.6,
+  objectFit: 'cover',
+  opacity: 0.8,
   [theme.breakpoints.up('md')]: {
     width: 'auto',
     height: '48vh'
@@ -124,9 +119,6 @@ const SearchInput = styled(Input)(() => ({
   borderRadius: '5px',
   fontWeight: 'bold',
   color: '#251E18'
-  // '&:focus-within': {
-  //   border: '1px solid #14B7CC'
-  // }
 }));
 //
 const Language = [
@@ -150,73 +142,69 @@ export default function LandingHero() {
   return (
     <RootStyle>
       <Container maxWidth="lg" sx={{ position: 'relative' }}>
-        <HeroImgStyle alt="hero" src="/static/home/hero2.svg" />
-        <Grid container spacing={5} justifyContent="space-between">
-          <Grid item xs={12} md={7}>
-            <ContentStyle>
-              <MotionInView variants={varFadeInUp}>
-                <Typography variant="h1" sx={{ color: 'common.white' }}>
-                  {t('Thumbnail_landing_hero_title')} <br />
-                  {t('Thumbnail_landing_hero_title_1')} <br /> {t('Thumbnail_landing_hero_title_2')}
-                  <Typography component="span" variant="h1" sx={{ color: '#14B7CC' }}>
-                    &nbsp;KROWD
-                  </Typography>
-                </Typography>
-              </MotionInView>
+        <HeroImgStyle src="https://embed.lottiefiles.com/animation/71841" />
+        <ContentStyle>
+          <MotionInView variants={varFadeInUp}>
+            <Typography variant="h1" sx={{ color: 'common.white' }}>
+              {t('Thumbnail_landing_hero_title')} <br />
+              {t('Thumbnail_landing_hero_title_1')} <br /> {t('Thumbnail_landing_hero_title_2')}
+              <Typography component="span" variant="h1" sx={{ color: '#14B7CC' }}>
+                &nbsp;KROWD
+              </Typography>
+            </Typography>
+          </MotionInView>
 
-              <MotionInView variants={varFadeInUp}>
-                <Typography sx={{ color: 'common.white', paddingBottom: '1rem' }}>
-                  {t('Thumbnail_landing_hero_description')} <br />
-                  {t('Thumbnail_landing_hero_description_1')}
-                </Typography>
-                <Typography sx={{ color: 'common.white' }}>
-                  {t('Thumbnail_landing_hero_description2')}
-                </Typography>
-              </MotionInView>
+          <MotionInView variants={varFadeInUp}>
+            <Typography sx={{ color: 'common.white', paddingBottom: '1rem' }}>
+              {t('Thumbnail_landing_hero_description')} <br />
+              {t('Thumbnail_landing_hero_description_1')}
+            </Typography>
+            <Typography sx={{ color: 'common.white' }}>
+              {t('Thumbnail_landing_hero_description2')}
+            </Typography>
+          </MotionInView>
 
-              <MotionInView variants={varFadeInUp}>
-                <Typography>
-                  <SearchbarStyle>
-                    <SearchInput
-                      disableUnderline={true}
-                      fullWidth
-                      // disableUnderline
-                      placeholder={t('Search_hover')}
-                      startAdornment={
-                        <InputAdornment position="start">
-                          <Box
-                            component={Icon}
-                            icon={searchFill}
-                            sx={{
-                              marginLeft: '10px',
-                              color: '#251E18',
-                              width: 20,
-                              height: 20
-                            }}
-                          />
-                        </InputAdornment>
-                      }
-                    />
-                    <Button
-                      href={PATH_SEARCHPAGE}
-                      style={{
-                        backgroundColor: '#14B7CC',
-                        color: '#FAF4EF',
-                        width: '150px',
-                        margin: '7px',
-                        fontSize: '15px',
-                        height: '50px'
-                      }}
-                      variant="contained"
-                    >
-                      {t('Search')}
-                    </Button>
-                  </SearchbarStyle>
-                </Typography>
-              </MotionInView>
-            </ContentStyle>
-          </Grid>
-        </Grid>
+          <MotionInView variants={varFadeInUp}>
+            <Typography>
+              <SearchbarStyle>
+                <SearchInput
+                  disableUnderline={true}
+                  fullWidth
+                  // disableUnderline
+                  placeholder={t('Search_hover')}
+                  startAdornment={
+                    <InputAdornment position="start">
+                      <Box
+                        component={Icon}
+                        icon={searchFill}
+                        sx={{
+                          marginLeft: '10px',
+                          color: '#251E18',
+                          width: 20,
+                          height: 20
+                        }}
+                      />
+                    </InputAdornment>
+                  }
+                />
+                <Button
+                  href={PATH_SEARCHPAGE}
+                  style={{
+                    backgroundColor: '#14B7CC',
+                    color: '#FAF4EF',
+                    width: '150px',
+                    margin: '7px',
+                    fontSize: '15px',
+                    height: '50px'
+                  }}
+                  variant="contained"
+                >
+                  {t('Search')}
+                </Button>
+              </SearchbarStyle>
+            </Typography>
+          </MotionInView>
+        </ContentStyle>
       </Container>
     </RootStyle>
   );

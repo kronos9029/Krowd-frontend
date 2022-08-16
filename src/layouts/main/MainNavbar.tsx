@@ -205,7 +205,7 @@ export default function MainNavbar() {
                   onClick={handleClick}
                   variant="contained"
                 >
-                  Đỗ Dương Tâm Đăng
+                  {user?.firstName} {user?.lastName}
                 </Button>
                 <Menu
                   id="basic-menu"
@@ -216,11 +216,15 @@ export default function MainNavbar() {
                     'aria-labelledby': 'basic-button'
                   }}
                 >
-                  <MenuItem onClick={handleClose}>Thông tin cá nhân</MenuItem>
-                  <MenuItem component={Link} href={PATH_DASHBOARD.general.app}>
-                    Bảng điều khiển
+                  <MenuItem component={Link} href={PATH_DASHBOARD.user.account}>
+                    {t(`mainNavbar_menu_item.mainNavbar_menu_item_profile`)}
                   </MenuItem>
-                  <MenuItem onClick={handleLogout}>Đăng xuất</MenuItem>
+                  <MenuItem component={Link} href={PATH_DASHBOARD.general.app}>
+                    {t(`mainNavbar_menu_item.mainNavbar_menu_item_console`)}
+                  </MenuItem>
+                  <MenuItem onClick={handleLogout}>
+                    {t(`mainNavbar_menu_item.mainNavbar_menu_item_logout`)}
+                  </MenuItem>
                 </Menu>
               </>
             )) || (

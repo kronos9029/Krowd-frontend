@@ -22,29 +22,25 @@ type CheckoutSummaryProps = {
   total: number;
   discount?: number;
   subtotal: number;
-  shipping?: number;
   onEdit?: VoidFunction;
   enableEdit?: boolean;
   onApplyDiscount?: (discount: number) => void;
   enableDiscount?: boolean;
 };
 
-export default function CheckoutSummary({
+export default function CheckoutPackageSummary({
   total,
   onEdit,
   discount,
   subtotal,
-  shipping,
   onApplyDiscount,
   enableEdit = false,
   enableDiscount = false
 }: CheckoutSummaryProps) {
-  const displayShipping = shipping !== null ? 'Free' : '-';
-
   return (
     <Card sx={{ mb: 3 }}>
       <CardHeader
-        title="Order Summary"
+        title="Số gói bạn đã chọn"
         action={
           enableEdit && (
             <Button
@@ -63,25 +59,16 @@ export default function CheckoutSummary({
         <Stack spacing={2}>
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              Sub Total
+              Tổng số tiền các gói
             </Typography>
             <Typography variant="subtitle2">{fCurrency(subtotal)}</Typography>
           </Stack>
 
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              Discount
+              Giảm giá
             </Typography>
             <Typography variant="subtitle2">{discount ? fCurrency(-discount) : '-'}</Typography>
-          </Stack>
-
-          <Stack direction="row" justifyContent="space-between">
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              Shipping
-            </Typography>
-            <Typography variant="subtitle2">
-              {shipping ? fCurrency(shipping) : displayShipping}
-            </Typography>
           </Stack>
 
           <Divider />
@@ -97,23 +84,6 @@ export default function CheckoutSummary({
               </Typography>
             </Box>
           </Stack>
-
-          {enableDiscount && onApplyDiscount && (
-            <TextField
-              fullWidth
-              placeholder="Discount codes / Gifts"
-              value="DISCOUNT5"
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <Button type="button" onClick={() => onApplyDiscount(5)} sx={{ mr: -0.5 }}>
-                      Apply
-                    </Button>
-                  </InputAdornment>
-                )
-              }}
-            />
-          )}
         </Stack>
       </CardContent>
     </Card>

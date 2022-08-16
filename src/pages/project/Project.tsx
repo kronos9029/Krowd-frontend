@@ -1,25 +1,14 @@
 // material
-import { alpha, useTheme, styled } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import { Grid, Card, Container, Typography, useMediaQuery, Tab, Tabs, Box } from '@mui/material';
-import { MHidden } from '../../components/@material-extend';
-import { varFadeInUp, MotionInView } from '../../components/animate';
-import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
-import CardMedia from '@mui/material/CardMedia';
+
 // components
 import Page from '../../components/Page';
-import { fCurrency } from 'utils/formatNumber';
-import { PATH_DETAILS, PATH_FIELDPAGE } from 'routes/paths';
-import i18next from 'i18next';
 import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
-import {
-  ShopFilterSidebar,
-  ShopProductSort,
-  ShopTagFiltered
-} from 'components/_dashboard/e-commerce/shop';
-import { Formik, useFormik } from 'formik';
+import { ShopProductSort } from 'components/_dashboard/e-commerce/shop';
+import { useFormik } from 'formik';
 import { useEffect, useState } from 'react';
-import { filter, includes, orderBy } from 'lodash';
 // redux
 import { RootState, useDispatch, useSelector } from 'redux/store';
 // routes
@@ -30,9 +19,12 @@ import { Product, ProductFilter, ProductState } from '../../@types/products';
 import { filterProducts, getProducts } from 'redux/slices/product';
 import { BlogPostsSearch } from 'components/_dashboard/project';
 // icon
-import { Icon } from '@iconify/react';
-import menu2Fill from '@iconify/icons-eva/menu-2-fill';
-import { getAllProject, filterProjects, getProjectId } from 'redux/slices/krowd_slices/project';
+import {
+  getAllProject,
+  filterProjects,
+  getProjectId,
+  getProjectList
+} from 'redux/slices/krowd_slices/project';
 import { ProjectFilter, ProjectState, PROJECT_STATUS } from '../../@types/krowd/project';
 import { getFieldList } from 'redux/slices/krowd_slices/field';
 import { Link } from 'react-router-dom';
@@ -96,7 +88,7 @@ export default function Projects() {
   const isDefault = !values.status && values.areaId === 'HCM';
   useEffect(() => {
     dispatch(getProducts());
-    dispatch(getAllProject('ADMIN'));
+    dispatch(getProjectList());
     dispatch(getFieldList());
     dispatch(filterProjects(values));
     setSelectedField(fieldList[0]?.id);
@@ -127,15 +119,15 @@ export default function Projects() {
       <Container maxWidth="lg">
         <Box sx={{ mb: { xs: 5, md: 5, paddingTop: '7rem' } }}>
           <Typography variant="h2" sx={{ mb: 3 }}>
-            Đầu tư ngay
+            {t(`landing_project_invest.landing_project_invest_now`)}
           </Typography>
           <Typography color={'text.disabled'} fontWeight={400} variant="subtitle2">
-            Duyệt qua các cơ hội đầu tư hiện tại trên Krowd.
+            {t(`landing_project_invest.landing_project_invest_approeve`)}
           </Typography>
           <Typography color={'text.disabled'} fontWeight={400} variant="subtitle2" sx={{ mb: 3 }}>
-            Tất cả các công ty đều được{' '}
+            {t(`landing_project_invest.landing_project_invest_business`)}{' '}
             <Link to="#" style={{ textDecoration: 'none' }}>
-              kiểm tra & vượt qua thẩm định.
+              {t(`landing_project_invest.landing_project_invest_appraisal`)}
             </Link>
           </Typography>
           <Box
@@ -161,7 +153,10 @@ export default function Projects() {
           </Box>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'end', my: 3 }}>
-          <Typography variant="h3">Các cơ hội cho bạn</Typography>
+          <Typography variant="h3">
+            {' '}
+            {t(`landing_project_invest.landing_project_invest_chance`)}
+          </Typography>
           <Typography color={'text.disabled'} fontWeight={1000} variant="h3" sx={{ ml: 1 }}>
             {projectList && projectList.numOfProject}
           </Typography>

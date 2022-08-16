@@ -64,10 +64,6 @@ export default function AccountBillingAddressBook({ addressBook }: AccountBillin
             </Box>
           </Paper>
         ))}
-
-        <Button size="small" startIcon={<Icon icon={plusFill} />}>
-          Add new address
-        </Button>
       </Stack>
     </Card>
   );

@@ -21,7 +21,7 @@ import {
   applyShipping
 } from '../../../../redux/slices/product';
 //
-import CheckoutSummary from './CheckoutSummary';
+import CheckoutPackageSummary from './CheckoutPackageSummary';
 import CheckoutDelivery from './CheckoutDelivery';
 import CheckoutBillingInfo from './CheckoutBillingInfo';
 import CheckoutPaymentMethods from './CheckoutPaymentMethods';
@@ -105,7 +105,6 @@ export default function CheckoutPayment() {
       } catch (error) {
         console.error(error);
         setSubmitting(false);
-        setErrors(error.message);
       }
     }
   });
@@ -140,12 +139,11 @@ export default function CheckoutPayment() {
 
           <Grid item xs={12} md={4}>
             <CheckoutBillingInfo onBackStep={handleBackStep} />
-            <CheckoutSummary
+            <CheckoutPackageSummary
               enableEdit
               total={total}
               subtotal={subtotal}
               discount={discount}
-              shipping={shipping}
               onEdit={() => handleGotoStep(0)}
             />
             <LoadingButton

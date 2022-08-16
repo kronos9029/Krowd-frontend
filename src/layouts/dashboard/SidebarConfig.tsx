@@ -40,13 +40,13 @@ const sidebarConfig = [
       { title: 'Dự án đang đầu tư', path: PATH_DASHBOARD.blog.posts, icon: ICONS.project },
       {
         title: 'Quản lý ví',
-        path: PATH_DASHBOARD.general.app,
-        icon: ICONS.wallet,
-        children: [
-          { title: 'Ví đầu tư', path: PATH_DASHBOARD.general.app },
-          { title: 'Dự án đang đầu tư', path: PATH_DASHBOARD.general.app },
-          { title: 'Ví doanh thu', path: PATH_DASHBOARD.general.app }
-        ]
+        path: PATH_DASHBOARD.general.banking,
+        icon: ICONS.wallet
+        // children: [
+        //   { title: 'Ví đầu tư', path: PATH_DASHBOARD.general.app },
+        //   { title: 'Dự án đang đầu tư', path: PATH_DASHBOARD.general.app },
+        //   { title: 'Ví doanh thu', path: PATH_DASHBOARD.general.app }
+        // ]
       }
     ]
   },

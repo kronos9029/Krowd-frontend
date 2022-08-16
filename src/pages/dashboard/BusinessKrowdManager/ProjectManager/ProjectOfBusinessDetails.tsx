@@ -30,7 +30,7 @@ import { useSnackbar } from 'notistack';
 import { MIconButton } from 'components/@material-extend';
 // redux
 import { RootState, useDispatch, useSelector } from '../../../../redux/store';
-import { getAllProject, getProjectId } from 'redux/slices/krowd_slices/project';
+import { getAllProject, getProjectId, getProjectList } from 'redux/slices/krowd_slices/project';
 // routes
 import { PATH_DASHBOARD, PATH_DETAILS } from '../../../../routes/paths';
 // hooks
@@ -154,7 +154,7 @@ export default function ProjectOfBusinessDetails() {
 
   // API
   useEffect(() => {
-    dispatch(getAllProject('ADMIN'));
+    dispatch(getProjectList());
   }, [dispatch, project?.projectEntity]);
 
   const handleGetProjectById = (activeProjectId: string) => {
@@ -172,14 +172,6 @@ export default function ProjectOfBusinessDetails() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
-  // const getHighLightListByTitle = (title: 'List' | 'Card') => {
-  //   return highlights!.find((value) => value.title === title);
-  // };
-
-  // const { list } = {
-  //   list: getHighLightListByTitle('List')
-  // };
   const { activeProjectId: projectID } = useSelector((state: RootState) => state.project);
 
   const getEntityList = (

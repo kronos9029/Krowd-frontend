@@ -101,5 +101,36 @@
     "Search_hover": "Bạn muốn tìm gì...",
     "not_found": "Không tìm thấy",
     "No_results_found": "Không tìm thấy từ khóa cho",
-    "Try_checking": "Thử tìm kiếm lại hoặc nhập đúng từ khóa"
+    "Try_checking": "Thử tìm kiếm lại hoặc nhập đúng từ khóa",
+
+    "mainNavbar_menu_item":{
+        "mainNavbar_menu_item_profile":"Thông tin cá nhân",
+        "mainNavbar_menu_item_console":"Bảng điều khiển",
+        "mainNavbar_menu_item_logout":"Đăng xuất"
+    },
+    "landing_project_highlight": {
+        "landing_highligh_transaction":"Tất cả các giao dịch được xem xét kỹ lưỡng bởi",
+        "landing_highligh_by_about_us":"nhóm đầu tư của chúng tôi",
+        "landing_highligh_by_category":"Thể loại",
+        "landing_highligh_by_highligh":"Nổi bật",
+        "landing_highligh_by_revenue":"Doanh thu",
+        "landing_highligh_by_more":"Xem thêm",
+        "landing_highligh_business_model":"Mô hình doanh nghiệp",
+        "landing_highligh_valucation_cap":"Giới hạn định giá",
+        "landing_highligh_min_investment":"Đầu tư tối thiểu"
+    },
+    "landing_project_invest": {
+        "landing_project_invest_now":"Đầu tư ngay",
+        "landing_project_invest_approeve":"Duyệt qua các cơ hội đầu tư hiện tại trên Krowd.",
+        "landing_project_invest_business":"Tất cả các công ty đều được",
+        "landing_project_invest_appraisal":"kiểm tra & vượt qua thẩm định.",
+        "landing_project_invest_chance":"Các cơ hội cho bạn"
+    },
+    "landing_project_search": {
+        "landing_project_search_placeholder":"Bạn đang tìm dự án gì đấy ?"
+    },
+    "dashboard_account_investor": {
+        "dashboard_account_investor_general":"Tổng quan",
+        "dashboard_account_investor_billing":"Hóa đơn"
+    }
 }

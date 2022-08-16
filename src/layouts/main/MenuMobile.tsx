@@ -1,11 +1,11 @@
 import { Icon } from '@iconify/react';
-import { useState, useEffect, ReactNode } from 'react';
 import menu2Fill from '@iconify/icons-eva/menu-2-fill';
 import { NavLink as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import arrowIosForwardFill from '@iconify/icons-eva/arrow-ios-forward-fill';
 import arrowIosDownwardFill from '@iconify/icons-eva/arrow-ios-downward-fill';
 // material
 import classNames from 'classnames';
+import React, { useEffect, useRef, useState, ReactNode } from 'react';
 
 import i18next from 'i18next';
 import cookies from 'js-cookie';
@@ -26,7 +26,8 @@ import {
   FormControl,
   Select,
   Typography,
-  MenuItem
+  MenuItem,
+  Menu
 } from '@mui/material';
 // components
 import Logo from '../../components/Logo';
@@ -38,6 +39,7 @@ import { MenuProps, MenuItemProps } from './MainNavbar';
 import useAuth from 'hooks/useAuth';
 import useIsMountedRef from 'hooks/useIsMountedRef';
 import { useSnackbar } from 'notistack';
+import { PATH_AUTH, PATH_DASHBOARD } from 'routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -182,12 +184,12 @@ function MenuMobileItem({ item, isOpen, onOpen }: MenuMobileItemProps) {
 }
 const Language = [
   {
-    code: 'en',
+    code: 'vi',
     name: 'Tiếng việt',
     countryCode: 'vn'
   },
   {
-    code: 'vi',
+    code: 'en',
     name: 'English',
     countryCode: 'en'
   }
@@ -201,6 +203,14 @@ export default function MenuMobile({ isOffset, isHome, navConfig }: MenuProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open1 = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar } = useSnackbar();
   const handleLogout = async () => {
@@ -312,48 +322,55 @@ export default function MenuMobile({ isOffset, isHome, navConfig }: MenuProps) {
                 </div>
               </div>
             </div>
-            <FormControl sx={{ m: 1, minWidth: 120 }}>
-              <Select value={''} displayEmpty>
-                <Box sx={{ my: 1.5, px: 2.5 }}>
-                  <Typography variant="subtitle1" noWrap>
-                    {user?.displayName}
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-                    {user?.email}
-                  </Typography>
-                  <Button
-                    variant="contained"
-                    sx={{
-                      backgroundColor: '#FF7F50',
-                      color: '#FFF',
-                      marginRight: '1rem',
-                      marginTop: '1rem'
-                    }}
-                    href="/auth/login"
-                  >
-                    {t('Navbar_login')}
-                  </Button>
-                  {user?.email ? (
-                    <Button
-                      sx={{
-                        marginRight: '1rem',
-                        marginTop: '1rem'
-                      }}
-                      color="inherit"
-                      variant="contained"
-                      onClick={handleLogout}
-                    >
-                      Đăng xuất
-                    </Button>
-                  ) : (
-                    ''
-                  )}
-                </Box>
-                <MenuItem value="">
-                  {user?.email ? <em>{user?.displayName}</em> : <em>Xin chào!!</em>}
-                </MenuItem>
-              </Select>
-            </FormControl>
+            {(user && (
+              <>
+                <Button
+                  id="basic-button"
+                  aria-controls={open1 ? 'basic-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open1 ? 'true' : undefined}
+                  onClick={handleClick}
+                  variant="contained"
+                >
+                  {user?.displayName}
+                </Button>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open1}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    'aria-labelledby': 'basic-button'
+                  }}
+                >
+                  <MenuItem component={Link} href={PATH_DASHBOARD.user.account}>
+                    {t(`mainNavbar_menu_item.mainNavbar_menu_item_profile`)}
+                  </MenuItem>
+                  <MenuItem component={Link} href={PATH_DASHBOARD.general.app}>
+                    {t(`mainNavbar_menu_item.mainNavbar_menu_item_console`)}
+                  </MenuItem>
+                  <MenuItem onClick={handleLogout}>
+                    {t(`mainNavbar_menu_item.mainNavbar_menu_item_logout`)}
+                  </MenuItem>
+                </Menu>
+              </>
+            )) || (
+              <Button
+                sx={{
+                  marginRight: '1rem',
+                  bgcolor: 'rgb(255, 127, 80)',
+                  '&:hover': {
+                    bgcolor: 'rgb(255, 127, 80)',
+                    color: '#ffffff'
+                  }
+                }}
+                size="medium"
+                variant="contained"
+                href={PATH_AUTH.login}
+              >
+                {t('Navbar_login')}
+              </Button>
+            )}
           </Scrollbar>
         </Drawer>
       </>

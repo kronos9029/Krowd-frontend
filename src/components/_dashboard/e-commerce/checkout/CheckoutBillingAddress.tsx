@@ -18,18 +18,18 @@ import mockData from '../../../../utils/mock-data';
 
 //
 import Label from '../../../Label';
-import CheckoutSummary from './CheckoutSummary';
+import CheckoutPackageSummary from './CheckoutPackageSummary';
 import CheckoutNewAddressForm from './CheckoutNewAddressForm';
 
 // ----------------------------------------------------------------------
 
-const MOCK_ADDRESS_BOOKS = [...Array(5)].map((_, index) => ({
+const MOCK_ADDRESS_BOOKS = [...Array(1)].map((_, index) => ({
   id: mockData.id(index),
   receiver: mockData.name.fullName(index),
   fullAddress: mockData.address.fullAddress(index),
   phone: mockData.phoneNumber(index),
-  addressType: index === 0 ? 'Home' : 'Office',
-  isDefault: index === 0
+  addressType: index === 0 ? 'Account' : 'Office',
+  isDefault: index === 1
 }));
 
 // ----------------------------------------------------------------------
@@ -84,7 +84,7 @@ function AddressItem({ address, onNextStep, onCreateBilling }: AddressItemProps)
         )}
         <Box sx={{ mx: 0.5 }} />
         <Button variant="outlined" size="small" onClick={handleCreateBilling}>
-          Deliver to this Address
+          Thanh toán
         </Button>
       </Box>
     </Card>
@@ -138,16 +138,13 @@ export default function CheckoutBillingAddress() {
               onClick={handleBackStep}
               startIcon={<Icon icon={arrowIosBackFill} />}
             >
-              Back
-            </Button>
-            <Button size="small" onClick={handleClickOpen} startIcon={<Icon icon={plusFill} />}>
-              Add new address
+              Trở về
             </Button>
           </Box>
         </Grid>
 
         <Grid item xs={12} md={4}>
-          <CheckoutSummary subtotal={subtotal} total={total} discount={discount} />
+          <CheckoutPackageSummary subtotal={subtotal} total={total} discount={discount} />
         </Grid>
       </Grid>
 

@@ -19,7 +19,7 @@ import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState } from 'react';
 import { dispatch, RootState, useSelector } from 'redux/store';
-import { getAllProject } from 'redux/slices/krowd_slices/project';
+import { getAllProject, getProjectList } from 'redux/slices/krowd_slices/project';
 //Icon
 import { Icon } from '@iconify/react';
 import barChartOutlined from '@iconify/icons-ant-design/bar-chart-outlined';
@@ -36,6 +36,7 @@ import { Post } from '../../../@types/blog';
 import { ProjectCard } from '../project';
 import { Link } from 'react-router-dom';
 import { PROJECT_STATUS } from '../../../@types/krowd/project';
+import useAuth from 'hooks/useAuth';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
@@ -72,6 +73,7 @@ const SORT_OPTIONS = [
 
 export default function LandingMinimalHelps() {
   const theme = useTheme();
+  const { user } = useAuth();
   const [filters, setFilters] = useState('Mostfunded');
   const currentLanguageCode = cookies.get('i18next') || 'en';
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
@@ -84,7 +86,7 @@ export default function LandingMinimalHelps() {
     }
   };
   useEffect(() => {
-    dispatch(getAllProject('INVESTOR'));
+    dispatch(getProjectList());
   }, [dispatch]);
 
   const [openHighLight, setOpenHighLight] = useState(false);
@@ -193,11 +195,11 @@ export default function LandingMinimalHelps() {
             variant="h4"
             sx={{ mb: 1, color: 'text.disabled', marginLeft: '1rem' }}
           >
-            Tất cả các giao dịch được xem xét kỹ lưỡng bởi{' '}
+            {t(`landing_project_highlight.landing_highligh_transaction`)}
             <Link to="#" style={{ textDecoration: 'none' }}>
-              nhóm đầu tư của chúng tôi
+              {' '}
+              {t(`landing_project_highlight.landing_highligh_by_about_us`)}
             </Link>
-            .
           </Typography>
         </Box>
 
@@ -219,7 +221,7 @@ export default function LandingMinimalHelps() {
                       }}
                       mr={0.5}
                     >
-                      Thể loại
+                      {t(`landing_project_highlight.landing_highligh_by_category`)}
                     </Typography>
                     {openCategory ? (
                       <Icon icon={caretUpFilled} width={15} height={15} />
@@ -237,7 +239,7 @@ export default function LandingMinimalHelps() {
                       sx={{ color: openHighLight ? 'primary.main' : 'text.secondary' }}
                       mr={0.5}
                     >
-                      Nổi bật
+                      {t(`landing_project_highlight.landing_highligh_by_highligh`)}
                     </Typography>
                     {openHighLight ? (
                       <Icon icon={caretUpFilled} width={15} height={15} />
@@ -257,7 +259,7 @@ export default function LandingMinimalHelps() {
                       }}
                       mr={0.5}
                     >
-                      Doanh thu
+                      {t(`landing_project_highlight.landing_highligh_by_revenue`)}
                     </Typography>
                     {openRevenue ? (
                       <Icon icon={caretUpFilled} width={15} height={15} />
@@ -277,7 +279,7 @@ export default function LandingMinimalHelps() {
                       }}
                       mr={0.5}
                     >
-                      Xem thêm
+                      {t(`landing_project_highlight.landing_highligh_by_more`)}
                     </Typography>
                     {openMore ? (
                       <Icon icon={caretUpFilled} width={15} height={15} />
@@ -431,7 +433,9 @@ export default function LandingMinimalHelps() {
                 <Divider orientation="vertical">|</Divider>
                 <Grid container sx={{ py: 3 }} xs={6} sm={6} md={6} lg={6}>
                   <List component="div" disablePadding>
-                    <Typography sx={{ fontWeight: '700' }}>Business model</Typography>
+                    <Typography sx={{ fontWeight: '700' }}>
+                      {t(`landing_project_highlight.landing_highligh_business_model`)}
+                    </Typography>
                     <ListItemButton>
                       <ListItemText primary="B2B" />
                     </ListItemButton>
@@ -460,7 +464,7 @@ export default function LandingMinimalHelps() {
                 <Grid container sx={{ py: 3 }} xs={5} sm={5} md={5} lg={5}>
                   <List component="div" disablePadding>
                     <Typography sx={{ fontWeight: '700', textAlign: 'center' }}>
-                      Valuation cap
+                      {t(`landing_project_highlight.landing_highligh_valucation_cap`)}
                     </Typography>
                     <ListItemButton>
                       <ListItemText primary="$5M and under" />
@@ -481,7 +485,9 @@ export default function LandingMinimalHelps() {
                 </Divider>
                 <Grid container sx={{ py: 3 }} xs={6} sm={6} md={6} lg={6}>
                   <List component="div" disablePadding>
-                    <Typography sx={{ fontWeight: '700' }}>Min. investment</Typography>
+                    <Typography sx={{ fontWeight: '700' }}>
+                      {t(`landing_project_highlight.landing_highligh_min_investment`)}
+                    </Typography>
                     <ListItemButton>
                       <ListItemText primary="$100 and under" />
                     </ListItemButton>

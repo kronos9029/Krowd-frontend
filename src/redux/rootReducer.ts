@@ -12,6 +12,7 @@ import areaKrowdReducer from './slices/krowd_slices/area';
 import RiskReducer from './slices/krowd_slices/riskType';
 import projectReducer from './slices/krowd_slices/project';
 import userKrowdReducer from './slices/krowd_slices/user';
+import user_InvestorStateKrowdReducer from './slices/krowd_slices/investor';
 import productReducer from './slices/product';
 
 // ----------------------------------------------------------------------
@@ -42,6 +43,7 @@ const rootReducer = combineReducers({
   blog: blogReducer,
   user: userReducer,
   userKrowd: userKrowdReducer,
+  user_InvestorStateKrowd: user_InvestorStateKrowdReducer,
   fieldKrowd: fieldKrowdReducer,
   areaKrowd: areaKrowdReducer,
   riskKrowd: RiskReducer,

@@ -18,7 +18,7 @@ import { ProductState } from '../../@types/products';
 import Page from '../../components/Page';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import {
-  CheckoutCart,
+  CheckoutPackage,
   CheckoutPayment,
   CheckoutOrderComplete,
   CheckoutBillingAddress
@@ -26,7 +26,7 @@ import {
 
 // ----------------------------------------------------------------------
 
-const STEPS = ['Cart', 'Billing & address', 'Payment'];
+const STEPS = ['Gói ưu đãi', 'Thanh toán'];
 
 const QontoConnector = styled(StepConnector)(({ theme }) => ({
   top: 10,
@@ -76,7 +76,7 @@ function QontoStepIcon({ active, completed }: { active: boolean; completed: bool
   );
 }
 
-export default function EcommerceCheckout() {
+export default function PackageVoucherCheckout() {
   const { themeStretch } = useSettings();
   const dispatch = useDispatch();
   const isMountedRef = useIsMountedRef();
@@ -97,21 +97,9 @@ export default function EcommerceCheckout() {
   }, [dispatch, activeStep]);
 
   return (
-    <Page title="Ecommerce: Checkout | Krowd">
+    <Page title="Gói ưu đãi | Krowd">
       <Container maxWidth={themeStretch ? false : 'lg'}>
-        <HeaderBreadcrumbs
-          heading="Checkout"
-          links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            {
-              name: 'E-Commerce',
-              href: PATH_DASHBOARD.eCommerce.root
-            },
-            { name: 'Checkout' }
-          ]}
-        />
-
-        <Grid container justifyContent={isComplete ? 'center' : 'flex-start'}>
+        <Grid container sx={{ py: 10 }} justifyContent={isComplete ? 'center' : 'flex-start'}>
           <Grid item xs={12} md={8} sx={{ mb: 5 }}>
             <Stepper alternativeLabel activeStep={activeStep} connector={<QontoConnector />}>
               {STEPS.map((label) => (
@@ -135,7 +123,7 @@ export default function EcommerceCheckout() {
 
         {!isComplete ? (
           <>
-            {activeStep === 0 && <CheckoutCart />}
+            {activeStep === 0 && <CheckoutPackage />}
             {activeStep === 1 && <CheckoutBillingAddress />}
             {activeStep === 2 && billing && <CheckoutPayment />}
           </>

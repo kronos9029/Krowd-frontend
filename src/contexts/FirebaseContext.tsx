@@ -3,6 +3,7 @@ import { createContext, ReactNode, useEffect, useReducer, useState } from 'react
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import React from 'react';
 // @types
 import { ActionMap, AuthState, AuthUser, FirebaseContextType } from '../@types/authentication';
 //
@@ -20,8 +21,7 @@ if (!firebase.apps.length) {
 const initialState: AuthState = {
   isAuthenticated: false,
   isInitialized: false,
-  user: null,
-  errorLoginMessage: null
+  user: null
 };
 
 enum Types {
@@ -35,7 +35,6 @@ type FirebaseAuthPayload = {
   [Types.Initial]: {
     isAuthenticated: boolean;
     user: AuthUser;
-    errorLoginMessage: string | null;
   };
 };
 
@@ -43,13 +42,12 @@ type FirebaseActions = ActionMap<FirebaseAuthPayload>[keyof ActionMap<FirebaseAu
 
 const reducer = (state: AuthState, action: FirebaseActions) => {
   if (action.type === 'INITIALISE') {
-    const { isAuthenticated, user, errorLoginMessage } = action.payload;
+    const { isAuthenticated, user } = action.payload;
     return {
       ...state,
       isAuthenticated,
       isInitialized: true,
-      user,
-      errorLoginMessage
+      user
     };
   }
 
@@ -79,12 +77,12 @@ function AuthProvider({ children }: { children: ReactNode }) {
             });
           dispatch({
             type: Types.Initial,
-            payload: { isAuthenticated: true, user, errorLoginMessage: null }
+            payload: { isAuthenticated: true, user }
           });
         } else {
           dispatch({
             type: Types.Initial,
-            payload: { isAuthenticated: false, user: null, errorLoginMessage: null }
+            payload: { isAuthenticated: false, user: null }
           });
         }
       }),
@@ -110,7 +108,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
           const errorMessage = getErrorMessage(FirebaseErrorType.IS_NOT_VERIFIED_EMAIL);
           dispatch({
             type: Types.Initial,
-            payload: { isAuthenticated: false, user: null, errorLoginMessage: errorMessage }
+            payload: { isAuthenticated: false, user: null }
           });
           return null;
         }
@@ -120,7 +118,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
         const errorMessage = getErrorMessage(e.code);
         dispatch({
           type: Types.Initial,
-          payload: { isAuthenticated: false, user: null, errorLoginMessage: errorMessage }
+          payload: { isAuthenticated: false, user: null }
         });
         return null;
       });
@@ -154,12 +152,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
     await firebase.auth().signOut();
   };
 
-  const resetPassword = async (email: string) => {
-    await firebase.auth().sendPasswordResetEmail(email);
-  };
-
   const auth = state.user ? { ...state.user } : null;
-  const { errorLoginMessage } = state;
   return (
     <AuthContext.Provider
       value={{
@@ -184,9 +177,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
         loginWithFaceBook,
         loginWithTwitter,
         logout,
-        resetPassword,
-        updateProfile: () => {},
-        errorLoginMessage: errorLoginMessage
+        updateProfile: () => {}
       }}
     >
       {children}

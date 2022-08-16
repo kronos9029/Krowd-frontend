@@ -21,7 +21,6 @@ const RootStyle = styled(motion.div)(({ theme }) => ({
     padding: 0
   }
 }));
-
 const ContentStyle = styled('div')(({ theme }) => ({
   textAlign: 'center',
   [theme.breakpoints.up('md')]: {

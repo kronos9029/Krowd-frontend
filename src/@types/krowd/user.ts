@@ -62,3 +62,5 @@ export type Role = {
   updateBy: null | string;
   isDeleted: boolean;
 };
+
+//-----------------------------------------------------

@@ -14,6 +14,7 @@ import { fCurrency } from 'utils/formatNumber';
 import { Link } from 'react-scroll';
 import { ProjectDetailAlbumCarousel } from 'components/_external-pages/project-detail/index';
 import { RootState, useSelector } from 'redux/store';
+import { PATH_PAGE } from 'routes/paths';
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -184,7 +185,7 @@ function ProjectDetailCard({ project: p, album }: ProjectDetailCardProps) {
             justifyContent: 'space-between'
           }}
         >
-          <Link to="__investmentPackage" style={{ width: '100%' }}>
+          <Link to={PATH_PAGE.checkout} style={{ width: '100%' }}>
             <Button
               sx={{ backgroundColor: '#FF7F50', '&:hover': { backgroundColor: '#FF7F50' } }}
               disableElevation

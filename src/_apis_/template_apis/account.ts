@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
 // utils
-import fakeRequest from '../utils/fakeRequest';
-import { verify, sign } from '../utils/jwt';
+import fakeRequest from '../../utils/fakeRequest';
+import { verify, sign } from '../../utils/jwt';
 // @types
-import { User } from '../@types/account';
+import { User } from '../../@types/account';
 //
 import mock from './mock';
 
@@ -20,14 +20,8 @@ const users: User[] = [
     password: 'krowd1234',
     photoURL: '/static/mock-images/avatars/avatar_default.jpg',
     phoneNumber: '+40 777666555',
-    country: 'United States',
     address: '90210 Broadway Blvd',
-    state: 'California',
-    city: 'San Francisco',
-    zipCode: '94116',
-    about: 'Praesent turpis. Phasellus viverra nulla ut metus varius laoreet. Phasellus tempus.',
-    role: 'user',
-    isPublic: true
+    about: 'ádsahjkdlsasd'
   }
 ];
 
@@ -79,14 +73,8 @@ mock.onPost('/api/account/register').reply(async (config) => {
       password,
       photoURL: null,
       phoneNumber: null,
-      country: null,
       address: null,
-      state: null,
-      city: null,
-      zipCode: null,
-      about: null,
-      role: 'user',
-      isPublic: true
+      about: null
     };
 
     const accessToken = sign({ userId: user.id }, JWT_SECRET, {

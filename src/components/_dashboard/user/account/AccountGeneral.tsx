@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Form, FormikProvider, useFormik } from 'formik';
 // material
 import {
@@ -12,82 +12,116 @@ import {
   TextField,
   FormControlLabel,
   Typography,
-  FormHelperText
+  FormHelperText,
+  Button
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // hooks
 import useAuth from '../../../../hooks/useAuth';
 import useIsMountedRef from '../../../../hooks/useIsMountedRef';
 import { UploadAvatar } from '../../../upload';
-// utils
-import { fData } from '../../../../utils/formatNumber';
 // @types
 import { User } from '../../../../@types/account';
+import { useSelector } from 'react-redux';
+import { dispatch, RootState } from 'redux/store';
+import { getUserKrowdDetail } from 'redux/slices/krowd_slices/investor';
+import { InvestorAPI } from '_apis_/krowd_apis/investor';
 //
-import countries from '../countries';
 
 // ----------------------------------------------------------------------
-
-interface InitialState extends Omit<User, 'password' | 'id' | 'role'> {
-  afterSubmit?: string;
-}
 
 export default function AccountGeneral() {
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar } = useSnackbar();
   const { user, updateProfile } = useAuth();
+  const [fileUpload, setFileUpload] = useState<File | null>(null);
+  const { investorKrowdDetail: mainInvestor } = useSelector(
+    (state: RootState) => state.user_InvestorStateKrowd
+  );
 
-  const UpdateUserSchema = Yup.object().shape({
-    displayName: Yup.string().required('Name is required')
-  });
+  useEffect(() => {
+    dispatch(getUserKrowdDetail(user?.id));
+  }, [dispatch]);
 
-  const formik = useFormik<InitialState>({
-    enableReinitialize: true,
+  const formik = useFormik({
     initialValues: {
-      displayName: user?.displayName || '',
       email: user?.email,
-      photoURL: user?.photoURL,
-      phoneNumber: user?.phoneNumber,
-      country: user?.country,
-      address: user?.address,
-      state: user?.state,
-      city: user?.city,
-      zipCode: user?.zipCode,
-      about: user?.about,
-      isPublic: user?.isPublic
+      image: user?.image,
+      phoneNum: user?.phoneNum || '<Chưa cập nhật>',
+      idCard: user?.idCard || '<Chưa cập nhật>',
+      city: user?.city || '<Chưa cập nhật>',
+      district: user?.district || '<Chưa cập nhật>',
+      address: user?.address || '<Chưa cập nhật>',
+      firstName: user?.firstName || '<Chưa cập nhật>',
+      lastName: user?.lastName || '<Chưa cập nhật>',
+      bankName: user?.bankName || '<Chưa cập nhật>'
     },
-
-    validationSchema: UpdateUserSchema,
-    onSubmit: async (values, { setErrors, setSubmitting }) => {
+    onSubmit: async (values, { setSubmitting }) => {
       try {
-        updateProfile?.();
-        enqueueSnackbar('Update success', { variant: 'success' });
-        if (isMountedRef.current) {
-          setSubmitting(false);
-        }
+        setSubmitting(true);
       } catch (error) {
-        if (isMountedRef.current) {
-          setErrors({ afterSubmit: error.code });
-          setSubmitting(false);
-        }
+        console.error(error);
+        setSubmitting(false);
       }
     }
   });
 
   const { values, errors, touched, isSubmitting, handleSubmit, getFieldProps, setFieldValue } =
     formik;
+  console.log('image of user', user?.image);
+  console.log('id of user', user?.id);
+  const formikImage = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      photoURL: user?.image
+    },
+    onSubmit: async (values, { setSubmitting }) => {
+      try {
+        setSubmitting(true);
+        await InvestorAPI.postImage({ investorId: user?.id, files: fileUpload });
+        // .then(() => {
+        //   enqueueSnackbar('Cập nhật ảnh thành công', {
+        //     variant: 'success'
+        //   });
+        //   dispatch(getUserKrowdDetail(user?.id));
+        // })
+        // .catch(() => {
+        //   enqueueSnackbar('Cập nhật ảnh thất bại', {
+        //     variant: 'error'
+        //   });
+        //   setFileUpload(null);
+        //   setFieldValueImage('photoURL', null);
+        // });
+      } catch (error) {
+        console.error(error);
+        setSubmitting(false);
+      }
+    }
+  });
+  const {
+    errors: errorsImage,
+    values: valuesImage,
+    touched: touchedImage,
+    handleSubmit: handleSubmitImage,
+    isSubmitting: isSubmittingImage,
+    setFieldValue: setFieldValueImage
+  } = formikImage;
 
   const handleDrop = useCallback(
     (acceptedFiles) => {
       const file = acceptedFiles[0];
       if (file) {
-        setFieldValue('photoURL', {
+        setFieldValue('image', {
           ...file,
           preview: URL.createObjectURL(file)
         });
+        setFileUpload(file);
+        console.log('fileUpload', fileUpload);
+        console.log('aaaaaa', file);
+        console.log('valuesImage', valuesImage.photoURL);
       }
     },
-    [setFieldValue]
+    [setFieldValueImage]
   );
 
   return (
@@ -95,97 +129,74 @@ export default function AccountGeneral() {
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={4}>
-            <Card sx={{ py: 10, px: 3, textAlign: 'center' }}>
-              <UploadAvatar
-                accept="image/*"
-                file={values.photoURL}
-                maxSize={3145728}
-                onDrop={handleDrop}
-                error={Boolean(touched.photoURL && errors.photoURL)}
-                caption={
-                  <Typography
-                    variant="caption"
-                    sx={{
-                      mt: 2,
-                      mx: 'auto',
-                      display: 'block',
-                      textAlign: 'center',
-                      color: 'text.secondary'
-                    }}
-                  >
-                    Allowed *.jpeg, *.jpg, *.png, *.gif
-                    <br /> max size of {fData(3145728)}
-                  </Typography>
-                }
-              />
-
-              <FormHelperText error sx={{ px: 2, textAlign: 'center' }}>
-                {touched.photoURL && errors.photoURL}
-              </FormHelperText>
-
-              <FormControlLabel
-                control={<Switch {...getFieldProps('isPublic')} color="primary" />}
-                labelPlacement="start"
-                label="Public Profile"
-                sx={{ mt: 5 }}
-              />
-            </Card>
+            <Box my={3}>
+              <FormikProvider value={formikImage}>
+                <Form noValidate autoComplete="off" onSubmit={handleSubmitImage}>
+                  <UploadAvatar
+                    accept="image/*"
+                    file={valuesImage.photoURL}
+                    maxSize={3145728}
+                    onDrop={handleDrop}
+                    error={Boolean(touchedImage.photoURL && errorsImage.photoURL)}
+                  />
+                  {fileUpload && (
+                    <Box display="flex" my={3} justifyContent="space-evenly">
+                      <LoadingButton
+                        color="warning"
+                        type="submit"
+                        variant="contained"
+                        loading={isSubmittingImage}
+                      >
+                        Lưu
+                      </LoadingButton>
+                      <Button
+                        color="error"
+                        variant="contained"
+                        onClick={() => {
+                          setFileUpload(null);
+                          setFieldValueImage('photoURL', user?.image);
+                        }}
+                      >
+                        Hủy
+                      </Button>
+                    </Box>
+                  )}
+                </Form>
+              </FormikProvider>
+            </Box>
           </Grid>
-
           <Grid item xs={12} md={8}>
             <Card sx={{ p: 3 }}>
               <Stack spacing={{ xs: 2, md: 3 }}>
                 <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
-                  <TextField fullWidth label="Name" {...getFieldProps('displayName')} />
-                  <TextField fullWidth disabled label="Email Address" {...getFieldProps('email')} />
-                </Stack>
-
-                <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
-                  <TextField fullWidth label="Phone Number" {...getFieldProps('phoneNumber')} />
-                  <TextField fullWidth label="Address" {...getFieldProps('address')} />
-                </Stack>
-
-                <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
+                  <TextField fullWidth disabled label="Email" {...getFieldProps('email')} />
                   <TextField
-                    select
+                    disabled
                     fullWidth
-                    label="Country"
-                    placeholder="Country"
-                    {...getFieldProps('country')}
-                    SelectProps={{ native: true }}
-                    error={Boolean(touched.country && errors.country)}
-                    helperText={touched.country && errors.country}
-                  >
-                    <option value="" />
-                    {countries.map((option) => (
-                      <option key={option.code} value={option.label}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </TextField>
-                  <TextField fullWidth label="State/Region" {...getFieldProps('state')} />
+                    label="Số điện thoại"
+                    {...getFieldProps('phoneNum')}
+                  />
+                </Stack>
+                <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
+                  <TextField fullWidth disabled label="Họ" {...getFieldProps('firstName')} />
+                  <TextField fullWidth disabled label="Tên" {...getFieldProps('lastName')} />
                 </Stack>
 
                 <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
-                  <TextField fullWidth label="City" {...getFieldProps('city')} />
-                  <TextField fullWidth label="Zip/Code" {...getFieldProps('zipCode')} />
+                  <TextField disabled fullWidth label="idCard" {...getFieldProps('idCard')} />
+                  <TextField
+                    disabled
+                    fullWidth
+                    label="Tên ngân hàng"
+                    {...getFieldProps('bankName')}
+                  />
                 </Stack>
-
-                <TextField
-                  {...getFieldProps('about')}
-                  fullWidth
-                  multiline
-                  minRows={4}
-                  maxRows={4}
-                  label="About"
-                />
+                <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
+                  <TextField disabled fullWidth label="Thành phố" {...getFieldProps('city')} />
+                  <TextField disabled fullWidth label="Quận" {...getFieldProps('district')} />
+                  <TextField disabled fullWidth label="Địa chỉ" {...getFieldProps('address')} />
+                </Stack>
               </Stack>
-
-              <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
-                <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-                  Save Changes
-                </LoadingButton>
-              </Box>
             </Card>
           </Grid>
         </Grid>

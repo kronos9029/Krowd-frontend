@@ -138,32 +138,9 @@ export default function BusinessProjectForm() {
       startDate: currentTime,
       endDate: '',
       image: null
-      // tags: ['Logan'],
-      // publish: true,
-      // comments: true,
-      // metaTitle: '',
-      // metaDescription: '',
-      // metaKeywords: ['Logan']
     },
     validationSchema: NewProjectSchema,
     onSubmit: async (values, { setSubmitting, resetForm }) => {
-      //     try {
-      //       await axios.post(
-      //         `https://ec2-13-215-197-250.ap-southeast-1.compute.amazonaws.com/api/v1.0/projects`,
-      //         values
-      //       );
-      //       resetForm();
-      //       setSubmitting(true);
-      //       enqueueSnackbar('Tạo mới thành công', {
-      //         variant: 'success'
-      //       });
-      //       navigate(PATH_DASHBOARD.projectsBusiness.projectBusinessKrowd);
-      //     } catch (error) {
-      //       console.error(error);
-      //       setSubmitting(false);
-      //     }
-      //   }
-      // });
       try {
         const formData = new FormData();
         formData.append('businessId', '9E74278A-F610-11EC-B939-0242AC120002');

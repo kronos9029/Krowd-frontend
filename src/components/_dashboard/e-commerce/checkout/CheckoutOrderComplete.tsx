@@ -7,7 +7,7 @@ import { styled } from '@mui/material/styles';
 import { Box, Link, Button, Divider, Typography, Stack, DialogProps } from '@mui/material';
 // redux
 import { useDispatch } from '../../../../redux/store';
-import { resetCart } from '../../../../redux/slices/product';
+import { onBackStep, resetCart } from '../../../../redux/slices/product';
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
 //
@@ -34,7 +34,10 @@ export default function CheckoutOrderComplete({ open }: DialogProps) {
 
   const handleResetStep = () => {
     dispatch(resetCart());
-    navigate(PATH_DASHBOARD.eCommerce.shop);
+    navigate('/');
+  };
+  const handleBackStep = () => {
+    dispatch(onBackStep());
   };
 
   return (
@@ -42,20 +45,19 @@ export default function CheckoutOrderComplete({ open }: DialogProps) {
       <Box sx={{ p: 4, maxWidth: 480, margin: 'auto' }}>
         <Box sx={{ textAlign: 'center' }}>
           <Typography variant="h4" paragraph>
-            Thank you for your purchase!
+            Quét mã để tải ứng dụng hoặc thanh toán ngay
           </Typography>
 
-          <OrderCompleteIllustration sx={{ height: 260, my: 10 }} />
-
-          <Typography align="left" paragraph>
+          {/* <OrderCompleteIllustration sx={{ height: 260, my: 10 }} /> */}
+          <img src="https://static.mservice.io/img/momo-upload-api-220622150620-637915071801318808.png" />
+          {/* <Typography align="left" paragraph>
             Thanks for placing order &nbsp;
             <Link href="#">01dc1370-3df6-11eb-b378-0242ac130002</Link>
-          </Typography>
+          </Typography> */}
 
           <Typography align="left" sx={{ color: 'text.secondary' }}>
-            We will send you a notification within 5 days when it ships.
-            <br /> <br /> If you have any question or queries then fell to get in contact us. <br />{' '}
-            <br /> All the best,
+            {/* We will send you a notification within 5 days when it ships. */}
+            <br /> <br /> Sử dụng App MoMo hoặc ứng dụng Camera hỗ trợ QR code để quét mã.
           </Typography>
         </Box>
 
@@ -68,17 +70,17 @@ export default function CheckoutOrderComplete({ open }: DialogProps) {
         >
           <Button
             color="inherit"
-            onClick={handleResetStep}
+            onClick={handleBackStep}
             startIcon={<Icon icon={arrowIosBackFill} />}
           >
-            Continue Shopping
+            Trở về
           </Button>
           <Button
             variant="contained"
             startIcon={<Icon icon={filePdfFilled} />}
-            onClick={handleResetStep}
+            onClick={handleBackStep}
           >
-            Download as PDF
+            Tải định dạng PDF
           </Button>
         </Stack>
       </Box>

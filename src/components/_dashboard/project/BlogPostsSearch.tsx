@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { paramCase } from 'change-case';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
@@ -24,6 +24,8 @@ import { PATH_DASHBOARD } from '../../../routes/paths';
 import { Post } from '../../../@types/blog';
 //
 import SearchNotFound from '../../SearchNotFound';
+import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
 
 // ----------------------------------------------------------------------
 
@@ -60,7 +62,13 @@ export default function BlogPostsSearch({ sx }: BoxProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const linkTo = (title: string) => `${PATH_DASHBOARD.blog.root}/post/${paramCase(title)}`;
-
+  const initialLanguage = Cookies.get('i18next') || 'vi';
+  const [currentLanguage, setCurrentLanguage] = useState('');
+  const { t } = useTranslation();
+  useEffect(() => {
+    setCurrentLanguage(initialLanguage);
+    localStorage.setItem('i18nextLng', initialLanguage);
+  });
   const handleChangeSearch = async (value: string) => {
     try {
       setSearchQuery(value);
@@ -99,7 +107,7 @@ export default function BlogPostsSearch({ sx }: BoxProps) {
         renderInput={(params) => (
           <TextField
             {...params}
-            placeholder="Bạn đang tìm dự án gì đấy ?"
+            placeholder={t(`landing_project_search.landing_project_search_placeholder`)}
             InputProps={{
               ...params.InputProps,
               startAdornment: (

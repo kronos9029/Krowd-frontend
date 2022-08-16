@@ -25,7 +25,6 @@ import NavSection from '../../components/NavSection';
 import { MHidden } from '../../components/@material-extend';
 //
 import sidebarConfig from './SidebarConfig';
-import SidebarBusinessConfig from './SidebarBusinessConfig';
 import { DocIllustration } from '../../assets';
 // ----------------------------------------------------------------------
 
@@ -153,7 +152,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
               <MyAvatar />
               <Box sx={{ ml: 2 }}>
                 <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                  {user?.displayName}
+                  {user?.firstName} {user?.lastName}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                   {user?.role}
@@ -225,7 +224,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
               <MyAvatar />
               <Box sx={{ ml: 2 }}>
                 <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                  {user?.displayName}
+                  {user?.firstName} {user?.lastName}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                   {user?.role}
@@ -236,7 +235,6 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
         )}
       </Stack>
 
-      <NavSection navConfig={SidebarBusinessConfig} isShow={!isCollapse} />
       <Box sx={{ flexGrow: 1 }} />
       {!isCollapse && (
         <Stack

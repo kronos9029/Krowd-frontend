@@ -22,17 +22,17 @@ import MenuPopover from '../../components/MenuPopover';
 
 const MENU_OPTIONS = [
   {
-    label: 'Home',
+    label: 'Trang chủ',
     icon: homeFill,
     linkTo: '/'
   },
   {
-    label: 'Profile',
+    label: 'Thông tin cá nhân',
     icon: personFill,
     linkTo: PATH_DASHBOARD.user.profile
   },
   {
-    label: 'Settings',
+    label: 'Cài đặt tài khoản',
     icon: settings2Fill,
     linkTo: PATH_DASHBOARD.user.account
   }
@@ -101,7 +101,7 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle1" noWrap>
-            {user?.displayName}
+            {user?.firstName} {user?.lastName}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
             {user?.email}

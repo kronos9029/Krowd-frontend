@@ -1,9 +1,12 @@
 import { createContext, ReactNode, useEffect, useReducer } from 'react';
 // utils
-import axios from '../utils/axios';
 import { isValidToken, setSession } from '../utils/jwt';
 // @types
 import { ActionMap, AuthState, AuthUser, JWTContextType } from '../@types/authentication';
+import FirebaseService from 'api/firebase';
+import { REACT_APP_API_URL } from 'config';
+import axios from 'axios';
+import { dispatch } from 'redux/store';
 
 // ----------------------------------------------------------------------
 
@@ -57,13 +60,6 @@ const JWTReducer = (state: AuthState, action: JWTActions) => {
         user: null
       };
 
-    case 'REGISTER':
-      return {
-        ...state,
-        isAuthenticated: true,
-        user: action.payload.user
-      };
-
     default:
       return state;
   }
@@ -78,12 +74,39 @@ function AuthProvider({ children }: { children: ReactNode }) {
     const initialize = async () => {
       try {
         const accessToken = window.localStorage.getItem('accessToken');
-
-        if (accessToken && isValidToken(accessToken)) {
+        const userId = window.localStorage.getItem('userId');
+        if (accessToken && userId && isValidToken(accessToken)) {
+          const response = await axios.get(REACT_APP_API_URL + `/users/${userId}`, {
+            headers: { Authorization: `Bearer ${accessToken}` }
+          });
+          const {
+            id,
+            email,
+            image,
+            phoneNum,
+            idCard,
+            city,
+            district,
+            address,
+            firstName,
+            lastName,
+            bankName
+          } = response.data;
+          const user = {
+            id: id,
+            // investorId: investorId,
+            phoneNum: phoneNum,
+            idCard: idCard,
+            city: city,
+            district: district,
+            address: address,
+            bankName: bankName,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            image: image
+          };
           setSession(accessToken);
-
-          const response = await axios.get('/api/account/my-account');
-          const { user } = response.data;
 
           dispatch({
             type: Types.Initial,
@@ -116,14 +139,45 @@ function AuthProvider({ children }: { children: ReactNode }) {
     initialize();
   }, []);
 
-  const login = async (email: string, password: string) => {
-    const response = await axios.post('/api/account/login', {
+  const login = async () => {
+    const firebaseLogin = await FirebaseService.loginWithGoogle();
+    const firebaseUser = await firebaseLogin.user?.getIdTokenResult();
+    if (!firebaseUser) return;
+    const firebaseToken = firebaseUser.token;
+    console.log(firebaseToken);
+    const response = await axios.post(
+      REACT_APP_API_URL + `/authenticate/investor?token=${firebaseToken}`
+    );
+    const {
+      id,
+      token,
       email,
-      password
-    });
-    const { accessToken, user } = response.data;
-
-    setSession(accessToken);
+      image,
+      phoneNum,
+      idCard,
+      city,
+      district,
+      address,
+      firstName,
+      lastName,
+      bankName
+    } = response.data;
+    const user = {
+      id: id,
+      // investorId: investorId,
+      phoneNum: phoneNum,
+      idCard: idCard,
+      city: city,
+      district: district,
+      address: address,
+      bankName: bankName,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      image: image
+    };
+    setSession(token);
+    window.localStorage.setItem('userId', id);
     dispatch({
       type: Types.Login,
       payload: {
@@ -132,26 +186,9 @@ function AuthProvider({ children }: { children: ReactNode }) {
     });
   };
 
-  const register = async (email: string, password: string, firstName: string, lastName: string) => {
-    const response = await axios.post('/api/account/register', {
-      email,
-      password,
-      firstName,
-      lastName
-    });
-    const { accessToken, user } = response.data;
-
-    window.localStorage.setItem('accessToken', accessToken);
-    dispatch({
-      type: Types.Register,
-      payload: {
-        user
-      }
-    });
-  };
-
   const logout = async () => {
     setSession(null);
+    window.localStorage.removeItem('firebaseToken');
     dispatch({ type: Types.Logout });
   };
 
@@ -166,8 +203,6 @@ function AuthProvider({ children }: { children: ReactNode }) {
         method: 'jwt',
         login,
         logout,
-        register,
-        resetPassword,
         updateProfile
       }}
     >

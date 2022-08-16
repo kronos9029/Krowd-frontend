@@ -3,7 +3,7 @@ import SimpleBar, { Props } from 'simplebar-react';
 import { alpha, styled } from '@mui/material/styles';
 import { Box, BoxProps } from '@mui/material';
 import { createRef, useEffect, useRef } from 'react';
-
+import * as React from 'react';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
@@ -52,6 +52,7 @@ export default function Scrollbar({ children, sx, ...other }: BoxProps & Props) 
   return (
     <RootStyle>
       <SimpleBarStyle timeout={500} clickOnTrack={false} sx={sx} {...other} ref={scrollableNodeRef}>
+        {/* <SimpleBarStyle timeout={500} clickOnTrack={false} sx={sx} {...other}> */}
         {children}
       </SimpleBarStyle>
     </RootStyle>

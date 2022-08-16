@@ -20,8 +20,7 @@ import {
   ProjectDetailHighLight
 } from 'components/_external-pages/project-detail/index';
 import MHidden from 'components/@material-extend/MHidden';
-import { TabContext, TabList, TabPanel } from '@mui/lab';
-import ProjectPackage from 'components/_dashboard/general-analytics/ProjectPackage';
+import KrowdPackage from './KrowdPackage';
 // ----------------------------------------------------------------------
 const projectPackage = {
   id: null,
@@ -99,32 +98,12 @@ export default function ComponentsDetails() {
             <Box>
               <Typography textAlign="center" py={1} color={'#666'} variant="h3">
                 Các loại gói đầu tư
-                {/* <PackageAnchor id="__investmentPackage" /> */}
               </Typography>
               <Box mx="auto" width={'10%'}>
                 <Divider sx={{ my: 1, borderBottomWidth: 'thick', color: 'primary.main' }} />
               </Box>
             </Box>
-            <Box sx={{ p: 3 }}>
-              <Grid container spacing={3} sx={{ mb: 5, pb: 5, mt: 3, pt: 3 }}>
-                <Grid item xs={12} sm={6} md={4}>
-                  <Link href="#" underline={'none'}>
-                    <ProjectPackage projectPackage={projectPackage} />
-                  </Link>
-                </Grid>
-
-                <Grid item xs={12} sm={6} md={4}>
-                  <Link href="#" underline={'none'}>
-                    <ProjectPackage projectPackage={projectPackage} />
-                  </Link>
-                </Grid>
-                <Grid item xs={12} sm={6} md={4}>
-                  <Link href="#" underline={'none'}>
-                    <ProjectPackage projectPackage={projectPackage} />
-                  </Link>
-                </Grid>
-              </Grid>
-            </Box>
+            <KrowdPackage />
           </Container>
           <Box sx={{ mb: 5 }}>
             <Divider variant="fullWidth" />
