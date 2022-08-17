@@ -2,9 +2,13 @@ import { Icon } from '@iconify/react';
 import { motion } from 'framer-motion';
 import searchFill from '@iconify/icons-eva/search-fill';
 // material
+import Particles from 'react-particles-js';
+
 import { styled } from '@mui/material/styles';
 import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
+import particlesConfig from 'assets/particlesConfig.json';
+
 import {
   Button,
   Box,
@@ -141,6 +145,33 @@ export default function LandingHero() {
   const { t } = useTranslation();
   return (
     <RootStyle>
+      {/* <Particles
+        className="myParticles"
+        params={{
+          particles: {
+            line_linked: {
+              color: '#528fcc'
+            },
+            number: {
+              value: 100
+            },
+            size: {
+              value: 8
+            },
+            color: {
+              value: '#336699'
+            }
+          },
+          interactivity: {
+            events: {
+              onhover: {
+                enable: false,
+                mode: 'repulse'
+              }
+            }
+          }
+        }}
+      /> */}
       <Container maxWidth="lg" sx={{ position: 'relative' }}>
         <HeroImgStyle src="https://embed.lottiefiles.com/animation/71841" />
         <ContentStyle>
@@ -153,7 +184,6 @@ export default function LandingHero() {
               </Typography>
             </Typography>
           </MotionInView>
-
           <MotionInView variants={varFadeInUp}>
             <Typography sx={{ color: 'common.white', paddingBottom: '1rem' }}>
               {t('Thumbnail_landing_hero_description')} <br />

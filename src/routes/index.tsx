@@ -191,16 +191,10 @@ export default function Router() {
         { path: 'contact-us', element: <Contact /> },
         { path: 'faqs', element: <Faqs /> },
         { path: 'details', element: <Details /> },
-        // { path: 'SearchPage', element: <SearchPage /> },
         { path: 'project', element: <Projects /> },
         {
           path: 'components',
-          children: [
-            { element: <ComponentsOverview /> }
-            // FOUNDATIONS
-            // MATERIAL UI
-            // EXTRA COMPONENTS
-          ]
+          children: [{ element: <ComponentsOverview /> }]
         }
       ]
     },
