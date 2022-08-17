@@ -78,7 +78,7 @@ async function postImage({ investorId, files }: { investorId: string; files: Fil
     throw new Error('No data');
   }
   formData.append('entityId', investorId);
-  formData.append('entityName', 'user');
+  formData.append('entityName', 'User');
   formData.append('files', files);
   await axios({
     method: 'post',

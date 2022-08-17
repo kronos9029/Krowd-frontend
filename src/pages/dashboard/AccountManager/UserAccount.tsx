@@ -9,7 +9,7 @@ import roundAccountBox from '@iconify/icons-ic/round-account-box';
 import editFill from '@iconify/icons-eva/edit-fill';
 import UserAccountForm from './UserAccountForm';
 // material
-import { Container, Tab, Box, Tabs, Button } from '@mui/material';
+import { Container, Tab, Box, Tabs, Button, CircularProgress, Typography } from '@mui/material';
 // redux
 import { RootState, useDispatch, useSelector } from '../../../redux/store';
 import {
@@ -29,6 +29,9 @@ import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 import { AccountBilling, AccountGeneral } from '../../../components/_dashboard/user/account';
 import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
+import { User_Investor } from '../../../@types/krowd/investor';
+import { getUserKrowdDetail } from 'redux/slices/krowd_slices/investor';
+import useAuth from 'hooks/useAuth';
 // ----------------------------------------------------------------------
 const Language = [
   {
@@ -42,12 +45,17 @@ const Language = [
     countryCode: 'en'
   }
 ];
+
 export default function UserAccount() {
   const { themeStretch } = useSettings();
+  const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
+  const { investorKrowdDetail: mainInvestor, isLoading } = useSelector(
+    (state: RootState) => state.user_InvestorStateKrowd
+  );
 
   const handleClose = () => {
     setOpen(false);
@@ -55,47 +63,12 @@ export default function UserAccount() {
   const currentLanguageCode = cookies.get('i18next') || 'en';
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const { cards, invoices, myProfile, addressBook, notifications } = useSelector(
-    (state: RootState) => state.user
-  );
 
-  const [currentTab, setCurrentTab] = useState(
-    `${t(`dashboard_account_investor.dashboard_account_investor_general`)}`
-  );
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCards());
-    dispatch(getAddressBook());
-    dispatch(getInvoices());
-    dispatch(getNotifications());
-    dispatch(getProfile());
+    dispatch(getUserKrowdDetail(user?.id));
   }, [dispatch]);
-
-  if (!myProfile) {
-    return null;
-  }
-
-  if (!cards) {
-    return null;
-  }
-
-  if (!notifications) {
-    return null;
-  }
-
-  const ACCOUNT_TABS = [
-    {
-      value: `${t(`dashboard_account_investor.dashboard_account_investor_general`)}`,
-      icon: <Icon icon={roundAccountBox} width={20} height={20} />,
-      component: <AccountGeneral />
-    },
-    {
-      value: `${t(`dashboard_account_investor.dashboard_account_investor_billing`)}`,
-      icon: <Icon icon={roundReceipt} width={20} height={20} />,
-      component: <AccountBilling cards={cards} addressBook={addressBook} invoices={invoices} />
-    }
-  ];
 
   return (
     <Page title="Tài khoản người đầu tư | Krowd">
@@ -118,30 +91,18 @@ export default function UserAccount() {
           }
         />
         <UserAccountForm open={open} onClose={handleClose} />
-        <Tabs
-          value={currentTab}
-          scrollButtons="auto"
-          variant="scrollable"
-          allowScrollButtonsMobile
-          onChange={(e, value) => setCurrentTab(value)}
-        >
-          {ACCOUNT_TABS.map((tab) => (
-            <Tab
-              disableRipple
-              key={tab.value}
-              label={tab.value}
-              icon={tab.icon}
-              value={tab.value}
+        {(isLoading && (
+          <Box>
+            <CircularProgress
+              size={100}
+              sx={{ margin: '0px auto', padding: '1rem', display: 'flex' }}
             />
-          ))}
-        </Tabs>
-
-        <Box sx={{ mb: 5 }} />
-
-        {ACCOUNT_TABS.map((tab) => {
-          const isMatched = tab.value === currentTab;
-          return isMatched && <Box key={tab.value}>{tab.component}</Box>;
-        })}
+            <Typography variant="h5" sx={{ textAlign: 'center', padding: '1rem' }}>
+              Đang tải dữ liệu, vui lòng đợi giây lát...
+            </Typography>
+          </Box>
+        )) ||
+          (mainInvestor && <AccountGeneral investor={mainInvestor} />)}
       </Container>
     </Page>
   );

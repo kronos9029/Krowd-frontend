@@ -1,19 +1,19 @@
 export type User_Investor = {
-  id: string;
+  id: string | null;
   business: null;
   role: Role;
-  description: null;
-  phoneNum: null;
-  idCard: null;
-  email: string;
-  gender: null;
-  dateOfBirth: null;
-  taxIdentificationNumber: null;
-  city: null;
-  district: null;
-  address: null;
-  bankName: null;
-  bankAccount: null;
+  description: string | null;
+  phoneNum: string | null;
+  idCard: string | null;
+  email: string | null;
+  gender: string | null;
+  dateOfBirth: string | null;
+  taxIdentificationNumber: string | null;
+  city: string | null;
+  district: string | null;
+  address: string | null;
+  bankName: string | null;
+  bankAccount: string | null;
   image: string;
   status: null;
   createDate: string;
@@ -21,8 +21,8 @@ export type User_Investor = {
   updateDate: string;
   updateBy: null;
   isDeleted: boolean;
-  lastName: string;
-  firstName: null;
+  lastName: string | null;
+  firstName: string | null;
 };
 
 export type Role = {

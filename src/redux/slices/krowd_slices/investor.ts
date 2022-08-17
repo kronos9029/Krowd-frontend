@@ -75,12 +75,12 @@ export default slice.reducer;
 
 export function getUserKrowdDetail(userID: string) {
   return async () => {
-    dispatch(slice.actions.startUserKrowdDetailLoading());
+    dispatch(slice.actions.startLoading());
     try {
       const response = await InvestorAPI.get({ id: userID });
-      dispatch(slice.actions.getUserKrowdDetailSuccess(response.data));
+      dispatch(slice.actions.getUserKrowdByIdSuccess(response.data));
     } catch (error) {
-      dispatch(slice.actions.hasUserKrowdDetailError(error));
+      dispatch(slice.actions.hasError(error));
     }
   };
 }
