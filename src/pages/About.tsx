@@ -7,19 +7,13 @@ import {
   AboutHero,
   AboutWhat,
   AboutTeam,
-  AboutVision,
-  AboutTestimonials
+  AboutVision
 } from '../components/_external-pages/about-krowd';
 
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
-  paddingTop: theme.spacing(8),
-  paddingLeft: '25px',
-  paddingRight: '25px',
-  [theme.breakpoints.up('md')]: {
-    paddingTop: theme.spacing(11)
-  }
+  paddingBottom: theme.spacing(11)
 }));
 
 // ----------------------------------------------------------------------

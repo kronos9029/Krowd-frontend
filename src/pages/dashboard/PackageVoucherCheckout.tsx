@@ -23,10 +23,11 @@ import {
   CheckoutOrderComplete,
   CheckoutBillingAddress
 } from '../../components/_dashboard/e-commerce/checkout';
+import KrowdPackage from 'pages/KrowdPackage';
 
 // ----------------------------------------------------------------------
 
-const STEPS = ['Gói ưu đãi', 'Thanh toán'];
+const STEPS = ['Gói ưu đãi', 'Gói đã chọn', 'Thanh toán'];
 
 const QontoConnector = styled(StepConnector)(({ theme }) => ({
   top: 10,
@@ -82,8 +83,7 @@ export default function PackageVoucherCheckout() {
   const isMountedRef = useIsMountedRef();
   const { checkout } = useSelector((state: { product: ProductState }) => state.product);
   const { cart, billing, activeStep } = checkout;
-  const isComplete = activeStep === STEPS.length;
-
+  const isComplete = activeStep === 2;
   useEffect(() => {
     if (isMountedRef.current) {
       dispatch(getCart(cart));
@@ -95,7 +95,7 @@ export default function PackageVoucherCheckout() {
       dispatch(createBilling(null));
     }
   }, [dispatch, activeStep]);
-
+  console.log('activeS', activeStep);
   return (
     <Page title="Gói ưu đãi | Krowd">
       <Container maxWidth={themeStretch ? false : 'lg'}>
@@ -125,6 +125,8 @@ export default function PackageVoucherCheckout() {
           <>
             {activeStep === 0 && <CheckoutPackage />}
             {activeStep === 1 && <CheckoutBillingAddress />}
+            {/* {activeStep === 1 && <CheckoutPackage />} */}
+            {/* {activeStep === 2 && <CheckoutBillingAddress />} */}
             {activeStep === 2 && billing && <CheckoutPayment />}
           </>
         ) : (

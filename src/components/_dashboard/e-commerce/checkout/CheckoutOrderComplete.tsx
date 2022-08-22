@@ -47,16 +47,8 @@ export default function CheckoutOrderComplete({ open }: DialogProps) {
           <Typography variant="h4" paragraph>
             Quét mã để tải ứng dụng hoặc thanh toán ngay
           </Typography>
-
-          {/* <OrderCompleteIllustration sx={{ height: 260, my: 10 }} /> */}
           <img src="https://static.mservice.io/img/momo-upload-api-220622150620-637915071801318808.png" />
-          {/* <Typography align="left" paragraph>
-            Thanks for placing order &nbsp;
-            <Link href="#">01dc1370-3df6-11eb-b378-0242ac130002</Link>
-          </Typography> */}
-
           <Typography align="left" sx={{ color: 'text.secondary' }}>
-            {/* We will send you a notification within 5 days when it ships. */}
             <br /> <br /> Sử dụng App MoMo hoặc ứng dụng Camera hỗ trợ QR code để quét mã.
           </Typography>
         </Box>

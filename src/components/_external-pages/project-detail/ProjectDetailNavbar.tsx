@@ -68,7 +68,7 @@ function ProjectDetailNavbar({ pitchs, bottomNav }: NavbarProps) {
   return (
     <>
       {isShow && (
-        <Box position={'fixed'} top={'10%'} left={'10%'} width={'fit-content'}>
+        <Box position={'fixed'} top={'10%'} left={'5%'} width={'fit-content'}>
           <Box>
             {pitchs &&
               pitchs.map((v, i) => {

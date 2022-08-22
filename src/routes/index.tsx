@@ -10,6 +10,7 @@ import AuthGuard from '../guards/AuthGuard';
 // import RoleBasedGuard from '../guards/RoleBasedGuard';
 // components
 import LoadingScreen from '../components/LoadingScreen';
+import PackageVoucherCheckout from '../pages/dashboard/PackageVoucherCheckout';
 
 // ----------------------------------------------------------------------
 
@@ -178,7 +179,7 @@ export default function Router() {
         { path: 'payment', element: <Payment /> },
         { path: '500', element: <Page500 /> },
         { path: '404', element: <NotFound /> },
-        { path: 'package', element: <EcommerceCheckout /> },
+        { path: 'package', element: <KrowdPackage /> },
         { path: '*', element: <Navigate to="/404" replace /> }
       ]
     },
@@ -192,6 +193,7 @@ export default function Router() {
         { path: 'faqs', element: <Faqs /> },
         { path: 'details', element: <Details /> },
         { path: 'project', element: <Projects /> },
+
         {
           path: 'components',
           children: [{ element: <ComponentsOverview /> }]

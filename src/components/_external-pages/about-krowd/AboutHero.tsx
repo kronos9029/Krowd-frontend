@@ -21,6 +21,7 @@ const RootStyle = styled(motion.div)(({ theme }) => ({
     padding: 0
   }
 }));
+
 const ContentStyle = styled('div')(({ theme }) => ({
   textAlign: 'center',
   [theme.breakpoints.up('md')]: {
@@ -51,13 +52,11 @@ export default function AboutHero() {
     <RootStyle initial="initial" animate="animate" variants={varWrapEnter}>
       <Container maxWidth="lg" sx={{ position: 'relative', height: '100%' }}>
         <ContentStyle sx={{ mb: 7 }}>
-          <TextAnimate text={t('Who')} sx={{ color: 'primary.main' }} variants={varFadeInRight} />
-          <br />
+          <TextAnimate text={t('Who')} sx={{ color: 'primary.main' }} variants={varFadeInRight} />{' '}
           <Box sx={{ display: 'inline-flex', color: 'common.white' }}>
             <TextAnimate text={t('Are')} sx={{ mr: 2 }} />
             <TextAnimate text={t('we')} />
           </Box>
-
           <motion.div variants={varFadeInRight}>
             <Typography
               variant="h4"

@@ -36,7 +36,7 @@ function ProjectDetailAfterPitch({ abouts, nav }: AboutListProps) {
   return (
     <>
       {/* About */}
-      <Container maxWidth={'lg'} sx={{ paddingBottom: '2rem' }}>
+      <Container maxWidth={'lg'} sx={{ paddingBottom: '3rem' }}>
         <Box mb={7}>
           <NavbarTopAnchor id={`__navbarTop_${aboutNav}`}></NavbarTopAnchor>
           <Typography textAlign="center" py={1} color={'#666'} variant="h3">
@@ -118,11 +118,11 @@ function ProjectDetailAfterPitch({ abouts, nav }: AboutListProps) {
         </Grid>
         <NavbarBottomAnchor id={`__navbarBottom_${aboutNav}`}></NavbarBottomAnchor>
       </Container>
-      <Box sx={{ mb: 5 }}>
+      <Box sx={{ mb: 7 }}>
         <Divider variant="fullWidth" />
       </Box>
       {/* Press */}
-      <Container maxWidth={'lg'} sx={{ paddingBottom: '4rem' }}>
+      <Container maxWidth={'lg'} sx={{ paddingBottom: '5rem' }}>
         <Box mb={7}>
           <NavbarTopAnchor id={`__navbarTop_${aboutNav}`}></NavbarTopAnchor>
           <Typography textAlign="center" py={1} color={'#666'} variant="h3">

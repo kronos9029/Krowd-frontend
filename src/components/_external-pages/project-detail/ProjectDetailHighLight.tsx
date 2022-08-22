@@ -62,7 +62,7 @@ function ProjectDetailHighLight({ highlights }: HighlightListProps) {
         highlights.length > 0 &&
         highlights.map((v, i) => {
           return (
-            <Box key={i} pb={10}>
+            <Box key={i}>
               <Box pb={5} display={'flex'}>
                 <Typography variant="h4" color={'#666'} height={50}>
                   <Icon
@@ -79,7 +79,7 @@ function ProjectDetailHighLight({ highlights }: HighlightListProps) {
                   </Box>
                 </Typography>
               </Box>
-              <Typography variant="h6" color={'text.secondary'} fontWeight={100}>
+              <Typography sx={{ pb: 0.1 }} variant="h6" color={'text.secondary'} fontWeight={100}>
                 {list && <FixQL>{parse(list.content)}</FixQL>}
               </Typography>
             </Box>

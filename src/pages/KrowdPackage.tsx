@@ -56,8 +56,8 @@ const PLANS = [
 
 const RootStyle = styled(Page)(({ theme }) => ({
   minHeight: '100%',
-  paddingTop: theme.spacing(15),
-  paddingBottom: theme.spacing(10)
+  paddingTop: theme.spacing(7),
+  paddingBottom: theme.spacing(1)
 }));
 
 // ----------------------------------------------------------------------
@@ -65,7 +65,15 @@ const RootStyle = styled(Page)(({ theme }) => ({
 export default function KrowdPackage() {
   return (
     <RootStyle title="Gói ưu đãi | Krowd">
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" sx={{ paddingBottom: '5rem' }}>
+        <Box>
+          <Typography textAlign="center" py={5} color={'#666'} variant="h3">
+            Các loại gói đầu tư
+          </Typography>
+          <Box mx="auto" width={'10%'} pb={3}>
+            <Divider sx={{ my: 1, borderBottomWidth: 'thick', color: 'primary.main' }} />
+          </Box>
+        </Box>
         <Grid container spacing={3}>
           {PLANS.map((card, index) => (
             <Grid item xs={12} md={4} key={card.subscription}>

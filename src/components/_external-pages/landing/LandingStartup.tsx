@@ -182,11 +182,18 @@ export default function LandingMinimalHelps() {
           </Box>
         </Box>
 
-        <Grid container>
+        {/* <Grid container>
           {projectList &&
             projectList.listOfProject
               .filter((value) => value.status === PROJECT_STATUS.CALLING_FOR_INVESTMENT)
               .slice(0, 3)
+              .map((p) => <ProjectCard key={p.id} row={p} />)}
+        </Grid> */}
+        <Grid container alignItems="center" justifyContent="center" spacing={5}>
+          {projectList &&
+            projectList.listOfProject
+              .filter((value) => value.status === PROJECT_STATUS.CALLING_FOR_INVESTMENT)
+              .slice(0, 9)
               .map((p) => <ProjectCard key={p.id} row={p} />)}
         </Grid>
 
@@ -200,7 +207,7 @@ export default function LandingMinimalHelps() {
             sx={{ mb: 1, color: 'text.disabled', marginLeft: '1rem' }}
           >
             {t(`landing_project_highlight.landing_highligh_transaction`)}
-            <Link to="#" style={{ textDecoration: 'none' }}>
+            <Link to="/about-us" style={{ textDecoration: 'none' }}>
               {' '}
               {t(`landing_project_highlight.landing_highligh_by_about_us`)}
             </Link>

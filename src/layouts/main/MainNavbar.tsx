@@ -154,7 +154,13 @@ export default function MainNavbar() {
   };
 
   return (
-    <AppBar sx={{ boxShadow: 0, bgcolor: '#FFFFFF' }}>
+    <AppBar
+      sx={{
+        boxShadow: 0,
+        bgcolor: '#FFFFFF',
+        position: 'absolute'
+      }}
+    >
       <ToolbarStyle
         disableGutters
         sx={{
@@ -198,6 +204,7 @@ export default function MainNavbar() {
             {(user && (
               <>
                 <Button
+                  sx={{ marginRight: '1rem' }}
                   id="basic-button"
                   aria-controls={open ? 'basic-menu' : undefined}
                   aria-haspopup="true"

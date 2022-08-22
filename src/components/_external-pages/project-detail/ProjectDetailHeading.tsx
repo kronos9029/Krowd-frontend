@@ -1,11 +1,15 @@
 import { Box, Chip, Typography } from '@mui/material';
 import { MHidden } from 'components/@material-extend';
-import { Project1 } from '../../../@types/krowd/project';
+import { Project1, PROJECT_STATUS } from '../../../@types/krowd/project';
 
+const StyleStatus = [
+  { name: PROJECT_STATUS.CALLING_FOR_INVESTMENT, bgcolor: 'primary.main', vn: 'ĐANG KÊU GỌI' },
+  { name: PROJECT_STATUS.ACTIVE, bgcolor: 'primary.success', vn: 'KÊU GỌI THÀNH CÔNG' }
+];
 function ProjectDetailHeading({ p }: { p: Project1 }) {
   return (
     <>
-      <Box my={2} pt={'6rem'} sx={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+      <Box my={2} pt={'9rem'} sx={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
         <Typography>
           <img style={{ width: '80px' }} src={p.business.image} />
         </Typography>
@@ -33,9 +37,14 @@ function ProjectDetailHeading({ p }: { p: Project1 }) {
         </Box>
         <Box sx={{ display: 'flex' }}>
           <Chip
-            label={<Typography variant="overline">{p.status}</Typography>}
+            label={
+              <Typography variant="overline">
+                {StyleStatus.find((e) => e.name === p.status)?.vn}
+              </Typography>
+            }
             variant="filled"
             sx={{
+              bgcolor: StyleStatus.find((e) => e.name === p.status)?.bgcolor,
               borderRadius: '3px',
               color: '#ffffff'
             }}

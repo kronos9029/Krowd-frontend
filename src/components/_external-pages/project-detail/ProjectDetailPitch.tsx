@@ -68,9 +68,9 @@ function ProjectDetailPitch({ pitchs }: PitchListProps) {
         pitchs.map(
           (v, i) =>
             v && (
-              <Box key={i} my={5} py={5}>
+              <Box key={i} my={5} py={0.4}>
                 <NavbarTopAnchor id={`__navbarTop_${v.id}`}></NavbarTopAnchor>
-                <Box pb={4}>
+                <Box pb={2}>
                   <Typography variant="h4" color={'#666'} height={50}>
                     {`${i + 1}. ${v.title}`}
                     <Box width={'10%'}>

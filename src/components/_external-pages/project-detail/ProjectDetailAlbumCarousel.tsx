@@ -8,7 +8,7 @@ import { Box } from '@mui/material';
 //
 import LightboxModal from '../../LightboxModal';
 import { CarouselControlsArrowsIndex } from '../../carousel';
-import { positions } from '@mui/system';
+import MainNavbar from 'layouts/main/MainNavbar';
 
 // ----------------------------------------------------------------------
 
@@ -45,7 +45,6 @@ const ThumbWrapperStyle = styled('div')(({ theme }) => ({
 }));
 
 const LargeImgStyle = styled('img')(({}) => ({
-  top: 0,
   width: '100%'
 }));
 
