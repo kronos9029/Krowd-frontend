@@ -64,13 +64,6 @@ const ContentStyle = styled('div')(({ theme }) => ({
 export default function Login() {
   return (
     <RootStyle title="Login | Krowd">
-      {/* <AuthLayout>
-        Bạn chưa có tại khoản? &nbsp;
-        <Link underline="none" variant="subtitle2" component={RouterLink} to={PATH_AUTH.register}>
-          Đăng ký ngay
-        </Link>
-      </AuthLayout> */}
-
       <MHidden width="mdDown">
         <SectionStyle>
           <Typography variant="h3" sx={{ p: 5, mt: 10, mb: 5 }}>

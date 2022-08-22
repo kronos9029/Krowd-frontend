@@ -6,19 +6,38 @@ import { MotionInView, varFadeInUp } from '../../animate';
 import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
 import { OverlayBackground } from 'assets';
+import { motion } from 'framer-motion';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
-  padding: theme.spacing(10, 0),
+  padding: theme.spacing(15, 0, 4, 0),
   backgroundColor: '#14B7CC',
   backgroundImage: `url(${OverlayBackground})`,
   backgroundSize: 'cover'
 }));
-
+const HeroImgStyle = styled(motion.iframe)(({ theme }) => ({
+  top: 0,
+  right: 10,
+  bottom: 0,
+  zIndex: 9,
+  width: '100%',
+  height: '100%',
+  margin: 'auto',
+  position: 'absolute',
+  objectFit: 'cover',
+  opacity: 0.8,
+  [theme.breakpoints.up('md')]: {
+    width: 'auto',
+    height: '48vh'
+  },
+  [theme.breakpoints.down('md')]: {
+    display: 'none'
+  }
+}));
+//
 const ContentStyle = styled('div')(({ theme }) => ({
   textAlign: 'center',
   position: 'relative',
-  // marginBottom: theme.spacing(10),
   [theme.breakpoints.up('md')]: {
     height: '100%',
     marginBottom: 0,
@@ -66,10 +85,15 @@ export default function LandingDarkMode() {
         />
 
         <Grid container spacing={5} direction="row-reverse" justifyContent="space-evenly">
-          <Grid item xs={12} md={4}>
+          <Grid item xs={6} sm={3} md={4} sx={{ position: 'relative' }}>
+            {/* <HeroImgStyle src="https://embed.lottiefiles.com/animation/45041" /> */}
+            <img alt="dark mode" src="/static/home/AppDownload.svg" />
+          </Grid>
+
+          <Grid item xs={12} md={6}>
             <ContentStyle>
               <MotionInView variants={varFadeInUp}>
-                <Typography variant="h3" sx={{ mb: 3, color: 'common.white' }}>
+                <Typography component="p" variant="h4" sx={{ mb: 3, color: 'common.white' }}>
                   {t('app_title_description')}
                 </Typography>
               </MotionInView>
@@ -77,50 +101,33 @@ export default function LandingDarkMode() {
               <MotionInView variants={varFadeInUp}>
                 <Typography
                   component="p"
-                  variant="overline"
-                  sx={{ mb: 2, color: 'common.white', display: 'block' }}
+                  sx={{ mb: 3, color: 'common.white', display: 'block', fontSize: '18px' }}
                 >
                   {t('app_title_description_1')}
                 </Typography>
               </MotionInView>
 
-              <MotionInView variants={varFadeInUp}>
-                <Typography sx={{ color: '', mb: 5, display: 'flex', justifyContent: 'center' }}>
-                  <img
-                    alt="light mode"
-                    src="/static/home/GooglePlay.png"
+              <Grid container spacing={3}>
+                <Grid xs={7} sm={7} md={7}>
+                  <iframe
+                    src="https://embed.lottiefiles.com/animation/27173"
                     style={{
-                      border: '#000000 10px solid',
-                      borderRadius: '10px',
-                      height: '80px',
-                      marginRight: '130px'
+                      width: '270px',
+                      height: '239px'
                     }}
                   />
-                </Typography>
-                <Typography sx={{ color: '', mb: 5, display: 'flex', justifyContent: 'center' }}>
-                  <img
-                    alt="light mode"
-                    src="/static/home/AppStore.png"
+                </Grid>
+                <Grid xs={5} sm={5} md={5} spacing={3}>
+                  <iframe
+                    src="https://embed.lottiefiles.com/animation/27169"
                     style={{
-                      border: '#000000 10px solid',
-                      borderRadius: '10px',
-                      height: '80px',
-                      marginRight: '130px'
+                      width: '230px',
+                      height: '240px'
                     }}
                   />
-                </Typography>
-              </MotionInView>
+                </Grid>
+              </Grid>
             </ContentStyle>
-          </Grid>
-
-          <Grid item xs={4} md={6} sx={{ position: 'relative' }}>
-            <MotionInView
-              threshold={0.5}
-              variants={varFadeInUp}
-              sx={{ top: 0, left: 0, position: 'absolute' }}
-            >
-              <img alt="dark mode" src="/static/home/AppDownload.svg" />
-            </MotionInView>
           </Grid>
         </Grid>
       </Container>

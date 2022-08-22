@@ -1,5 +1,10 @@
 // material
 import { alpha, useTheme, styled } from '@mui/material/styles';
+//React
+import { useEffect, useState } from 'react';
+import { dispatch, RootState, useSelector } from 'redux/store';
+import useAuth from 'hooks/useAuth';
+import { Link } from 'react-router-dom';
 import {
   Box,
   Container,
@@ -14,34 +19,39 @@ import {
   Stack,
   Chip
 } from '@mui/material';
-import { orderBy } from 'lodash';
+//Languages
 import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
-import React, { useEffect, useState } from 'react';
-import { dispatch, RootState, useSelector } from 'redux/store';
-import { getAllProject, getProjectList } from 'redux/slices/krowd_slices/project';
+//Project
+import { ProjectCard } from '../project';
+import { PROJECT_STATUS } from '../../../@types/krowd/project';
+import { getProjectList } from 'redux/slices/krowd_slices/project';
+import { getFieldList } from 'redux/slices/krowd_slices/field';
 //Icon
 import { Icon } from '@iconify/react';
 import barChartOutlined from '@iconify/icons-ant-design/bar-chart-outlined';
 import caretDownFilled from '@iconify/icons-ant-design/caret-down-filled';
 import caretUpFilled from '@iconify/icons-ant-design/caret-up-filled';
 import fileProtectOutlined from '@iconify/icons-ant-design/file-protect-outlined';
-//
+//Temp
 import { BlogPostsSearch, BlogPostsSort } from 'components/_dashboard/project';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import { getFieldList } from 'redux/slices/krowd_slices/field';
-import FieldCard from 'components/FieldCard';
-import { Post } from '../../../@types/blog';
-import { ProjectCard } from '../project';
-import { Link } from 'react-router-dom';
-import { PROJECT_STATUS } from '../../../@types/krowd/project';
-import useAuth from 'hooks/useAuth';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
+  paddingTop: theme.spacing(5),
   [theme.breakpoints.up('md')]: {
-    paddingBottom: theme.spacing(11),
+    paddingBottom: theme.spacing(4),
+    backgroundColor:
+      theme.palette.mode === 'light'
+        ? `linear-gradient(180deg, ${alpha(theme.palette.grey[300], 0)} 0%, ${
+            theme.palette.grey[300]
+          } 100%)`
+        : 'none'
+  },
+
+  [theme.breakpoints.up('xs')]: {
+    paddingTop: theme.spacing(9),
+    paddingBottom: theme.spacing(4),
     backgroundColor:
       theme.palette.mode === 'light'
         ? `linear-gradient(180deg, ${alpha(theme.palette.grey[300], 0)} 0%, ${
@@ -72,8 +82,6 @@ const SORT_OPTIONS = [
 // ----------------------------------------------------------------------
 
 export default function LandingMinimalHelps() {
-  const theme = useTheme();
-  const { user } = useAuth();
   const [filters, setFilters] = useState('Mostfunded');
   const currentLanguageCode = cookies.get('i18next') || 'en';
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
@@ -147,13 +155,9 @@ export default function LandingMinimalHelps() {
   };
 
   return (
-    <RootStyle
-      sx={{
-        paddingBottom: '1rem'
-      }}
-    >
+    <RootStyle>
       <Container maxWidth="lg">
-        <Box sx={{ mb: { xs: 10, md: 2, textAlign: 'left', paddingTop: '3rem' } }}>
+        <Box sx={{ mb: { xs: 10, md: 2, textAlign: 'left' } }}>
           <Typography variant="h2" sx={{ mb: 3, color: 'text.primary' }}>
             {t('highlight_project')}
           </Typography>

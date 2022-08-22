@@ -21,10 +21,11 @@ const Language = [
 ];
 
 const RootStyle = styled('div')(({ theme }) => ({
-  paddingTop: theme.spacing(12),
-  [theme.breakpoints.up('md')]: {
-    paddingBottom: theme.spacing(1)
-  }
+  paddingTop: theme.spacing(12)
+
+  // [theme.breakpoints.up('sm')]: {
+  //   paddingBottom: theme.spacing(3.5)
+  // }
 }));
 
 const CenterItemContainerMd = styled(Container)(({ theme }) => ({
@@ -40,14 +41,12 @@ const CardStyle = styled(Card)(({ theme }) => {
     textAlign: 'center',
     color: '#000000',
     backgroundColor: '#ffffff',
-    padding: theme.spacing(3.2, 5, 2),
-    // boxShadow: '-20px 20px 40px 0 rgb(0 0 0 / 35%)',
+    padding: theme.spacing(3.2, 5, 2, 3),
     [theme.breakpoints.up('md')]: {
       backgroundColor: '#ffffff'
     },
     '&.card_title_2': {
       [theme.breakpoints.up('md')]: {
-        // backgroundColor: theme.palette.background.paper
         backgroundColor: '#ffffff'
         // boxShadow: '-20px 20px 40px 0 rgb(0 0 0 / 35%)',
         // '&:before': {
@@ -100,7 +99,7 @@ export default function LandingMinimalHelps() {
   return (
     <RootStyle>
       <CenterItemContainerMd maxWidth="lg">
-        <Grid container spacing={isDesktop ? 15 : 5}>
+        <Grid container spacing={4}>
           {Array.from(MinimalContents).map((value) => (
             <Grid key={value.card_title} item xs={12} md={4}>
               <MotionInView variants={varFadeInUp}>
@@ -110,7 +109,7 @@ export default function LandingMinimalHelps() {
                       style={{
                         width: '50px',
                         display: 'inline',
-                        paddingBottom: '1.5rem'
+                        paddingBottom: '1rem'
                       }}
                       src={value.icon}
                     />

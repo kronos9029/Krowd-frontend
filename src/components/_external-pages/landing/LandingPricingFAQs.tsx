@@ -13,7 +13,7 @@ const RootStyle = styled(Page)(({ theme }) => ({
   paddingBottom: theme.spacing(5),
   backgroundColor: '#FFFFFF',
   [theme.breakpoints.up('md')]: {
-    paddingTop: theme.spacing(5)
+    paddingTop: theme.spacing(9)
   }
 }));
 

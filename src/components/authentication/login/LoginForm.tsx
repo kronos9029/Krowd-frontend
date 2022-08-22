@@ -27,7 +27,7 @@ export default function LoginForm() {
     <>
       <Box sx={{ p: 7 }}>
         <Typography variant="h5" sx={{ color: '#002226', fontWeight: '800', textAlign: 'center' }}>
-          Login to F-CMS
+          Login to Krowd System
         </Typography>
         <LoadingButton
           style={{

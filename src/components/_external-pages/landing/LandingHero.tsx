@@ -17,8 +17,7 @@ import {
   Stack,
   StackProps,
   InputAdornment,
-  Input,
-  Grid
+  Input
 } from '@mui/material';
 // routes
 import { varFadeInUp, MotionInView, varFadeInDown } from '../../animate';
@@ -48,9 +47,26 @@ const RootStyle = styled('div')(({ theme }) => ({
     top: 0,
     left: 0,
     width: '100%',
-    display: 'flex',
+    // display: 'flex',
     alignItems: 'center'
   }
+  // [theme.breakpoints.up('sm')]: {
+  //   paddingBottom: theme.spacing(8),
+  //   top: 0,
+  //   left: 0,
+  //   width: '100%',
+  //   // display: 'flex',
+  //   alignItems: 'center'
+  // },
+  // [theme.breakpoints.up('xs')]: {
+  //   paddingTop: theme.spacing(11),
+  //   paddingBottom: theme.spacing(4),
+  //   top: 0,
+  //   left: 0,
+  //   width: '100%',
+  //   // display: 'flex',
+  //   alignItems: 'center'
+  // }
 }));
 
 const ContentStyle = styled((props: StackProps) => <Stack spacing={5} {...props} />)(
@@ -62,41 +78,26 @@ const ContentStyle = styled((props: StackProps) => <Stack spacing={5} {...props}
     borderRadius: '2rem',
     paddingLeft: 0,
     paddingRight: 0,
-    position: 'relative',
+    // position: 'relative',
     backgroundImage: 'none',
-    paddingTop: theme.spacing(15),
-    paddingBottom: theme.spacing(15),
+    paddingTop: theme.spacing(5),
     [theme.breakpoints.up('md')]: {
       margin: 'unset',
       textAlign: 'left',
       height: '100%',
       marginBottom: 0,
       display: 'inline-flex',
-      flexDirection: 'column',
+      flexDirection: 'collum',
       justifyContent: 'center',
       alignItems: 'flex-start'
     },
+
     [theme.breakpoints.down('md')]: {
       paddingTop: 50,
       paddingBottom: 60
     }
   })
 );
-
-// const ContentStyle = styled('div')(({ theme }) => ({
-//   textAlign: 'center',
-//   position: 'relative',
-//   // marginBottom: theme.spacing(10),
-//   [theme.breakpoints.up('md')]: {
-//     height: '100%',
-//     marginBottom: 0,
-//     textAlign: 'left',
-//     display: 'inline-flex',
-//     flexDirection: 'column',
-//     justifyContent: 'center',
-//     alignItems: 'flex-start'
-//   }
-// }));
 
 const HeroImgStyle = styled(motion.iframe)(({ theme }) => ({
   top: 0,
@@ -173,12 +174,13 @@ export default function LandingHero() {
         }}
       /> */}
       <Container maxWidth="lg" sx={{ position: 'relative' }}>
+        {/* <Container maxWidth={false}> */}
         <HeroImgStyle src="https://embed.lottiefiles.com/animation/71841" />
         <ContentStyle>
           <MotionInView variants={varFadeInUp}>
             <Typography variant="h1" sx={{ color: 'common.white' }}>
-              {t('Thumbnail_landing_hero_title')} <br />
-              {t('Thumbnail_landing_hero_title_1')} <br /> {t('Thumbnail_landing_hero_title_2')}
+              {t('Thumbnail_landing_hero_title')} {t('Thumbnail_landing_hero_title_1')}{' '}
+              {t('Thumbnail_landing_hero_title_2')}
               <Typography component="span" variant="h1" sx={{ color: '#14B7CC' }}>
                 &nbsp;KROWD
               </Typography>
@@ -186,10 +188,9 @@ export default function LandingHero() {
           </MotionInView>
           <MotionInView variants={varFadeInUp}>
             <Typography sx={{ color: 'common.white', paddingBottom: '1rem' }}>
-              {t('Thumbnail_landing_hero_description')} <br />
-              {t('Thumbnail_landing_hero_description_1')}
+              {t('Thumbnail_landing_hero_description')} {t('Thumbnail_landing_hero_description_1')}{' '}
             </Typography>
-            <Typography sx={{ color: 'common.white' }}>
+            <Typography sx={{ color: 'common.white', paddingBottom: '1rem' }}>
               {t('Thumbnail_landing_hero_description2')}
             </Typography>
           </MotionInView>
@@ -200,7 +201,6 @@ export default function LandingHero() {
                 <SearchInput
                   disableUnderline={true}
                   fullWidth
-                  // disableUnderline
                   placeholder={t('Search_hover')}
                   startAdornment={
                     <InputAdornment position="start">

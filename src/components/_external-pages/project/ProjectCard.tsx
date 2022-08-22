@@ -1,26 +1,14 @@
-import {
-  Grid,
-  CardMedia,
-  Box,
-  Container,
-  Typography,
-  CardActionArea,
-  Card,
-  alpha,
-  Chip
-} from '@mui/material';
+import { Grid, CardMedia, Box, Typography, CardActionArea, Card, alpha, Chip } from '@mui/material';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import { styled } from '@mui/material/styles';
 import { MotionInView, varFadeInUp } from 'components/animate';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getProjectId } from 'redux/slices/krowd_slices/project';
 import { dispatch } from 'redux/store';
 import { PATH_DETAILS } from 'routes/paths';
 import { fCurrency } from 'utils/formatNumber';
 import { Project1 } from '../../../@types/krowd/project';
-import CheckIcon from '@mui/icons-material/Check';
-const ACTIVE_STATUS = 4;
 const CardStyle = styled(Card)(({ theme }) => {
   const shadowCard = (opacity: number) =>
     theme.palette.mode === 'light'
@@ -30,34 +18,39 @@ const CardStyle = styled(Card)(({ theme }) => {
     maxWidth: 390,
     margin: 'auto',
     textAlign: 'left',
+    marginBottom: theme.spacing(5),
     boxShadow: `-40px 40px 80px 0 ${shadowCard(0.2)}`,
     [theme.breakpoints.up('md')]: {
       borderRadius: theme.shape.borderRadiusMd,
       backgroundColor: '#f4f6f8',
       boxShadow: `-20px 20px 40px 0 ${shadowCard(0.15)}`
     },
-    '&.cardCenter': {
-      [theme.breakpoints.up('md')]: {
-        marginTop: -80,
-        backgroundColor: theme.palette.background.paper,
-        boxShadow: `-40px 40px 80px 0 ${shadowCard(0.1)}`,
-        '&:before': {
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          zIndex: -1,
-          content: "''",
-          margin: 'auto',
-          position: 'absolute',
-          width: 'calc(100% - 40px)',
-          height: 'calc(100% - 40px)',
-          borderRadius: theme.shape.borderRadiusMd,
-          backgroundColor: theme.palette.background.paper,
-          boxShadow: `-20px 20px 40px 0 ${shadowCard(0.05)}`
-        }
-      }
+    [theme.breakpoints.up('xs')]: {
+      borderRadius: theme.shape.borderRadiusMd,
+      backgroundColor: '#f4f6f8'
     }
+    // '&.cardCenter': {
+    //   [theme.breakpoints.up('md')]: {
+    //     marginTop: -80,
+    //     backgroundColor: theme.palette.background.paper,
+    //     boxShadow: `-40px 40px 80px 0 ${shadowCard(0.1)}`,
+    //     '&:before': {
+    //       top: 0,
+    //       left: 0,
+    //       right: 0,
+    //       bottom: 0,
+    //       zIndex: -1,
+    //       content: "''",
+    //       margin: 'auto',
+    //       position: 'absolute',
+    //       width: 'calc(100% - 40px)',
+    //       height: 'calc(100% - 40px)',
+    //       borderRadius: theme.shape.borderRadiusMd,
+    //       backgroundColor: theme.palette.background.paper,
+    //       boxShadow: `-20px 20px 40px 0 ${shadowCard(0.05)}`
+    //     }
+    //   }
+    // }
   };
 });
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
@@ -92,7 +85,6 @@ function ProjectCard({ row }: { row: Project1 }) {
               width: 360,
               maxHeight: 500,
               height: 500
-              // '&:hover': { opacity: 0.9 }
             }}
           >
             <CardActionArea>
@@ -100,7 +92,7 @@ function ProjectCard({ row }: { row: Project1 }) {
                 sx={{
                   minWidth: 50,
                   minHeight: 50,
-                  boxShadow: '40px 40px 80px 0 20%',
+                  boxShadow: '20px 40px 80px 0 20%',
                   position: 'absolute',
                   top: isHover ? '39%' : '42%',
                   left: '5%',
@@ -118,26 +110,6 @@ function ProjectCard({ row }: { row: Project1 }) {
                 height={240}
                 src={row.image}
               />
-              {/* <Box sx={{ position: 'absolute', top: '1%', right: '1%' }}>
-                <Chip
-                  label={
-                    <>
-                      {row.status === 4 ? (
-                        <CheckIcon sx={{ fontSize: '16px', color: '#ffffff' }} />
-                      ) : undefined}
-                      <Typography variant="overline" fontSize={11} ml={row.status === 4 ? 1 : 0}>
-                        {ProjectStatus[row.status].statusString}
-                      </Typography>
-                    </>
-                  }
-                  variant="filled"
-                  sx={{
-                    borderRadius: '3px',
-                    backgroundColor: `${ProjectStatus[row.status].color}`,
-                    color: '#ffffff'
-                  }}
-                />
-              </Box> */}
               <Box px={3}>
                 <Box minHeight={'10em'}>
                   <Typography
