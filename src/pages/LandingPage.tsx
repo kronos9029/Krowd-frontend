@@ -2,6 +2,8 @@
 import { styled } from '@mui/material/styles';
 // components
 import Page from '../components/Page';
+import { MessengerChat } from 'react-messenger-chat-plugin';
+
 import {
   LandingHero,
   LandingMinimal,
@@ -41,6 +43,34 @@ export default function LandingPage() {
         <LandingThreeSteps />
         <LandingPricingFAQs />
         <LandingDarkMode />
+        <MessengerChat
+          pageId="100084621412328"
+          language="sv_SE"
+          themeColor={'#000000'}
+          bottomSpacing={300}
+          loggedInGreeting="loggedInGreeting"
+          loggedOutGreeting="loggedOutGreeting"
+          greetingDialogDisplay={'show'}
+          onMessengerShow={() => {
+            console.log('onMessengerShow');
+          }}
+          onMessengerHide={() => {
+            console.log('onMessengerHide');
+          }}
+          onMessengerDialogShow={() => {
+            console.log('onMessengerDialogShow');
+          }}
+          onMessengerDialogHide={() => {
+            console.log('onMessengerDialogHide');
+          }}
+          onMessengerMounted={() => {
+            console.log('onMessengerMounted');
+          }}
+          onMessengerLoad={() => {
+            console.log('onMessengerLoad');
+          }}
+        />
+        ,{/* <MessengerCustomerChat pageId="" appId="596613965341821" />, */}
       </ContentStyle>
     </RootStyle>
   );
