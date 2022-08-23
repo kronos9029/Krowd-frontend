@@ -43,7 +43,7 @@ export default function LandingPage() {
         <LandingThreeSteps />
         <LandingPricingFAQs />
         <LandingDarkMode />
-        <MessengerChat
+        {/* <MessengerChat
           pageId="100084621412328"
           language="sv_SE"
           themeColor={'#000000'}
@@ -69,8 +69,8 @@ export default function LandingPage() {
           onMessengerLoad={() => {
             console.log('onMessengerLoad');
           }}
-        />
-        ,{/* <MessengerCustomerChat pageId="" appId="596613965341821" />, */}
+        /> */}
+        {/* <MessengerCustomerChat pageId="" appId="596613965341821" />, */}
       </ContentStyle>
     </RootStyle>
   );
