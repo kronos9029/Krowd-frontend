@@ -90,7 +90,7 @@ export default function UserAccount() {
             </Button>
           }
         />
-        <UserAccountForm open={open} onClose={handleClose} />
+        {mainInvestor && <UserAccountForm user={mainInvestor} open={open} onClose={handleClose} />}
         {(isLoading && (
           <Box>
             <CircularProgress

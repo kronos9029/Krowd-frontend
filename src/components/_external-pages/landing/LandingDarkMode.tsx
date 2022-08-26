@@ -15,6 +15,7 @@ const RootStyle = styled('div')(({ theme }) => ({
   backgroundImage: `url(${OverlayBackground})`,
   backgroundSize: 'cover'
 }));
+
 const HeroImgStyle = styled(motion.iframe)(({ theme }) => ({
   top: 0,
   right: 10,
@@ -107,21 +108,22 @@ export default function LandingDarkMode() {
                 </Typography>
               </MotionInView>
 
-              <Grid container spacing={3}>
-                <Grid xs={7} sm={7} md={7}>
+              <Grid container spacing={3} justifyContent={'space-between'}>
+                <Grid xs={6} sm={7} md={5} spacing={3}>
                   <iframe
                     src="https://embed.lottiefiles.com/animation/27173"
                     style={{
-                      width: '270px',
+                      width: '200px',
                       height: '239px'
                     }}
                   />
                 </Grid>
-                <Grid xs={5} sm={5} md={5} spacing={3}>
+
+                <Grid xs={5} sm={5} md={7}>
                   <iframe
                     src="https://embed.lottiefiles.com/animation/27169"
                     style={{
-                      width: '230px',
+                      width: '167px',
                       height: '240px'
                     }}
                   />

@@ -18,19 +18,36 @@ import {
   AppCurrentDownload,
   AppTotalActiveUsers
 } from '../../components/_dashboard/general-app';
+import { dispatch, RootState, useSelector } from 'redux/store';
+import investor from 'redux/slices/krowd_slices/investor';
+import { useEffect } from 'react';
+import { getUserKrowdDetail } from 'redux/slices/krowd_slices/user';
 
 // ----------------------------------------------------------------------
+// const { themeStretch } = useSettings();
+// const { user } = useAuth();
+// const { businessDetailState } = useSelector((state: RootState) => state.business);
+// const { businessDetail, isLoading } = businessDetailState;
 
+// return (
+//   <Page title="Trang chủ doanh nghiệp | Krowd dành cho doanh nghiệp">
+//     <Container maxWidth={themeStretch ? false : 'xl'}>
+//       <Grid container spacing={3}>
+//         <Grid item xs={12} md={5}>
+//           <AppWelcome user={user} business={businessDetail} />
+//         </Grid>
 export default function GeneralApp() {
   const { themeStretch } = useSettings();
   const { user } = useAuth();
+  const { UserDetailState } = useSelector((state: RootState) => state.userKrowd);
+  const { UserDetail, isLoading } = UserDetailState;
 
   return (
     <Page title="General: App | Krowd">
       <Container maxWidth={themeStretch ? false : 'xl'}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={8}>
-            <AppWelcome displayName={user?.displayName} />
+            <AppWelcome user={user} investor={UserDetail} />
           </Grid>
 
           <Grid item xs={12} md={4}>

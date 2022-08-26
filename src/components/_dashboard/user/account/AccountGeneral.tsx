@@ -36,8 +36,9 @@ type UserAccountProps = {
 export default function AccountGeneral({ investor }: UserAccountProps) {
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar } = useSnackbar();
-  const { user, updateProfile } = useAuth();
   const [fileUpload, setFileUpload] = useState<File | null>(null);
+  const { firstName, lastName, phoneNum, email, idCard, district, bankName, city, address } =
+    investor;
 
   const formikImage = useFormik({
     enableReinitialize: true,
@@ -47,12 +48,12 @@ export default function AccountGeneral({ investor }: UserAccountProps) {
     onSubmit: async (values, { setSubmitting }) => {
       try {
         setSubmitting(true);
-        await InvestorAPI.postImage({ investorId: user?.id, files: fileUpload })
+        await InvestorAPI.postImage({ investorId: investor.id, files: fileUpload })
           .then(() => {
             enqueueSnackbar('Cập nhật ảnh thành công', {
               variant: 'success'
             });
-            dispatch(getUserKrowdDetail(user?.id));
+            dispatch(getUserKrowdDetail(investor.id));
           })
           .catch(() => {
             enqueueSnackbar('Cập nhật ảnh thất bại', {
@@ -97,7 +98,7 @@ export default function AccountGeneral({ investor }: UserAccountProps) {
             <Box my={3}>
               <UploadAvatar
                 accept="image/*"
-                file={valuesImage?.photoURL ?? ''}
+                file={valuesImage.photoURL}
                 maxSize={3145728}
                 onDrop={handleDrop}
                 error={Boolean(touchedImage.photoURL && errorsImage.photoURL)}
@@ -117,7 +118,7 @@ export default function AccountGeneral({ investor }: UserAccountProps) {
                     variant="contained"
                     onClick={() => {
                       setFileUpload(null);
-                      setFieldValueImage('photoURL', user?.image);
+                      setFieldValueImage('photoURL', investor.image);
                     }}
                   >
                     Hủy
@@ -130,8 +131,8 @@ export default function AccountGeneral({ investor }: UserAccountProps) {
             <Card sx={{ p: 3 }}>
               <Stack spacing={{ xs: 2, md: 3 }}>
                 <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
-                  <TextField fullWidth disabled label="Email" value={investor.email} />
-                  <TextField disabled fullWidth label="Số điện thoại" value={investor.phoneNum} />
+                  <TextField fullWidth disabled label="Email" value={email} />
+                  <TextField disabled fullWidth label="Số điện thoại" value={phoneNum} />
                 </Stack>
                 <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
                   <TextField
@@ -140,17 +141,17 @@ export default function AccountGeneral({ investor }: UserAccountProps) {
                     label="Họ"
                     value={investor?.firstName ?? '<Chưa cập nhật>'}
                   />
-                  <TextField fullWidth disabled label="Tên" value={investor.lastName} />
+                  <TextField fullWidth disabled label="Tên" value={lastName} />
                 </Stack>
 
                 <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
-                  <TextField disabled fullWidth label="idCard" value={investor.idCard} />
-                  <TextField disabled fullWidth label="Tên ngân hàng" value={investor.bankName} />
+                  <TextField disabled fullWidth label="idCard" value={idCard} />
+                  <TextField disabled fullWidth label="Tên ngân hàng" value={bankName} />
                 </Stack>
                 <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
-                  <TextField disabled fullWidth label="Thành phố" value={investor.city} />
-                  <TextField disabled fullWidth label="Quận" value={investor.district} />
-                  <TextField disabled fullWidth label="Địa chỉ" value={investor.address} />
+                  <TextField disabled fullWidth label="Thành phố" value={city} />
+                  <TextField disabled fullWidth label="Quận" value={district} />
+                  <TextField disabled fullWidth label="Địa chỉ" value={address} />
                 </Stack>
               </Stack>
             </Card>

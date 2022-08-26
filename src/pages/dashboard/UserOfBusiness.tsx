@@ -20,7 +20,7 @@ const TABLE_HEAD_NONE = [
 
 // ----------------------------------------------------------------------
 
-export default function UserList() {
+export default function UserListOfBusiness() {
   return (
     <Page title="Doanh nghiệp: Danh sách | Krowd">
       <Container maxWidth={false}>

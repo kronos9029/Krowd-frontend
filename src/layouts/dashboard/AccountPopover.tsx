@@ -3,7 +3,8 @@ import { useSnackbar } from 'notistack';
 import { useRef, useState } from 'react';
 import homeFill from '@iconify/icons-eva/home-fill';
 import personFill from '@iconify/icons-eva/person-fill';
-import settings2Fill from '@iconify/icons-eva/settings-2-fill';
+import projectIcon from '@iconify/icons-ant-design/account-book';
+
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 // material
 import { alpha } from '@mui/material/styles';
@@ -27,13 +28,13 @@ const MENU_OPTIONS = [
     linkTo: '/'
   },
   {
-    label: 'Thông tin cá nhân',
-    icon: personFill,
-    linkTo: PATH_DASHBOARD.user.profile
+    label: 'Dự án của bạn',
+    icon: projectIcon,
+    linkTo: PATH_DASHBOARD.userKrowd.list
   },
   {
-    label: 'Cài đặt tài khoản',
-    icon: settings2Fill,
+    label: 'Thông tin cá nhân',
+    icon: personFill,
     linkTo: PATH_DASHBOARD.user.account
   }
 ];
@@ -101,7 +102,7 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle1" noWrap>
-            {user?.firstName} {user?.lastName}
+            {user?.fullName}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
             {user?.email}

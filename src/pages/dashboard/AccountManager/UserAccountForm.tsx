@@ -20,30 +20,26 @@ import { dispatch, RootState } from 'redux/store';
 import { useSelector } from 'react-redux';
 import { getUserKrowdDetail } from 'redux/slices/krowd_slices/investor';
 import { REACT_APP_API_URL } from 'config';
+import { User_Investor } from '../../../@types/krowd/investor';
 // @types
 
 // ----------------------------------------------------------------------
 
 type UserAccountFormProps = {
+  user: User_Investor;
   open: boolean;
   onClose: VoidFunction;
 };
 
-export default function UserAccountForm({ open, onClose }: UserAccountFormProps) {
+export default function UserAccountForm({ user, open, onClose }: UserAccountFormProps) {
   const NewAddressSchema = Yup.object().shape({
     phoneNum: Yup.string().required('Yêu cầu nhập số điện thoại'),
-    idCard: Yup.string().required('Yêu cầu nhập mã thẻ'),
     district: Yup.string().required('Yêu cầu nhập quận của bạn'),
     address: Yup.string().required('Yêu cầu nhập địa chỉ'),
-    city: Yup.string().required('Yêu cầu nhập thành phố'),
     firstName: Yup.string().required('Yêu cầu nhập họ của bạn'),
-    lastName: Yup.string().required('Yêu cầu nhập tên của bạn'),
-    bankName: Yup.string().required('Yêu cầu nhập tên ngân hàng')
+    lastName: Yup.string().required('Yêu cầu nhập tên của bạn')
   });
   const { enqueueSnackbar } = useSnackbar();
-
-  const { user } = useAuth();
-
   function getToken() {
     return window.localStorage.getItem('accessToken');
   }
@@ -138,7 +134,7 @@ export default function UserAccountForm({ open, onClose }: UserAccountFormProps)
                   <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
-                      label="Tên"
+                      label="Ten"
                       {...getFieldProps('lastName')}
                       error={Boolean(touched.lastName && errors.lastName)}
                       helperText={touched.lastName && errors.lastName}

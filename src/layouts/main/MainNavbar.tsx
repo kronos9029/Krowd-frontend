@@ -212,7 +212,7 @@ export default function MainNavbar() {
                   onClick={handleClick}
                   variant="contained"
                 >
-                  {user?.firstName} {user?.lastName}
+                  {user?.fullName}{' '}
                 </Button>
                 <Menu
                   id="basic-menu"

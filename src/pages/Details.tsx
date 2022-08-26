@@ -1,5 +1,5 @@
 // material
-import { Divider, Container, Grid, Box, Typography, styled, Link, Tab } from '@mui/material';
+import { Divider, Container, Grid, Box, Typography, styled, Link, Tab, Input } from '@mui/material';
 // redux
 import { RootState, useSelector } from 'redux/store';
 // routes
@@ -190,6 +190,44 @@ export default function ComponentsDetails() {
           <Box sx={{ mb: 7 }}>
             <Divider variant="fullWidth" />
           </Box>
+          <Container maxWidth={'lg'} sx={{ mb: 6 }}>
+            <Grid container>
+              <Grid xs={12} sm={4} md={5} lg={3}>
+                <Box>
+                  <Button
+                    disabled
+                    disableElevation
+                    size="large"
+                    sx={{
+                      border: 'solid',
+                      borderRadius: '5%'
+                    }}
+                  >
+                    Bạn muốn kiếm thêm chi tiêu
+                  </Button>
+                </Box>
+              </Grid>
+              <Grid xs={12} sm={4} md={5} lg={7}>
+                <Box>
+                  <Link href={PATH_PAGE.checkout} style={{ width: '100%', textDecoration: 'none' }}>
+                    <Button
+                      sx={{
+                        backgroundColor: '#FF7F50',
+                        minWidth: '450px',
+                        '&:hover': { backgroundColor: '#FF7F50' }
+                      }}
+                      disableElevation
+                      disableRipple
+                      variant="contained"
+                      size="large"
+                    >
+                      Đầu tư ngay {projectID.name}
+                    </Button>
+                  </Link>
+                </Box>
+              </Grid>
+            </Grid>
+          </Container>
 
           <Box sx={{ mb: 7 }}>
             <Divider variant="fullWidth" />

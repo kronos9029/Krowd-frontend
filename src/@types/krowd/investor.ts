@@ -1,28 +1,28 @@
 export type User_Investor = {
-  id: string | null;
+  id: string;
   business: null;
   role: Role;
-  description: string | null;
-  phoneNum: string | null;
-  idCard: string | null;
-  email: string | null;
-  gender: string | null;
-  dateOfBirth: string | null;
-  taxIdentificationNumber: string | null;
-  city: string | null;
-  district: string | null;
-  address: string | null;
-  bankName: string | null;
-  bankAccount: string | null;
+  description: string;
+  phoneNum: string;
+  idCard: string;
+  email: string;
+  gender: string;
+  dateOfBirth: string;
+  taxIdentificationNumber: string;
+  city: string;
+  district: string;
+  address: string;
+  bankName: string;
+  bankAccount: string;
   image: string;
-  status: null;
+  status: string;
   createDate: string;
-  createBy: null;
+  createBy: Date | string | number;
   updateDate: string;
-  updateBy: null;
+  updateBy: Date | string | number;
   isDeleted: boolean;
-  lastName: string | null;
-  firstName: string | null;
+  lastName: string;
+  firstName: string;
 };
 
 export type Role = {
@@ -30,8 +30,8 @@ export type Role = {
   name: string;
   description: string;
   createDate: string;
-  createBy: null;
+  createBy: Date | string | number;
   updateDate: string;
-  updateBy: null;
+  updateBy: Date | string | number;
   isDeleted: boolean;
 };

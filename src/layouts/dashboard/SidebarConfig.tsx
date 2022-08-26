@@ -24,11 +24,11 @@ const sidebarConfig = [
   {
     subheader: 'Thống kê của bạn',
     items: [
-      // {
-      //   title: 'app',
-      //   path: PATH_DASHBOARD.general.app,
-      //   icon: ICONS.dashboard
-      // },
+      {
+        title: 'app',
+        path: PATH_DASHBOARD.general.app,
+        icon: ICONS.dashboard
+      },
       // { title: 'Chung', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics },
       { title: 'Ví của bạn', path: PATH_DASHBOARD.general.banking, icon: ICONS.banking },
       { title: 'Tổng quan ngày', path: PATH_DASHBOARD.general.booking, icon: ICONS.booking }
@@ -37,7 +37,7 @@ const sidebarConfig = [
   {
     subheader: 'Quản lý',
     items: [
-      { title: 'Dự án đang đầu tư', path: PATH_DASHBOARD.blog.posts, icon: ICONS.project },
+      { title: 'Dự án đang đầu tư', path: PATH_DASHBOARD.userKrowd.list, icon: ICONS.project },
       {
         title: 'Quản lý ví',
         path: PATH_DASHBOARD.general.banking,

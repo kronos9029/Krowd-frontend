@@ -7,6 +7,7 @@ import FirebaseService from 'api/firebase';
 import { REACT_APP_API_URL } from 'config';
 import axios from 'axios';
 import { dispatch } from 'redux/store';
+import investor from 'redux/slices/krowd_slices/investor';
 
 // ----------------------------------------------------------------------
 
@@ -79,35 +80,19 @@ function AuthProvider({ children }: { children: ReactNode }) {
           const response = await axios.get(REACT_APP_API_URL + `/users/${userId}`, {
             headers: { Authorization: `Bearer ${accessToken}` }
           });
-          const {
-            id,
-            email,
-            image,
-            phoneNum,
-            idCard,
-            city,
-            district,
-            address,
-            firstName,
-            lastName,
-            bankName
-          } = response.data;
+          const { id, investorId, email, phoneNum, lastName, firstName, image, role } =
+            response.data;
           const user = {
             id: id,
-            // investorId: investorId,
-            phoneNum: phoneNum,
-            idCard: idCard,
-            city: city,
-            district: district,
-            address: address,
-            bankName: bankName,
-            firstName: firstName,
-            lastName: lastName,
+            investorId: investorId,
             email: email,
-            image: image
+            image: image,
+            fullName: `${firstName} ${lastName}`,
+            phoneNum: phoneNum,
+            role: role.name
           };
           setSession(accessToken);
-
+          console.log(user);
           dispatch({
             type: Types.Initial,
             payload: {
@@ -148,33 +133,16 @@ function AuthProvider({ children }: { children: ReactNode }) {
     const response = await axios.post(
       REACT_APP_API_URL + `/authenticate/investor?token=${firebaseToken}`
     );
-    const {
-      id,
-      token,
-      email,
-      image,
-      phoneNum,
-      idCard,
-      city,
-      district,
-      address,
-      firstName,
-      lastName,
-      bankName
-    } = response.data;
+    const { token, id, investorId, email, phoneNum, fullName, image, roleName } = response.data;
     const user = {
       id: id,
-      // investorId: investorId,
-      phoneNum: phoneNum,
-      idCard: idCard,
-      city: city,
-      district: district,
-      address: address,
-      bankName: bankName,
-      firstName: firstName,
-      lastName: lastName,
+      investorId: investorId,
       email: email,
-      image: image
+      image: image,
+      fullName: fullName,
+      phoneNum: phoneNum,
+      token: token,
+      role: roleName
     };
     setSession(token);
     window.localStorage.setItem('userId', id);

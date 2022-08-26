@@ -112,7 +112,7 @@ export default function Router() {
           path: 'userKrowd',
           children: [
             { element: <Navigate to="/dashboard/userKrowd/profile" replace /> },
-            { path: 'posts', element: <UserOfBusiness /> },
+            { path: 'projects', element: <UserOfBusiness /> },
             { path: 'cards', element: <UserCards /> },
             { path: 'list', element: <UserOfBusiness /> },
             { path: 'new', element: <UserCreate /> },

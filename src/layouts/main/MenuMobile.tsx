@@ -332,7 +332,7 @@ export default function MenuMobile({ isOffset, isHome, navConfig }: MenuProps) {
                   onClick={handleClick}
                   variant="contained"
                 >
-                  {user?.displayName}
+                  {user?.fullName}
                 </Button>
                 <Menu
                   id="basic-menu"

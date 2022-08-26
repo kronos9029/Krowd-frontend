@@ -3,7 +3,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Typography, Button, Card, CardContent, CardProps } from '@mui/material';
 import { SeoIllustration } from '../../../assets';
-import useAuth from 'hooks/useAuth';
+import { User_Investor } from '../../../@types/krowd/investor';
 
 // ----------------------------------------------------------------------
 
@@ -23,11 +23,11 @@ const RootStyle = styled(Card)(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 interface AppWelcomeProps extends CardProps {
-  displayName?: string;
+  investor?: User_Investor | null;
+  user?: any;
 }
 
-export default function AppWelcome({ displayName }: AppWelcomeProps) {
-  const { user } = useAuth();
+export default function AppWelcome({ user, investor }: AppWelcomeProps) {
   return (
     <RootStyle>
       <CardContent
@@ -39,8 +39,7 @@ export default function AppWelcome({ displayName }: AppWelcomeProps) {
       >
         <Typography gutterBottom variant="h4">
           Chào mừng trở lại,
-          <br /> {user?.firstName} {''}
-          {user?.lastName}
+          <br /> {user.fullName}
         </Typography>
       </CardContent>
 
