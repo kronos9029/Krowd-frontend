@@ -72,13 +72,46 @@ const Language = [
     countryCode: 'en'
   }
 ];
+const SORT_OPTIONS_CONFIG = {
+  vi: [
+    {
+      value: 'Mostfunded',
+      label: 'Được tài trợ nhiều nhất'
+    },
+    {
+      value: 'Newestfirst',
+      label: 'Mới nhất'
+    },
+    {
+      value: 'Mosttraction',
+      label: 'Đầu tư nhiều nhất'
+    },
+    {
+      value: 'Closingsoon',
+      label: 'Kết thúc'
+    }
+  ],
 
-const SORT_OPTIONS = [
-  { value: 'Mostfunded', label: 'Most funded' },
-  { value: 'Newestfirst', label: 'Newest first' },
-  { value: 'Mosttraction', label: 'Most traction' },
-  { value: 'Closingsoon', label: 'Closing soon' }
-];
+  en: [
+    {
+      value: 'Mostfunded',
+      label: 'Most funded'
+    },
+    {
+      value: 'Newestfirst',
+      label: 'Newest first'
+    },
+    {
+      value: 'Mosttraction',
+      label: 'Most traction'
+    },
+    {
+      value: 'Closingsoon',
+      label: 'Closing soon'
+    }
+  ]
+};
+
 // ----------------------------------------------------------------------
 
 export default function LandingMinimalHelps() {
@@ -300,7 +333,13 @@ export default function LandingMinimalHelps() {
                   </Button>
                 </Grid>
                 <Grid item xs={12} md={4}>
-                  <BlogPostsSort query={filters} options={SORT_OPTIONS} onSort={handleChangeSort} />
+                  <BlogPostsSort
+                    query={filters}
+                    options={
+                      currentLanguageCode === 'vi' ? SORT_OPTIONS_CONFIG.vi : SORT_OPTIONS_CONFIG.en
+                    }
+                    onSort={handleChangeSort}
+                  />
                 </Grid>
               </Grid>
             </Grid>

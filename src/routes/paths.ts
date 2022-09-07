@@ -33,7 +33,7 @@ export const PATH_PAGE = {
   project: '/project',
   checkout: '/package',
   homePage: '/',
-  mediaKrowd: 'https://www.facebook.com/profile.php?id=100084621412328'
+  mediaKrowd: '/https://www.facebook.com/profile.php?id=100084621412328'
 };
 
 export const PATH_DASHBOARD = {

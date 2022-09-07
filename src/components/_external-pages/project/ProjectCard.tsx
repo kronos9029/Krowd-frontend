@@ -9,6 +9,9 @@ import { dispatch } from 'redux/store';
 import { PATH_DETAILS } from 'routes/paths';
 import { fCurrency } from 'utils/formatNumber';
 import { Project1 } from '../../../@types/krowd/project';
+//language
+import cookies from 'js-cookie';
+import { useTranslation } from 'react-i18next';
 const CardStyle = styled(Card)(({ theme }) => {
   const shadowCard = (opacity: number) =>
     theme.palette.mode === 'light'
@@ -64,9 +67,23 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     backgroundColor: '#14B7CC'
   }
 }));
-
+const Language = [
+  {
+    code: 'vi',
+    name: 'English',
+    countryCode: 'vi'
+  },
+  {
+    code: 'en',
+    name: 'Vietnamese',
+    countryCode: 'en'
+  }
+];
 function ProjectCard({ row }: { row: Project1 }) {
   const [isHover, setIsHover] = useState(false);
+  const currentLanguageCode = cookies.get('i18next') || 'en';
+  const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
+  const { t } = useTranslation();
   const handleGetProjectById = (activeProjectId: string) => {
     dispatch(getProjectId(activeProjectId, 'ADMIN'));
   };
@@ -178,7 +195,7 @@ function ProjectCard({ row }: { row: Project1 }) {
                           marginBottom: '0.2rem'
                         }}
                       >
-                        <strong>Đã đầu tư</strong>
+                        <strong>{t(`Invested`)}</strong>
                       </Typography>
                       <Typography
                         paragraph
@@ -187,7 +204,7 @@ function ProjectCard({ row }: { row: Project1 }) {
                           marginBottom: '0.2rem'
                         }}
                       >
-                        <strong>Mục tiêu</strong>
+                        <strong>{t(`InvestCapital`)}</strong>
                       </Typography>
                     </Box>
                     <BorderLinearProgress

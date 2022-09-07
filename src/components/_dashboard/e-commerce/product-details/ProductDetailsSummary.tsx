@@ -15,28 +15,19 @@ import roundAddShoppingCart from '@iconify/icons-ic/round-add-shopping-cart';
 import { useTheme, styled } from '@mui/material/styles';
 import {
   Box,
-  Grid,
-  Link,
-  Button,
-  Rating,
   Tooltip,
   Divider,
-  TextField,
   Typography,
-  FormHelperText,
   LinearProgress,
   linearProgressClasses
 } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
 // utils
-import { fShortenNumber, fCurrency } from '../../../../utils/formatNumber';
+import { fCurrency } from '../../../../utils/formatNumber';
 //
-import Label from '../../../Label';
 import { MIconButton } from '../../../@material-extend';
-import ColorSinglePicker from '../../../ColorSinglePicker';
 import { Product, CartItem } from '../../../../@types/products';
-import { KrowdProjectProgress } from 'components/_dashboard/general-booking';
 
 // ----------------------------------------------------------------------
 
@@ -78,56 +69,56 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     backgroundColor: '#14B7CC'
   }
 }));
-const Incrementer = ({ name, available }: { name: string; available: number }) => {
-  const [field, , helpers] = useField(name);
-  const { value } = field;
-  const { setValue } = helpers;
+// const Incrementer = ({ name, available }: { name: string; available: number }) => {
+//   const [field, , helpers] = useField(name);
+//   const { value } = field;
+//   const { setValue } = helpers;
 
-  const incrementQuantity = () => {
-    setValue(value + 1);
-  };
-  const decrementQuantity = () => {
-    setValue(value - 1);
-  };
+//   const incrementQuantity = () => {
+//     setValue(value + 1);
+//   };
+//   const decrementQuantity = () => {
+//     setValue(value - 1);
+//   };
 
-  return (
-    <Box
-      sx={{
-        py: 0.5,
-        px: 0.75,
-        border: 1,
-        lineHeight: 0,
-        borderRadius: 1,
-        display: 'flex',
-        alignItems: 'center',
-        borderColor: 'grey.50032'
-      }}
-    >
-      <MIconButton size="small" color="inherit" disabled={value <= 1} onClick={decrementQuantity}>
-        <Icon icon={minusFill} width={16} height={16} />
-      </MIconButton>
-      <Typography
-        variant="body2"
-        component="span"
-        sx={{
-          width: 40,
-          textAlign: 'center',
-          display: 'inline-block'
-        }}
-      >
-        {value}
-      </Typography>
-      <MIconButton
-        size="small"
-        color="inherit"
-        disabled={value >= available}
-        onClick={incrementQuantity}
-      >
-        <Icon icon={plusFill} width={16} height={16} />
-      </MIconButton>
-    </Box>
-  );
-};
+//   return (
+//     <Box
+//       sx={{
+//         py: 0.5,
+//         px: 0.75,
+//         border: 1,
+//         lineHeight: 0,
+//         borderRadius: 1,
+//         display: 'flex',
+//         alignItems: 'center',
+//         borderColor: 'grey.50032'
+//       }}
+//     >
+//       <MIconButton size="small" color="inherit" disabled={value <= 1} onClick={decrementQuantity}>
+//         <Icon icon={minusFill} width={16} height={16} />
+//       </MIconButton>
+//       <Typography
+//         variant="body2"
+//         component="span"
+//         sx={{
+//           width: 40,
+//           textAlign: 'center',
+//           display: 'inline-block'
+//         }}
+//       >
+//         {value}
+//       </Typography>
+//       <MIconButton
+//         size="small"
+//         color="inherit"
+//         disabled={value >= available}
+//         onClick={incrementQuantity}
+//       >
+//         <Icon icon={plusFill} width={16} height={16} />
+//       </MIconButton>
+//     </Box>
+//   );
+// };
 
 type ProductDetailsSumaryprops = {
   product: Product;
@@ -143,13 +134,10 @@ export default function ProductDetailsSummary({
   onGotoStep,
   ...other
 }: ProductDetailsSumaryprops) {
-  const theme = useTheme();
   const navigate = useNavigate();
   const { id, name, sizes, price, cover, status, colors, available } = product;
 
   const alreadyProduct = cart.map((item) => item.id).includes(id);
-  const isMaxQuantity =
-    cart.filter((item) => item.id === id).map((item) => item.quantity)[0] >= available;
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -182,16 +170,6 @@ export default function ProductDetailsSummary({
 
   const { values, touched, errors, getFieldProps, handleSubmit } = formik;
 
-  const handleAddCart = async () => {
-    try {
-      onAddCart({
-        ...values,
-        subtotal: values.price * values.quantity
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
   let totalBudget = Math.floor(Math.random() * 100000000);
   let currentBudget = Math.floor(Math.random() * totalBudget);
   let ratio = Math.floor((currentBudget / totalBudget) * 100);

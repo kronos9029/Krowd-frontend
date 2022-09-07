@@ -13,7 +13,9 @@ import { fCurrency } from 'utils/formatNumber';
 import { Link } from 'react-scroll';
 import { ProjectDetailAlbumCarousel } from 'components/_external-pages/project-detail/index';
 import { PATH_PAGE } from 'routes/paths';
-
+//Language
+import cookies from 'js-cookie';
+import { useTranslation } from 'react-i18next';
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
   borderRadius: 5,
@@ -30,7 +32,23 @@ type ProjectDetailCardProps = {
   project: Project1;
   album: string[];
 };
+const Language = [
+  {
+    code: 'vi',
+    name: 'English',
+    countryCode: 'vi'
+  },
+  {
+    code: 'en',
+    name: 'Vietnamese',
+    countryCode: 'en'
+  }
+];
 function ProjectDetailCard({ project: p, album }: ProjectDetailCardProps) {
+  //Language
+  const currentLanguageCode = cookies.get('i18next') || 'en';
+  const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
+  const { t } = useTranslation();
   return (
     <Grid container>
       <Grid
@@ -69,7 +87,7 @@ function ProjectDetailCard({ project: p, album }: ProjectDetailCardProps) {
                 marginBottom: '0.2rem'
               }}
             >
-              <strong>Đã đầu tư</strong>
+              <strong>{t(`Invested`)}</strong>
             </Typography>
             <Typography
               paragraph
@@ -78,7 +96,7 @@ function ProjectDetailCard({ project: p, album }: ProjectDetailCardProps) {
                 marginBottom: '0.2rem'
               }}
             >
-              <strong>Mục tiêu</strong>
+              <strong>{t(`InvestCapital`)}</strong>
             </Typography>
           </Box>
           <BorderLinearProgress
@@ -123,7 +141,7 @@ function ProjectDetailCard({ project: p, album }: ProjectDetailCardProps) {
             {p.multiplier}
             <span>%</span>
             <Typography color="text.disabled" variant="subtitle2">
-              Doanh thu chia sẻ
+              {t(`Project_detail_card.ShareRevenue`)}
             </Typography>
           </Typography>
         </Box>
@@ -140,7 +158,7 @@ function ProjectDetailCard({ project: p, album }: ProjectDetailCardProps) {
             <span>x</span>
             {p.multiplier}
             <Typography color="text.disabled" variant="subtitle2">
-              Hệ số nhân
+              {t(`Project_detail_card.Multiplier`)}
             </Typography>
           </Typography>
         </Box>
@@ -154,9 +172,9 @@ function ProjectDetailCard({ project: p, album }: ProjectDetailCardProps) {
           }}
         >
           <Typography sx={{ mt: 0.2, fontSize: '25px', fontWeight: '900' }}>
-            {p.duration} <span> tháng </span>
+            {p.duration} <span> {t(`Project_detail_card.month`)} </span>
             <Typography color="text.disabled" variant="subtitle2">
-              Thanh toán đầu tư
+              {t(`Project_detail_card.duration`)}
             </Typography>
           </Typography>
         </Box>
@@ -170,9 +188,9 @@ function ProjectDetailCard({ project: p, album }: ProjectDetailCardProps) {
           }}
         >
           <Typography sx={{ mt: 0.2, fontSize: '25px', fontWeight: '900' }}>
-            {p.numOfStage} <span> kì</span>
+            {p.numOfStage} <span> {t(`Project_detail_card.Term`)}</span>
             <Typography color="text.disabled" variant="subtitle2">
-              Số kì thanh toán
+              {t(`Project_detail_card.numOfStage`)}
             </Typography>
           </Typography>
         </Box>
@@ -192,7 +210,7 @@ function ProjectDetailCard({ project: p, album }: ProjectDetailCardProps) {
               variant="contained"
               size="large"
             >
-              Đầu tư ngay
+              {t(`Project_detail_card.investNow`)}
             </Button>
           </Link>
         </Box>

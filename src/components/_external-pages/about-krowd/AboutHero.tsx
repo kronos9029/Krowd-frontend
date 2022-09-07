@@ -52,11 +52,19 @@ export default function AboutHero() {
     <RootStyle initial="initial" animate="animate" variants={varWrapEnter}>
       <Container maxWidth="lg" sx={{ position: 'relative', height: '100%' }}>
         <ContentStyle sx={{ mb: 7 }}>
-          <TextAnimate text={t('Who')} sx={{ color: 'primary.main' }} variants={varFadeInRight} />{' '}
-          <Box sx={{ display: 'inline-flex', color: 'common.white' }}>
-            <TextAnimate text={t('Are')} sx={{ mr: 2 }} />
-            <TextAnimate text={t('we')} />
-          </Box>
+          <TextAnimate
+            text={t('Who')}
+            sx={{ color: 'primary.main', mr: 2, gap: 1 }}
+            variants={varFadeInRight}
+          />
+          <TextAnimate
+            sx={{ display: 'inline-flex', color: 'common.white', mr: 2 }}
+            text={t('Are')}
+          />
+          <TextAnimate
+            text={t('we')}
+            sx={{ display: 'inline-flex', color: 'common.white', mr: 2 }}
+          />
           <motion.div variants={varFadeInRight}>
             <Typography
               variant="h4"

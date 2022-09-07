@@ -17,8 +17,6 @@ import Logo from '../../components/Logo';
 import i18next from 'i18next';
 import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
-import React, { useEffect } from 'react';
-import classNames from 'classnames';
 
 // ----------------------------------------------------------------------
 
@@ -56,7 +54,11 @@ const LINKS = [
     // headline: 'Về KROWD',
     children: [
       { name: 'Tuyển dụng', href: '#' },
-      { name: 'Truyền thông', href: '#' }
+      {
+        name: 'Truyền thông',
+        target: '_blank',
+        href: 'https://www.facebook.com/profile.php?id=100084621412328'
+      }
     ]
   }
 ];

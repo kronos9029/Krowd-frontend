@@ -9,31 +9,93 @@ import { useDispatch, useSelector } from '../../../../redux/store';
 import { sortByProducts } from '../../../../redux/slices/product';
 // @types
 import { ProductState } from '../../../../@types/products';
-
+import cookies from 'js-cookie';
+import { useTranslation } from 'react-i18next';
 // ----------------------------------------------------------------------
+const SORT_BY_OPTIONS_CONFIG = {
+  vi: [
+    {
+      value: 'featured',
+      label: 'Ngày tạo dự án'
+    },
+    {
+      value: 'newest',
+      label: 'Dự án mới nhất'
+    },
+    {
+      value: 'Desc',
+      label: 'Từ Z - A'
+    },
+    {
+      value: 'Asc',
+      label: 'Từ A - Z'
+    }
+  ],
 
-const SORT_BY_OPTIONS = [
-  { value: 'featured', label: 'Ngày tạo dự án' },
-  { value: 'newest', label: 'Dự án nổi bật' },
-  { value: 'priceDesc', label: 'Từ a - z' },
-  { value: 'priceAsc', label: 'Từ z - a' }
-];
+  en: [
+    {
+      value: 'featured',
+      label: 'Featured'
+    },
+    {
+      value: 'newest',
+      label: 'Newest'
+    },
+    {
+      value: 'Desc',
+      label: 'Z - A'
+    },
+    {
+      value: 'Asc',
+      label: 'A - Z'
+    }
+  ]
+};
 
 function renderLabel(label: string | null) {
-  if (label === 'Ngày tạo dự án') {
+  if (label === 'featured') {
     return 'Featured';
   }
-  if (label === 'Dự án nổi bật') {
+  if (label === 'newest') {
     return 'Newest';
   }
-  if (label === 'Từ a - z') {
-    return 'Ký tự: High-Low';
+  if (label === 'Desc') {
+    return 'Z - A';
   }
-  return 'Ký tự: Từ z - a';
+  return 'A - Z';
 }
+function renderLabelEng(label: string | null) {
+  if (label === 'featured') {
+    return 'Ngày tạo dự án';
+  }
+  if (label === 'newest') {
+    return 'Dự án mới nhất';
+  }
+
+  if (label === 'Desc') {
+    return 'từ Z - A';
+  }
+
+  return 'Từ A - Z';
+}
+const Language = [
+  {
+    code: 'vi',
+    name: 'English',
+    countryCode: 'vi'
+  },
+  {
+    code: 'en',
+    name: 'Vietnamese',
+    countryCode: 'en'
+  }
+];
 
 export default function ShopProductSort() {
   const dispatch = useDispatch();
+  const currentLanguageCode = cookies.get('i18next') || 'en';
+  const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
+  const { t } = useTranslation();
   const [open, setOpen] = useState<HTMLButtonElement | null>(null);
   const { sortBy } = useSelector((state: { product: ProductState }) => state.product);
 
@@ -58,9 +120,9 @@ export default function ShopProductSort() {
         onClick={(event) => handleOpen(event.currentTarget)}
         endIcon={<Icon icon={open ? chevronUpFill : chevronDownFill} />}
       >
-        Sắp sếp theo&nbsp;&nbsp;&nbsp;
+        {t(`sortByLabel`)}&nbsp;&nbsp;&nbsp;
         <Typography component="span" variant="subtitle2" sx={{ color: 'text.secondary' }}>
-          {renderLabel(sortBy)}
+          {currentLanguageCode === 'vi' ? renderLabelEng(sortBy) : renderLabel(sortBy)}
         </Typography>
       </Button>
       <Menu
@@ -71,16 +133,18 @@ export default function ShopProductSort() {
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        {SORT_BY_OPTIONS.map((option) => (
-          <MenuItem
-            key={option.value}
-            selected={option.value === sortBy}
-            onClick={() => handleSortBy(option.value)}
-            sx={{ typography: 'body2' }}
-          >
-            {option.label}
-          </MenuItem>
-        ))}
+        {(currentLanguageCode === 'vi' ? SORT_BY_OPTIONS_CONFIG.vi : SORT_BY_OPTIONS_CONFIG.en).map(
+          (option) => (
+            <MenuItem
+              key={option.value}
+              selected={option.value === sortBy}
+              onClick={() => handleSortBy(option.value)}
+              sx={{ typography: 'body2' }}
+            >
+              {option.label}
+            </MenuItem>
+          )
+        )}
       </Menu>
     </>
   );

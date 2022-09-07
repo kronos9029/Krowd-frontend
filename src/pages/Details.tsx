@@ -28,6 +28,9 @@ import Logo from 'components/Logo';
 import Label from 'components/Label';
 import { PATH_PAGE } from 'routes/paths';
 import { useEffect, useState } from 'react';
+//Language
+import cookies from 'js-cookie';
+import { useTranslation } from 'react-i18next';
 // ----------------------------------------------------------------------
 const projectPackage = {
   id: null,
@@ -49,10 +52,24 @@ const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
     height: APP_BAR_DESKTOP
   }
 }));
-
+const Language = [
+  {
+    code: 'vi',
+    name: 'English',
+    countryCode: 'vi'
+  },
+  {
+    code: 'en',
+    name: 'Vietnamese',
+    countryCode: 'en'
+  }
+];
 export default function ComponentsDetails() {
   const { activeProjectId: projectID } = useSelector((state: RootState) => state.project);
-
+  //Language
+  const currentLanguageCode = cookies.get('i18next') || 'en';
+  const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
+  const { t } = useTranslation();
   const getEntityList = (
     type: 'PITCH' | 'EXTENSION' | 'DOCUMENT' | 'ALBUM' | 'ABOUT' | 'HIGHLIGHT'
   ) => {
@@ -132,7 +149,7 @@ export default function ComponentsDetails() {
                             // textDecoration: 'underLine'
                           }}
                         >
-                          Tiêu điểm
+                          {t(`Project_detail_card.Pitch`)}
                         </Label>
                         <Box
                           sx={{
@@ -156,7 +173,7 @@ export default function ComponentsDetails() {
                               variant="contained"
                               size="large"
                             >
-                              Đầu tư ngay {projectID.name}
+                              {t(`Project_detail_card.investNow`)} {projectID.name}
                             </Button>
                           </Link>
                         </Box>
@@ -203,7 +220,7 @@ export default function ComponentsDetails() {
                       borderRadius: '5%'
                     }}
                   >
-                    Bạn muốn kiếm thêm chi tiêu
+                    {t(`Project_detail_card.hoverSologun`)}
                   </Button>
                 </Box>
               </Grid>
@@ -221,7 +238,8 @@ export default function ComponentsDetails() {
                       variant="contained"
                       size="large"
                     >
-                      Đầu tư ngay {projectID.name}
+                      {t(`Project_detail_card.investNow`)}
+                      {projectID.name}
                     </Button>
                   </Link>
                 </Box>

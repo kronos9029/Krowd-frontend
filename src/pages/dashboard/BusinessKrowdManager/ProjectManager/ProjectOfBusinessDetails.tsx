@@ -48,6 +48,9 @@ import parse from 'html-react-parser';
 import { SeoIllustration } from 'assets';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import BlogNewPostPreview from 'components/_dashboard/project/BlogNewPostPreview';
+//Language
+import cookies from 'js-cookie';
+import { useTranslation } from 'react-i18next';
 
 // import ProjectMoreMenu from 'components/_dashboard/e-commerce/product-details/ProjectMoreMenu';
 // import { ShopTagFiltered } from 'components/_dashboard/e-commerce/projectKrowd';
@@ -71,7 +74,18 @@ const TABLE_HEAD = {
     { id: '', align: 'center' }
   ]
 };
-
+const Language = [
+  {
+    code: 'vi',
+    name: 'English',
+    countryCode: 'vi'
+  },
+  {
+    code: 'en',
+    name: 'Vietnamese',
+    countryCode: 'en'
+  }
+];
 // ----------------------------------------------------------------------
 
 type Anonymous = Record<string | number, string>;
@@ -84,25 +98,6 @@ function descendingComparator(a: Anonymous, b: Anonymous, orderBy: string) {
     return 1;
   }
   return 0;
-}
-
-function getComparator(order: string, orderBy: string) {
-  return order === 'desc'
-    ? (a: Anonymous, b: Anonymous) => descendingComparator(a, b, orderBy)
-    : (a: Anonymous, b: Anonymous) => -descendingComparator(a, b, orderBy);
-}
-
-function applySortFilter(array: Project1[], comparator: (a: any, b: any) => number, query: string) {
-  const stabilizedThis = array.map((el, index) => [el, index] as const);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) return order;
-    return a[1] - b[1];
-  });
-  if (query) {
-    return filter(array, (_user) => _user.name.toLowerCase().indexOf(query.toLowerCase()) !== -1);
-  }
-  return stabilizedThis.map((el) => el[0]);
 }
 
 export default function ProjectOfBusinessDetails() {
@@ -152,6 +147,10 @@ export default function ProjectOfBusinessDetails() {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
+  //Language
+  const currentLanguageCode = cookies.get('i18next') || 'en';
+  const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
+  const { t } = useTranslation();
   // API
   useEffect(() => {
     dispatch(getProjectList());

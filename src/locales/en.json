@@ -86,7 +86,7 @@
         "headline_link_description_2": "Communication"
     },
     "aboutus_hero": "We are here to fulfill our mission to bring you",
-    "aboutus_hero_1": " the best investment opportunities.",
+    "aboutus_hero_1": " the best investment opportunities",
     "aboutus_krowd_title": "What is Krowd?",
     "aboutus_krowd_vision_title": "LAM HUU KHANH PHUONG, Founder & CEO",
     "aboutus_krowd_vision_description": "Starting with his expertise in information technology, he has been a lecturer in the IT department at FPT University in Ho Chi Minh City since the early days of its establishment. As one of the contributors to building the foundation of the resource school, Lam Huu Khanh Phuong is visionary enough to see that the development of digitalization will interfere with all industries.",
@@ -134,5 +134,20 @@
     "dashboard_account_investor": {
         "dashboard_account_investor_general":"Generall",
         "dashboard_account_investor_billing":"Billing"
-    }
+    },
+    "Project_detail_card": {
+        "ShareRevenue":"Share revenue",
+        "Multiplier":"Multiplier",
+        "duration": "Duration",
+        "month": "Month",
+        "Term": "Term",
+        "numOfStage": "Number of Stage",
+        "investNow": "Invest now",
+        "hoverSologun":"You want to earn more spending",
+        "Pitch":"Pitch"
+    },
+    "sortByLabel":"Sort by",
+    "Invested":"Invested",
+    "InvestCapital":"Investment target capital"
+
 }

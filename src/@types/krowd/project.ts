@@ -2,7 +2,8 @@ import { FormikProps } from 'formik';
 export type FormikPropsShopView = FormikProps<ProjectFilter>;
 export enum PROJECT_STATUS {
   CALLING_FOR_INVESTMENT = 'CALLING_FOR_INVESTMENT',
-  ACTIVE = 'ACTIVE'
+  ACTIVE = 'ACTIVE',
+  DARFT = 'DARFT'
 }
 export type ProjectState = {
   isLoading: boolean;

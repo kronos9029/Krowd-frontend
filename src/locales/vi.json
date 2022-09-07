@@ -88,14 +88,14 @@
     "Are": "là",
     "we": "ai?",
     "aboutus_hero": "Chúng tôi ở đây để hoàn thành sứ mệnh mang đến",
-    "aboutus_hero_1": "những cơ hội đầu tư tốt nhất cho bạn.",
+    "aboutus_hero_1": "những cơ hội đầu tư tốt nhất cho bạn",
     "aboutus_krowd_title": "Krowd là gì?",
     "aboutus_krowd_vision_title": "LÂM HỮU KHÁNH PHƯƠNG, Nhà sáng lập & CEO",
     "aboutus_krowd_vision_description": "Khởi đầu với chuyên môn là công nghệ thông tin, anh ấy trở thành giảng viên khoa CNTT tại trường Đại học FPT cơ sở Thành phố Hồ Chí Minh từ những ngày đầu thành lập. Là một trong những người góp phần xây dựng nên nền tảng của trường tài nguyên, Lâm Hữu Khánh Phương đủ tầm nhìn để thấy được sự phát triển của số hóa sẽ can thiệp vào tất cả các ngành nghề.",
     "aboutus_krowd_vision_description_2": "Sau hơn 20 năm trong nghề, tiếp thu được những tinh hoa cũng như kinh nghiệm được tích lũy, ông quyết định tìm hiểu và sáng lập nên nền tảng Krowd nhầm mang nước Việt Nam hiển thị rõ hơn trên bản đồ kinh tế Thế giới.",
     "aboutus_krowd_vision_title_1": "Chúng tôi là ai?",
     "aboutus_krowd_sologan_1": "Krowd sẽ cung cấp cho bạn hỗ trợ nếu bạn có bất kỳ vấn đề, nhóm hỗ trợ của chúng tôi sẽ trả lời trong vòng một ngày và chúng tôi cũng có tài liệu chi tiết.",
-    "aboutus_krowd_1": "Huy động vốn từ cộng đồng từ lâu đã trở thành một dòng thu nhập cao đối với những người có thể đáp ứng các yêu cầu về vốn và thời gian cao cần thiết.",
+    "aboutus_krowd_1": "Huy động vốn từ cộng đồng từ lâu đã trở thành một dòng thu nhập cao đối với những người có thể đáp ứng các yêu cầu về vốn và thời gian cần thiết.",
     "aboutus_krowd_2": "Krowd là nền tảng duy nhất có thể tiếp cận đầu tư chia sẻ doanh thu cho bất kỳ ai với số tiền ít nhất là 500,000 đồng.",
     "Search": "Tìm kiếm",
     "Search_hover": "Bạn muốn tìm gì...",
@@ -132,5 +132,20 @@
     "dashboard_account_investor": {
         "dashboard_account_investor_general":"Tổng quan",
         "dashboard_account_investor_billing":"Hóa đơn"
-    }
+    },
+    "Project_detail_card": {
+        "ShareRevenue":"Doanh thu chia sẻ",
+        "Multiplier":"Hệ số nhân",
+        "duration": "Kỳ hạn",
+        "month": "tháng",
+        "Term": "Kỳ",
+        "numOfStage": "Số kỳ thanh toán",
+        "investNow":"Đầu tư ngay ",
+        "hoverSologun":"Bạn muốn kiếm thêm chi tiêu",
+        "Pitch":"Tiêu điểm"
+
+    },
+        "sortByLabel":"Sắp xếp theo",
+        "Invested":"Đã đầu tư",
+        "InvestCapital":"Vốn mục tiêu đầu tư" 
 }
