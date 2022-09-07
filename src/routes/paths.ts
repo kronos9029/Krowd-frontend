@@ -31,7 +31,9 @@ export const PATH_PAGE = {
   page500: '/500',
   business: '/components',
   project: '/project',
-  checkout: '/package'
+  checkout: '/package',
+  homePage: '/',
+  mediaKrowd: 'https://www.facebook.com/profile.php?id=100084621412328'
 };
 
 export const PATH_DASHBOARD = {

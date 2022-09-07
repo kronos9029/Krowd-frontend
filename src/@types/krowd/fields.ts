@@ -1,3 +1,7 @@
+export type FieldList = {
+  numOfField: number;
+  listOfField: Field[];
+};
 export type Field = {
   id: string;
   name: string;

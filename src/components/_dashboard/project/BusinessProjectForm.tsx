@@ -406,7 +406,7 @@ export default function BusinessProjectForm() {
                     onChange={(event, newValue) => {
                       setFieldValue('fieldId', newValue);
                     }}
-                    options={fieldList.map((option) => option.id)}
+                    options={fieldList.listOfField.map((option) => option.id)}
                     // options={fieldList}
                     // options={fieldList.map((option) => option.id)}
                     // getOptionLabel={(option) => option.name}

@@ -311,7 +311,7 @@ export default function LandingMinimalHelps() {
             <Grid container sx={{ backgroundColor: '#f7f7f7' }} mb={5}>
               <Grid container sx={{ py: 3, ml: 3 }}>
                 {fieldList &&
-                  fieldList.map((f) => {
+                  fieldList.listOfField.map((f) => {
                     const isSelected = selectedFilter.indexOf(f.name);
                     return (
                       <List key={f.id} component="div" disablePadding>

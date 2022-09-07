@@ -10,7 +10,10 @@ import { Field } from '../../../@types/krowd/fields';
 type FieldState = {
   isLoading: boolean;
   error: boolean;
-  fieldList: Field[];
+  fieldList: {
+    numOfField: number;
+    listOfField: Field[];
+  };
   activeFieldId: Field | null;
 };
 
@@ -18,7 +21,10 @@ const initialState: FieldState = {
   isLoading: false,
   error: false,
   activeFieldId: null,
-  fieldList: []
+  fieldList: {
+    numOfField: 0,
+    listOfField: []
+  }
 };
 
 const slice = createSlice({

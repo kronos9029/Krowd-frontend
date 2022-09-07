@@ -204,7 +204,7 @@ export default function MainNavbar() {
             {(user && (
               <>
                 <Button
-                  sx={{ marginRight: '1rem' }}
+                  sx={{ marginRight: '23px' }}
                   id="basic-button"
                   aria-controls={open ? 'basic-menu' : undefined}
                   aria-haspopup="true"
@@ -237,7 +237,7 @@ export default function MainNavbar() {
             )) || (
               <Button
                 sx={{
-                  marginRight: '1rem',
+                  marginRight: '23px',
                   bgcolor: 'rgb(255, 127, 80)',
                   '&:hover': {
                     bgcolor: 'rgb(255, 127, 80)',

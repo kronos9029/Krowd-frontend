@@ -12,9 +12,7 @@ export type ProjectState = {
   sortBy: string | null;
   filters: {
     status: string[];
-    // businessId: string;
     areaId: string;
-    // fieldId: string[];
   };
 };
 

@@ -91,8 +91,8 @@ export default function Projects() {
     dispatch(getProjectList());
     dispatch(getFieldList());
     dispatch(filterProjects(values));
-    setSelectedField(fieldList[0]?.id);
-  }, [dispatch, fieldList[0]?.id]);
+    setSelectedField(fieldList.listOfField[0]?.id);
+  }, [dispatch, fieldList.listOfField[0]?.id]);
 
   const handleOpenFilter = () => {
     setOpenFilter(true);

@@ -17,7 +17,7 @@ export default function LoginForm() {
   const handleLoginGoogle = async () => {
     try {
       await login();
-      navigate(PATH_DASHBOARD.root);
+      navigate(PATH_PAGE.homePage);
     } catch (error) {
       navigate(PATH_PAGE.page500);
     }
@@ -27,7 +27,8 @@ export default function LoginForm() {
     <>
       <Box sx={{ p: 7 }}>
         <Typography variant="h5" sx={{ color: '#002226', fontWeight: '800', textAlign: 'center' }}>
-          Login to Krowd System
+          {/* Login to Krowd System */}
+          Đăng nhập vào hệ thống của Krowd
         </Typography>
         <LoadingButton
           style={{
