@@ -8,6 +8,8 @@ import { REACT_APP_API_URL } from 'config';
 import axios from 'axios';
 import { dispatch } from 'redux/store';
 import investor from 'redux/slices/krowd_slices/investor';
+import { PATH_PAGE } from 'routes/paths';
+import { useNavigate } from 'react-router';
 
 // ----------------------------------------------------------------------
 
@@ -70,6 +72,7 @@ const AuthContext = createContext<JWTContextType | null>(null);
 
 function AuthProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(JWTReducer, initialState);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const initialize = async () => {

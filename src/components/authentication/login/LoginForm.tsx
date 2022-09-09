@@ -17,7 +17,6 @@ export default function LoginForm() {
   const handleLoginGoogle = async () => {
     try {
       await login();
-      navigate(PATH_PAGE.homePage);
     } catch (error) {
       navigate(PATH_PAGE.page500);
     }

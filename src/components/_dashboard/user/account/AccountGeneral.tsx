@@ -138,16 +138,15 @@ export default function AccountGeneral({ investor }: UserAccountProps) {
                   <TextField
                     fullWidth
                     disabled
-                    label="Họ"
-                    value={investor?.firstName ?? '<Chưa cập nhật>'}
+                    label="Họ và tên"
+                    value={`${investor?.firstName} ${lastName}` ?? '<Chưa cập nhật>'}
                   />
-                  <TextField fullWidth disabled label="Tên" value={lastName} />
-                </Stack>
-
-                <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
-                  <TextField disabled fullWidth label="idCard" value={idCard} />
                   <TextField disabled fullWidth label="Tên ngân hàng" value={bankName} />
                 </Stack>
+                {/* 
+                <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
+                  <TextField disabled fullWidth label="idCard" value={idCard} />
+                </Stack> */}
                 <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
                   <TextField disabled fullWidth label="Thành phố" value={city} />
                   <TextField disabled fullWidth label="Quận" value={district} />

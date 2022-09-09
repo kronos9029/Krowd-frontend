@@ -13,14 +13,13 @@ import { fData } from '../../utils/formatNumber';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
-  width: 144,
-  height: 144,
+  width: 300,
+  height: 300,
   margin: 'auto',
   borderRadius: '50%',
   padding: theme.spacing(1),
   border: `1px dashed ${theme.palette.grey[500_32]}`
 }));
-
 const DropZoneStyle = styled('div')({
   zIndex: 0,
   width: '100%',

@@ -50,16 +50,16 @@ export default function UserAccountForm({ user, open, onClose }: UserAccountForm
 
   const formik = useFormik({
     initialValues: {
-      id: user?.id,
-      image: user?.image,
-      phoneNum: user?.phoneNum,
-      idCard: user?.idCard,
-      city: user?.city,
-      district: user?.district,
-      address: user?.address,
-      firstName: user?.firstName,
-      lastName: user?.lastName,
-      bankName: user?.bankName
+      id: user?.id ?? '',
+      image: user?.image ?? '',
+      phoneNum: user?.phoneNum ?? '',
+      // idCard: user?.idCard ?? '',
+      city: user?.city ?? '',
+      district: user?.district ?? '',
+      address: user?.address ?? '',
+      firstName: user?.firstName ?? '',
+      lastName: user?.lastName ?? '',
+      bankName: user?.bankName ?? ''
     },
     validationSchema: NewAddressSchema,
     onSubmit: async (values, { setSubmitting, resetForm }) => {
@@ -69,22 +69,22 @@ export default function UserAccountForm({ user, open, onClose }: UserAccountForm
         }
         const formData = new FormData();
         const header = getHeaderFormData();
-        formData.append('firstName', values.firstName ?? '');
+        formData.append('firstName', values.firstName);
         formData.append('email', user?.email);
         formData.append('lastName', values.lastName ?? '');
-        formData.append('phoneNum', values.phoneNum ?? '');
-        formData.append('city', values.city ?? '');
-        formData.append('district', values.district ?? '');
-        formData.append('address', values.address ?? '');
-        formData.append('idCard', 'idCard');
-        formData.append('bankName', values.bankName ?? '');
-        formData.append('bankName', values.bankName ?? '');
-        formData.append('roleId', 'ad5f37da-ca48-4dc5-9f4b-963d94b535e6');
-        formData.append('dateOfBirth', '24/07/2000');
-        formData.append('taxIdentificationNumber', '123');
-        formData.append('bankAccount', '123');
-        formData.append('gender', 'male');
-        formData.append('description', '123');
+        formData.append('phoneNum', values.phoneNum);
+        formData.append('city', values.city);
+        formData.append('district', values.district);
+        formData.append('address', values.address);
+        // formData.append('idCard', 'idCard');
+        formData.append('bankName', values.bankName);
+        formData.append('bankName', values.bankName);
+        // formData.append('roleId', 'ad5f37da-ca48-4dc5-9f4b-963d94b535e6');
+        // formData.append('dateOfBirth', '24/07/2000');
+        // formData.append('taxIdentificationNumber', '123');
+        // formData.append('bankAccount', '123');
+        // formData.append('gender', 'male');
+        // formData.append('description', '123');
         await axios({
           method: 'put',
           url: REACT_APP_API_URL + `/users/${user.id}`,
@@ -134,7 +134,7 @@ export default function UserAccountForm({ user, open, onClose }: UserAccountForm
                   <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
-                      label="Ten"
+                      label="Tên"
                       {...getFieldProps('lastName')}
                       error={Boolean(touched.lastName && errors.lastName)}
                       helperText={touched.lastName && errors.lastName}
