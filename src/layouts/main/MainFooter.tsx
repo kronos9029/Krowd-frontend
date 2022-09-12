@@ -8,7 +8,16 @@ import { Link as RouterLink } from 'react-router-dom';
 
 // material
 import { styled } from '@mui/material/styles';
-import { Grid, Link, Divider, Container, Typography, IconButton, Stack } from '@mui/material';
+import {
+  Grid,
+  Link,
+  Divider,
+  Container,
+  Typography,
+  IconButton,
+  Stack,
+  Button
+} from '@mui/material';
 // routes
 import { PATH_PAGE } from '../../routes/paths';
 //
@@ -33,27 +42,27 @@ const LINKS = [
     x: 0,
     children: [
       { name: 'Về chúng tôi', href: PATH_PAGE.about },
-      { name: 'Liên hệ với chúng tôi', href: '#' },
-      { name: 'Hướng dẫn đầu tư', href: '#' },
-      { name: 'Hướng dẫn gọi đầu tư', href: '#' },
-      { name: 'Các câu hỏi thường gặp', href: '#' }
+      { name: 'Liên hệ với chúng tôi', href: PATH_PAGE.maintenance, target: '' },
+      { name: 'Hướng dẫn đầu tư', href: PATH_PAGE.maintenance, target: '' },
+      { name: 'Hướng dẫn gọi đầu tư', href: PATH_PAGE.maintenance, target: '' },
+      { name: 'Các câu hỏi thường gặp', href: PATH_PAGE.maintenance, target: '' }
     ]
   },
   {
     // headline: 'Thông tin pháp lý',
     headline: '2',
     children: [
-      { name: '  Điều khoản sử dụng dịch vụ', href: '#' },
-      { name: 'Chính sách bảo mật', href: '#' },
-      { name: 'Cảnh báo rủi ro đầu tư', href: '#' },
-      { name: 'Hợp đồng pháp lý liên quan', href: '#' }
+      { name: '  Điều khoản sử dụng dịch vụ', href: PATH_PAGE.maintenance, target: '' },
+      { name: 'Chính sách bảo mật', href: PATH_PAGE.maintenance, target: '' },
+      { name: 'Cảnh báo rủi ro đầu tư', href: PATH_PAGE.maintenance, target: '' },
+      { name: 'Hợp đồng pháp lý liên quan', href: PATH_PAGE.maintenance, target: '' }
     ]
   },
   {
     headline: '3',
     // headline: 'Về KROWD',
     children: [
-      { name: 'Tuyển dụng', href: '#' },
+      { name: 'Tuyển dụng', href: PATH_PAGE.maintenance, target: '' },
       {
         name: 'Truyền thông',
         target: '_blank',
@@ -132,21 +141,20 @@ export default function MainFooter() {
                 var x = 1;
                 return (
                   <Stack key={headline} spacing={2}>
-                    <Typography component="p" variant="overline">
+                    <Typography component="p" variant="overline" sx={{ textAlign: 'center' }}>
                       {t(`footer_title_${headline}.headline_name`)}
                     </Typography>
                     {children.map((link) => (
-                      <Link
-                        to={link.href}
+                      <Button
+                        href={link.href}
                         key={link.name}
+                        target={link.target}
                         color="inherit"
-                        variant="body2"
-                        component={RouterLink}
-                        sx={{ display: 'block' }}
+                        sx={{ display: 'block', fontSize: '13px', fontWeight: 300 }}
                       >
                         {t(`footer_title_${headline}.headline_link_description_${x++}`)}
                         {/* {link.name} */}
-                      </Link>
+                      </Button>
                     ))}
                   </Stack>
                 );

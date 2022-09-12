@@ -178,6 +178,7 @@ export default function Router() {
         { path: 'pricing', element: <KrowdPackage /> },
         { path: 'payment', element: <Payment /> },
         { path: '500', element: <Page500 /> },
+        { path: 'page-success', element: <PageSuccess /> },
         { path: '404', element: <NotFound /> },
         { path: 'package', element: <KrowdPackage /> },
         { path: '*', element: <Navigate to="/404" replace /> }
@@ -272,6 +273,7 @@ const Maintenance = Loadable(lazy(() => import('../pages/Maintenance')));
 const KrowdPackage = Loadable(lazy(() => import('../pages/KrowdPackage')));
 const Payment = Loadable(lazy(() => import('../pages/Payment')));
 const Page500 = Loadable(lazy(() => import('../pages/Page500')));
+const PageSuccess = Loadable(lazy(() => import('../pages/PageSuccess')));
 const NotFound = Loadable(lazy(() => import('../pages/Page404')));
 // Components
 const ComponentsOverview = Loadable(lazy(() => import('../pages/ComponentsOverview')));

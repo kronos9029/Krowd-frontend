@@ -24,16 +24,16 @@ export default function Maintenance() {
     <RootStyle title="Maintenance | Krowd">
       <Container sx={{ textAlign: 'center' }}>
         <Typography variant="h3" paragraph>
-          Website currently under maintenance
+          Đang cập nhật phát triển
         </Typography>
         <Typography sx={{ color: 'text.secondary' }}>
-          We are currently working hard on this page!
+          Chúng tôi hiện đang làm việc chăm chỉ trên trang này!
         </Typography>
 
         <MaintenanceIllustration sx={{ my: 10, height: 240 }} />
 
         <Button variant="contained" size="large" component={RouterLink} to="/">
-          Go to Home
+          Quay lại trang chủ
         </Button>
       </Container>
     </RootStyle>
