@@ -30,46 +30,46 @@ const sidebarConfig = [
         icon: ICONS.dashboard
       },
       // { title: 'Chung', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics },
-      { title: 'Ví của bạn', path: PATH_DASHBOARD.general.banking, icon: ICONS.banking },
-      { title: 'Tổng quan ngày', path: PATH_DASHBOARD.general.booking, icon: ICONS.booking }
+      { title: 'Ví của bạn', path: PATH_DASHBOARD.general.banking, icon: ICONS.banking }
+      // { title: 'Tổng quan ngày', path: PATH_DASHBOARD.general.booking, icon: ICONS.booking }
     ]
   },
   {
     subheader: 'Quản lý',
     items: [
-      { title: 'Dự án đang đầu tư', path: PATH_DASHBOARD.userKrowd.list, icon: ICONS.project },
-      {
-        title: 'Quản lý ví',
-        path: PATH_DASHBOARD.general.banking,
-        icon: ICONS.wallet
-        // children: [
-        //   { title: 'Ví đầu tư', path: PATH_DASHBOARD.general.app },
-        //   { title: 'Dự án đang đầu tư', path: PATH_DASHBOARD.general.app },
-        //   { title: 'Ví doanh thu', path: PATH_DASHBOARD.general.app }
-        // ]
-      }
-    ]
-  },
-  {
-    subheader: 'Quản lý giao dịch',
-    items: [
+      { title: 'Dự án đang đầu tư', path: PATH_DASHBOARD.userKrowd.list, icon: ICONS.project }
       // {
-      //   title: 'Thanh toán giữa các ví',
-      //   path: PATH_DASHBOARD.transaction.walletTransaction,
-      //   icon: ICONS.accountTransaction
-      // }
-      {
-        title: 'Giao dịch ngân hàng',
-        path: PATH_DASHBOARD.transaction.accountTransaction,
-        icon: ICONS.bankTransaction
-      }
-      // {
-      //   title: 'Lịch sử doanh thu',
-      //   path: PATH_DASHBOARD.transaction.PeriodRevenueHistory,
-      //   icon: ICONS.PeriodRevenueHistory
+      //   title: 'Quản lý ví',
+      //   path: PATH_DASHBOARD.general.banking,
+      //   icon: ICONS.wallet
+      //   // children: [
+      //   //   { title: 'Ví đầu tư', path: PATH_DASHBOARD.general.app },
+      //   //   { title: 'Dự án đang đầu tư', path: PATH_DASHBOARD.general.app },
+      //   //   { title: 'Ví doanh thu', path: PATH_DASHBOARD.general.app }
+      //   // ]
       // }
     ]
   }
+  // {
+  //   subheader: 'Quản lý giao dịch',
+  //   items: [
+  //     // {
+  //     //   title: 'Thanh toán giữa các ví',
+  //     //   path: PATH_DASHBOARD.transaction.walletTransaction,
+  //     //   icon: ICONS.accountTransaction
+  //     // }
+  //     {
+  //       title: 'Giao dịch ngân hàng',
+  //       path: PATH_DASHBOARD.transaction.accountTransaction,
+  //       icon: ICONS.bankTransaction
+  //     }
+  //     // {
+  //     //   title: 'Lịch sử doanh thu',
+  //     //   path: PATH_DASHBOARD.transaction.PeriodRevenueHistory,
+  //     //   icon: ICONS.PeriodRevenueHistory
+  //     // }
+  //   ]
+  // }
 ];
 
 //----------------------------------------------------------------------------------

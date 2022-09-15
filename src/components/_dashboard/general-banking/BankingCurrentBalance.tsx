@@ -15,6 +15,8 @@ import { fCurrency } from '../../../utils/formatNumber';
 import { MIconButton } from '../../@material-extend';
 import { CarouselControlsPaging1 } from '../../carousel';
 import MenuPopover from '../../MenuPopover';
+import { RootState, useSelector } from 'redux/store';
+import { WalletType } from '../../../@types/krowd/wallet';
 
 // ----------------------------------------------------------------------
 
@@ -57,35 +59,6 @@ const shadowStyle = {
 
 // ----------------------------------------------------------------------
 
-const CARDS = [
-  {
-    id: '8baa359f-7e98-4c13-8d5b-fa210b643d82',
-    balance: 23432.03,
-    cardType: 'mastercard',
-    cardHolder: 'Julianne Zemlak',
-    cardNumber: '**** **** **** 3640',
-    cardValid: '11/22'
-  },
-  {
-    id: '32a7ed73-894f-4c79-a1d7-8a968ff69cc4',
-    balance: 18000.23,
-    cardType: 'visa',
-    cardHolder: 'Pascale Schaefer',
-    cardNumber: '**** **** **** 8864',
-    cardValid: '11/25'
-  },
-  {
-    id: 'ef0bca7b-4460-44bc-a606-1354ce3c0a3c',
-    balance: 2000.89,
-    cardType: 'mastercard',
-    cardHolder: 'Tamara Hilll',
-    cardNumber: '**** **** **** 7755',
-    cardValid: '11/22'
-  }
-];
-
-// ----------------------------------------------------------------------
-
 function MoreMenuButton() {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
@@ -122,9 +95,9 @@ function MoreMenuButton() {
             icon={editFill}
             sx={{ width: 20, height: 20, flexShrink: 0, mr: 1 }}
           />
-          <Typography variant="body2">Edit card</Typography>
+          <Typography variant="body2">Xem chi tiết</Typography>
         </MenuItem>
-        <MenuItem
+        {/* <MenuItem
           onClick={handleClose}
           sx={{ py: 0.75, px: 1.5, borderRadius: 0.75, color: 'error.main' }}
         >
@@ -134,7 +107,7 @@ function MoreMenuButton() {
             sx={{ width: 20, height: 20, flexShrink: 0, mr: 1 }}
           />
           <Typography variant="body2">Delete card</Typography>
-        </MenuItem>
+        </MenuItem> */}
       </MenuPopover>
     </>
   );
@@ -142,17 +115,20 @@ function MoreMenuButton() {
 
 type CardItemProps = {
   card: {
+    walletType: WalletType;
     id: string;
-    cardType: string;
+    investorId: string;
     balance: number;
-    cardHolder: string;
-    cardNumber: string;
-    cardValid: string;
+    createDate: string;
+    createBy: string;
+    updateDate: string;
+    updateBy: string;
+    isDeleted: boolean;
   };
 };
 
 function CardItem({ card }: CardItemProps) {
-  const { cardType, balance, cardHolder, cardNumber, cardValid } = card;
+  const { walletType, balance } = card;
   const [showCurrency, setShowCurrency] = useState(true);
 
   const onToggleShowCurrency = () => {
@@ -168,7 +144,7 @@ function CardItem({ card }: CardItemProps) {
 
         <div>
           <Typography sx={{ mb: 2, typography: 'subtitle2', opacity: 0.72 }}>
-            Current Balance
+            {walletType.name}
           </Typography>
           <Stack direction="row" alignItems="center" spacing={1}>
             <Typography sx={{ typography: 'h3' }}>
@@ -183,24 +159,21 @@ function CardItem({ card }: CardItemProps) {
         <Stack direction="row" alignItems="center" justifyContent="flex-end" spacing={1}>
           <Box
             component="img"
-            src={`/static/icons/ic_${cardType === 'mastercard' ? 'mastercard' : 'visa'}.svg`}
+            // src={`/static/icons/ic_${cardType === 'mastercard' ? 'mastercard' : 'visa'}.svg`}
+            src={`/static/icons/ic_mastercard.svg`}
             sx={{ height: 24 }}
           />
-          <Typography sx={{ typography: 'subtitle1', textAlign: 'right' }}>{cardNumber}</Typography>
+          <Typography sx={{ typography: 'subtitle1', textAlign: 'right' }}>...</Typography>
         </Stack>
 
         <Stack direction="row" spacing={5}>
           <div>
-            <Typography sx={{ mb: 1, typography: 'caption', opacity: 0.48 }}>
-              Card Holder
-            </Typography>
-            <Typography sx={{ typography: 'subtitle1' }}>{cardHolder}</Typography>
+            <Typography sx={{ mb: 1, typography: 'caption', opacity: 0.48 }}>Cập nhật</Typography>
+            <Typography sx={{ typography: 'subtitle1' }}>Chi tiết</Typography>
           </div>
           <div>
-            <Typography sx={{ mb: 1, typography: 'caption', opacity: 0.48 }}>
-              Valid Dates
-            </Typography>
-            <Typography sx={{ typography: 'subtitle1' }}>{cardValid}</Typography>
+            <Typography sx={{ mb: 1, typography: 'caption', opacity: 0.48 }}>Cập nhật</Typography>
+            <Typography sx={{ typography: 'subtitle1' }}>Cập nhật</Typography>
           </div>
         </Stack>
       </CardItemStyle>
@@ -210,7 +183,8 @@ function CardItem({ card }: CardItemProps) {
 
 export default function BankingCurrentBalance() {
   const theme = useTheme();
-
+  const { isLoading, walletList } = useSelector((state: RootState) => state.walletKrowd);
+  const { listOfInvestorWallet } = walletList;
   const settings = {
     dots: true,
     arrows: false,
@@ -228,7 +202,7 @@ export default function BankingCurrentBalance() {
     <RootStyle>
       <Box sx={{ position: 'relative', zIndex: 9 }}>
         <Slider {...settings}>
-          {CARDS.map((card) => (
+          {listOfInvestorWallet.slice(2, 5).map((card) => (
             <CardItem key={card.id} card={card} />
           ))}
         </Slider>

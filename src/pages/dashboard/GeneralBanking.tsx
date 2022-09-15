@@ -15,10 +15,11 @@ import {
   BankingRecentTransitions,
   BankingExpensesCategories
 } from '../../components/_dashboard/general-banking';
+import { Wallet } from '../../@types/krowd/wallet';
 
 // ----------------------------------------------------------------------
 
-export default function GeneralBanking() {
+export default function GeneralBanking({ wallet }: { wallet: Wallet }) {
   const { themeStretch } = useSettings();
 
   return (
@@ -27,15 +28,21 @@ export default function GeneralBanking() {
         <Grid container spacing={3}>
           <Grid item xs={12} md={7}>
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3}>
-              <BankingIncome />
-              <BankingExpenses />
+              <BankingIncome wallet={wallet} />
+              <BankingExpenses wallet={wallet} />
             </Stack>
           </Grid>
 
           <Grid item xs={12} md={5}>
             <BankingCurrentBalance />
           </Grid>
-
+          <Grid item xs={12} md={12}>
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3}>
+              <BankingExpenses wallet={wallet} />
+              <BankingExpenses wallet={wallet} />
+              <BankingExpenses wallet={wallet} />
+            </Stack>
+          </Grid>
           <Grid item xs={12} md={12}>
             <Stack spacing={3}>
               <BankingBalanceStatistics />

@@ -138,7 +138,7 @@ function ProjectDetailCard({ project: p, album }: ProjectDetailCardProps) {
           }}
         >
           <Typography sx={{ mt: 0.2, fontSize: '25px', fontWeight: '900' }}>
-            {p.multiplier}
+            {p.sharedRevenue}
             <span>%</span>
             <Typography color="text.disabled" variant="subtitle2">
               {t(`Project_detail_card.ShareRevenue`)}
