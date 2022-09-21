@@ -25,6 +25,7 @@ import { dispatch, RootState } from 'redux/store';
 import Label from 'components/Label';
 import { getProjectPackage } from 'redux/slices/krowd_slices/project';
 import { PATH_PAGE } from 'routes/paths';
+import { fCurrencyPackage } from 'utils/formatNumber';
 
 // ----------------------------------------------------------------------
 
@@ -46,10 +47,7 @@ export default function ProjectPackage({ project }: { project: Project1 }) {
   const { isPackageLoading } = packageLists;
 
   useEffect(() => {
-    const fetchData = async () => {
-      await dispatch(getProjectPackage(project.id));
-    };
-    fetchData().catch(console.error);
+    dispatch(getProjectPackage(project.id));
   }, [dispatch]);
   return (
     <>
@@ -90,25 +88,23 @@ export default function ProjectPackage({ project }: { project: Project1 }) {
                     ) : (
                       ''
                     )}
-                    <Typography variant="h2" sx={{ mx: 1 }}>
-                      {e.price === 0 ? 'Free' : e.price}
+                    <Typography variant="h3" sx={{ mx: 1 }}>
+                      {e.price === 0 ? 'Free' : fCurrencyPackage(e.price)}
                     </Typography>
-                    {index === 1 || index === 2 ? (
-                      <Typography
-                        gutterBottom
-                        component="span"
-                        variant="subtitle2"
-                        sx={{
-                          alignSelf: 'flex-end',
-                          color: 'text.secondary'
-                        }}
-                      ></Typography>
-                    ) : (
-                      ''
-                    )}
                   </Box>
                   <Typography
-                    variant="caption"
+                    variant="body2"
+                    sx={{
+                      textTransform: 'capitalize',
+                      justifyContent: 'center',
+                      display: 'flex',
+                      mb: 2
+                    }}
+                  >
+                    (VND)
+                  </Typography>
+                  <Typography
+                    variant="body1"
                     sx={{
                       color: 'primary.main',
                       textTransform: 'capitalize',
@@ -126,7 +122,7 @@ export default function ProjectPackage({ project }: { project: Project1 }) {
                         sx={{ textAlign: 'left', alignItems: 'left' }}
                         variant="body2"
                       >
-                        {item}
+                        - {item}
                       </Typography>
                     ))}
                   </Stack>

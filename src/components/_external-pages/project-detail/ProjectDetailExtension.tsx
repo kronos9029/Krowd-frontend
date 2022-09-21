@@ -35,7 +35,7 @@ function ProjectDetailExtension({ extensions }: ExtensionListProps) {
   return (
     <>
       <Box width={'fit-content'} py={1.4}>
-        <Typography variant="h3" color={'text.secondary'}>
+        <Typography sx={{ mt: 3.8 }} variant="h4" color={'text.secondary'}>
           Thông tin mở rộng
         </Typography>
         <Box width={'25%'}>

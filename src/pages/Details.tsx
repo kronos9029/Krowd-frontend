@@ -83,6 +83,8 @@ export default function ComponentsDetails() {
     window.scrollY > 1000 ? setisShowNav(true) : setisShowNav(false);
   };
   useEffect(() => {
+    dispatch(getProjectPackage(projectID?.id ?? ''));
+
     window.addEventListener('scroll', listenScrollEvent);
     return () => {
       window.removeEventListener('scroll', listenScrollEvent);
@@ -101,7 +103,7 @@ export default function ComponentsDetails() {
         .filter(notEmpty)
     ],
     highlights: getEntityList('HIGHLIGHT'),
-    bottomNav: [getEntityList('ABOUT')!.length > 0 ? 'Về dự án' : null]
+    bottomNav: [getEntityList('ABOUT')!.length > 0 ? 'Về chúng tôi' : null]
   };
 
   function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {

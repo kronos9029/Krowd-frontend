@@ -1,4 +1,15 @@
-import { Box, Card, Container, Divider, Grid, Link, styled, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Card,
+  Container,
+  Divider,
+  Grid,
+  Link,
+  styled,
+  Typography
+} from '@mui/material';
+import { height } from '@mui/system';
 import { RootState, useSelector } from 'redux/store';
 
 const NavbarTopAnchor = styled('div')(() => ({
@@ -33,7 +44,7 @@ function ProjectDetailAfterPitch({ abouts, nav }: AboutListProps) {
   const { detailOfProject } = useSelector((state: RootState) => state.project);
   const { detailOfProjectID: projectID } = detailOfProject;
   const { manager, name } = projectID!;
-  const aboutNav = nav.find((value) => value === 'Về dự án');
+  const aboutNav = nav.find((value) => value === 'Về chúng tôi');
   return (
     <>
       {/* About */}
@@ -41,31 +52,72 @@ function ProjectDetailAfterPitch({ abouts, nav }: AboutListProps) {
         <Box mb={7}>
           <NavbarTopAnchor id={`__navbarTop_${aboutNav}`}></NavbarTopAnchor>
           <Typography textAlign="center" py={1} color={'#666'} variant="h3">
-            Giới thiệu về {name}
+            Về chúng tôi
           </Typography>
           <Box mx="auto" width={'10%'}>
             <NavbarTopClickAnchor id={`__navbarTopClick_${aboutNav}`}></NavbarTopClickAnchor>
             <Divider sx={{ my: 1, borderBottomWidth: 'thick', color: 'primary.main' }} />
           </Box>
         </Box>
-        <Grid container>
-          <Grid xs={12} sm={4} md={5} lg={4}>
+        <Grid container display={'flex'} justifyContent={'space-evenly'}>
+          <Grid>
+            <Box
+              mx={'auto'}
+              mb={2}
+              sx={{
+                position: 'relative',
+                width: '200px',
+                height: '200px',
+                overflow: 'hidden',
+                borderRadius: '50%'
+              }}
+            >
+              <img src={manager.image} style={{ width: '100%', height: 'auto' }} />
+            </Box>
+
+            <Typography
+              variant="h3"
+              textAlign={'center'}
+            >{`${manager.lastName} ${manager.firstName}`}</Typography>
+            <Typography textAlign={'center'} py={1} color={'text.disabled'} variant="body1">
+              Quản lý dự án
+            </Typography>
+          </Grid>
+          <Grid>
             {abouts &&
               abouts
                 .filter((ab) => ab.title !== 'Truyền thông')
                 .slice(0, 3)
                 .map((ab, i) => (
                   <Box key={i}>
-                    <Typography py={1} color={'text.disabled'} variant="body1">
-                      {ab.title}
-                    </Typography>
-                    <Typography fontWeight={700} variant="body1">
-                      {ab.content}
-                    </Typography>
+                    <Button disabled={ab.link === null} sx={{ opacity: ab.link ? 1 : 0.4 }}>
+                      <Card sx={{ borderRadius: '45% 0% 0% 45%', height: 100 }}>
+                        <Grid
+                          container
+                          display={'flex'}
+                          alignItems="center"
+                          justifyContent={'center'}
+                        >
+                          <Grid sx={{ mt: 2.6 }}>
+                            <img
+                              style={{ borderRadius: '50%', width: 60 }}
+                              src={`static/icons/social/${ab.title}.png`}
+                            />
+                          </Grid>
+                          <Grid>
+                            <Typography sx={{ mt: 4, width: 200 }}>
+                              Theo dõi chúng tôi qua{' '}
+                              <Typography sx={{ fontWeight: '700' }}>{ab.title}</Typography>
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      </Card>
+                    </Button>
                   </Box>
                 ))}
           </Grid>
-          <Grid xs={12} sm={4} md={5} lg={4}>
+
+          {/* <Grid xs={12} sm={4} md={5} lg={4}>
             {abouts &&
               abouts
                 .filter((ab) => ab.title !== 'Truyền thông')
@@ -95,27 +147,7 @@ function ProjectDetailAfterPitch({ abouts, nav }: AboutListProps) {
                     </Box>
                   ))}
             </Box>
-          </Grid>
-          <Grid xs={12} sm={4} md={5} lg={4} textAlign={'center'}>
-            <Box
-              mx={'auto'}
-              mb={2}
-              sx={{
-                position: 'relative',
-                width: '200px',
-                height: '200px',
-                overflow: 'hidden',
-                borderRadius: '50%'
-              }}
-            >
-              <img src={manager.image} style={{ width: '100%', height: 'auto' }} />
-            </Box>
-
-            <Typography variant="h3">{`${manager.lastName} ${manager.firstName}`}</Typography>
-            <Typography py={1} color={'text.disabled'} variant="body1">
-              Quản lý dự án
-            </Typography>
-          </Grid>
+          </Grid> */}
         </Grid>
         <NavbarBottomAnchor id={`__navbarBottom_${aboutNav}`}></NavbarBottomAnchor>
       </Container>

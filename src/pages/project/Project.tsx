@@ -158,7 +158,7 @@ export default function Projects() {
         <Grid container alignItems="center" justifyContent="center" spacing={5}>
           {projectList.listOfProject &&
             projectList.listOfProject
-              .filter((p) => p.status === PROJECT_STATUS.CALLING_FOR_INVESTMENT)
+              // .filter((p) => p.status === PROJECT_STATUS.CALLING_FOR_INVESTMENT)
               .map((p) => <ProjectCard key={p.id} row={p} />)}
         </Grid>
       </Container>

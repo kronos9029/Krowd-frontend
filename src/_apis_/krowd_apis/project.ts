@@ -7,10 +7,6 @@ function getToken() {
   return window.localStorage.getItem('accessToken');
 }
 
-function getHeaderFormData() {
-  const token = getToken();
-  return { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` };
-}
 function getHeader() {
   const token = getToken();
   return { Authorization: `Bearer ${token}` };
