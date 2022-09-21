@@ -1,24 +1,14 @@
 import { Icon } from '@iconify/react';
 import { capitalCase } from 'change-case';
 import { useState, useEffect } from 'react';
-import bellFill from '@iconify/icons-eva/bell-fill';
-import shareFill from '@iconify/icons-eva/share-fill';
-import roundVpnKey from '@iconify/icons-ic/round-vpn-key';
-import roundReceipt from '@iconify/icons-ic/round-receipt';
-import roundAccountBox from '@iconify/icons-ic/round-account-box';
+
 import editFill from '@iconify/icons-eva/edit-fill';
 import UserAccountForm from './UserAccountForm';
 // material
 import { Container, Tab, Box, Tabs, Button, CircularProgress, Typography } from '@mui/material';
 // redux
 import { RootState, useDispatch, useSelector } from '../../../redux/store';
-import {
-  getCards,
-  getProfile,
-  getInvoices,
-  getAddressBook,
-  getNotifications
-} from '../../../redux/slices/userKrowdrac';
+
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // hooks
@@ -29,7 +19,6 @@ import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 import { AccountBilling, AccountGeneral } from '../../../components/_dashboard/user/account';
 import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
-import { User_Investor } from '../../../@types/krowd/investor';
 import { getUserKrowdDetail } from 'redux/slices/krowd_slices/investor';
 import useAuth from 'hooks/useAuth';
 // ----------------------------------------------------------------------

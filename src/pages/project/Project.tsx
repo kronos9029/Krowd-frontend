@@ -19,12 +19,7 @@ import { Product, ProductFilter, ProductState } from '../../@types/products';
 import { filterProducts, getProducts } from 'redux/slices/product';
 import { BlogPostsSearch } from 'components/_dashboard/project';
 // icon
-import {
-  getAllProject,
-  filterProjects,
-  getProjectId,
-  getProjectList
-} from 'redux/slices/krowd_slices/project';
+import { filterProjects, getProjectList } from 'redux/slices/krowd_slices/project';
 import { ProjectFilter, ProjectState, PROJECT_STATUS } from '../../@types/krowd/project';
 import { getFieldList } from 'redux/slices/krowd_slices/field';
 import { Link } from 'react-router-dom';
@@ -85,7 +80,6 @@ export default function Projects() {
   });
 
   const { values, resetForm, handleSubmit } = formik;
-  const isDefault = !values.status && values.areaId === 'HCM';
   useEffect(() => {
     dispatch(getProducts());
     dispatch(getProjectList());
@@ -162,7 +156,7 @@ export default function Projects() {
           </Typography>
         </Box>
         <Grid container alignItems="center" justifyContent="center" spacing={5}>
-          {projectList &&
+          {projectList.listOfProject &&
             projectList.listOfProject
               .filter((p) => p.status === PROJECT_STATUS.CALLING_FOR_INVESTMENT)
               .map((p) => <ProjectCard key={p.id} row={p} />)}

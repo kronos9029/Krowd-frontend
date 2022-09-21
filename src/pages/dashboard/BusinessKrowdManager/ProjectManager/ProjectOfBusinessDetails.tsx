@@ -30,7 +30,11 @@ import { useSnackbar } from 'notistack';
 import { MIconButton } from 'components/@material-extend';
 // redux
 import { RootState, useDispatch, useSelector } from '../../../../redux/store';
-import { getAllProject, getProjectId, getProjectList } from 'redux/slices/krowd_slices/project';
+import {
+  getAllProject,
+  getProjectList,
+  getProjectListById
+} from 'redux/slices/krowd_slices/project';
 // routes
 import { PATH_DASHBOARD, PATH_DETAILS } from '../../../../routes/paths';
 // hooks
@@ -137,8 +141,8 @@ export default function ProjectOfBusinessDetails() {
     }
   }));
   //   const { projectList } = useSelector((state: RootState) => state.project);
-  const { activeProjectId: project } = useSelector((state: RootState) => state.project);
-
+  const { detailOfProject } = useSelector((state: RootState) => state.project);
+  const { detailOfProjectID: project } = detailOfProject;
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
   const [selected, setSelected] = useState<string[]>([]);
@@ -157,7 +161,7 @@ export default function ProjectOfBusinessDetails() {
   }, [dispatch, project?.projectEntity]);
 
   const handleGetProjectById = (activeProjectId: string) => {
-    dispatch(getProjectId(activeProjectId, 'ADMIN'));
+    dispatch(getProjectListById(activeProjectId));
   };
 
   // Sort filter
@@ -171,8 +175,7 @@ export default function ProjectOfBusinessDetails() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  const { activeProjectId: projectID } = useSelector((state: RootState) => state.project);
-
+  const { detailOfProjectID: projectID } = detailOfProject;
   const getEntityList = (
     type:
       | 'PITCH'

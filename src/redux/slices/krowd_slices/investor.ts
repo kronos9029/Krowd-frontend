@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { dispatch } from '../../store';
 // utils
-import axios from 'axios';
 import { User_Investor } from '../../../@types/krowd/investor';
 import { InvestorAPI } from '_apis_/krowd_apis/investor';
 

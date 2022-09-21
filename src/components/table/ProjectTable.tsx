@@ -4,6 +4,8 @@ import { PATH_DASHBOARD } from '../../routes/paths';
 import { DATA_TYPE, KrowdTable, RowData } from './krowd-table/KrowdTable';
 import { getProjectList } from '../../redux/slices/krowd_slices/project';
 import React from 'react';
+import { Box, Container, Typography } from '@mui/material';
+import { SeverErrorIllustration } from 'assets';
 
 const TABLE_HEAD = [
   { id: 'idx', label: 'STT', align: 'center' },
@@ -89,7 +91,6 @@ export default function ProjectTable() {
       };
     });
   };
-
   return (
     <KrowdTable
       headingTitle="Các dự án đang đầu tư"

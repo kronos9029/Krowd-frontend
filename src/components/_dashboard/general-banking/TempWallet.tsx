@@ -20,10 +20,15 @@ import { getWalletList } from 'redux/slices/krowd_slices/wallet';
 
 const RootStyle = styled(Card)(({ theme }) => ({
   width: '100%',
-  boxShadow: 'none',
   position: 'relative',
-  color: theme.palette.primary.darker,
-  backgroundColor: '#97eef9'
+  backgroundSize: 'cover',
+  padding: theme.spacing(3),
+  backgroundRepeat: 'no-repeat',
+  color: theme.palette.common.white,
+  backgroundImage: 'url("/static/bg_card.png")',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between'
 }));
 
 const IconWrapperStyle = styled('div')(({ theme }) => ({
@@ -46,7 +51,7 @@ const TOTAL = 1876500000;
 const PERCENT = 2.6;
 const CHART_DATA = [{ data: [0] }];
 
-export default function BankingIncome({ wallet }: { wallet: Wallet }) {
+export default function TempWallet({ wallet }: { wallet: Wallet }) {
   useEffect(() => {
     dispatch(getWalletList());
   }, [dispatch]);

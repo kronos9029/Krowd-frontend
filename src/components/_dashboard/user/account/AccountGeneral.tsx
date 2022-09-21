@@ -37,9 +37,23 @@ export default function AccountGeneral({ investor }: UserAccountProps) {
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar } = useSnackbar();
   const [fileUpload, setFileUpload] = useState<File | null>(null);
-  const { firstName, lastName, phoneNum, email, idCard, district, bankName, city, address } =
-    investor;
-
+  const {
+    firstName,
+    lastName,
+    phoneNum,
+    email,
+    gender,
+    dateOfBirth,
+    role,
+    status,
+    address,
+    bankName,
+    bankAccount,
+    taxIdentificationNumber,
+    city,
+    district,
+    idCard
+  } = investor;
   const formikImage = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -130,28 +144,80 @@ export default function AccountGeneral({ investor }: UserAccountProps) {
           <Grid item xs={12} md={8}>
             <Card sx={{ p: 3 }}>
               <Stack spacing={{ xs: 2, md: 3 }}>
-                <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
-                  <TextField fullWidth disabled label="Email" value={email} />
-                  <TextField disabled fullWidth label="Số điện thoại" value={phoneNum} />
-                </Stack>
+                <Typography sx={{ fontWeight: '700' }}>Thông tin cá nhân</Typography>
                 <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
                   <TextField
                     fullWidth
                     disabled
                     label="Họ và tên"
-                    value={`${investor?.firstName} ${lastName}` ?? '<Chưa cập nhật>'}
+                    value={`${firstName} ${lastName}`}
                   />
-                  <TextField disabled fullWidth label="Tên ngân hàng" value={bankName} />
+                  <TextField fullWidth disabled label="Email" value={email} />
                 </Stack>
-                {/* 
                 <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
-                  <TextField disabled fullWidth label="idCard" value={idCard} />
-                </Stack> */}
-                <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
-                  <TextField disabled fullWidth label="Thành phố" value={city} />
-                  <TextField disabled fullWidth label="Quận" value={district} />
-                  <TextField disabled fullWidth label="Địa chỉ" value={address} />
+                  <TextField
+                    fullWidth
+                    disabled
+                    label="Ngày sinh"
+                    value={dateOfBirth ?? '<Chưa cập nhật>'}
+                  />
+                  <TextField
+                    fullWidth
+                    disabled
+                    label="Giới tính"
+                    value={gender ?? '<Chưa cập nhật>'}
+                  />
+                  <TextField fullWidth disabled label="SĐT" value={phoneNum ?? '<Chưa cập nhật>'} />
+                  <TextField
+                    fullWidth
+                    disabled
+                    label="CMND/CCCD"
+                    value={idCard ?? '<Chưa cập nhật>'}
+                  />
                 </Stack>
+                <Typography sx={{ fontWeight: '700' }}>Địa chỉ</Typography>
+                <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
+                  <TextField
+                    fullWidth
+                    disabled
+                    label="Số nhà, tên đường"
+                    value={address ?? '<Chưa cập nhật>'}
+                  />
+                  <TextField
+                    fullWidth
+                    disabled
+                    label="Thành phố"
+                    value={city ?? '<Chưa cập nhật>'}
+                  />
+                  <TextField
+                    sx={{ width: '500px' }}
+                    disabled
+                    label="Quận"
+                    value={district ?? '<Chưa cập nhật>'}
+                  />
+                </Stack>
+                <Typography sx={{ fontWeight: '700' }}>Ngân hàng</Typography>
+                <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
+                  <TextField
+                    fullWidth
+                    disabled
+                    label="Tên ngân hàng"
+                    value={bankName ?? '<Chưa cập nhật>'}
+                  />
+                  <TextField
+                    fullWidth
+                    disabled
+                    label="Số tài khoản"
+                    value={bankAccount ?? '<Chưa cập nhật>'}
+                  />
+                  <TextField
+                    fullWidth
+                    disabled
+                    label="MST"
+                    value={taxIdentificationNumber ?? '<Chưa cập nhật>'}
+                  />
+                </Stack>
+                {/* <TextField fullWidth disabled label="Vai trò" value={role.name} /> */}
               </Stack>
             </Card>
           </Grid>

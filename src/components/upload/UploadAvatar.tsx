@@ -13,8 +13,8 @@ import { fData } from '../../utils/formatNumber';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
-  width: 300,
-  height: 300,
+  width: 350,
+  height: 350,
   margin: 'auto',
   borderRadius: '50%',
   padding: theme.spacing(1),

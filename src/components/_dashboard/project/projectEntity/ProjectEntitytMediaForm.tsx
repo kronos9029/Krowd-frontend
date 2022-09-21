@@ -40,8 +40,8 @@ export default function ProjectEntitytDocumentForm() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
-  const { activeProjectId: projectID } = useSelector((state: RootState) => state.project);
-
+  const { detailOfProject } = useSelector((state: RootState) => state.project);
+  const { detailOfProjectID: projectID } = detailOfProject;
   const handleOpenPreview = () => {
     navigate(PATH_DASHBOARD.projectsBusiness.projectBusinessDetails);
   };

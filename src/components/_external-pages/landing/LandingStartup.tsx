@@ -223,7 +223,7 @@ export default function LandingMinimalHelps() {
               .map((p) => <ProjectCard key={p.id} row={p} />)}
         </Grid> */}
         <Grid container alignItems="center" justifyContent="center" spacing={5}>
-          {projectList &&
+          {projectList.listOfProject &&
             projectList.listOfProject
               .filter((value) => value.status === PROJECT_STATUS.CALLING_FOR_INVESTMENT)
               .slice(0, 9)
@@ -563,7 +563,7 @@ export default function LandingMinimalHelps() {
           </Box>
         )}
         <Grid container alignItems="center" justifyContent="center" spacing={5}>
-          {projectList &&
+          {projectList.listOfProject &&
             projectList.listOfProject
               .filter((value) => value.status === PROJECT_STATUS.CALLING_FOR_INVESTMENT)
               .slice(0, 9)

@@ -129,11 +129,7 @@ export default function Router() {
             // { path: 'projectEntityDetails', element: <ProjectEntityDetails /> },
             { path: 'new-project', element: <KrowdNewProject /> },
             { path: 'new-projectEntity', element: <KrowdNewProjectEntity /> },
-            { path: 'new-projectHighLight', element: <KrowdNewProjectHighLight /> },
-            { path: 'new-projectExtension', element: <KrowdNewProjectExtension /> },
-            { path: 'new-projectDocument', element: <KrowdNewProjectDocument /> },
             { path: 'new-projectMedia', element: <KrowdNewProjectMedia /> },
-            { path: 'new-projectFAQ', element: <KrowdNewProjectFAQ /> },
             { path: 'new-projectOwner', element: <KrowdNewProjectOwner /> }
             // { path: 'projectBusinessDetails', element: <ProjectKrowdAdminDetails /> }
           ]
@@ -236,19 +232,10 @@ const KrowdNewProject = Loadable(lazy(() => import('../pages/dashboard/KrowdNewP
 const KrowdNewProjectEntity = Loadable(
   lazy(() => import('../pages/dashboard/KrowdNewProjectEntity'))
 );
-const KrowdNewProjectHighLight = Loadable(
-  lazy(() => import('../pages/dashboard/KrowdNewProjectHighLight'))
-);
-const KrowdNewProjectExtension = Loadable(
-  lazy(() => import('../pages/dashboard/KrowdNewProjectExtension'))
-);
-const KrowdNewProjectDocument = Loadable(
-  lazy(() => import('../pages/dashboard/KrowdNewProjectDocument'))
-);
+
 const KrowdNewProjectMedia = Loadable(
   lazy(() => import('../pages/dashboard/KrowdNewProjectMedia'))
 );
-const KrowdNewProjectFAQ = Loadable(lazy(() => import('../pages/dashboard/KrowdNewProjectFAQ')));
 const KrowdNewProjectOwner = Loadable(
   lazy(() => import('../pages/dashboard/KrowdNewProjectOwner'))
 );

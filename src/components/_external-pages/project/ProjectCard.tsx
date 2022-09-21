@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 import { MotionInView, varFadeInUp } from 'components/animate';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getProjectId } from 'redux/slices/krowd_slices/project';
+import { getProjectListById } from 'redux/slices/krowd_slices/project';
 import { dispatch } from 'redux/store';
 import { PATH_DETAILS } from 'routes/paths';
 import { fCurrency } from 'utils/formatNumber';
@@ -85,7 +85,7 @@ function ProjectCard({ row }: { row: Project1 }) {
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
   const { t } = useTranslation();
   const handleGetProjectById = (activeProjectId: string) => {
-    dispatch(getProjectId(activeProjectId, 'ADMIN'));
+    dispatch(getProjectListById(activeProjectId));
   };
   return (
     <Grid sx={{ p: 2 }} item key={row.id} xs={12} sm={12} md={6} lg={4}>

@@ -1,7 +1,7 @@
 // material
 import { Divider, Container, Grid, Box, Typography, styled, Link, Tab, Input } from '@mui/material';
 // redux
-import { RootState, useSelector } from 'redux/store';
+import { dispatch, RootState, useSelector } from 'redux/store';
 // routes
 // icons
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
@@ -19,7 +19,8 @@ import {
   ProjectDetailNavbar,
   ProjectDetailDocument,
   ProjectDetailAfterPitch,
-  ProjectDetailHighLight
+  ProjectDetailHighLight,
+  ProjectPackage
 } from 'components/_external-pages/project-detail/index';
 import MHidden from 'components/@material-extend/MHidden';
 import KrowdPackage from './KrowdPackage';
@@ -31,6 +32,7 @@ import { useEffect, useState } from 'react';
 //Language
 import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
+import { getProjectPackage } from 'redux/slices/krowd_slices/project';
 // ----------------------------------------------------------------------
 const projectPackage = {
   id: null,
@@ -65,7 +67,8 @@ const Language = [
   }
 ];
 export default function ComponentsDetails() {
-  const { activeProjectId: projectID } = useSelector((state: RootState) => state.project);
+  const { detailOfProject, packageLists } = useSelector((state: RootState) => state.project);
+  const { detailOfProjectID: projectID } = detailOfProject;
   //Language
   const currentLanguageCode = cookies.get('i18next') || 'en';
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
@@ -75,18 +78,16 @@ export default function ComponentsDetails() {
   ) => {
     return projectID?.projectEntity.find((pe) => pe.type === type)?.typeItemList;
   };
-
   const [isShowNav, setisShowNav] = useState(false);
   const listenScrollEvent = () => {
     window.scrollY > 1000 ? setisShowNav(true) : setisShowNav(false);
   };
   useEffect(() => {
     window.addEventListener('scroll', listenScrollEvent);
-
     return () => {
       window.removeEventListener('scroll', listenScrollEvent);
     };
-  }, []);
+  }, [dispatch]);
 
   const { pitchs, extensions, documents, album, abouts, highlights, bottomNav } = {
     pitchs: getEntityList('PITCH'),
@@ -199,6 +200,15 @@ export default function ComponentsDetails() {
                   )}
                   {documents && documents.length > 0 && (
                     <ProjectDetailDocument documents={documents} />
+                  )}
+                  {packageLists.listOfPackage && packageLists.listOfPackage.length > 0 && (
+                    <Grid container sx={{ mt: 4 }}>
+                      <Grid container sx={{ mt: 4 }}>
+                        <Grid xs={12} sm={5} md={4} lg={5}>
+                          <ProjectPackage project={projectID} />
+                        </Grid>
+                      </Grid>
+                    </Grid>
                   )}
                 </Grid>
               </Grid>

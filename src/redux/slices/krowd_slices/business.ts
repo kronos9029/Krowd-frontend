@@ -66,10 +66,6 @@ export default slice.reducer;
 
 // Actions
 
-// ----------------------------------------------------------------------
-
-// ----------------------------------------------------------------------
-
 export function getBusinessList(temp_field_role: 'ADMIN') {
   return async () => {
     dispatch(slice.actions.startLoading());
@@ -90,21 +86,6 @@ export function getBusinessListById(bussinessId: string) {
     try {
       const response = await axios.get(REACT_APP_API_URL + `businesses/${bussinessId}`);
       dispatch(slice.actions.getBusinessListIDSuccess(response.data));
-    } catch (error) {
-      console.log('...');
-      dispatch(slice.actions.hasError(error));
-    }
-  };
-}
-export function getProjectByBusinessID(businessId: string, temp_field_role: 'ADMIN') {
-  return async () => {
-    dispatch(slice.actions.startLoading());
-    try {
-      const response = await axios.get(REACT_APP_API_URL + 'projects', {
-        params: { businessId, temp_field_role }
-      });
-
-      dispatch(slice.actions.getBusinessListSuccess(response.data));
     } catch (error) {
       console.log('...');
       dispatch(slice.actions.hasError(error));

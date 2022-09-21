@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-import { getProjectId, getProjectInvestorId } from '../../../redux/slices/krowd_slices/project';
+import { getProjectListById } from '../../../redux/slices/krowd_slices/project';
 import React from 'react';
 // material
 // redux
@@ -31,7 +31,7 @@ export default function KrowdDetailView() {
   const getData = () => {
     switch (getViewOf) {
       case VIEW_DETAIL_DATA_TYPE.PROJECT: {
-        dispatch(getProjectInvestorId(id));
+        dispatch(getProjectListById(id));
         return;
       }
       default:

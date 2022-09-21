@@ -5,8 +5,11 @@ import useSettings from '../../hooks/useSettings';
 // components
 import Page from '../../components/Page';
 import {
-  BankingIncome,
-  BankingExpenses,
+  TempWallet,
+  SharedInvestmentWallet,
+  AdvanceWallet,
+  ProjectPaymentWallet,
+  CollectionWallet,
   BankingContacts,
   BankingInviteFriends,
   BankingQuickTransfer,
@@ -26,27 +29,28 @@ export default function GeneralBanking({ wallet }: { wallet: Wallet }) {
     <Page title="General: Banking | Krowd">
       <Container maxWidth={themeStretch ? false : 'xl'}>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={7}>
+          <Grid item xs={12} md={12}>
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3}>
-              <BankingIncome wallet={wallet} />
-              <BankingExpenses wallet={wallet} />
+              <TempWallet wallet={wallet} />
+              <SharedInvestmentWallet wallet={wallet} />
             </Stack>
           </Grid>
 
-          <Grid item xs={12} md={5}>
+          {/* <Grid item xs={12} md={5}>
             <BankingCurrentBalance />
-          </Grid>
+          </Grid> */}
           <Grid item xs={12} md={12}>
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3}>
-              <BankingExpenses wallet={wallet} />
-              <BankingExpenses wallet={wallet} />
-              <BankingExpenses wallet={wallet} />
+              <AdvanceWallet wallet={wallet} />
+              <ProjectPaymentWallet wallet={wallet} />
+              <CollectionWallet wallet={wallet} />
             </Stack>
           </Grid>
+
           <Grid item xs={12} md={12}>
             <Stack spacing={3}>
               <BankingBalanceStatistics />
-              <BankingExpensesCategories />
+              {/* <BankingExpensesCategories /> */}
               <BankingRecentTransitions />
             </Stack>
           </Grid>

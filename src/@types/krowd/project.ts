@@ -185,3 +185,18 @@ export type NewProjectFormValues = {
   endDate: string;
   image: File | any;
 };
+export type Package = {
+  id: string;
+  remainingQuantity: number;
+  status: string;
+  createDate: string;
+  createBy: string;
+  updateDate: string;
+  updateBy: string;
+  name: string;
+  projectId: string;
+  price: number;
+  image: File | any;
+  quantity: number;
+  descriptionList: string[];
+};

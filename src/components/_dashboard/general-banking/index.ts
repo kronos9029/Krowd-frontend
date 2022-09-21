@@ -1,5 +1,8 @@
-export { default as BankingIncome } from './BankingIncome';
-export { default as BankingExpenses } from './BankingExpenses';
+export { default as TempWallet } from './TempWallet';
+export { default as SharedInvestmentWallet } from './SharedInvestmentWallet';
+export { default as AdvanceWallet } from './AdvanceWallet';
+export { default as ProjectPaymentWallet } from './ProjectPaymentWallet';
+export { default as CollectionWallet } from './CollectionWallet';
 export { default as BankingContacts } from './BankingContacts';
 export { default as BankingQuickTransfer } from './BankingQuickTransfer';
 export { default as BankingInviteFriends } from './BankingInviteFriends';

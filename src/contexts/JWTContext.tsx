@@ -6,9 +6,6 @@ import { ActionMap, AuthState, AuthUser, JWTContextType } from '../@types/authen
 import FirebaseService from 'api/firebase';
 import { REACT_APP_API_URL } from 'config';
 import axios from 'axios';
-import { dispatch } from 'redux/store';
-import investor from 'redux/slices/krowd_slices/investor';
-import { PATH_PAGE } from 'routes/paths';
 import { useNavigate } from 'react-router';
 
 // ----------------------------------------------------------------------

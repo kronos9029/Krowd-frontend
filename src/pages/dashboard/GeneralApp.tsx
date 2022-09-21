@@ -18,10 +18,7 @@ import {
   AppCurrentDownload,
   AppTotalActiveUsers
 } from '../../components/_dashboard/general-app';
-import { dispatch, RootState, useSelector } from 'redux/store';
-import investor from 'redux/slices/krowd_slices/investor';
-import { useEffect } from 'react';
-import { getUserKrowdDetail } from 'redux/slices/krowd_slices/user';
+import { RootState, useSelector } from 'redux/store';
 
 // ----------------------------------------------------------------------
 // const { themeStretch } = useSettings();

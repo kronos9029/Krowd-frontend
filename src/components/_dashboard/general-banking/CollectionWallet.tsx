@@ -3,18 +3,18 @@ import ReactApexChart from 'react-apexcharts';
 import { Icon } from '@iconify/react';
 import trendingUpFill from '@iconify/icons-eva/trending-up-fill';
 import trendingDownFill from '@iconify/icons-eva/trending-down-fill';
-import diagonalArrowRightUpFill from '@iconify/icons-eva/diagonal-arrow-right-up-fill';
+import diagonalArrowLeftDownFill from '@iconify/icons-eva/diagonal-arrow-left-down-fill';
 // material
-import { styled, useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import { Card, Typography, Stack } from '@mui/material';
 // utils
 import { fCurrency, fPercent } from '../../../utils/formatNumber';
 //
 import BaseOptionChart from '../../charts/BaseOptionChart';
 import { useEffect } from 'react';
-import { getWalletList } from 'redux/slices/krowd_slices/wallet';
 import { dispatch, RootState, useSelector } from 'redux/store';
 import { Wallet } from '../../../@types/krowd/wallet';
+import { getWalletList } from 'redux/slices/krowd_slices/wallet';
 
 // ----------------------------------------------------------------------
 
@@ -23,7 +23,7 @@ const RootStyle = styled(Card)(({ theme }) => ({
   boxShadow: 'none',
   position: 'relative',
   color: theme.palette.primary.darker,
-  backgroundColor: '#ffc586'
+  backgroundColor: '#97eef9'
 }));
 
 const IconWrapperStyle = styled('div')(({ theme }) => ({
@@ -42,16 +42,19 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-const TOTAL = 893800000;
-const PERCENT = -0.5;
-const CHART_DATA = [{ data: [76, 20, 84, 135, 56, 134, 122, 49] }];
+const TOTAL = 1876500000;
+const PERCENT = 2.6;
+const CHART_DATA = [{ data: [0] }];
 
-export default function BankingExpenses({ wallet }: { wallet: Wallet }) {
-  const theme = useTheme();
+export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
+  useEffect(() => {
+    dispatch(getWalletList());
+  }, [dispatch]);
+
   const { isLoading, walletList } = useSelector((state: RootState) => state.walletKrowd);
   const { listOfInvestorWallet } = walletList;
+
   const chartOptions = merge(BaseOptionChart(), {
-    colors: [theme.palette.warning.main],
     chart: { sparkline: { enabled: true } },
     xaxis: { labels: { show: false } },
     yaxis: { labels: { show: false } },
@@ -72,12 +75,15 @@ export default function BankingExpenses({ wallet }: { wallet: Wallet }) {
 
   return (
     <>
+      {/* {walletList.listOfInvestorWallet
+        .filter((IS) => IS.type === 'I1')
+        .map((e, i) => { */}
       {listOfInvestorWallet &&
         listOfInvestorWallet.length > 0 &&
-        listOfInvestorWallet.slice(1, 2).map((e, i) => (
+        listOfInvestorWallet.slice(4, 5).map((e, i) => (
           <RootStyle key={i}>
             {/* <IconWrapperStyle>
-              <Icon icon={diagonalArrowRightUpFill} width={24} height={24} />
+              <Icon icon={diagonalArrowLeftDownFill} width={24} height={24} />
             </IconWrapperStyle> */}
 
             <Stack spacing={1} sx={{ p: 3 }}>
@@ -98,8 +104,6 @@ export default function BankingExpenses({ wallet }: { wallet: Wallet }) {
                 </Typography>
               </Stack>
             </Stack>
-
-            {/* <ReactApexChart type="area" series={CHART_DATA} options={chartOptions} height={120} /> */}
           </RootStyle>
         ))}
     </>

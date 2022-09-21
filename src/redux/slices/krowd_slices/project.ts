@@ -2,7 +2,12 @@ import { createSlice } from '@reduxjs/toolkit';
 import { dispatch, store } from '../../store';
 // utils
 import axios from 'axios';
-import { business, NewProjectEntityFormValues, Project1 } from '../../../@types/krowd/project';
+import {
+  business,
+  NewProjectEntityFormValues,
+  Package,
+  Project1
+} from '../../../@types/krowd/project';
 import { REACT_APP_API_URL } from '../../../config';
 import { ProjectAPI } from '_apis_/krowd_apis/project';
 // ----------------------------------------------------------------------
@@ -11,12 +16,21 @@ type ProjectState = {
   isLoading: boolean;
   error: boolean;
   projectList: {
+    isLoadingProjectList: boolean;
     numOfProject: number;
     listOfProject: Project1[];
+    errorProjectList: boolean;
   };
-  activeProjectId: Project1 | null;
+  detailOfProject: {
+    isLoadingDetailOfProjectID: boolean;
+    detailOfProjectID: Project1 | null;
+    errorDetailOfProjectID: boolean;
+  };
+
   activeProjectEntityId: NewProjectEntityFormValues | null;
+
   projects: Project1[];
+
   project: Project1 | null;
   sortBy: Project1 | null;
   filters: {
@@ -31,14 +45,31 @@ type ProjectState = {
     };
     error: boolean;
   };
+  packageLists: {
+    isPackageLoading: boolean;
+    numOfPackage: number;
+    listOfPackage: Package[];
+  };
+  projectPackageDetails: Package | null;
 };
 
 const initialState: ProjectState = {
   isLoading: false,
   error: false,
-  activeProjectId: null,
+
+  detailOfProject: {
+    isLoadingDetailOfProjectID: false,
+    detailOfProjectID: null,
+    errorDetailOfProjectID: false
+  },
+
   activeProjectEntityId: null,
-  projectList: { numOfProject: 0, listOfProject: [] },
+  projectList: {
+    isLoadingProjectList: false,
+    numOfProject: 0,
+    listOfProject: [],
+    errorProjectList: false
+  },
   projects: [],
   project: null,
   sortBy: null,
@@ -53,40 +84,61 @@ const initialState: ProjectState = {
       listOfProject: []
     },
     error: false
-  }
+  },
+  packageLists: {
+    isPackageLoading: false,
+    numOfPackage: 0,
+    listOfPackage: []
+  },
+  projectPackageDetails: null
 };
 
 const slice = createSlice({
   name: 'project',
   initialState,
   reducers: {
-    // START LOADING
-    startLoading(state) {
-      state.isLoading = true;
-    },
-
     // HAS ERROR
     hasError(state, action) {
       state.isLoading = false;
       state.error = action.payload;
     },
 
-    // GET MANAGE USERS
+    // ------ GET ALL PROJECT ------------ //
+    startLoadingProjectList(state) {
+      state.projectList.isLoadingProjectList = true;
+    },
+    hasGetAllProjectError(state, action) {
+      state.projectList.isLoadingProjectList = false;
+      state.projectList.errorProjectList = action.payload;
+    },
     getProjectListSuccess(state, action) {
       state.isLoading = false;
       state.projectList = action.payload;
     },
 
+    // ------ GET ALL PROJECT BY ID------------ //
+
+    starDetailOfProjectIDtLoading(state) {
+      state.detailOfProject.isLoadingDetailOfProjectID = true;
+    },
+    hasDetailOfProjectIDError(state, action) {
+      state.detailOfProject.isLoadingDetailOfProjectID = false;
+      state.detailOfProject.errorDetailOfProjectID = action.payload;
+    },
     getProjectListIDSuccess(state, action) {
-      state.isLoading = false;
-      state.activeProjectId = action.payload;
+      state.detailOfProject.isLoadingDetailOfProjectID = false;
+      state.detailOfProject.detailOfProjectID = action.payload;
     },
-    delProjectListIDSuccess(state, action) {
-      state.projectList = action.payload;
+
+    // ------ GET ALL PACKAGE BY PROJECT ID------------ //
+    // START LOADING
+    startPackageListLoading(state) {
+      state.packageLists.isPackageLoading = true;
     },
-    getProjectByBusinessIDSuccess(state, action) {
-      state.isLoading = false;
-      state.projectList = action.payload;
+
+    getProjectPackageSuccess(state, action) {
+      state.packageLists.isPackageLoading = false;
+      state.packageLists = action.payload;
     },
 
     //  SORT & FILTER PRODUCTS
@@ -109,103 +161,46 @@ export const { sortByProjects, filterProjects } = slice.actions;
 
 // ----------------------------------------------------------------------
 
-export function getAllProject(temp_field_role: 'ADMIN' | 'INVESTOR' | 'BUSINESS') {
+// PACKAGE PROJECT
+export function getProjectPackage(projectId: string) {
   return async () => {
-    const { dispatch } = store;
-
-    dispatch(slice.actions.startLoading());
+    dispatch(slice.actions.startPackageListLoading());
     try {
-      const response: { data: { products: Project1[] } } = await axios.get(
-        REACT_APP_API_URL + 'projects',
-        {
-          params: { temp_field_role }
-        }
-      );
+      const response = await ProjectAPI.getPackageID({ id: projectId });
+      dispatch(slice.actions.getProjectPackageSuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+// ALL PROJECT
+export function getAllProject() {
+  return async () => {
+    dispatch(slice.actions.startLoadingProjectList());
+    try {
+      const response = await ProjectAPI.getAllProject();
       dispatch(slice.actions.getProjectListSuccess(response.data));
     } catch (error) {
-      dispatch(slice.actions.hasError(error));
+      dispatch(slice.actions.hasGetAllProjectError(error));
     }
   };
 }
-
+// GET PROJECT BY ID
 export function getProjectListById(projectId: string) {
   return async () => {
-    dispatch(slice.actions.startLoading());
+    dispatch(slice.actions.starDetailOfProjectIDtLoading());
     try {
-      const response = await axios.get(
-        `https://ec2-13-215-197-250.ap-southeast-1.compute.amazonaws.com/api/v1.0/businesses/${projectId}`
-      );
+      const response = await ProjectAPI.get({ id: projectId });
       dispatch(slice.actions.getProjectListIDSuccess(response.data));
     } catch (error) {
-      dispatch(slice.actions.hasError(error));
+      dispatch(slice.actions.hasDetailOfProjectIDError(error));
     }
   };
 }
-
-export function getProjectId(projectId: string, temp_field_role: 'ADMIN') {
-  return async () => {
-    dispatch(slice.actions.startLoading());
-    try {
-      const response = await axios.get(
-        `https://ec2-13-215-197-250.ap-southeast-1.compute.amazonaws.com/api/v1.0/projects/${projectId}`,
-        {
-          params: { temp_field_role }
-        }
-      );
-      dispatch(slice.actions.getProjectListIDSuccess(response.data));
-    } catch (error) {
-      dispatch(slice.actions.hasError(error));
-    }
-  };
-}
-
-export function getProjectInvestorId(projectId: string) {
-  return async () => {
-    dispatch(slice.actions.startLoading());
-    try {
-      const response = await axios.get(
-        `https://ec2-13-215-197-250.ap-southeast-1.compute.amazonaws.com/api/v1.0/projects/${projectId}`
-      );
-      dispatch(slice.actions.getProjectListIDSuccess(response.data));
-    } catch (error) {
-      dispatch(slice.actions.hasError(error));
-    }
-  };
-}
-export function getProjectByBusinessID(businessId: string, temp_field_role: 'ADMIN') {
-  return async () => {
-    dispatch(slice.actions.startLoading());
-    try {
-      const response = await axios.get(
-        'https://ec2-13-215-197-250.ap-southeast-1.compute.amazonaws.com/api/v1.0/projects',
-        {
-          params: { businessId, temp_field_role }
-        }
-      );
-      dispatch(slice.actions.getProjectByBusinessIDSuccess(response.data));
-    } catch (error) {
-      dispatch(slice.actions.hasError(error));
-    }
-  };
-}
-export function delProjectListById(projectId: string) {
-  return async () => {
-    dispatch(slice.actions.startLoading());
-    try {
-      const response = await axios.delete(
-        `https://ec2-13-215-197-250.ap-southeast-1.compute.amazonaws.com/api/v1.0/businesses/${projectId}`
-      );
-      // dispatch(getProjectList());
-    } catch (error) {
-      dispatch(slice.actions.hasError(error));
-    }
-  };
-}
-
-//--------------------------------------
+//------- GET ALL PROJECT WITH PARAMS
 export function getProjectList() {
   return async () => {
-    dispatch(slice.actions.startLoading());
+    dispatch(slice.actions.startLoadingProjectList());
     try {
       const response = await ProjectAPI.gets();
       dispatch(slice.actions.getProjectListSuccess(response.data));

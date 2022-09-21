@@ -26,7 +26,7 @@ import { useSnackbar } from 'notistack';
 import { MIconButton } from 'components/@material-extend';
 // redux
 import { RootState, useDispatch, useSelector } from '../../../../redux/store';
-import project, { getAllProject, getProjectId } from 'redux/slices/krowd_slices/project';
+import project, { getAllProject, getProjectListById } from 'redux/slices/krowd_slices/project';
 // routes
 import { PATH_DASHBOARD, PATH_DETAILS } from '../../../../routes/paths';
 // hooks
@@ -101,7 +101,7 @@ export default function ProjectOfBusinessList() {
   // const { isLoading, data: ListBusiness, error, isFetching } = getAllBusiness();
   // API
   useEffect(() => {
-    dispatch(getAllProject('ADMIN'));
+    dispatch(getAllProject());
   }, [dispatch]);
 
   const handleDeleteBusinessById = (activeBussinessId: string) => {
@@ -116,7 +116,7 @@ export default function ProjectOfBusinessList() {
   };
 
   const handleGetProjectById = (activeProjectId: string) => {
-    dispatch(getProjectId(activeProjectId, 'ADMIN'));
+    dispatch(getProjectListById(activeProjectId));
   };
 
   // Sort filter

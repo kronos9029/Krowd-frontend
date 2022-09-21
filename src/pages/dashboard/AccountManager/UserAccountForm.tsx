@@ -1,18 +1,24 @@
 import * as Yup from 'yup';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik, Form, FormikProvider } from 'formik';
 // material
 import {
   Grid,
   Dialog,
   Button,
-  Divider,
   TextField,
   DialogTitle,
   DialogContent,
-  DialogActions
+  DialogActions,
+  Box,
+  DialogContentText,
+  Stack,
+  Typography,
+  FormControl,
+  InputLabel,
+  Select
 } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
+import { DatePicker, LoadingButton } from '@mui/lab';
 import useAuth from 'hooks/useAuth';
 import { useSnackbar } from 'notistack';
 import axios from 'axios';
@@ -21,6 +27,8 @@ import { useSelector } from 'react-redux';
 import { getUserKrowdDetail } from 'redux/slices/krowd_slices/investor';
 import { REACT_APP_API_URL } from 'config';
 import { User_Investor } from '../../../@types/krowd/investor';
+import { fDateTimeSuffix2 } from 'utils/formatTime';
+
 // @types
 
 // ----------------------------------------------------------------------
@@ -32,6 +40,15 @@ type UserAccountFormProps = {
 };
 
 export default function UserAccountForm({ user, open, onClose }: UserAccountFormProps) {
+  const [value, setValue] = useState<Date | null>(new Date(user?.dateOfBirth ?? 'dd/MM/yyyy'));
+  const [valueMinDate, setMinDate] = useState<Date | null>(new Date('1950/12/31'));
+  const [valueMaxDate, setMaxDate] = useState<Date | null>(new Date('2003/12/31'));
+
+  const handleChange = (newValue: Date | null) => {
+    setValue(newValue);
+    setFieldValue('dateOfBirth', fDateTimeSuffix2(newValue!));
+  };
+  const GENDER_OPTION = ['Nam', 'Nữ', 'Khác'];
   const NewAddressSchema = Yup.object().shape({
     phoneNum: Yup.string().required('Yêu cầu nhập số điện thoại'),
     district: Yup.string().required('Yêu cầu nhập quận của bạn'),
@@ -50,16 +67,18 @@ export default function UserAccountForm({ user, open, onClose }: UserAccountForm
 
   const formik = useFormik({
     initialValues: {
-      id: user?.id ?? '',
-      image: user?.image ?? '',
-      phoneNum: user?.phoneNum ?? '',
-      // idCard: user?.idCard ?? '',
-      city: user?.city ?? '',
-      district: user?.district ?? '',
-      address: user?.address ?? '',
       firstName: user?.firstName ?? '',
       lastName: user?.lastName ?? '',
-      bankName: user?.bankName ?? ''
+      phoneNum: user?.phoneNum ?? '',
+      address: user?.address ?? '',
+      gender: user?.gender ?? '',
+      idCard: user?.idCard ?? '',
+      district: user?.district ?? '',
+      city: user?.city ?? '',
+      bankName: user?.bankName ?? '',
+      bankAccount: user?.bankAccount ?? '',
+      taxIdentificationNumber: user?.taxIdentificationNumber ?? '',
+      dateOfBirth: user?.dateOfBirth ?? ''
     },
     validationSchema: NewAddressSchema,
     onSubmit: async (values, { setSubmitting, resetForm }) => {
@@ -76,15 +95,12 @@ export default function UserAccountForm({ user, open, onClose }: UserAccountForm
         formData.append('city', values.city);
         formData.append('district', values.district);
         formData.append('address', values.address);
-        // formData.append('idCard', 'idCard');
+        formData.append('idCard', values.idCard);
         formData.append('bankName', values.bankName);
-        formData.append('bankName', values.bankName);
-        // formData.append('roleId', 'ad5f37da-ca48-4dc5-9f4b-963d94b535e6');
-        // formData.append('dateOfBirth', '24/07/2000');
-        // formData.append('taxIdentificationNumber', '123');
-        // formData.append('bankAccount', '123');
-        // formData.append('gender', 'male');
-        // formData.append('description', '123');
+        formData.append('dateOfBirth', `${values.dateOfBirth}`);
+        formData.append('taxIdentificationNumber', values.taxIdentificationNumber);
+        formData.append('bankAccount', values.bankAccount);
+        formData.append('gender', values.gender);
         await axios({
           method: 'put',
           url: REACT_APP_API_URL + `/users/${user.id}`,
@@ -111,102 +127,151 @@ export default function UserAccountForm({ user, open, onClose }: UserAccountForm
     }
   });
 
-  const { errors, values, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
+  const { errors, values, touched, isSubmitting, handleSubmit, getFieldProps, setFieldValue } =
+    formik;
 
   return (
     <Dialog fullWidth maxWidth="sm" open={open} onClose={onClose}>
-      <DialogTitle>Cập nhật thông tin của bạn</DialogTitle>
       <FormikProvider value={formik}>
-        <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+        <Form noValidate autoComplete="off" onSubmit={handleSubmit}>
+          <DialogTitle>Cập nhật thông tin</DialogTitle>
           <DialogContent>
-            <Grid container spacing={3} direction="column">
-              <Grid item>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      fullWidth
-                      label="Họ"
-                      {...getFieldProps('firstName')}
-                      error={Boolean(touched.firstName && errors.firstName)}
-                      helperText={touched.firstName && errors.firstName}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      fullWidth
-                      label="Tên"
-                      {...getFieldProps('lastName')}
-                      error={Boolean(touched.lastName && errors.lastName)}
-                      helperText={touched.lastName && errors.lastName}
-                    />
-                  </Grid>
+            <Box my={3}>
+              <DialogContentText>Cập nhật thông tin của bạn ở bên dưới</DialogContentText>
+            </Box>
+            <Stack spacing={{ xs: 2, md: 3 }}>
+              <Typography>Thông tin cá nhân:</Typography>
+              <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
+                <TextField
+                  label="Họ"
+                  fullWidth
+                  variant="outlined"
+                  {...getFieldProps('firstName')}
+                  error={Boolean(touched.firstName && errors.firstName)}
+                  helperText={touched.firstName && errors.firstName}
+                />
+                <TextField
+                  label="Tên"
+                  fullWidth
+                  variant="outlined"
+                  {...getFieldProps('lastName')}
+                  error={Boolean(touched.lastName && errors.lastName)}
+                  helperText={touched.lastName && errors.lastName}
+                />
+
+                <FormControl sx={{ width: '270px' }}>
+                  <InputLabel>Giới tính</InputLabel>
+                  <Select
+                    label="Giới tính"
+                    native
+                    {...getFieldProps('gender')}
+                    value={values.gender}
+                  >
+                    {GENDER_OPTION.map((category, i) => (
+                      <option key={i} value={category}>
+                        {category}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Stack>
+
+              <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
+                <Grid xs={12} md={5}>
+                  <DatePicker
+                    label="Ngày sinh"
+                    inputFormat="dd/MM/yyyy"
+                    value={value}
+                    minDate={valueMinDate!}
+                    maxDate={valueMaxDate!}
+                    onChange={handleChange}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        error={Boolean(touched.dateOfBirth && errors.dateOfBirth)}
+                      />
+                    )}
+                  />
                 </Grid>
-              </Grid>
-              <Grid item>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      fullWidth
-                      label="Số điện thoại"
-                      {...getFieldProps('phoneNum')}
-                      error={Boolean(touched.phoneNum && errors.phoneNum)}
-                      helperText={touched.phoneNum && errors.phoneNum}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      fullWidth
-                      label="Tên ngân hàng"
-                      {...getFieldProps('bankName')}
-                      error={Boolean(touched.bankName && errors.bankName)}
-                      helperText={touched.bankName && errors.bankName}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={4}>
-                    <TextField
-                      fullWidth
-                      label="Thành phố"
-                      {...getFieldProps('city')}
-                      error={Boolean(touched.city && errors.city)}
-                      helperText={touched.city && errors.city}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={4}>
-                    <TextField
-                      fullWidth
-                      label="Quận"
-                      {...getFieldProps('district')}
-                      error={Boolean(touched.district && errors.district)}
-                      helperText={touched.district && errors.district}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={4}>
-                    <TextField
-                      fullWidth
-                      label="Địa chỉ"
-                      {...getFieldProps('address')}
-                      error={Boolean(touched.address && errors.address)}
-                      helperText={touched.address && errors.address}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
+                <TextField
+                  label="SĐT"
+                  variant="outlined"
+                  {...getFieldProps('phoneNum')}
+                  error={Boolean(touched.phoneNum && errors.phoneNum)}
+                  helperText={touched.phoneNum && errors.phoneNum}
+                />
+                <TextField
+                  label="CMND/CCCD"
+                  variant="outlined"
+                  {...getFieldProps('idCard')}
+                  error={Boolean(touched.idCard && errors.idCard)}
+                  helperText={touched.idCard && errors.idCard}
+                />
+              </Stack>
+              <Typography>Địa chỉ:</Typography>
+
+              <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
+                <TextField
+                  label="Số nhà, tên đường"
+                  fullWidth
+                  variant="outlined"
+                  {...getFieldProps('address')}
+                  error={Boolean(touched.address && errors.address)}
+                  helperText={touched.address && errors.address}
+                />
+              </Stack>
+              <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
+                <TextField
+                  label="Thành phố"
+                  fullWidth
+                  variant="outlined"
+                  {...getFieldProps('city')}
+                  error={Boolean(touched.city && errors.city)}
+                  helperText={touched.city && errors.city}
+                />
+                <TextField
+                  label="Quận"
+                  fullWidth
+                  variant="outlined"
+                  {...getFieldProps('district')}
+                  error={Boolean(touched.district && errors.district)}
+                  helperText={touched.district && errors.district}
+                />
+              </Stack>
+              <Typography>Ngân hàng</Typography>
+              <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
+                <TextField
+                  label="Tên ngân hàng"
+                  fullWidth
+                  variant="outlined"
+                  {...getFieldProps('bankName')}
+                  error={Boolean(touched.bankName && errors.bankName)}
+                  helperText={touched.bankName && errors.bankName}
+                />
+                <TextField
+                  label="Số tài khoản"
+                  fullWidth
+                  variant="outlined"
+                  {...getFieldProps('bankAccount')}
+                  error={Boolean(touched.bankAccount && errors.bankAccount)}
+                  helperText={touched.bankAccount && errors.bankAccount}
+                />
+                <TextField
+                  label="Mã số thuế"
+                  fullWidth
+                  variant="outlined"
+                  {...getFieldProps('taxIdentificationNumber')}
+                  error={Boolean(touched.taxIdentificationNumber && errors.taxIdentificationNumber)}
+                  helperText={touched.taxIdentificationNumber && errors.taxIdentificationNumber}
+                />
+              </Stack>
+            </Stack>
           </DialogContent>
-
-          <Divider />
-
           <DialogActions>
-            <LoadingButton type="submit" variant="contained" color="warning" loading={isSubmitting}>
-              Cập nhật
+            <Button onClick={onClose}>Đóng</Button>
+            <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
+              Lưu
             </LoadingButton>
-            <Button type="button" color="error" variant="contained" onClick={onClose}>
-              Hủy
-            </Button>
           </DialogActions>
         </Form>
       </FormikProvider>

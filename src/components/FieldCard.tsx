@@ -1,11 +1,11 @@
 import { Grid, Box, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { getProjectId } from 'redux/slices/krowd_slices/project';
+import { getProjectListById } from 'redux/slices/krowd_slices/project';
 import { dispatch } from 'redux/store';
 import { PATH_DETAILS } from 'routes/paths';
 import { Field } from '../@types/krowd/fields';
 const handleGetProjectById = (activeProjectId: string) => {
-  dispatch(getProjectId(activeProjectId, 'ADMIN'));
+  dispatch(getProjectListById(activeProjectId));
 };
 function FieldCard({ row }: { row: Field }) {
   return (

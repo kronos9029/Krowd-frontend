@@ -30,7 +30,7 @@ const sidebarConfig = [
         icon: ICONS.dashboard
       },
       // { title: 'Chung', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics },
-      { title: 'Ví của bạn', path: PATH_DASHBOARD.general.banking, icon: ICONS.banking }
+      { title: 'Ví của bạn', path: PATH_DASHBOARD.general.banking, icon: ICONS.wallet }
       // { title: 'Tổng quan ngày', path: PATH_DASHBOARD.general.booking, icon: ICONS.booking }
     ]
   },

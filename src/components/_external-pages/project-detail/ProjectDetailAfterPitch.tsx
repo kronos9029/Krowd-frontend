@@ -30,7 +30,8 @@ type AboutListProps = {
   nav: (string | null)[];
 };
 function ProjectDetailAfterPitch({ abouts, nav }: AboutListProps) {
-  const { activeProjectId: projectID } = useSelector((state: RootState) => state.project);
+  const { detailOfProject } = useSelector((state: RootState) => state.project);
+  const { detailOfProjectID: projectID } = detailOfProject;
   const { manager, name } = projectID!;
   const aboutNav = nav.find((value) => value === 'Về dự án');
   return (
