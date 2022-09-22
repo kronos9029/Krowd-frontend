@@ -80,7 +80,7 @@ function ProjectDetailHighLight({ highlights }: HighlightListProps) {
                 </Typography>
               </Box>
               <Typography sx={{ pb: 0.1 }} variant="h6" color={'text.secondary'} fontWeight={100}>
-                {list && <FixQL>{parse(list.content)}</FixQL>}
+                {list && list.content && <FixQL>{parse(list.content)}</FixQL>}
               </Typography>
             </Box>
           );

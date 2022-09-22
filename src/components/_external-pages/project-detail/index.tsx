@@ -8,3 +8,4 @@ export { default as ProjectDetailDocument } from './ProjectDetailDocument';
 export { default as ProjectDetailAfterPitch } from './ProjectDetailAfterPitch';
 export { default as ProjectDetailHighLight } from './ProjectDetailHighLight';
 export { default as ProjectPackage } from './ProjectPackage';
+export { default as ProjectDetailsPress } from './ProjectDetailsPress';

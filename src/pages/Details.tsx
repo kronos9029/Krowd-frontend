@@ -20,7 +20,8 @@ import {
   ProjectDetailDocument,
   ProjectDetailAfterPitch,
   ProjectDetailHighLight,
-  ProjectPackage
+  ProjectPackage,
+  ProjectDetailsPress
 } from 'components/_external-pages/project-detail/index';
 import MHidden from 'components/@material-extend/MHidden';
 import KrowdPackage from './KrowdPackage';
@@ -74,7 +75,7 @@ export default function ComponentsDetails() {
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
   const { t } = useTranslation();
   const getEntityList = (
-    type: 'PITCH' | 'EXTENSION' | 'DOCUMENT' | 'ALBUM' | 'ABOUT' | 'HIGHLIGHT'
+    type: 'PITCH' | 'EXTENSION' | 'DOCUMENT' | 'ALBUM' | 'ABOUT' | 'HIGHLIGHT' | 'PRESS'
   ) => {
     return projectID?.projectEntity.find((pe) => pe.type === type)?.typeItemList;
   };
@@ -91,11 +92,12 @@ export default function ComponentsDetails() {
     };
   }, [dispatch]);
 
-  const { pitchs, extensions, documents, album, abouts, highlights, bottomNav } = {
+  const { pitchs, extensions, documents, album, abouts, highlights, bottomNav, press } = {
     pitchs: getEntityList('PITCH'),
     extensions: getEntityList('EXTENSION'),
     documents: getEntityList('DOCUMENT'),
     abouts: getEntityList('ABOUT'),
+    press: getEntityList('PRESS'),
     album: [
       projectID!.image,
       ...getEntityList('ALBUM')!
@@ -103,7 +105,10 @@ export default function ComponentsDetails() {
         .filter(notEmpty)
     ],
     highlights: getEntityList('HIGHLIGHT'),
-    bottomNav: [getEntityList('ABOUT')!.length > 0 ? 'Về chúng tôi' : null]
+    bottomNav: [
+      getEntityList('ABOUT')!.length > 0 ? 'Về chúng tôi' : null,
+      getEntityList('PRESS')!.length > 0 ? 'Bài viết liên quan' : null
+    ]
   };
 
   function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {
@@ -263,6 +268,7 @@ export default function ComponentsDetails() {
             <Divider variant="fullWidth" />
           </Box>
           <ProjectDetailAfterPitch abouts={abouts} nav={bottomNav} />
+          <ProjectDetailsPress press={press} nav={bottomNav} />
         </>
       )}
       <hr />
