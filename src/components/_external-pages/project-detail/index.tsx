@@ -9,3 +9,6 @@ export { default as ProjectDetailAfterPitch } from './ProjectDetailAfterPitch';
 export { default as ProjectDetailHighLight } from './ProjectDetailHighLight';
 export { default as ProjectPackage } from './ProjectPackage';
 export { default as ProjectDetailsPress } from './ProjectDetailsPress';
+export { default as KrowdProjectStage } from './KrowdProjectStage';
+export { default as StageListKrowdTable } from './StageListKrowdTable';
+export { default as ProjectDetailFAQsBusiness } from './ProjectDetailFAQsBusiness';

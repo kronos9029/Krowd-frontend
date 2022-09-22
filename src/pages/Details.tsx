@@ -21,7 +21,10 @@ import {
   ProjectDetailAfterPitch,
   ProjectDetailHighLight,
   ProjectPackage,
-  ProjectDetailsPress
+  ProjectDetailsPress,
+  KrowdProjectStage,
+  StageListKrowdTable,
+  ProjectDetailFAQsBusiness
 } from 'components/_external-pages/project-detail/index';
 import MHidden from 'components/@material-extend/MHidden';
 import KrowdPackage from './KrowdPackage';
@@ -34,6 +37,11 @@ import { useEffect, useState } from 'react';
 import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
 import { getProjectPackage } from 'redux/slices/krowd_slices/project';
+import { getAllProjectStage, getProjectStageList } from 'redux/slices/krowd_slices/stage';
+import { Icon } from '@iconify/react';
+import starFilled from '@iconify/icons-ant-design/star-filled';
+// import chartMedian from '@iconify/icons-carbon/chart-median';
+// import tableIcon from '@iconify/icons-codicon/table';
 // ----------------------------------------------------------------------
 const projectPackage = {
   id: null,
@@ -71,11 +79,13 @@ export default function ComponentsDetails() {
   const { detailOfProject, packageLists } = useSelector((state: RootState) => state.project);
   const { detailOfProjectID: projectID } = detailOfProject;
   //Language
+  const [openStage, setOpenStage] = useState('chart');
+
   const currentLanguageCode = cookies.get('i18next') || 'en';
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
   const { t } = useTranslation();
   const getEntityList = (
-    type: 'PITCH' | 'EXTENSION' | 'DOCUMENT' | 'ALBUM' | 'ABOUT' | 'HIGHLIGHT' | 'PRESS'
+    type: 'PITCH' | 'EXTENSION' | 'DOCUMENT' | 'ALBUM' | 'ABOUT' | 'HIGHLIGHT' | 'PRESS' | 'FAQ'
   ) => {
     return projectID?.projectEntity.find((pe) => pe.type === type)?.typeItemList;
   };
@@ -91,13 +101,26 @@ export default function ComponentsDetails() {
       window.removeEventListener('scroll', listenScrollEvent);
     };
   }, [dispatch]);
+  useEffect(() => {
+    dispatch(getProjectStageList(projectID?.id ?? ''));
+    dispatch(getAllProjectStage(projectID?.id ?? ''));
+    // dispatch(getProjectId(project.id));
+  }, [dispatch]);
 
-  const { pitchs, extensions, documents, album, abouts, highlights, bottomNav, press } = {
+  const handleClickOpenStage = () => {
+    setOpenStage('table');
+  };
+  const handleCloseOpenStage = () => {
+    setOpenStage('chart');
+  };
+  const { listOfChartStage } = useSelector((state: RootState) => state.stage);
+  const { pitchs, extensions, documents, album, abouts, highlights, bottomNav, press, faqs } = {
     pitchs: getEntityList('PITCH'),
     extensions: getEntityList('EXTENSION'),
     documents: getEntityList('DOCUMENT'),
     abouts: getEntityList('ABOUT'),
     press: getEntityList('PRESS'),
+    faqs: getEntityList('FAQ'),
     album: [
       projectID!.image,
       ...getEntityList('ALBUM')!
@@ -106,8 +129,10 @@ export default function ComponentsDetails() {
     ],
     highlights: getEntityList('HIGHLIGHT'),
     bottomNav: [
+      listOfChartStage.length > 0 ? 'Biểu đồ của dự án' : null,
       getEntityList('ABOUT')!.length > 0 ? 'Về chúng tôi' : null,
-      getEntityList('PRESS')!.length > 0 ? 'Bài viết liên quan' : null
+      getEntityList('PRESS')!.length > 0 ? 'Bài viết liên quan' : null,
+      getEntityList('FAQ')!.length > 0 ? 'Câu hỏi thắc mắc' : null
     ]
   };
 
@@ -247,7 +272,6 @@ export default function ComponentsDetails() {
                     <Button
                       sx={{
                         backgroundColor: '#FF7F50',
-                        minWidth: '450px',
                         '&:hover': { backgroundColor: '#FF7F50' }
                       }}
                       disableElevation
@@ -263,12 +287,85 @@ export default function ComponentsDetails() {
               </Grid>
             </Grid>
           </Container>
+          <Box sx={{ mb: 7 }}>
+            <Divider variant="fullWidth" />
+          </Box>
+          <Container maxWidth={'lg'}>
+            <Grid
+              container
+              display={'flex'}
+              alignItems={'center'}
+              justifyContent={'space-between'}
+              mb={5}
+            >
+              <Grid lg={8}>
+                <Typography variant="h5" sx={{ mr: 3 }} color={'#666'}>
+                  <Icon
+                    icon={starFilled}
+                    style={{
+                      marginRight: 10,
+                      marginBottom: 5,
+                      color: '#14B7CC'
+                    }}
+                  />
+                  Giai đoạn ước tính
+                </Typography>
+              </Grid>
+              <Grid lg={4}>
+                <Grid
+                  container
+                  display={'flex'}
+                  alignItems={'center'}
+                  justifyContent={'space-evenly'}
+                >
+                  <Grid>
+                    <Button variant="outlined" onClick={handleClickOpenStage}>
+                      <Typography variant="h4" color={'#666'} height={30}>
+                        <Icon
+                          icon={starFilled}
+                          style={{
+                            marginRight: 10,
+                            marginBottom: 5,
+                            color: '#14B7CC'
+                          }}
+                        />
+                      </Typography>
+                      Bảng
+                    </Button>
+                  </Grid>
+                  <Grid>
+                    <Button variant="outlined" onClick={handleCloseOpenStage}>
+                      <Typography variant="h4" color={'#666'} height={30}>
+                        <Icon
+                          icon={starFilled}
+                          style={{
+                            marginRight: 10,
+                            marginBottom: 5,
+                            color: '#14B7CC'
+                          }}
+                        />
+                      </Typography>
+                      Biểu đồ
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Container>
 
+          {openStage === 'chart' && listOfChartStage && listOfChartStage.length > 0 && (
+            <KrowdProjectStage project={projectID} nav={bottomNav} />
+          )}
+
+          {openStage === 'table' && listOfChartStage && listOfChartStage.length > 0 && (
+            <StageListKrowdTable project={projectID} />
+          )}
           <Box sx={{ mb: 7 }}>
             <Divider variant="fullWidth" />
           </Box>
           <ProjectDetailAfterPitch abouts={abouts} nav={bottomNav} />
           <ProjectDetailsPress press={press} nav={bottomNav} />
+          <ProjectDetailFAQsBusiness faqs={faqs} nav={bottomNav} />
         </>
       )}
       <hr />

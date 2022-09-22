@@ -12,6 +12,7 @@ import areaKrowdReducer from './slices/krowd_slices/area';
 import RiskReducer from './slices/krowd_slices/riskType';
 import walletKrowdReducer from './slices/krowd_slices/wallet';
 import projectReducer from './slices/krowd_slices/project';
+import ProjectStageReducer from './slices/krowd_slices/stage';
 import userKrowdReducer from './slices/krowd_slices/user';
 import user_InvestorStateKrowdReducer from './slices/krowd_slices/investor';
 import productReducer from './slices/product';
@@ -48,6 +49,7 @@ const rootReducer = combineReducers({
   fieldKrowd: fieldKrowdReducer,
   areaKrowd: areaKrowdReducer,
   walletKrowd: walletKrowdReducer,
+  stage: ProjectStageReducer,
   riskKrowd: RiskReducer,
   project: persistReducer(projectPersistConfig, projectReducer),
   product: persistReducer(productPersistConfig, productReducer)

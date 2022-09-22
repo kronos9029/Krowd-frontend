@@ -2,7 +2,7 @@ import axios from 'axios';
 import { REACT_APP_API_URL } from '../../config';
 const API_PACKAGE_ID = '/packages/project';
 const API_PROJECT = '/projects';
-
+const API_STAGE_ID = '/stages';
 function getToken() {
   return window.localStorage.getItem('accessToken');
 }
@@ -40,9 +40,17 @@ async function getPackageID({ id }: { id: string }) {
   });
   return response;
 }
+async function getStageId({ id }: { id: string }) {
+  const headers = getHeader();
+  const response = await axios.get(REACT_APP_API_URL + `${API_STAGE_ID}/${id}`, {
+    headers: headers
+  });
+  return response;
+}
 export const ProjectAPI = {
   gets: gets,
   get: get,
   getPackageID: getPackageID,
-  getAllProject: getAllProject
+  getAllProject: getAllProject,
+  getStageId: getStageId
 };

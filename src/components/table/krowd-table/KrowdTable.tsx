@@ -69,11 +69,11 @@ export function KrowdTable({
   viewPath,
   deleteRecord
 }: KrowdTableProps) {
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
   const data = getData();
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(parseInt(event.target.value, 5));
     setPage(0);
   };
 
@@ -85,7 +85,7 @@ export function KrowdTable({
     <>
       <HeaderBreadcrumbs
         heading={`${headingTitle.toUpperCase()} (${data.length})`}
-        links={[{ name: 'Bảng điều khiển', href: PATH_DASHBOARD.root }, { name: 'Danh sách' }]}
+        links={[{ name: '', href: PATH_DASHBOARD.root }]}
         action={
           createNewRecordButton && (
             <Button
@@ -198,7 +198,7 @@ export function KrowdTable({
                                 </TableCell>
                               );
                             case DATA_TYPE.DATE:
-                              const date = String(_item.value).split(' ')[0];
+                              const date = String(_item.value);
                               return (
                                 <TableCell
                                   key={`__${_item.name}__${data.id}`}

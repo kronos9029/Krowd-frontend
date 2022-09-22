@@ -11,3 +11,4 @@ import './krowd_apis/project';
 import './krowd_apis/business';
 import './krowd_apis/investor';
 import './krowd_apis/wallet';
+import './krowd_apis/stage';

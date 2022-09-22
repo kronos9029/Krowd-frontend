@@ -6,7 +6,6 @@ import { getProjectList } from '../../redux/slices/krowd_slices/project';
 import React from 'react';
 import { Box, Container, Typography } from '@mui/material';
 import { SeverErrorIllustration } from 'assets';
-
 const TABLE_HEAD = [
   { id: 'idx', label: 'STT', align: 'center' },
   { id: 'image', label: 'HÌNH ẢNH', align: '' },
