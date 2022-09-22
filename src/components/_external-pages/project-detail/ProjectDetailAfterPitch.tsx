@@ -107,7 +107,7 @@ function ProjectDetailAfterPitch({ abouts, nav }: AboutListProps) {
                           <Grid sx={{ mt: 2.6 }}>
                             <img
                               style={{ borderRadius: '50%', width: 60 }}
-                              src={`/static/icons/social/${ab.title}.png`}
+                              src={`/static/icons/navbar/${ab.title}.png`}
                             />
                           </Grid>
                           <Grid>
