@@ -51,7 +51,7 @@ export default function ProjectPackage({ project }: { project: Project1 }) {
   }, [dispatch]);
   return (
     <>
-      <Box width={'fit-content'} py={1.4}>
+      <Box py={1.4}>
         <Typography variant="h4" color={'#666'}>
           Gói đầu tư
         </Typography>
@@ -75,7 +75,7 @@ export default function ProjectPackage({ project }: { project: Project1 }) {
             {packageLists.listOfPackage &&
               packageLists.listOfPackage.length > 0 &&
               packageLists.listOfPackage.map((e, index) => (
-                <Grid sx={{ p: 2 }} item key={index} xs={12} sm={12} md={6} lg={12}>
+                <Grid sx={{ p: 2 }} item key={index} xs={12} sm={12} md={12} lg={12}>
                   <Typography
                     variant="overline"
                     sx={{ display: 'flex', color: 'text.secondary', justifyContent: 'center' }}
