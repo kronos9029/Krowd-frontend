@@ -53,7 +53,7 @@ function ProjectDetailAfterPitch({ press, nav }: PressListProps) {
       </Box>{' '}
       {/* Press */}
       {press && press.length > 0 ? (
-        <Container maxWidth={false} sx={{ paddingBottom: '5rem' }}>
+        <Container maxWidth={'lg'} sx={{ paddingBottom: '5rem' }}>
           <Box mb={7}>
             <NavbarTopAnchor id={`__navbarTop_${pressNav}`}></NavbarTopAnchor>
             <Typography textAlign="center" py={1} color={'#666'} variant="h4">
@@ -64,7 +64,7 @@ function ProjectDetailAfterPitch({ press, nav }: PressListProps) {
               <Divider sx={{ my: 1, borderBottomWidth: 'thick', color: 'primary.main' }} />
             </Box>
           </Box>
-          <Grid container gap={1} justifyContent={'space-evenly'}>
+          <Grid container justifyContent={'space-evenly'}>
             {press &&
               press.map((f, i) => {
                 const part = f.description?.split('\\gg20p');
@@ -75,13 +75,12 @@ function ProjectDetailAfterPitch({ press, nav }: PressListProps) {
                 const content = f.content?.substring(0, 150).concat('...');
                 return (
                   <>
-                    <Grid xs={12} sm={5} md={3} lg={3}>
+                    <Grid xs={12} sm={5} md={4} lg={3}>
                       <Link key={i} href={`${newLink}`} target="_blank" underline="none">
                         <Card
                           sx={{
                             width: '100%',
-                            minHeight: 520,
-                            maxHeight: 520,
+                            minHeight: 400,
                             boxShadow: '40px 40px 80px 0 20%',
                             alignItems: 'center'
                           }}
@@ -91,18 +90,24 @@ function ProjectDetailAfterPitch({ press, nav }: PressListProps) {
                               display: 'center'
                             }}
                             component="img"
-                            height={240}
+                            height={200}
                             src={`${f.link}`}
                           />
-                          <Typography px={2} mt={2} mb={1} variant="h6">
+                          <Typography
+                            px={2}
+                            mt={2}
+                            mb={1}
+                            sx={{ fontWeight: '700' }}
+                            variant="body1"
+                          >
                             {f.title}
                           </Typography>
                           <Typography px={2} mb={1} variant="body1" color={'text.disabled'}>
                             {newspaperName} · {publicDate}
                           </Typography>
-                          <Typography px={2} mb={1} pb={2} variant="body2" color={'text.primary'}>
+                          {/* <Typography px={2} mb={1} pb={2} variant="body2" color={'text.primary'}>
                             {content}
-                          </Typography>
+                          </Typography> */}
                         </Card>
                       </Link>
                     </Grid>
