@@ -52,10 +52,10 @@ export default function ProjectPackage({ project }: { project: Project1 }) {
   return (
     <>
       <Box width={'fit-content'} py={1.4}>
-        <Typography variant="h5" color={'text.secondary'}>
+        <Typography variant="h4" color={'#666'}>
           Gói đầu tư
         </Typography>
-        <Box width={'25%'}>
+        <Box width={'45%'}>
           <Divider variant="fullWidth" sx={{ my: 1 }} />
         </Box>
       </Box>
@@ -114,16 +114,27 @@ export default function ProjectPackage({ project }: { project: Project1 }) {
                   >
                     Số lượng {e.quantity}
                   </Typography>
-
-                  <Stack spacing={2} sx={{ my: 5 }}>
+                  <Stack
+                    paddingLeft={0}
+                    textAlign={'left'}
+                    component="ul"
+                    spacing={2}
+                    sx={{ my: 5, width: 1 }}
+                  >
                     {e.descriptionList.map((item, i) => (
-                      <Typography
+                      <Stack
                         key={i}
-                        sx={{ textAlign: 'left', alignItems: 'left' }}
-                        variant="body2"
+                        component="li"
+                        direction="row"
+                        alignItems="center"
+                        spacing={1.5}
+                        sx={{
+                          typography: 'body2'
+                        }}
                       >
-                        - {item}
-                      </Typography>
+                        <Box component={Icon} icon={checkmarkFill} sx={{ width: 20, height: 20 }} />
+                        <Typography variant="body2">{item}</Typography>
+                      </Stack>
                     ))}
                   </Stack>
                   <Button

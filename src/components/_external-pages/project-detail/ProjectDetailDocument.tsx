@@ -16,10 +16,10 @@ function ProjectDetailDocument({ documents }: DocumentListProps) {
   return (
     <>
       <Box>
-        <Typography sx={{ mt: 3 }} variant="h4" color={'#666'}>
+        <Typography sx={{ mt: 8 }} variant="h4" color={'#666'}>
           Tài liệu
         </Typography>
-        <Box width={'25%'}>
+        <Box width={'18%'}>
           <Divider variant="fullWidth" sx={{ my: 1, mb: 3 }} />
         </Box>
       </Box>

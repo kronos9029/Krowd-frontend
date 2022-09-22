@@ -51,7 +51,7 @@ function ProjectDetailAfterPitch({ abouts, nav }: AboutListProps) {
       <Container maxWidth={'lg'} sx={{ paddingBottom: '3rem' }}>
         <Box mb={7}>
           <NavbarTopAnchor id={`__navbarTop_${aboutNav}`}></NavbarTopAnchor>
-          <Typography textAlign="center" py={1} color={'#666'} variant="h3">
+          <Typography textAlign="center" py={1} color={'#666'} variant="h4">
             Về chúng tôi
           </Typography>
           <Box mx="auto" width={'10%'}>
@@ -90,22 +90,28 @@ function ProjectDetailAfterPitch({ abouts, nav }: AboutListProps) {
                 .slice(0, 3)
                 .map((ab, i) => (
                   <Box key={i}>
-                    <Button disabled={ab.link === null} sx={{ opacity: ab.link ? 1 : 0.4 }}>
+                    <Button
+                      href={`${ab.link}`}
+                      target="_blank"
+                      disabled={ab.link === null}
+                      sx={{ opacity: ab.link ? 1 : 0.4 }}
+                    >
                       <Card sx={{ borderRadius: '45% 0% 0% 45%', height: 100 }}>
                         <Grid
                           container
                           display={'flex'}
                           alignItems="center"
                           justifyContent={'center'}
+                          textAlign={'center'}
                         >
                           <Grid sx={{ mt: 2.6 }}>
                             <img
                               style={{ borderRadius: '50%', width: 60 }}
-                              src={`static/icons/social/${ab.title}.png`}
+                              src={`/static/icons/social/${ab.title}.png`}
                             />
                           </Grid>
                           <Grid>
-                            <Typography sx={{ mt: 4, width: 200 }}>
+                            <Typography variant="subtitle2" sx={{ mt: 4, width: 200 }}>
                               Theo dõi chúng tôi qua{' '}
                               <Typography sx={{ fontWeight: '700' }}>{ab.title}</Typography>
                             </Typography>
