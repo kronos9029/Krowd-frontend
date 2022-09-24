@@ -83,7 +83,7 @@ function ProjectDetailFAQsBusiness({ faqs, nav }: FAQSListProps) {
                 <MotionInView variants={varFadeIn}>
                   <Accordion>
                     <AccordionSummary
-                      style={{ paddingTop: '1rem', paddingBottom: '1rem', color: '#251E18' }}
+                      style={{ paddingTop: '1rem', marginTop: 5, color: '#251E18' }}
                       expandIcon={<Icon icon={arrowIosDownwardFill} width={20} height={20} />}
                     >
                       <Typography variant="subtitle1">+ {fqs.title}</Typography>

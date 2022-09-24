@@ -172,7 +172,7 @@ export default function ComponentsDetails() {
                           justifyContent: 'space-between'
                         }}
                       >
-                        <Label
+                        <Button
                           sx={{
                             ml: 1,
                             color: '#14b7cc',
@@ -183,7 +183,7 @@ export default function ComponentsDetails() {
                           }}
                         >
                           {t(`Project_detail_card.Pitch`)}
-                        </Label>
+                        </Button>
                         <Box
                           sx={{
                             my: 1.5,

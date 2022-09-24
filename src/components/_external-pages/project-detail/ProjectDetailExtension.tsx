@@ -34,12 +34,12 @@ function ProjectDetailExtension({ extensions }: ExtensionListProps) {
   };
   return (
     <>
-      <Box width={'fit-content'} py={1.4}>
-        <Typography sx={{ mt: 3.8 }} variant="h4" color={'#666'}>
+      <Box width={'fit-content'}>
+        <Typography variant="h4" sx={{ mb: 1 }} color={'#666'}>
           Thông tin mở rộng
         </Typography>
         <Box width={'25%'}>
-          <Divider variant="fullWidth" sx={{ my: 1 }} />
+          <Divider variant="fullWidth" />
         </Box>
       </Box>
       <Box>
