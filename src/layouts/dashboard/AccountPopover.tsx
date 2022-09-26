@@ -4,7 +4,8 @@ import { useRef, useState } from 'react';
 import homeFill from '@iconify/icons-eva/home-fill';
 import personFill from '@iconify/icons-eva/person-fill';
 import projectIcon from '@iconify/icons-ant-design/account-book';
-
+// import walletIcon from '@iconify/icons-ant-design/wallet-outline';
+import walletIcon from '@iconify/icons-ant-design/wallet-fill';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 // material
 import { alpha } from '@mui/material/styles';
@@ -35,6 +36,11 @@ const MENU_OPTIONS = [
   {
     label: 'Thông tin cá nhân',
     icon: personFill,
+    linkTo: PATH_DASHBOARD.user.account
+  },
+  {
+    label: 'Nạp tiền vào ví',
+    icon: walletIcon,
     linkTo: PATH_DASHBOARD.user.account
   }
 ];

@@ -17,3 +17,4 @@ export { default as PlanStarterIcon } from './icon_plan_starter';
 export { default as PlanPremiumIcon } from './icon_plan_premium';
 //image
 export { default as OverlayBackground } from './overlay.svg';
+export { default as bankingIllustration } from './bankingIllustration.svg';

@@ -23,25 +23,11 @@ const RootStyle = styled(Card)(({ theme }) => ({
   position: 'relative',
   backgroundSize: 'cover',
   padding: theme.spacing(3),
+  marginBottom: theme.spacing(3),
   backgroundRepeat: 'no-repeat',
-  color: theme.palette.common.white,
-  backgroundImage: 'url("/static/bg_card.png")',
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'space-between'
-}));
-
-const IconWrapperStyle = styled('div')(({ theme }) => ({
-  width: 48,
-  height: 48,
-  display: 'flex',
-  borderRadius: '50%',
-  position: 'absolute',
-  alignItems: 'center',
-  top: theme.spacing(3),
-  right: theme.spacing(3),
-  justifyContent: 'center',
-  color: theme.palette.primary.main,
+  justifyContent: 'space-between',
   backgroundColor: theme.palette.primary.main
 }));
 

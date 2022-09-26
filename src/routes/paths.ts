@@ -29,6 +29,7 @@ export const PATH_PAGE = {
   faqs: '/faqs',
   page404: '/404',
   page500: '/500',
+  pageTopUp: '/top-up',
   business: '/components',
   project: '/project',
   checkout: '/package',

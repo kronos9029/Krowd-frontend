@@ -80,7 +80,7 @@ export default function Router() {
         { path: 'app', element: <GeneralApp /> },
         { path: 'ecommerce', element: <GeneralEcommerce /> },
         { path: 'analytics', element: <GeneralAnalytics /> },
-        { path: 'banking', element: <GeneralBanking /> },
+        { path: 'banking', element: <WalletBanking /> },
         { path: 'booking', element: <GeneralBooking /> },
 
         {
@@ -174,6 +174,7 @@ export default function Router() {
         { path: 'pricing', element: <KrowdPackage /> },
         { path: 'payment', element: <Payment /> },
         { path: '500', element: <Page500 /> },
+        { path: 'top-up', element: <PageTopUp /> },
         { path: 'page-success', element: <PageSuccess /> },
         { path: '404', element: <NotFound /> },
         { path: 'package', element: <KrowdPackage /> },
@@ -211,7 +212,7 @@ const VerifyCode = Loadable(lazy(() => import('../pages/authentication/VerifyCod
 const GeneralApp = Loadable(lazy(() => import('../pages/dashboard/GeneralApp')));
 const GeneralEcommerce = Loadable(lazy(() => import('../pages/dashboard/GeneralEcommerce')));
 const GeneralAnalytics = Loadable(lazy(() => import('../pages/dashboard/GeneralAnalytics')));
-const GeneralBanking = Loadable(lazy(() => import('../pages/dashboard/GeneralBanking')));
+const WalletBanking = Loadable(lazy(() => import('../pages/dashboard/WalletBanking')));
 const GeneralBooking = Loadable(lazy(() => import('../pages/dashboard/GeneralBooking')));
 const EcommerceShop = Loadable(lazy(() => import('../pages/dashboard/EcommerceShop')));
 const EcommerceProductDetails = Loadable(
@@ -260,6 +261,7 @@ const Maintenance = Loadable(lazy(() => import('../pages/Maintenance')));
 const KrowdPackage = Loadable(lazy(() => import('../pages/KrowdPackage')));
 const Payment = Loadable(lazy(() => import('../pages/Payment')));
 const Page500 = Loadable(lazy(() => import('../pages/Page500')));
+const PageTopUp = Loadable(lazy(() => import('../pages/PageTopUp')));
 const PageSuccess = Loadable(lazy(() => import('../pages/PageSuccess')));
 const NotFound = Loadable(lazy(() => import('../pages/Page404')));
 // Components

@@ -29,10 +29,10 @@ import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
 import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
-import useAuth from 'hooks/useAuth';
-import useIsMountedRef from 'hooks/useIsMountedRef';
 import { useSnackbar } from 'notistack';
-import { PATH_AUTH, PATH_DASHBOARD, PATH_PAGE } from 'routes/paths';
+import { PATH_AUTH, PATH_DASHBOARD, PATH_PAGE } from '../../routes/paths';
+import useAuth from '../../hooks/useAuth';
+import useIsMountedRef from '../../hooks/useIsMountedRef';
 
 // ----------------------------------------------------------------------
 
@@ -72,8 +72,7 @@ const ToolbarShadowStyle = styled('div')(({ theme }) => ({
   margin: 'auto',
   borderRadius: '50%',
   position: 'absolute',
-  width: `calc(100% - 48px)`,
-  boxShadow: theme.customShadows.z8
+  width: `calc(100% - 48px)`
 }));
 
 // ----------------------------------------------------------------------
@@ -109,7 +108,7 @@ const Language = [
     countryCode: 'en'
   }
 ];
-export default function MainNavbar() {
+export default function MainNavbarTopUp() {
   const isOffset = useOffSetTop(-1);
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -156,6 +155,7 @@ export default function MainNavbar() {
   return (
     <AppBar
       sx={{
+        height: '120px',
         boxShadow: 0,
         bgcolor: '#FFFFFF',
         position: 'absolute'
@@ -195,12 +195,6 @@ export default function MainNavbar() {
           <Box sx={{ flexGrow: 1.4 }} />
 
           <MHidden width="mdDown">
-            <MenuDesktop
-              isOffset={isOffset}
-              isHome={isHome}
-              navConfig={currentLanguage === 'vi' ? navConfig.vi : navConfig.en}
-            />
-
             {(user && (
               <>
                 <Button

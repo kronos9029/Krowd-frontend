@@ -7,5 +7,6 @@ export { default as AppTotalActiveUsers } from './AppTotalActiveUsers';
 export { default as AppTotalDownloads } from './AppTotalDownloads';
 export { default as AppTotalInstalled } from './AppTotalInstalled';
 export { default as AppWelcome } from './AppWelcome';
+export { default as WalletWelcome } from './WalletWelcome';
 export { default as AppWidgets1 } from './AppWidgets1';
 export { default as AppWidgets2 } from './AppWidgets2';

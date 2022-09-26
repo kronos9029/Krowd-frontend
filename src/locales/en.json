@@ -108,7 +108,8 @@
     "mainNavbar_menu_item":{
         "mainNavbar_menu_item_profile":"Personal information",
         "mainNavbar_menu_item_console":"Console",
-        "mainNavbar_menu_item_logout":"Log out"
+        "mainNavbar_menu_item_logout":"Log out",
+        "mainNavbar_menu_item_wallet":"Deposit"
     },
     "landing_project_highlight": {
     "landing_highligh_transaction":"All transactions are scrutinized by",

@@ -19,11 +19,17 @@ import {
   BankingExpensesCategories
 } from '../../components/_dashboard/general-banking';
 import { Wallet } from '../../@types/krowd/wallet';
+import { AppWelcome, WalletWelcome } from 'components/_dashboard/general-app';
+import { RootState, useSelector } from 'redux/store';
+import useAuth from 'hooks/useAuth';
 
 // ----------------------------------------------------------------------
 
-export default function GeneralBanking({ wallet }: { wallet: Wallet }) {
+export default function WalletBanking({ wallet }: { wallet: Wallet }) {
   const { themeStretch } = useSettings();
+  const { user } = useAuth();
+  const { UserDetailState } = useSelector((state: RootState) => state.userKrowd);
+  const { UserDetail, isLoading } = UserDetailState;
 
   return (
     <Page title="General: Banking | Krowd">
@@ -31,8 +37,13 @@ export default function GeneralBanking({ wallet }: { wallet: Wallet }) {
         <Grid container spacing={3}>
           <Grid item xs={12} md={12}>
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3}>
-              <TempWallet wallet={wallet} />
-              <SharedInvestmentWallet wallet={wallet} />
+              <Grid lg={6}>
+                <WalletWelcome user={user} investor={UserDetail} />
+              </Grid>
+              <Grid lg={6}>
+                <TempWallet wallet={wallet} />
+                <SharedInvestmentWallet wallet={wallet} />
+              </Grid>
             </Stack>
           </Grid>
 

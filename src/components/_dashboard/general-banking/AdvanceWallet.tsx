@@ -23,21 +23,7 @@ const RootStyle = styled(Card)(({ theme }) => ({
   boxShadow: 'none',
   position: 'relative',
   color: theme.palette.primary.darker,
-  backgroundColor: '#97eef9'
-}));
-
-const IconWrapperStyle = styled('div')(({ theme }) => ({
-  width: 48,
-  height: 48,
-  display: 'flex',
-  borderRadius: '50%',
-  position: 'absolute',
-  alignItems: 'center',
-  top: theme.spacing(3),
-  right: theme.spacing(3),
-  justifyContent: 'center',
-  color: theme.palette.primary.main,
-  backgroundColor: theme.palette.primary.main
+  backgroundColor: '#ff9b26e0'
 }));
 
 // ----------------------------------------------------------------------

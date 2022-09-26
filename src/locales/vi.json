@@ -106,7 +106,8 @@
     "mainNavbar_menu_item":{
         "mainNavbar_menu_item_profile":"Thông tin cá nhân",
         "mainNavbar_menu_item_console":"Bảng điều khiển",
-        "mainNavbar_menu_item_logout":"Đăng xuất"
+        "mainNavbar_menu_item_logout":"Đăng xuất",
+        "mainNavbar_menu_item_wallet":"Nạp tiền"
     },
     "landing_project_highlight": {
         "landing_highligh_transaction":"Tất cả các giao dịch được xem xét kỹ lưỡng bởi",
