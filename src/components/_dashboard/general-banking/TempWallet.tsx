@@ -20,15 +20,10 @@ import { getWalletList } from 'redux/slices/krowd_slices/wallet';
 
 const RootStyle = styled(Card)(({ theme }) => ({
   width: '100%',
+  boxShadow: 'none',
   position: 'relative',
-  backgroundSize: 'cover',
-  padding: theme.spacing(3),
-  marginBottom: theme.spacing(3),
-  backgroundRepeat: 'no-repeat',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
-  backgroundColor: theme.palette.primary.main
+  color: theme.palette.primary.darker,
+  backgroundColor: '#ff9b26e0'
 }));
 
 // ----------------------------------------------------------------------

@@ -6,7 +6,7 @@ import trendingDownFill from '@iconify/icons-eva/trending-down-fill';
 import diagonalArrowLeftDownFill from '@iconify/icons-eva/diagonal-arrow-left-down-fill';
 // material
 import { styled } from '@mui/material/styles';
-import { Card, Typography, Stack } from '@mui/material';
+import { Card, Typography, Stack, Grid, Button } from '@mui/material';
 // utils
 import { fCurrency, fPercent } from '../../../utils/formatNumber';
 //
@@ -20,12 +20,15 @@ import { getWalletList } from 'redux/slices/krowd_slices/wallet';
 
 const RootStyle = styled(Card)(({ theme }) => ({
   width: '100%',
-  boxShadow: 'none',
   position: 'relative',
-  color: theme.palette.primary.darker,
-  backgroundColor: '#ff9b26e0'
+  backgroundSize: 'cover',
+  padding: theme.spacing(3),
+  backgroundRepeat: 'no-repeat',
+  backgroundColor: theme.palette.primary.main,
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between'
 }));
-
 // ----------------------------------------------------------------------
 
 const TOTAL = 1876500000;
@@ -73,8 +76,28 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
             </IconWrapperStyle> */}
 
             <Stack spacing={1} sx={{ p: 3 }}>
-              <Typography sx={{ typography: 'subtitle2' }}>{e.walletType.name}</Typography>
-              <Typography sx={{ typography: 'h3' }}>{fCurrency(e.balance)}</Typography>
+              <Grid container>
+                <Grid lg={8}>
+                  <Typography sx={{ typography: 'subtitle2' }}>{e.walletType.name}</Typography>
+                  <Typography sx={{ typography: 'h3' }}>{fCurrency(e.balance)}</Typography>
+                </Grid>
+                <Grid sx={{ display: 'flex', gap: 1 }}>
+                  <Button
+                    color="warning"
+                    sx={{ mt: 5, display: 'flex', backgroundColor: '#ff9c00' }}
+                    variant="contained"
+                  >
+                    Chuyển tiền
+                  </Button>
+                  <Button
+                    color="warning"
+                    sx={{ mt: 5, display: 'flex', backgroundColor: '#ff9c00' }}
+                    variant="contained"
+                  >
+                    Rút tiền
+                  </Button>
+                </Grid>
+              </Grid>
               <Stack direction="row" alignItems="center" flexWrap="wrap">
                 <Icon
                   width={20}

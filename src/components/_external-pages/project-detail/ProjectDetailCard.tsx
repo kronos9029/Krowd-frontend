@@ -16,6 +16,7 @@ import { PATH_PAGE } from 'routes/paths';
 //Language
 import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
   borderRadius: 5,
@@ -49,6 +50,12 @@ function ProjectDetailCard({ project: p, album }: ProjectDetailCardProps) {
   const currentLanguageCode = cookies.get('i18next') || 'en';
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
+  const handleInvest = () => {
+    // href={PATH_PAGE.checkout}
+    navigate(PATH_PAGE.checkout);
+  };
   return (
     <Grid container>
       <Grid
@@ -201,18 +208,20 @@ function ProjectDetailCard({ project: p, album }: ProjectDetailCardProps) {
             justifyContent: 'space-between'
           }}
         >
-          <Link to={PATH_PAGE.checkout} style={{ width: '100%' }}>
-            <Button
-              sx={{ backgroundColor: '#FF7F50', '&:hover': { backgroundColor: '#FF7F50' } }}
-              disableElevation
-              disableRipple
-              fullWidth={true}
-              variant="contained"
-              size="large"
-            >
-              {t(`Project_detail_card.investNow`)}
-            </Button>
-          </Link>
+          <Button
+            sx={{
+              backgroundColor: '#FF7F50',
+              color: 'white',
+              '&:hover': { backgroundColor: '#FF7F50' }
+            }}
+            fullWidth={true}
+            variant="contained"
+            size="large"
+            color="warning"
+            onClick={() => handleInvest()}
+          >
+            {t(`Project_detail_card.investNow`)}
+          </Button>
         </Box>
       </Grid>
     </Grid>

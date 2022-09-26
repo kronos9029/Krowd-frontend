@@ -43,13 +43,7 @@ import starFilled from '@iconify/icons-ant-design/star-filled';
 // import chartMedian from '@iconify/icons-carbon/chart-median';
 // import tableIcon from '@iconify/icons-codicon/table';
 // ----------------------------------------------------------------------
-const projectPackage = {
-  id: null,
-  name: null,
-  description: null,
-  investValue: null,
-  voucherDescription: ['Ưu đãi khi mua gói 1', 'Ưu đãi khi mua gói 2', 'Ưu đãi khi mua gói 3']
-};
+
 const APP_BAR_MOBILE = 64;
 const APP_BAR_DESKTOP = 88;
 

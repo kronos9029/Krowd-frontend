@@ -41,8 +41,8 @@ export default function WalletBanking({ wallet }: { wallet: Wallet }) {
                 <WalletWelcome user={user} investor={UserDetail} />
               </Grid>
               <Grid lg={6}>
-                <TempWallet wallet={wallet} />
                 <SharedInvestmentWallet wallet={wallet} />
+                <CollectionWallet wallet={wallet} />
               </Grid>
             </Stack>
           </Grid>
@@ -52,9 +52,10 @@ export default function WalletBanking({ wallet }: { wallet: Wallet }) {
           </Grid> */}
           <Grid item xs={12} md={12}>
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3}>
+              <TempWallet wallet={wallet} />
+
               <AdvanceWallet wallet={wallet} />
               <ProjectPaymentWallet wallet={wallet} />
-              <CollectionWallet wallet={wallet} />
             </Stack>
           </Grid>
 

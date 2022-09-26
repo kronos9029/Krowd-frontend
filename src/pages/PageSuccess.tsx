@@ -7,9 +7,8 @@ import { Box, Button, Typography, Container } from '@mui/material';
 // components
 import { MotionContainer, varBounceIn } from '../components/animate';
 import Page from '../components/Page';
-import { OrderCompleteIllustration, PageNotFoundIllustration } from '../assets';
+import { OrderCompleteIllustration, PageNotFoundIllustration, SuccessIlustation } from '../assets';
 import { useEffect, useState } from 'react';
-
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
@@ -19,7 +18,11 @@ const RootStyle = styled(Page)(({ theme }) => ({
   paddingTop: theme.spacing(15),
   paddingBottom: theme.spacing(10)
 }));
-
+const SuccessIlustation2 = styled('div')(({ theme }) => ({
+  padding: theme.spacing(15, 0, 4, 0),
+  backgroundImage: `url(${SuccessIlustation})`,
+  backgroundSize: 'cover'
+}));
 // ----------------------------------------------------------------------
 
 export default function PageSuccess() {
@@ -43,17 +46,17 @@ export default function PageSuccess() {
           <Box sx={{ maxWidth: 480, margin: 'auto', textAlign: 'center' }}>
             <motion.div variants={varBounceIn}>
               <Typography variant="h3" paragraph>
-                Bạn đã thanh toán thành công
+                Giao dịch hoàn thành
               </Typography>
             </motion.div>
             <Typography sx={{ color: 'text.secondary' }}>
               Chúng tôi sẽ quay lại trang chủ trong vòng {count} giây. <br />
               Nếu bạn có bất kỳ câu hỏi hoặc thắc mắc nào thì vui lòng liên hệ với chúng tôi. <br />{' '}
-              <br /> Chúc mọi điều tốt lành,
+              <br /> Chúc bạn một ngày vui vẻ,
             </Typography>
 
             <motion.div variants={varBounceIn}>
-              <OrderCompleteIllustration sx={{ height: 260, my: 10 }} />
+              <SuccessIlustation2 sx={{ height: 460 }}></SuccessIlustation2>
             </motion.div>
 
             <Button to="/" size="large" variant="contained" component={RouterLink}>

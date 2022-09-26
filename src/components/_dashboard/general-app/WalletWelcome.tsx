@@ -54,9 +54,6 @@ export default function AppWelcome({ user, investor }: AppWelcomeProps) {
           Thống kê ví của bạn,
           <br /> {user.fullName}
         </Typography>
-        <Button color={'warning'} sx={{ mt: 5, display: 'flex' }} variant="contained">
-          Nạp tiền vào ví
-        </Button>
       </CardContent>
     </RootStyle>
   );

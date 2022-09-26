@@ -21,9 +21,10 @@ import { SeverErrorIllustration } from '../assets';
 import MainNavbarTopUp from '../layouts/main/MainNavbarTopUp';
 import { Icon } from '@iconify/react';
 import backspace from '@iconify/icons-eva/backspace-fill';
-import checkmarkFill from '@iconify/icons-eva/checkmark-fill';
 import Logo from 'components/Logo';
 import { getWalletList } from 'redux/slices/krowd_slices/wallet';
+import shieldCheck from '@iconify/icons-bi/shield-check';
+
 import { useEffect, useState } from 'react';
 import { dispatch, RootState, useSelector } from 'redux/store';
 import { fCurrency } from 'utils/formatNumber';
@@ -151,7 +152,7 @@ export default function PageTopUp() {
                   <Button sx={{ width: '40%', height: '50%' }}>
                     <img
                       style={{ width: '140px', height: '87px' }}
-                      src="/static/icons/navbar/VNpay.svg"
+                      src="/static/icons/navbar/VNPay.svg"
                     />
                   </Button>
                   <Button sx={{ width: '40%', height: '50%' }}>
@@ -222,8 +223,8 @@ export default function PageTopUp() {
                     />
                   </RadioGroup>
                   <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
-                    <Icon color="green" width={40} height={40} icon={checkmarkFill} />
-                    <Typography sx={{ mt: 3, textAlign: 'left' }}>
+                    <Icon color="green" width={30} height={30} icon={shieldCheck} />
+                    <Typography sx={{ mt: 3, textAlign: 'left', ml: 1 }}>
                       Mọi thông tin khách hàng đều được mã hóa để bảo mật thông tin khách hàng.
                     </Typography>
                   </Box>

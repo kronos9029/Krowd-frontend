@@ -115,6 +115,7 @@ export default function Projects() {
           <Typography variant="h2" sx={{ mb: 3 }}>
             {t(`landing_project_invest.landing_project_invest_now`)}
           </Typography>
+
           <Typography color={'text.disabled'} fontWeight={400} variant="subtitle2">
             {t(`landing_project_invest.landing_project_invest_approeve`)}
           </Typography>
