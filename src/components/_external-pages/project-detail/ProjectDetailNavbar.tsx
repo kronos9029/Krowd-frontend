@@ -1,6 +1,7 @@
 import { Box, Divider, Typography } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
 import { Link as ScrollLink } from 'react-scroll';
+import { RootState, useSelector } from 'redux/store';
 type PitchProps = {
   id: string;
   title: string;
@@ -12,13 +13,26 @@ type PitchProps = {
 
 type NavbarProps = {
   pitchs: PitchProps[] | undefined;
-  bottomNav: (string | null)[];
 };
 
-function ProjectDetailNavbar({ pitchs, bottomNav }: NavbarProps) {
+function ProjectDetailNavbar({ pitchs }: NavbarProps) {
   const [isShow, setIsShow] = useState(false);
   const [selectedNavbar, setSelectedNavbar] = useState(pitchs?.at(0)?.id);
   var lastScrollTop = 0;
+  const { detailOfProject } = useSelector((state: RootState) => state.project);
+  const { detailOfProjectID: projectID } = detailOfProject;
+  const { listOfChartStage } = useSelector((state: RootState) => state.stage);
+  const getEntityList = (
+    type: 'PITCH' | 'EXTENSION' | 'DOCUMENT' | 'ALBUM' | 'ABOUT' | 'HIGHLIGHT' | 'PRESS' | 'FAQ'
+  ) => {
+    return projectID?.projectEntity.find((pe) => pe.type === type)?.typeItemList;
+  };
+  const bottomNav = [
+    listOfChartStage.length > 0 ? 'Biểu đồ của dự án' : null,
+    getEntityList('ABOUT')!.length > 0 ? 'Về chúng tôi' : null,
+    getEntityList('PRESS')!.length > 0 ? 'Bài viết liên quan' : null,
+    getEntityList('FAQ')!.length > 0 ? 'Câu hỏi thắc mắc' : null
+  ];
   const trackScrolling = useCallback(() => {
     const currentIndex = pitchs!.findIndex((p) => p.id === selectedNavbar);
     const firstElement = document.getElementById(`__navbarTop_${pitchs?.at(0)?.id}`);

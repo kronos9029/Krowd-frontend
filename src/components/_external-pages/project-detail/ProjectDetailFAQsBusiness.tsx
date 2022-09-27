@@ -47,11 +47,9 @@ type FAQSProps = {
 };
 type FAQSListProps = {
   faqs: FAQSProps[] | undefined;
-  nav: (string | null)[];
+  nav: string;
 };
 function ProjectDetailFAQsBusiness({ faqs, nav }: FAQSListProps) {
-  const pressNav = nav.find((value) => value === 'Câu hỏi thắc mắc');
-
   return (
     <>
       {/* Press */}
@@ -62,13 +60,13 @@ function ProjectDetailFAQsBusiness({ faqs, nav }: FAQSListProps) {
               <Divider variant="fullWidth" />
             </Box>
             <Box mb={7}>
-              <NavbarTopAnchor id={`__navbarTop_${pressNav}`}></NavbarTopAnchor>
+              <NavbarTopAnchor id={`__navbarTop_${nav}`}></NavbarTopAnchor>
 
               <Typography textAlign="center" py={1} color={'#666'} variant="h4">
                 Câu hỏi thắc mắc
               </Typography>
               <Box mx="auto" width={'10%'}>
-                <NavbarTopClickAnchor id={`__navbarTopClick_${pressNav}`}></NavbarTopClickAnchor>
+                <NavbarTopClickAnchor id={`__navbarTopClick_${nav}`}></NavbarTopClickAnchor>
 
                 <Divider sx={{ my: 1, borderBottomWidth: 'thick', color: 'primary.main' }} />
               </Box>

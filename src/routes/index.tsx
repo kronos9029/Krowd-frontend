@@ -120,20 +120,7 @@ export default function Router() {
             { path: 'account', element: <UserAccount /> }
           ]
         },
-        {
-          path: 'projectsBusiness',
-          children: [
-            { element: <Navigate to="/dashboard/projectsBusiness" replace /> },
-            { path: 'projectBusinessKrowd', element: <ProjectOfBusinessList /> },
-            { path: 'projectDetails', element: <ProjectOfBusinessDetails /> },
-            // { path: 'projectEntityDetails', element: <ProjectEntityDetails /> },
-            { path: 'new-project', element: <KrowdNewProject /> },
-            { path: 'new-projectEntity', element: <KrowdNewProjectEntity /> },
-            { path: 'new-projectMedia', element: <KrowdNewProjectMedia /> },
-            { path: 'new-projectOwner', element: <KrowdNewProjectOwner /> }
-            // { path: 'projectBusinessDetails', element: <ProjectKrowdAdminDetails /> }
-          ]
-        },
+
         {
           path: 'blog',
           children: [
@@ -189,7 +176,7 @@ export default function Router() {
         { path: 'about-us', element: <About /> },
         { path: 'contact-us', element: <Contact /> },
         { path: 'faqs', element: <Faqs /> },
-        { path: 'details', element: <Details /> },
+        { path: 'details/:id', element: <Details /> },
         { path: 'project', element: <Projects /> },
 
         {
@@ -267,11 +254,3 @@ const NotFound = Loadable(lazy(() => import('../pages/Page404')));
 // Components
 const ComponentsOverview = Loadable(lazy(() => import('../pages/ComponentsOverview')));
 ///
-const ProjectOfBusinessList = Loadable(
-  lazy(() => import('../pages/dashboard/BusinessKrowdManager/ProjectManager/ProjectOfBusinessList'))
-);
-const ProjectOfBusinessDetails = Loadable(
-  lazy(
-    () => import('../pages/dashboard/BusinessKrowdManager/ProjectManager/ProjectOfBusinessDetails')
-  )
-);

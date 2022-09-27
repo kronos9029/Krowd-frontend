@@ -31,7 +31,6 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 
 type ProjectDetailCardProps = {
   project: Project1;
-  album: string[];
 };
 const Language = [
   {
@@ -45,13 +44,27 @@ const Language = [
     countryCode: 'en'
   }
 ];
-function ProjectDetailCard({ project: p, album }: ProjectDetailCardProps) {
+function ProjectDetailCard({ project: p }: ProjectDetailCardProps) {
   //Language
   const currentLanguageCode = cookies.get('i18next') || 'en';
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const getEntityList = (
+    type: 'PITCH' | 'EXTENSION' | 'DOCUMENT' | 'ALBUM' | 'ABOUT' | 'HIGHLIGHT' | 'PRESS' | 'FAQ'
+  ) => {
+    return p.projectEntity.find((pe) => pe.type === type)?.typeItemList;
+  };
+  const album = [
+    p.image,
+    ...getEntityList('ALBUM')!
+      .map((_image) => _image.link)
+      .filter(notEmpty)
+  ];
 
+  function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {
+    return value !== null && value !== undefined;
+  }
   const handleInvest = () => {
     // href={PATH_PAGE.checkout}
     navigate(PATH_PAGE.checkout);

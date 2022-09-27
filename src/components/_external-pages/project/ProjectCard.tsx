@@ -1,12 +1,21 @@
-import { Grid, CardMedia, Box, Typography, CardActionArea, Card, alpha, Chip } from '@mui/material';
+import {
+  Grid,
+  CardMedia,
+  Box,
+  Typography,
+  CardActionArea,
+  Card,
+  alpha,
+  Chip,
+  Link
+} from '@mui/material';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import { styled } from '@mui/material/styles';
 import { MotionInView, varFadeInUp } from 'components/animate';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { getProjectListById } from 'redux/slices/krowd_slices/project';
 import { dispatch } from 'redux/store';
-import { PATH_DETAILS } from 'routes/paths';
+import { PATH_PAGE } from 'routes/paths';
 import { fCurrency } from 'utils/formatNumber';
 import { Project1 } from '../../../@types/krowd/project';
 //language
@@ -84,17 +93,11 @@ function ProjectCard({ row }: { row: Project1 }) {
   const currentLanguageCode = cookies.get('i18next') || 'en';
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
   const { t } = useTranslation();
-  const handleGetProjectById = (activeProjectId: string) => {
-    dispatch(getProjectListById(activeProjectId));
-  };
+
   return (
     <Grid sx={{ p: 2 }} item key={row.id} xs={12} sm={12} md={6} lg={4}>
       <MotionInView variants={varFadeInUp}>
-        <Link
-          onClick={() => handleGetProjectById(row.id)}
-          to={PATH_DETAILS}
-          style={{ textDecoration: 'none' }}
-        >
+        <Link href={`${PATH_PAGE.details}/${row.id}`} style={{ textDecoration: 'none' }}>
           <CardStyle
             onMouseOver={() => setIsHover(true)}
             onMouseOut={() => setIsHover(false)}

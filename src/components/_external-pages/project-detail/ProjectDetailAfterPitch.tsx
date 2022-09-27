@@ -38,24 +38,23 @@ type AboutProps = {
 };
 type AboutListProps = {
   abouts: AboutProps[] | undefined;
-  nav: (string | null)[];
+  nav: string;
 };
 function ProjectDetailAfterPitch({ abouts, nav }: AboutListProps) {
   const { detailOfProject } = useSelector((state: RootState) => state.project);
   const { detailOfProjectID: projectID } = detailOfProject;
   const { manager, name } = projectID!;
-  const aboutNav = nav.find((value) => value === 'Về chúng tôi');
   return (
     <>
       {/* About */}
       <Container maxWidth={'lg'} sx={{ paddingBottom: '3rem' }}>
         <Box mb={7}>
-          <NavbarTopAnchor id={`__navbarTop_${aboutNav}`}></NavbarTopAnchor>
+          <NavbarTopAnchor id={`__navbarTop_${nav}`}></NavbarTopAnchor>
           <Typography textAlign="center" py={1} color={'#666'} variant="h4">
             Về chúng tôi
           </Typography>
           <Box mx="auto" width={'10%'}>
-            <NavbarTopClickAnchor id={`__navbarTopClick_${aboutNav}`}></NavbarTopClickAnchor>
+            <NavbarTopClickAnchor id={`__navbarTopClick_${nav}`}></NavbarTopClickAnchor>
             <Divider sx={{ my: 1, borderBottomWidth: 'thick', color: 'primary.main' }} />
           </Box>
         </Box>
@@ -155,7 +154,7 @@ function ProjectDetailAfterPitch({ abouts, nav }: AboutListProps) {
             </Box>
           </Grid> */}
         </Grid>
-        <NavbarBottomAnchor id={`__navbarBottom_${aboutNav}`}></NavbarBottomAnchor>
+        <NavbarBottomAnchor id={`__navbarBottom_${nav}`}></NavbarBottomAnchor>
       </Container>
 
       {/* Press */}

@@ -33,7 +33,7 @@ const NavbarTopClickAnchor = styled('div')(() => ({
 }));
 type AboutListProps = {
   project: Project1;
-  nav: (string | null)[];
+  nav: string;
 };
 export default function KrowdProjectStage({ project, nav }: AboutListProps) {
   const [seriesData, setSeriesData] = useState('Biểu đồ số tiền doanh thu từng kỳ');
@@ -42,7 +42,6 @@ export default function KrowdProjectStage({ project, nav }: AboutListProps) {
     setSeriesData(String(event.target.value));
   };
   const { listOfChartStage } = useSelector((state: RootState) => state.stage);
-  const aboutNav = nav.find((value) => value === 'Biểu đồ của dự án');
   const chartOptions = merge(BaseOptionChart(), {
     xaxis: {
       categories: [
@@ -77,13 +76,13 @@ export default function KrowdProjectStage({ project, nav }: AboutListProps) {
 
   return (
     <>
-      <NavbarTopAnchor id={`__navbarTop_${aboutNav}`}></NavbarTopAnchor>
+      <NavbarTopAnchor id={`__navbarTop_${nav}`}></NavbarTopAnchor>
 
       <Typography textAlign="center" py={1} color={'#666'} variant="h4">
         Biểu đồ của dự án
       </Typography>
       <Box mx="auto" width={'10%'}>
-        <NavbarTopClickAnchor id={`__navbarTopClick_${aboutNav}`}></NavbarTopClickAnchor>
+        <NavbarTopClickAnchor id={`__navbarTopClick_${nav}`}></NavbarTopClickAnchor>
         <Divider sx={{ my: 1, borderBottomWidth: 'thick', color: 'primary.main' }} />
       </Box>
       <Grid container>

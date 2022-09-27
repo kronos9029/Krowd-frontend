@@ -1,10 +1,21 @@
 // material
-import { Divider, Container, Grid, Box, Typography, styled, Link, Tab, Input } from '@mui/material';
+import {
+  Divider,
+  Container,
+  Grid,
+  Box,
+  Typography,
+  styled,
+  Link,
+  Tab,
+  Input,
+  CircularProgress
+} from '@mui/material';
 // redux
 import { dispatch, RootState, useSelector } from 'redux/store';
 // routes
 // icons
-import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useLocation, useNavigate, useParams } from 'react-router-dom';
 // material
 import { Button, AppBar, Toolbar, Select, FormControl, MenuItem, Menu } from '@mui/material';
 // @types
@@ -36,7 +47,7 @@ import { useEffect, useState } from 'react';
 //Language
 import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
-import { getProjectPackage } from 'redux/slices/krowd_slices/project';
+import { getProjectListById, getProjectPackage } from 'redux/slices/krowd_slices/project';
 import { getAllProjectStage, getProjectStageList } from 'redux/slices/krowd_slices/stage';
 import { Icon } from '@iconify/react';
 import starFilled from '@iconify/icons-ant-design/star-filled';
@@ -70,76 +81,72 @@ const Language = [
   }
 ];
 export default function ComponentsDetails() {
-  const { detailOfProject, packageLists } = useSelector((state: RootState) => state.project);
-  const { detailOfProjectID: projectID } = detailOfProject;
   //Language
-  const [openStage, setOpenStage] = useState('chart');
-
-  const currentLanguageCode = cookies.get('i18next') || 'en';
-  const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
-  const { t } = useTranslation();
-  const getEntityList = (
-    type: 'PITCH' | 'EXTENSION' | 'DOCUMENT' | 'ALBUM' | 'ABOUT' | 'HIGHLIGHT' | 'PRESS' | 'FAQ'
-  ) => {
-    return projectID?.projectEntity.find((pe) => pe.type === type)?.typeItemList;
-  };
-  const [isShowNav, setisShowNav] = useState(false);
-  const listenScrollEvent = () => {
-    window.scrollY > 1000 ? setisShowNav(true) : setisShowNav(false);
-  };
+  const { id = '' } = useParams();
   useEffect(() => {
-    dispatch(getProjectPackage(projectID?.id ?? ''));
-
+    dispatch(getProjectListById(id));
+    dispatch(getProjectPackage(id));
+    dispatch(getProjectStageList(id));
+    dispatch(getAllProjectStage(id));
     window.addEventListener('scroll', listenScrollEvent);
     return () => {
       window.removeEventListener('scroll', listenScrollEvent);
     };
   }, [dispatch]);
-  useEffect(() => {
-    dispatch(getProjectStageList(projectID?.id ?? ''));
-    dispatch(getAllProjectStage(projectID?.id ?? ''));
-    // dispatch(getProjectId(project.id));
-  }, [dispatch]);
+  const { detailOfProject, packageLists } = useSelector((state: RootState) => state.project);
+  const { detailOfProjectID: projectID, isLoadingDetailOfProjectID } = detailOfProject;
+  const [openStage, setOpenStage] = useState('chart');
+  const { listOfChartStage } = useSelector((state: RootState) => state.stage);
 
+  const currentLanguageCode = cookies.get('i18next') || 'en';
+  const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
+  const { t } = useTranslation();
+
+  const [isShowNav, setisShowNav] = useState(false);
+  const listenScrollEvent = () => {
+    window.scrollY > 1000 ? setisShowNav(true) : setisShowNav(false);
+  };
   const handleClickOpenStage = () => {
     setOpenStage('table');
   };
   const handleCloseOpenStage = () => {
     setOpenStage('chart');
   };
-  const { listOfChartStage } = useSelector((state: RootState) => state.stage);
-  const { pitchs, extensions, documents, album, abouts, highlights, bottomNav, press, faqs } = {
+  const getEntityList = (
+    type: 'PITCH' | 'EXTENSION' | 'DOCUMENT' | 'ALBUM' | 'ABOUT' | 'HIGHLIGHT' | 'PRESS' | 'FAQ'
+  ) => {
+    return projectID?.projectEntity.find((pe) => pe.type === type)?.typeItemList;
+  };
+  const { pitchs, extensions, documents, abouts, highlights, press, faqs } = {
     pitchs: getEntityList('PITCH'),
     extensions: getEntityList('EXTENSION'),
     documents: getEntityList('DOCUMENT'),
     abouts: getEntityList('ABOUT'),
     press: getEntityList('PRESS'),
     faqs: getEntityList('FAQ'),
-    album: [
-      projectID!.image,
-      ...getEntityList('ALBUM')!
-        .map((_image) => _image.link)
-        .filter(notEmpty)
-    ],
-    highlights: getEntityList('HIGHLIGHT'),
-    bottomNav: [
-      listOfChartStage.length > 0 ? 'Biểu đồ của dự án' : null,
-      getEntityList('ABOUT')!.length > 0 ? 'Về chúng tôi' : null,
-      getEntityList('PRESS')!.length > 0 ? 'Bài viết liên quan' : null,
-      getEntityList('FAQ')!.length > 0 ? 'Câu hỏi thắc mắc' : null
-    ]
+    highlights: getEntityList('HIGHLIGHT')
   };
 
-  function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {
-    return value !== null && value !== undefined;
-  }
   return (
     <Page title="Chi tiết dự án | Krowd">
-      {projectID && (
+      {isLoadingDetailOfProjectID && (
+        <Box sx={{ height: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Box>
+            <CircularProgress
+              size={100}
+              sx={{ margin: '0px auto', padding: '1rem', display: 'flex' }}
+            />
+            <Typography variant="h5" sx={{ textAlign: 'center', padding: '1rem' }}>
+              Đang tải dữ liệu, vui lòng đợi giây lát...
+            </Typography>
+          </Box>
+        </Box>
+      )}
+      {!isLoadingDetailOfProjectID && projectID && (
         <>
           <Container maxWidth={'lg'} sx={{ paddingBottom: '4rem' }}>
             <ProjectDetailHeading p={projectID} />
-            <ProjectDetailCard project={projectID} album={album} />
+            <ProjectDetailCard project={projectID} />
           </Container>
           <Box sx={{ mb: 10 }}>
             <Divider variant="fullWidth" sx={{ opacity: 0.1 }} />
@@ -147,7 +154,7 @@ export default function ComponentsDetails() {
           <Container maxWidth={'lg'}>
             <Box>
               <MHidden width="xlDown">
-                <ProjectDetailNavbar pitchs={pitchs} bottomNav={bottomNav} />
+                <ProjectDetailNavbar pitchs={pitchs} />
               </MHidden>
               <MHidden width="mdDown">
                 {isShowNav && (
@@ -348,7 +355,7 @@ export default function ComponentsDetails() {
           </Container>
 
           {openStage === 'chart' && listOfChartStage && listOfChartStage.length > 0 && (
-            <KrowdProjectStage project={projectID} nav={bottomNav} />
+            <KrowdProjectStage project={projectID} nav={'Biểu đồ của dự án'} />
           )}
 
           {openStage === 'table' && listOfChartStage && listOfChartStage.length > 0 && (
@@ -357,9 +364,9 @@ export default function ComponentsDetails() {
           <Box sx={{ mb: 7 }}>
             <Divider variant="fullWidth" />
           </Box>
-          <ProjectDetailAfterPitch abouts={abouts} nav={bottomNav} />
-          <ProjectDetailsPress press={press} nav={bottomNav} />
-          <ProjectDetailFAQsBusiness faqs={faqs} nav={bottomNav} />
+          <ProjectDetailAfterPitch abouts={abouts} nav={'Về chúng tôi'} />
+          <ProjectDetailsPress press={press} nav={'Bài viết liên quan'} />
+          <ProjectDetailFAQsBusiness faqs={faqs} nav={'Câu hỏi thắc mắc'} />
         </>
       )}
       <hr />

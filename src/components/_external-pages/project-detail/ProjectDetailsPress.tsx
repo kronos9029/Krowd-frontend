@@ -40,12 +40,11 @@ type PressProps = {
 };
 type PressListProps = {
   press: PressProps[] | undefined;
-  nav: (string | null)[];
+  nav: string;
 };
 function ProjectDetailAfterPitch({ press, nav }: PressListProps) {
   const { detailOfProject } = useSelector((state: RootState) => state.project);
   const { detailOfProjectID: projectID } = detailOfProject;
-  const pressNav = nav.find((value) => value === 'Bài viết liên quan');
   return (
     <>
       <Box sx={{ mb: 7 }}>
@@ -55,12 +54,12 @@ function ProjectDetailAfterPitch({ press, nav }: PressListProps) {
       {press && press.length > 0 ? (
         <Container maxWidth={'lg'} sx={{ paddingBottom: '5rem' }}>
           <Box mb={7}>
-            <NavbarTopAnchor id={`__navbarTop_${pressNav}`}></NavbarTopAnchor>
+            <NavbarTopAnchor id={`__navbarTop_${nav}`}></NavbarTopAnchor>
             <Typography textAlign="center" py={1} color={'#666'} variant="h4">
               Bài viết liên quan
             </Typography>
             <Box mx="auto" width={'10%'}>
-              <NavbarTopClickAnchor id={`__navbarTopClick_${pressNav}`}></NavbarTopClickAnchor>
+              <NavbarTopClickAnchor id={`__navbarTopClick_${nav}`}></NavbarTopClickAnchor>
               <Divider sx={{ my: 1, borderBottomWidth: 'thick', color: 'primary.main' }} />
             </Box>
           </Box>
@@ -115,7 +114,7 @@ function ProjectDetailAfterPitch({ press, nav }: PressListProps) {
                 );
               })}
           </Grid>
-          <NavbarBottomAnchor id={`__navbarBottom_${pressNav}`}></NavbarBottomAnchor>
+          <NavbarBottomAnchor id={`__navbarBottom_${nav}`}></NavbarBottomAnchor>
         </Container>
       ) : (
         ''
