@@ -82,7 +82,7 @@ function ProjectDetailNavbar({ pitchs }: NavbarProps) {
   return (
     <>
       {isShow && (
-        <Box position={'fixed'} top={'10%'} left={'5%'} width={'fit-content'}>
+        <Box position={'fixed'} top={'10%'} left={'2%'} width={'fit-content'}>
           <Box>
             {pitchs &&
               pitchs.map((v, i) => {
@@ -98,7 +98,7 @@ function ProjectDetailNavbar({ pitchs }: NavbarProps) {
                       <Typography
                         color={isSelected ? 'text.primary' : 'text.disabled'}
                         variant="overline"
-                        fontSize={12}
+                        fontSize={10}
                       >
                         {v.title}
                       </Typography>
@@ -122,7 +122,7 @@ function ProjectDetailNavbar({ pitchs }: NavbarProps) {
                     <Typography
                       color={selectedNavbar === nav ? 'text.primary' : 'text.disabled'}
                       variant="overline"
-                      fontSize={12}
+                      fontSize={10}
                     >
                       {nav}
                     </Typography>
