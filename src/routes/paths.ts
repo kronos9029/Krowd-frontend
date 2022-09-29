@@ -32,7 +32,7 @@ export const PATH_PAGE = {
   pageTopUp: '/top-up',
   business: '/components',
   project: '/project',
-  checkout: '/package',
+  checkout: '/package/invest',
   homePage: '/',
   mediaKrowd: 'https://www.facebook.com/profile.php?id=100084621412328',
   paymentSuccess: '/payment-success',

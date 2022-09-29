@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { REACT_APP_API_URL } from '../../config';
 const API_PACKAGE_ID = '/packages/project';
+const API_PACKAGE_BY_ID = '/packages';
 const API_PROJECT = '/projects';
 const API_STAGE_ID = '/stages';
 function getToken() {
@@ -40,6 +41,13 @@ async function getPackageID({ id }: { id: string }) {
   });
   return response;
 }
+async function getPackageBYID({ id }: { id: string }) {
+  const headers = getHeader();
+  const response = await axios.get(REACT_APP_API_URL + `${API_PACKAGE_BY_ID}/${id}`, {
+    headers: headers
+  });
+  return response;
+}
 async function getStageId({ id }: { id: string }) {
   const headers = getHeader();
   const response = await axios.get(REACT_APP_API_URL + `${API_STAGE_ID}/${id}`, {
@@ -52,5 +60,6 @@ export const ProjectAPI = {
   get: get,
   getPackageID: getPackageID,
   getAllProject: getAllProject,
-  getStageId: getStageId
+  getStageId: getStageId,
+  getPackageBYID: getPackageBYID
 };

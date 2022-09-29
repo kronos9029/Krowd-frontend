@@ -10,8 +10,7 @@ import {
   Stack,
   Card,
   Divider,
-  Dialog,
-  Link
+  Dialog
 } from '@mui/material';
 // components
 
@@ -24,7 +23,7 @@ import { useSelector } from 'react-redux';
 import { Project1 } from '../../../@types/krowd/project';
 import { dispatch, RootState } from 'redux/store';
 import Label from 'components/Label';
-import { getPackageBYID, getProjectPackage } from 'redux/slices/krowd_slices/project';
+import { getProjectPackage } from 'redux/slices/krowd_slices/project';
 import { PATH_DASHBOARD, PATH_PAGE } from 'routes/paths';
 import { fCurrencyPackage } from 'utils/formatNumber';
 import useAuth from 'hooks/useAuth';
@@ -86,50 +85,50 @@ export default function ProjectPackage({ project }: { project: Project1 }) {
               packageLists.listOfPackage.length > 0 &&
               packageLists.listOfPackage.map((e, index) => (
                 <Grid sx={{ p: 2 }} item key={index} xs={12} sm={12} md={12} lg={12}>
-                  <Typography
-                    variant="overline"
-                    sx={{ display: 'flex', color: 'text.secondary', justifyContent: 'center' }}
+                  <Grid
+                    container
+                    sx={{
+                      color: 'primary.main',
+                      display: 'flex'
+                    }}
                   >
-                    {e.name}
-                  </Typography>
-                  <Box sx={{ display: 'flex', justifyContent: 'center', my: 2 }}>
+                    <Grid xs={8} sm={8} md={8} lg={8}>
+                      <Typography
+                        variant="overline"
+                        sx={{ color: 'text.secondary', justifyContent: 'left' }}
+                      >
+                        {e.name}
+                      </Typography>
+                    </Grid>
+                    <Grid>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          color: 'primary.main',
+                          justifyContent: 'right'
+                        }}
+                      >
+                        {e.quantity} / {e.quantity}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                  <Box sx={{ display: 'flex', justifyContent: 'left' }}>
                     {index === 1 || index === 2 ? (
                       <Typography variant="subtitle1" sx={{ color: 'text.secondary' }}></Typography>
                     ) : (
                       ''
                     )}
-                    <Typography variant="h3" sx={{ mx: 1 }}>
-                      {e.price === 0 ? 'Free' : fCurrencyPackage(e.price)}
+                    <Typography variant="h5">
+                      {e.price === 0 ? 'Free' : fCurrencyPackage(e.price)} VND
                     </Typography>
                   </Box>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      textTransform: 'capitalize',
-                      justifyContent: 'center',
-                      display: 'flex',
-                      mb: 2
-                    }}
-                  >
-                    (VND)
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      color: 'primary.main',
-                      textTransform: 'capitalize',
-                      justifyContent: 'center',
-                      display: 'flex'
-                    }}
-                  >
-                    Số lượng {e.quantity}
-                  </Typography>
+
                   <Stack
                     paddingLeft={0}
                     textAlign={'left'}
                     component="ul"
                     spacing={2}
-                    sx={{ my: 5, width: 1 }}
+                    sx={{ my: 1, width: 1 }}
                   >
                     {e.descriptionList.map((item, i) => (
                       <Stack
@@ -137,60 +136,19 @@ export default function ProjectPackage({ project }: { project: Project1 }) {
                         component="li"
                         direction="row"
                         alignItems="center"
-                        spacing={1.5}
+                        spacing={1}
                         sx={{
                           typography: 'body2'
                         }}
                       >
-                        <Box component={Icon} icon={checkmarkFill} sx={{ width: 20, height: 20 }} />
                         <Typography variant="body2">{item}</Typography>
                       </Stack>
                     ))}
                   </Stack>
-
-                  {user && user ? (
-                    <Link
-                      style={{ textDecoration: 'none' }}
-                      onClick={() => {
-                        dispatch(getPackageBYID(e.id));
-                      }}
-                      href={`${PATH_PAGE.checkout}/${project.id}`}
-                    >
-                      <Typography sx={{ textAlign: 'end' }}>
-                        <Button
-                          sx={{
-                            backgroundColor: '#FF7F50',
-                            textDecoration: 'none',
-                            '&:hover': { backgroundColor: '#FF7F50' }
-                          }}
-                          disableElevation
-                          disableRipple
-                          variant="contained"
-                          size="large"
-                        >
-                          Chọn gói
-                        </Button>
-                      </Typography>
-                    </Link>
-                  ) : (
-                    <Typography sx={{ textAlign: 'end' }}>
-                      <Button
-                        sx={{
-                          backgroundColor: '#FF7F50',
-                          textDecoration: 'none',
-                          '&:hover': { backgroundColor: '#FF7F50' }
-                        }}
-                        onClick={() => handleInvest()}
-                        disableElevation
-                        disableRipple
-                        variant="contained"
-                        size="large"
-                      >
-                        Chọn gói
-                      </Button>
-                    </Typography>
-                  )}
-                  <Divider sx={{ my: 3 }} variant="fullWidth" />
+                  <Typography sx={{ textAlign: 'end' }}>
+                    <Button sx={{ display: 'right' }}>Chọn gói</Button>
+                  </Typography>
+                  <Divider variant="fullWidth" />
                 </Grid>
               ))}
           </Grid>

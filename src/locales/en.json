@@ -147,6 +147,18 @@
         "hoverSologun":"You want to earn more spending",
         "Pitch":"Pitch"
     },
+    "Project_package_invest": {
+        "InvestmentAmount":"Investment amount",
+        "InvestPaymentsHead":"Payments are processed immediately.",
+        "InvestMyself": "You are investing as Myself",
+        "PersonalInformation": "Personal information",
+        "PrivatePersonalInfomation": "Required by VietNam banking laws. This information is kept secure. It will never be used for any purpose beyond executing your investment.",
+        "ConfirmInformation": "Confirm personal information",
+        "AdditionalInformation": "Additional Information",
+        "DesOfAdditionalInformation":"This offer requires additional details to participate in the investment",
+        "Terms":"Terms"
+    },
+    "Isloading_page":"Loading data, please wait a moment...",
     "sortByLabel":"Sort by",
     "Invested":"Invested",
     "InvestCapital":"Investment target capital"

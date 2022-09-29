@@ -164,7 +164,6 @@ export default function Router() {
         { path: 'top-up', element: <PageTopUp /> },
         { path: 'page-success', element: <PageSuccess /> },
         { path: '404', element: <NotFound /> },
-        { path: 'package', element: <KrowdPackage /> },
         { path: '*', element: <Navigate to="/404" replace /> }
       ]
     },
@@ -177,8 +176,9 @@ export default function Router() {
         { path: 'contact-us', element: <Contact /> },
         { path: 'faqs', element: <Faqs /> },
         { path: 'details/:id', element: <Details /> },
-        { path: 'project', element: <Projects /> },
+        { path: 'package/invest/:id', element: <KrowdPackage /> },
 
+        { path: 'project', element: <Projects /> },
         {
           path: 'components',
           children: [{ element: <ComponentsOverview /> }]

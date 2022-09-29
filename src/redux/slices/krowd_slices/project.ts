@@ -26,6 +26,10 @@ type ProjectState = {
     detailOfProjectID: Project1 | null;
     errorDetailOfProjectID: boolean;
   };
+  projectPackageDetails: {
+    projectPackageDetailsLoading: boolean;
+    PackageDetails: Package | null;
+  };
 
   activeProjectEntityId: NewProjectEntityFormValues | null;
 
@@ -50,7 +54,6 @@ type ProjectState = {
     numOfPackage: number;
     listOfPackage: Package[];
   };
-  projectPackageDetails: Package | null;
 };
 
 const initialState: ProjectState = {
@@ -90,7 +93,10 @@ const initialState: ProjectState = {
     numOfPackage: 0,
     listOfPackage: []
   },
-  projectPackageDetails: null
+  projectPackageDetails: {
+    projectPackageDetailsLoading: false,
+    PackageDetails: null
+  }
 };
 
 const slice = createSlice({
@@ -139,6 +145,16 @@ const slice = createSlice({
     getProjectPackageSuccess(state, action) {
       state.packageLists.isPackageLoading = false;
       state.packageLists = action.payload;
+    },
+    // ------ GET PACKAGE BY  ID------------ //
+    // START LOADING
+    startPackageIDLoading(state) {
+      state.projectPackageDetails.projectPackageDetailsLoading = true;
+    },
+
+    getPackageIDSuccess(state, action) {
+      state.projectPackageDetails.projectPackageDetailsLoading = false;
+      state.projectPackageDetails.PackageDetails = action.payload;
     },
 
     //  SORT & FILTER PRODUCTS
@@ -204,6 +220,20 @@ export function getProjectList() {
     try {
       const response = await ProjectAPI.gets();
       dispatch(slice.actions.getProjectListSuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+//------- GET PACKAGE WITH ID
+
+export function getPackageBYID(Id: string) {
+  return async () => {
+    dispatch(slice.actions.startPackageIDLoading());
+    try {
+      const response = await ProjectAPI.getPackageBYID({ id: Id });
+      console.log(response);
+      dispatch(slice.actions.getPackageIDSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

@@ -42,15 +42,20 @@ import KrowdPackage from './KrowdPackage';
 import MainNavbar from 'layouts/main/MainNavbar';
 import Logo from 'components/Logo';
 import Label from 'components/Label';
-import { PATH_PAGE } from 'routes/paths';
+import { PATH_DASHBOARD, PATH_PAGE } from 'routes/paths';
 import { useEffect, useState } from 'react';
 //Language
 import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
-import { getProjectListById, getProjectPackage } from 'redux/slices/krowd_slices/project';
+import {
+  getPackageBYID,
+  getProjectListById,
+  getProjectPackage
+} from 'redux/slices/krowd_slices/project';
 import { getAllProjectStage, getProjectStageList } from 'redux/slices/krowd_slices/stage';
 import { Icon } from '@iconify/react';
 import starFilled from '@iconify/icons-ant-design/star-filled';
+import useAuth from 'hooks/useAuth';
 // import chartMedian from '@iconify/icons-carbon/chart-median';
 // import tableIcon from '@iconify/icons-codicon/table';
 // ----------------------------------------------------------------------
@@ -101,7 +106,8 @@ export default function ComponentsDetails() {
   const currentLanguageCode = cookies.get('i18next') || 'en';
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
   const { t } = useTranslation();
-
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [isShowNav, setisShowNav] = useState(false);
   const listenScrollEvent = () => {
     window.scrollY > 1000 ? setisShowNav(true) : setisShowNav(false);
@@ -126,7 +132,13 @@ export default function ComponentsDetails() {
     faqs: getEntityList('FAQ'),
     highlights: getEntityList('HIGHLIGHT')
   };
-
+  const handleInvest = () => {
+    if (user) {
+      navigate(`${PATH_PAGE.checkout}/${projectID?.id}`);
+    } else {
+      navigate(PATH_DASHBOARD.root);
+    }
+  };
   return (
     <Page title="Chi tiết dự án | Krowd">
       {isLoadingDetailOfProjectID && (
@@ -192,24 +204,48 @@ export default function ComponentsDetails() {
                             justifyContent: 'space-between'
                           }}
                         >
-                          <Link
-                            href={PATH_PAGE.checkout}
-                            style={{ width: '100%', textDecoration: 'none' }}
-                          >
-                            <Button
-                              sx={{
-                                backgroundColor: '#FF7F50',
-                                '&:hover': { backgroundColor: '#FF7F50' }
+                          {user && user ? (
+                            <Link
+                              style={{ textDecoration: 'none' }}
+                              onClick={() => {
+                                dispatch(getPackageBYID(''));
                               }}
-                              disableElevation
-                              disableRipple
-                              fullWidth={true}
-                              variant="contained"
-                              size="large"
+                              href={`${PATH_PAGE.checkout}/${projectID.id}`}
                             >
-                              {t(`Project_detail_card.investNow`)} {projectID.name}
-                            </Button>
-                          </Link>
+                              <Typography sx={{ textAlign: 'end' }}>
+                                <Button
+                                  sx={{
+                                    backgroundColor: '#FF7F50',
+                                    textDecoration: 'none',
+                                    '&:hover': { backgroundColor: '#FF7F50' }
+                                  }}
+                                  disableElevation
+                                  disableRipple
+                                  variant="contained"
+                                  size="large"
+                                >
+                                  {t(`Project_detail_card.investNow`)} {projectID.name}
+                                </Button>
+                              </Typography>
+                            </Link>
+                          ) : (
+                            <Typography sx={{ textAlign: 'end' }}>
+                              <Button
+                                sx={{
+                                  backgroundColor: '#FF7F50',
+                                  textDecoration: 'none',
+                                  '&:hover': { backgroundColor: '#FF7F50' }
+                                }}
+                                onClick={() => handleInvest()}
+                                disableElevation
+                                disableRipple
+                                variant="contained"
+                                size="large"
+                              >
+                                {t(`Project_detail_card.investNow`)} {projectID.name}
+                              </Button>
+                            </Typography>
+                          )}
                         </Box>
                       </Container>
                     </ToolbarStyle>
@@ -255,7 +291,6 @@ export default function ComponentsDetails() {
               <Grid xs={12} sm={4} md={5} lg={3}>
                 <Box>
                   <Button
-                    disabled
                     disableElevation
                     size="large"
                     sx={{
@@ -269,21 +304,48 @@ export default function ComponentsDetails() {
               </Grid>
               <Grid xs={12} sm={4} md={5} lg={7}>
                 <Box>
-                  <Link href={PATH_PAGE.checkout} style={{ width: '100%', textDecoration: 'none' }}>
-                    <Button
-                      sx={{
-                        backgroundColor: '#FF7F50',
-                        '&:hover': { backgroundColor: '#FF7F50' }
+                  {user && user ? (
+                    <Link
+                      style={{ textDecoration: 'none' }}
+                      onClick={() => {
+                        dispatch(getPackageBYID(''));
                       }}
-                      disableElevation
-                      disableRipple
-                      variant="contained"
-                      size="large"
+                      href={`${PATH_PAGE.checkout}/${projectID.id}`}
                     >
-                      {t(`Project_detail_card.investNow`)}
-                      {projectID.name}
-                    </Button>
-                  </Link>
+                      <Typography sx={{ display: 'flex', textAlign: 'end' }}>
+                        <Button
+                          sx={{
+                            backgroundColor: '#FF7F50',
+                            textDecoration: 'none',
+                            '&:hover': { backgroundColor: '#FF7F50' }
+                          }}
+                          disableElevation
+                          disableRipple
+                          variant="contained"
+                          size="large"
+                        >
+                          {t(`Project_detail_card.investNow`)} {projectID.name}
+                        </Button>
+                      </Typography>
+                    </Link>
+                  ) : (
+                    <Typography sx={{ textAlign: 'end' }}>
+                      <Button
+                        sx={{
+                          backgroundColor: '#FF7F50',
+                          textDecoration: 'none',
+                          '&:hover': { backgroundColor: '#FF7F50' }
+                        }}
+                        onClick={() => handleInvest()}
+                        disableElevation
+                        disableRipple
+                        variant="contained"
+                        size="large"
+                      >
+                        {t(`Project_detail_card.investNow`)} {projectID.name}
+                      </Button>
+                    </Typography>
+                  )}
                 </Box>
               </Grid>
             </Grid>

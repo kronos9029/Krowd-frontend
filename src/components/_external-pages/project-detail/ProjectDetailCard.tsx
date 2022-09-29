@@ -5,18 +5,21 @@ import {
   Grid,
   LinearProgress,
   linearProgressClasses,
+  Link,
   styled,
   Typography
 } from '@mui/material';
 import { Project1 } from '../../../@types/krowd/project';
 import { fCurrency } from 'utils/formatNumber';
-import { Link } from 'react-scroll';
 import { ProjectDetailAlbumCarousel } from 'components/_external-pages/project-detail/index';
-import { PATH_PAGE } from 'routes/paths';
+import { PATH_DASHBOARD, PATH_PAGE } from 'routes/paths';
 //Language
 import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
+import useAuth from 'hooks/useAuth';
+import { getPackageBYID } from 'redux/slices/krowd_slices/project';
+import { dispatch } from 'redux/store';
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
   borderRadius: 5,
@@ -49,6 +52,7 @@ function ProjectDetailCard({ project: p }: ProjectDetailCardProps) {
   const currentLanguageCode = cookies.get('i18next') || 'en';
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
   const { t } = useTranslation();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const getEntityList = (
     type: 'PITCH' | 'EXTENSION' | 'DOCUMENT' | 'ALBUM' | 'ABOUT' | 'HIGHLIGHT' | 'PRESS' | 'FAQ'
@@ -66,8 +70,11 @@ function ProjectDetailCard({ project: p }: ProjectDetailCardProps) {
     return value !== null && value !== undefined;
   }
   const handleInvest = () => {
-    // href={PATH_PAGE.checkout}
-    navigate(PATH_PAGE.checkout);
+    if (user) {
+      navigate(PATH_PAGE.checkout);
+    } else {
+      navigate(PATH_DASHBOARD.root);
+    }
   };
   return (
     <Grid container>
@@ -221,20 +228,44 @@ function ProjectDetailCard({ project: p }: ProjectDetailCardProps) {
             justifyContent: 'space-between'
           }}
         >
-          <Button
-            sx={{
-              backgroundColor: '#FF7F50',
-              color: 'white',
-              '&:hover': { backgroundColor: '#FF7F50' }
-            }}
-            fullWidth={true}
-            variant="contained"
-            size="large"
-            color="warning"
-            onClick={() => handleInvest()}
-          >
-            {t(`Project_detail_card.investNow`)}
-          </Button>
+          {user && user ? (
+            <Link
+              style={{ textDecoration: 'none' }}
+              onClick={() => {
+                dispatch(getPackageBYID(''));
+              }}
+              href={`${PATH_PAGE.checkout}/${p.id}`}
+            >
+              <Button
+                sx={{
+                  backgroundColor: '#FF7F50',
+                  textDecoration: 'none',
+                  '&:hover': { backgroundColor: '#FF7F50' }
+                }}
+                disableElevation
+                disableRipple
+                variant="contained"
+                size="large"
+              >
+                {t(`Project_detail_card.investNow`)} {p.name}
+              </Button>
+            </Link>
+          ) : (
+            <Button
+              sx={{
+                backgroundColor: '#FF7F50',
+                textDecoration: 'none',
+                '&:hover': { backgroundColor: '#FF7F50' }
+              }}
+              onClick={() => handleInvest()}
+              disableElevation
+              disableRipple
+              variant="contained"
+              size="large"
+            >
+              {t(`Project_detail_card.investNow`)} {p.name}
+            </Button>
+          )}
         </Box>
       </Grid>
     </Grid>

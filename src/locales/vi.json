@@ -146,6 +146,18 @@
         "Pitch":"Tiêu điểm"
 
     },
+    "Project_package_invest": {
+        "InvestmentAmount":"Số tiền đầu tư",
+        "InvestPaymentsHead":"Thanh toán được xử lý ngay lập tức.",
+        "InvestMyself": "Bạn đang đầu tư với tư cách là cá nhân",
+        "PersonalInformation": "Thông tin cá nhân",
+        "PrivatePersonalInfomation": "Yêu cầu của pháp luật ngân hàng Việt Nam. Thông tin này được giữ an toàn. Nó sẽ không bao giờ được sử dụng cho bất kỳ mục đích nào ngoài việc thực hiện khoản đầu tư của bạn.",
+        "ConfirmInformation": "Xác nhận thông tin cá nhân",
+        "AdditionalInformation":"Thông tin bổ sung",
+        "DesOfAdditionalInformation":"Ưu đãi này yêu cầu thêm chi tiết để tham gia vào đợt đầu tư",
+        "Terms":"Điều kiện"
+    },
+        "Isloading_page":"Đang tải dữ liệu, vui lòng đợi giây lát...",
         "sortByLabel":"Sắp xếp theo",
         "Invested":"Đã đầu tư",
         "InvestCapital":"Vốn mục tiêu đầu tư" 
