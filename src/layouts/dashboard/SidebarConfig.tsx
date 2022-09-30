@@ -37,39 +37,34 @@ const sidebarConfig = [
   {
     subheader: 'Quản lý',
     items: [
-      { title: 'Dự án đang đầu tư', path: PATH_DASHBOARD.userKrowd.list, icon: ICONS.project }
-      // {
-      //   title: 'Quản lý ví',
-      //   path: PATH_DASHBOARD.general.banking,
-      //   icon: ICONS.wallet
-      //   // children: [
-      //   //   { title: 'Ví đầu tư', path: PATH_DASHBOARD.general.app },
-      //   //   { title: 'Dự án đang đầu tư', path: PATH_DASHBOARD.general.app },
-      //   //   { title: 'Ví doanh thu', path: PATH_DASHBOARD.general.app }
-      //   // ]
-      // }
+      {
+        title: 'Dự án đang đầu tư',
+        path: PATH_DASHBOARD.projectInvested.list,
+        icon: ICONS.project
+      }
+      // { title: 'Giao dịch', path: PATH_DASHBOARD.projectInvested.list, icon: ICONS.project }
+    ]
+  },
+  {
+    subheader: 'Quản lý giao dịch',
+    items: [
+      {
+        title: 'Nạp tiền và rút tiền',
+        path: PATH_DASHBOARD.transaction.list,
+        icon: ICONS.project
+      },
+      {
+        title: 'Ví Krowd',
+        path: PATH_DASHBOARD.transaction.walletTransaction,
+        icon: ICONS.project
+      },
+      {
+        title: 'Đầu tư dự án',
+        path: PATH_DASHBOARD.transaction.payments,
+        icon: ICONS.project
+      }
     ]
   }
-  // {
-  //   subheader: 'Quản lý giao dịch',
-  //   items: [
-  //     // {
-  //     //   title: 'Thanh toán giữa các ví',
-  //     //   path: PATH_DASHBOARD.transaction.walletTransaction,
-  //     //   icon: ICONS.accountTransaction
-  //     // }
-  //     {
-  //       title: 'Giao dịch ngân hàng',
-  //       path: PATH_DASHBOARD.transaction.accountTransaction,
-  //       icon: ICONS.bankTransaction
-  //     }
-  //     // {
-  //     //   title: 'Lịch sử doanh thu',
-  //     //   path: PATH_DASHBOARD.transaction.PeriodRevenueHistory,
-  //     //   icon: ICONS.PeriodRevenueHistory
-  //     // }
-  //   ]
-  // }
 ];
 
 //----------------------------------------------------------------------------------

@@ -19,17 +19,25 @@ import {
 // utils
 import axios from '../../../utils/axios';
 // routes
-import { PATH_DASHBOARD } from '../../../routes/paths';
+import { PATH_DASHBOARD, PATH_PAGE } from '../../../routes/paths';
 // @types
 import { Post } from '../../../@types/blog';
 //
 import SearchNotFound from '../../SearchNotFound';
 import { useTranslation } from 'react-i18next';
 import Cookies from 'js-cookie';
+import { REACT_APP_API_URL } from 'config';
+import { dispatch, RootState, useSelector } from 'redux/store';
+import { getAllProject } from 'redux/slices/krowd_slices/project';
+import { Project1 } from '../../../@types/krowd/project';
 
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
+  backgroundColor: 'white',
+  height: 50,
+  padding: 5,
+  borderRadius: 4,
   '& .MuiAutocomplete-root': {
     width: 300,
     // transition: theme.transitions.create('width', {
@@ -61,22 +69,24 @@ const RootStyle = styled('div')(({ theme }) => ({
 export default function BlogPostsSearch({ sx }: BoxProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const linkTo = (title: string) => `${PATH_DASHBOARD.blog.root}/post/${paramCase(title)}`;
+  const linkTo = (title: string) => `${PATH_PAGE.details}/${paramCase(title)}`;
+
+  const { projectList } = useSelector((state: RootState) => state.project);
+
+  const { listOfProject } = projectList;
   const initialLanguage = Cookies.get('i18next') || 'vi';
   const [currentLanguage, setCurrentLanguage] = useState('');
   const { t } = useTranslation();
-  useEffect(() => {
-    setCurrentLanguage(initialLanguage);
-    localStorage.setItem('i18nextLng', initialLanguage);
-  });
+
   const handleChangeSearch = async (value: string) => {
     try {
       setSearchQuery(value);
       if (value) {
-        const response = await axios.get('/api/blog/posts/a', {
+        const response = await axios.get(`${REACT_APP_API_URL}/projects/`, {
           params: { query: value }
         });
         setSearchResults(response.data.results);
+        console.log(response);
       } else {
         setSearchResults([]);
       }
@@ -84,7 +94,31 @@ export default function BlogPostsSearch({ sx }: BoxProps) {
       console.error(error);
     }
   };
-
+  // const loadUsers = async () => {
+  //   const response = await axios.get('https://reqres.in/api/users');
+  //   console.log(response.data.data);
+  //   setUsers(response.data.data);
+  // };
+  console.log('searchQuery', searchQuery);
+  useEffect(() => {
+    const handleChangeSearch = async (value: string) => {
+      try {
+        setSearchQuery(value);
+        if (value) {
+          const response = await axios.get(`${REACT_APP_API_URL}/projects`, {
+            params: { query: value }
+          });
+          setSearchResults(response.data.results);
+          console.log(response);
+        } else {
+          setSearchResults([]);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    handleChangeSearch(searchQuery);
+  }, []);
   return (
     <RootStyle
       sx={{
@@ -96,13 +130,34 @@ export default function BlogPostsSearch({ sx }: BoxProps) {
         ...sx
       }}
     >
+      {/* <Autocomplete
+        onInputChange={(event, value) => handleChangeSearch(value)}
+        options={listOfProject}
+        getOptionLabel={(option) => option.name}
+        renderOption={(props, option) => (
+          <Box component="li" {...props}>
+            {option.name}
+          </Box>
+        )}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            inputProps={{
+              ...params.inputProps,
+              autoComplete: 'new-password' // disable autocomplete and autofill
+            }}
+            placeholder={t(`landing_project_search.landing_project_search_placeholder`)}
+          />
+        )}
+      /> */}
       <Autocomplete
         size="small"
         disablePortal
         popupIcon={null}
-        options={searchResults}
+        options={listOfProject}
+        // options={searchResults}
         onInputChange={(event, value) => handleChangeSearch(value)}
-        getOptionLabel={(post: Post) => post.title}
+        getOptionLabel={(post: Project1) => post.name}
         noOptionsText={<SearchNotFound searchQuery={searchQuery} />}
         renderInput={(params) => (
           <TextField
@@ -129,12 +184,12 @@ export default function BlogPostsSearch({ sx }: BoxProps) {
           />
         )}
         renderOption={(props, post, { inputValue }) => {
-          const { title } = post;
-          const matches = match(title, inputValue);
-          const parts = parse(title, matches);
+          const { name } = post;
+          const matches = match(name, inputValue);
+          const parts = parse(name, matches);
           return (
             <li {...props}>
-              <Link to={linkTo(title)} component={RouterLink} underline="none">
+              <Link to={linkTo(post.id)} component={RouterLink} underline="none">
                 {parts.map((part, index) => (
                   <Typography
                     key={index}

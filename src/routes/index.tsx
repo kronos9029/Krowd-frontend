@@ -109,12 +109,26 @@ export default function Router() {
           ]
         },
         {
+          path: 'project-invested',
+          children: [
+            { element: <Navigate to="/dashboard/project-invested/list" replace /> },
+
+            { path: 'list', element: <ProjectListInvested /> }
+          ]
+        },
+        {
+          path: 'account-transaction',
+          children: [
+            { element: <Navigate to="/dashboard/account-transaction/list" replace /> },
+            { path: 'list', element: <UserAccountTransaction /> },
+            { path: 'wallet-transaction', element: <UserWalletTransaction /> }
+          ]
+        },
+        {
           path: 'userKrowd',
           children: [
             { element: <Navigate to="/dashboard/userKrowd/profile" replace /> },
-            { path: 'projects', element: <UserOfBusiness /> },
             { path: 'cards', element: <UserCards /> },
-            { path: 'list', element: <UserOfBusiness /> },
             { path: 'new', element: <UserCreate /> },
             { path: ':name/edit', element: <UserCreate /> },
             { path: 'account', element: <UserAccount /> }
@@ -125,7 +139,6 @@ export default function Router() {
           path: 'blog',
           children: [
             { element: <Navigate to="/dashboard/blog/posts" replace /> },
-            { path: 'posts', element: <UserOfBusiness /> },
             { path: 'post/:title', element: <BlogPost /> },
             { path: 'new-post', element: <KrowdNewProject /> }
           ]
@@ -213,7 +226,6 @@ const EcommerceProductCreate = Loadable(
 );
 const EcommerceCheckout = Loadable(lazy(() => import('../pages/dashboard/PackageVoucherCheckout')));
 const EcommerceInvoice = Loadable(lazy(() => import('../pages/dashboard/EcommerceInvoice')));
-const UserOfBusiness = Loadable(lazy(() => import('../pages/dashboard/UserOfBusiness')));
 const BlogPost = Loadable(lazy(() => import('../pages/dashboard/BlogPost')));
 const KrowdNewProject = Loadable(lazy(() => import('../pages/dashboard/KrowdNewProject')));
 //project Entity
@@ -231,6 +243,15 @@ const UserProfile = Loadable(lazy(() => import('../pages/dashboard/UserProfile')
 const UserCards = Loadable(lazy(() => import('../pages/dashboard/UserCards')));
 const UserList = Loadable(lazy(() => import('../pages/dashboard/UserList')));
 const UserAccount = Loadable(lazy(() => import('../pages/dashboard/AccountManager/UserAccount')));
+const UserAccountTransaction = Loadable(
+  lazy(() => import('../pages/dashboard/AccountManager/UserAccountTransaction'))
+);
+const UserWalletTransaction = Loadable(
+  lazy(() => import('../pages/dashboard/AccountManager/UserWalletTransaction'))
+);
+const ProjectListInvested = Loadable(
+  lazy(() => import('../pages/dashboard/ProjectKrowdManager/ProjectListInvested'))
+);
 const UserCreate = Loadable(lazy(() => import('../pages/dashboard/UserCreate')));
 const Chat = Loadable(lazy(() => import('../pages/dashboard/Chat')));
 const Mail = Loadable(lazy(() => import('../pages/dashboard/Mail')));

@@ -21,6 +21,13 @@ type ProjectState = {
     listOfProject: Project1[];
     errorProjectList: boolean;
   };
+  projectListInvested: {
+    isLoadingProjectListInvested: boolean;
+    numOfProject: number;
+    listOfProject: Project1[];
+    errorProjectListInvested: boolean;
+  };
+
   detailOfProject: {
     isLoadingDetailOfProjectID: boolean;
     detailOfProjectID: Project1 | null;
@@ -73,6 +80,13 @@ const initialState: ProjectState = {
     listOfProject: [],
     errorProjectList: false
   },
+
+  projectListInvested: {
+    isLoadingProjectListInvested: false,
+    numOfProject: 0,
+    listOfProject: [],
+    errorProjectListInvested: false
+  },
   projects: [],
   project: null,
   sortBy: null,
@@ -120,6 +134,18 @@ const slice = createSlice({
     getProjectListSuccess(state, action) {
       state.isLoading = false;
       state.projectList = action.payload;
+    },
+    // ------ GET ALL PROJECT INVESTED ------------ //
+    startLoadingProjectInvestedList(state) {
+      state.projectListInvested.isLoadingProjectListInvested = true;
+    },
+    hasGetAllProjectInvestedError(state, action) {
+      state.projectListInvested.isLoadingProjectListInvested = false;
+      state.projectListInvested.errorProjectListInvested = action.payload;
+    },
+    getProjectListInvestedSuccess(state, action) {
+      state.projectListInvested.isLoadingProjectListInvested = false;
+      state.projectListInvested = action.payload;
     },
 
     // ------ GET ALL PROJECT BY ID------------ //
@@ -220,6 +246,19 @@ export function getProjectList() {
     try {
       const response = await ProjectAPI.gets();
       dispatch(slice.actions.getProjectListSuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
+//------- GET ALL PROJECT INVESTED WITH PARAMS
+export function getProjectListInvested() {
+  return async () => {
+    dispatch(slice.actions.startLoadingProjectInvestedList());
+    try {
+      const response = await ProjectAPI.getProjectInvested();
+      dispatch(slice.actions.getProjectListInvestedSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

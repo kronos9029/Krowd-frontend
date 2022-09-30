@@ -35,11 +35,13 @@ export enum DATA_TYPE {
   CHIP_TEXT = 'chip_text',
   IMAGE = 'image',
   LIST_TEXT = 'list_text',
+  NUMBER_FORMAT = 'number_format',
   NUMBER = 'number',
   WRAP_TEXT = 'wrap_text',
   DATE = 'date',
   CURRENCY = 'currency'
 }
+
 export type RowData = {
   id: string;
   items: {
@@ -69,7 +71,7 @@ export function KrowdTable({
   viewPath,
   deleteRecord
 }: KrowdTableProps) {
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
   const data = getData();
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -174,6 +176,26 @@ export function KrowdTable({
                                 >
                                   <Stack direction="row" alignItems="center" spacing={2}>
                                     <Typography variant="subtitle2">{_item.value}</Typography>
+                                  </Stack>
+                                </TableCell>
+                              );
+                            case DATA_TYPE.NUMBER_FORMAT:
+                              return (
+                                <TableCell
+                                  key={`__${_item.name}__${data.id}`}
+                                  component="th"
+                                  scope="row"
+                                  padding="normal"
+                                >
+                                  <Stack direction="row" alignItems="right" spacing={2}>
+                                    <Typography
+                                      variant="subtitle2"
+                                      noWrap
+                                      mx="auto"
+                                      color={_item.textColor ?? 'text.primary'}
+                                    >
+                                      {fCurrency(_item.value)}
+                                    </Typography>
                                   </Stack>
                                 </TableCell>
                               );

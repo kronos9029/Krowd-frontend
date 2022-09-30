@@ -10,8 +10,14 @@ import {
   TextField,
   Stack,
   FormControl,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  DialogContentText,
   Input
 } from '@mui/material';
+
 // redux
 import { dispatch, RootState, useSelector } from 'redux/store';
 // icons
@@ -45,8 +51,12 @@ import * as Yup from 'yup';
 import { fCurrency, fCurrencyPackage } from 'utils/formatNumber';
 import { LoadingButton } from '@mui/lab';
 import eyeFill from '@iconify/icons-eva/eye-fill';
-import eyeOffFill from '@iconify/icons-eva/eye-off-2-fill';
+import refresh from '@iconify/icons-eva/refresh-fill';
+import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
+// import eyeOffFill from '@iconify/icons-eva/eye-off-2-fill';
 import checkFill from '@iconify/icons-eva/checkmark-fill';
+import check2Fill from '@iconify/icons-eva/checkmark-circle-2-fill';
+import redFill from '@iconify/icons-eva/alert-triangle-fill';
 import alertFill from '@iconify/icons-eva/alert-triangle-outline';
 import { MIconButton } from 'components/@material-extend';
 import { getWalletList } from 'redux/slices/krowd_slices/wallet';
@@ -54,19 +64,6 @@ import { PATH_PAGE } from 'routes/paths';
 
 // ----------------------------------------------------------------------
 
-const APP_BAR_MOBILE = 64;
-const APP_BAR_DESKTOP = 88;
-
-const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
-  height: APP_BAR_MOBILE,
-  transition: theme.transitions.create(['height', 'background-color'], {
-    easing: theme.transitions.easing.easeInOut,
-    duration: theme.transitions.duration.shorter
-  }),
-  [theme.breakpoints.up('md')]: {
-    height: APP_BAR_DESKTOP
-  }
-}));
 const LIST_TERM = styled('div')(({}) => ({
   borderTop: '1px solid #e0e0e0',
   border: '1px solid #e0e0e0',
@@ -97,54 +94,80 @@ type Package = {
   quantity: number;
   descriptionList: string[];
 };
+
 export default function KrowdPackage() {
-  //Language
   const { user } = useAuth();
   const [open, setOpen] = useState(false);
-  const [balance, setBalance] = useState(1);
+  const [balance, setBalance] = useState(0);
   const [showCurrency, setShowCurrency] = useState(true);
+  const [showIDPayment, setShowIDPayment] = useState(true);
+  const [openModalInvestSuccess, setOpenModalInvestSuccess] = useState(false);
+  const [openModalInvestError, setOpenModalInvestError] = useState(false);
+  const { id = '' } = useParams();
+
+  //DATA RESPONSE SUCCESS
+  const [resPaymentID, setDataInvestedIDPAY] = useState('');
+  const [resQuality, setDataInvestedQuality] = useState('');
+  const [resWalletName, setDataInvestedfromWalletName] = useState('');
+  const [resFee, setDataInvestedfee] = useState('');
+  const [resDate, setDataInvestedDate] = useState('');
+  const [dataInvestedSuccess, setDataInvestedSuccess] = useState();
+
+  const { enqueueSnackbar } = useSnackbar();
+
   const onToggleShowCurrency = () => {
     setShowCurrency((prev) => !prev);
   };
-  console.log(balance);
-  const { id = '' } = useParams();
-  const { investorKrowdDetail: mainInvestor, isLoading } = useSelector(
-    (state: RootState) => state.user_InvestorStateKrowd
-  );
+  const onToggleShowIDPayment = () => {
+    setShowIDPayment((prev) => !prev);
+  };
+
+  //--------------------GET DATA----------------------------
   useEffect(() => {
     dispatch(getUserKrowdDetail(user?.id));
     dispatch(getProjectListById(id));
     dispatch(getWalletList());
     dispatch(getProjectPackage(id));
   }, [dispatch]);
-  const { enqueueSnackbar } = useSnackbar();
 
+  //--------------------ROOT STATE-------------------------
+  //--------------------GET MAIN USER (INVESTOR)------------
+  const { investorKrowdDetail: mainInvestor, isLoading } = useSelector(
+    (state: RootState) => state.user_InvestorStateKrowd
+  );
+  //--------------------PROJECT-----------------------------
   const { detailOfProject, packageLists, projectPackageDetails } = useSelector(
     (state: RootState) => state.project
   );
   const { detailOfProjectID: projectID, isLoadingDetailOfProjectID } = detailOfProject;
-
+  //-------------------WALLET BALANCE------------------------
+  const { walletList } = useSelector((state: RootState) => state.walletKrowd);
+  const { listOfInvestorWallet } = walletList;
+  //-------------------PACKAGE-------------------------------
+  const { PackageDetails } = projectPackageDetails && projectPackageDetails;
   const { isPackageLoading } = packageLists;
+  //-------------------LANGUAGE------------------------------
   const currentLanguageCode = cookies.get('i18next') || 'en';
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
   const { t } = useTranslation();
-  const getEntityList = (type: 'DOCUMENT') => {
-    return projectID?.projectEntity.find((pe) => pe.type === type)?.typeItemList;
-  };
-  const { walletList } = useSelector((state: RootState) => state.walletKrowd);
-  const { listOfInvestorWallet } = walletList;
+
   const handleClickOpenPackage2 = async (v: Package) => {
     dispatch(getPackageBYID(v.id));
-    // setOpenPackage2(true);
   };
-  const { PackageDetails } = projectPackageDetails && projectPackageDetails;
-
+  // const handleClickRefeshBalance = async (v: Package) => {
+  //   dispatch(getWalletTypeByID(v.id));
+  // };
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
+
+  const getEntityList = (type: 'DOCUMENT') => {
+    return projectID?.projectEntity.find((pe) => pe.type === type)?.typeItemList;
+  };
+
   const { documents } = {
     documents: getEntityList('DOCUMENT')
   };
@@ -164,7 +187,6 @@ export default function KrowdPackage() {
     initialValues: {
       projectId: id,
       checkBox: false,
-      // investorId: mainInvestor?.investorId,
       packageId: PackageDetails?.id,
       quantity: 1
     },
@@ -174,21 +196,35 @@ export default function KrowdPackage() {
         const headers = getHeaderFormData();
         await axios
           .post(
-            `https://ec2-13-215-197-250.ap-southeast-1.compute.amazonaws.com/api/v1.0/investments`,
+            `${REACT_APP_API_URL}/investments`,
             {
               projectId: id,
-              // investorId: '4664b5c1-2f53-4bed-9a30-adcbb5d1e417',
               packageId: PackageDetails?.id,
               quantity: `${values.quantity}`
             },
             { headers: headers }
           )
-          .then(() => {
-            enqueueSnackbar('Đầu tư thành công', {
-              variant: 'success'
-            });
+          .then((res) => {
+            setDataInvestedSuccess(res.data.amount);
+            setDataInvestedIDPAY(res.data.id);
+            setDataInvestedQuality(res.data.investedQuantity);
+            setDataInvestedfromWalletName(res.data.fromWalletName);
+            setDataInvestedfee(res.data.fee);
+            setDataInvestedDate(res.data.createDate);
+            if (res.data.status === 'SUCCESS') {
+              setOpenModalInvestSuccess(true);
+              enqueueSnackbar('Đầu tư thành công', {
+                variant: 'success'
+              });
+            } else {
+              setOpenModalInvestError(true);
+              enqueueSnackbar('Cập nhật thất bại', {
+                variant: 'error'
+              });
+            }
           })
           .catch(() => {
+            setOpenModalInvestError(true);
             enqueueSnackbar('Cập nhật thất bại', {
               variant: 'error'
             });
@@ -492,7 +528,25 @@ export default function KrowdPackage() {
                       </Box>
                     </Box>
                     <Divider sx={{ mt: 7, maxWidth: 600 }} />
+                    {listOfInvestorWallet &&
+                      listOfInvestorWallet.slice(1, 2).map((e, i) => (
+                        <Grid key={i}>
+                          <Typography variant="h5"> Cập nhật số dư ví</Typography>
+                          <Stack direction="row" alignItems="center" spacing={1}>
+                            <Button
+                              color="inherit"
+                              sx={{ opacity: 0.48 }}
+                              onClick={() => setBalance(e.balance)}
+                              // onClick={() => handleClickRefeshBalance(e)}
+                            >
+                              <Icon icon={refresh} />
+                            </Button>
+                            <Typography>{fCurrency(balance)}</Typography>
+                          </Stack>
+                        </Grid>
+                      ))}
                     {PackageDetails?.price &&
+                    values.checkBox &&
                     values.quantity > 0 &&
                     balance >= PackageDetails!.price * values.quantity ? (
                       // {values.checkBox ? (
@@ -533,6 +587,7 @@ export default function KrowdPackage() {
                             </Form>
                           </FormikProvider>
                         </Box>
+
                         <Box>
                           {PackageDetails?.price &&
                             balance < PackageDetails!.price * values.quantity && (
@@ -664,6 +719,365 @@ export default function KrowdPackage() {
           </Container>
         </>
       )}
+      <Dialog fullWidth maxWidth="sm" open={openModalInvestSuccess}>
+        <DialogTitle sx={{ alignItems: 'center', textAlign: 'center' }}>
+          <Icon color="green" height={60} width={60} icon={check2Fill} />
+        </DialogTitle>
+        <DialogContent>
+          <Box mt={1}>
+            <DialogContentText
+              sx={{ textAlign: 'center', fontWeight: 900, fontSize: 20, color: 'black' }}
+            >
+              Giao dịch thành công
+            </DialogContentText>
+          </Box>
+          <Stack spacing={{ xs: 2, md: 1 }}>
+            <Container sx={{ p: 2 }}>
+              <Box>
+                <Typography sx={{ textAlign: 'center' }}>
+                  Mua thành công {resQuality} {PackageDetails?.name}{' '}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography sx={{ textAlign: 'center', color: 'green', fontSize: 35 }}>
+                  {fCurrency(`${dataInvestedSuccess}`)}
+                </Typography>
+              </Box>
+              <Divider sx={{ my: 2 }} />
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  mb: '0.5rem',
+                  p: 1
+                }}
+              >
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18',
+                    marginBottom: '0.2rem'
+                  }}
+                >
+                  <strong>Dự án</strong>
+                </Typography>
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18',
+                    marginBottom: '0.2rem'
+                  }}
+                >
+                  <strong>{projectID?.name}</strong>
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  p: 1,
+
+                  justifyContent: 'space-between'
+                }}
+              >
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18',
+
+                    marginBottom: '0.2rem'
+                  }}
+                >
+                  <strong>Thời gian</strong>
+                </Typography>
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18'
+                  }}
+                >
+                  {resDate}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  p: 1,
+                  justifyContent: 'space-between'
+                }}
+              >
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18',
+                    marginBottom: '0.2rem'
+                  }}
+                >
+                  <strong>Nguồn tiền</strong>
+                </Typography>
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18'
+                  }}
+                >
+                  {resWalletName}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  p: 1,
+
+                  justifyContent: 'space-between'
+                }}
+              >
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18',
+
+                    marginBottom: '0.2rem'
+                  }}
+                >
+                  <strong>Phí giao dịch</strong>
+                </Typography>
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18'
+                  }}
+                >
+                  {resFee}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  p: 1,
+
+                  justifyContent: 'space-between'
+                }}
+              >
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18',
+
+                    marginBottom: '0.2rem'
+                  }}
+                >
+                  <strong>Mã giao dịch</strong>
+                </Typography>
+
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18'
+                  }}
+                >
+                  <Stack direction="row" alignItems="center">
+                    <MIconButton
+                      color="inherit"
+                      onClick={onToggleShowIDPayment}
+                      sx={{ opacity: 0.48 }}
+                    >
+                      <Icon icon={showIDPayment ? eyeFill : eyeOffFill} />
+                    </MIconButton>
+                    <Typography sx={{ typography: 'body2' }}>
+                      {showIDPayment ? '********' : resPaymentID}
+                    </Typography>
+                  </Stack>
+                </Typography>
+              </Box>
+            </Container>
+          </Stack>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
+            <Box>
+              <Button variant="contained" href={`${PATH_PAGE.details}/${projectID?.id}`}>
+                Trở về dự án
+              </Button>
+            </Box>
+            {/* <Box>
+              <Button
+                color="success"
+                variant="contained"
+                onClick={() => setOpenModalInvestSuccess(false)}
+              >
+                Xong
+              </Button>
+            </Box> */}
+          </Box>
+        </DialogContent>
+      </Dialog>
+      <Dialog fullWidth maxWidth="sm" open={openModalInvestError}>
+        <DialogTitle sx={{ alignItems: 'center', textAlign: 'center' }}>
+          <Icon color="red" height={60} width={60} icon={redFill} />
+        </DialogTitle>
+        <DialogContent>
+          <Box mt={1}>
+            <DialogContentText
+              sx={{ textAlign: 'center', fontWeight: 900, fontSize: 20, color: 'black' }}
+            >
+              Giao dịch không thành công
+            </DialogContentText>
+          </Box>
+          <Stack spacing={{ xs: 2, md: 1 }}>
+            <Container sx={{ p: 2 }}>
+              <Box>
+                <Typography sx={{ textAlign: 'center' }}>
+                  Mua thất bại {resQuality} {PackageDetails?.name}{' '}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography sx={{ textAlign: 'center', color: 'red', fontSize: 35 }}>
+                  {fCurrency(`${dataInvestedSuccess}`)}
+                </Typography>
+              </Box>
+              <Divider sx={{ my: 2 }} />
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  mb: '0.5rem',
+                  p: 1
+                }}
+              >
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18',
+                    marginBottom: '0.2rem'
+                  }}
+                >
+                  <strong>Dự án</strong>
+                </Typography>
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18',
+                    marginBottom: '0.2rem'
+                  }}
+                >
+                  <strong>{projectID?.name}</strong>
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  p: 1,
+
+                  justifyContent: 'space-between'
+                }}
+              >
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18',
+
+                    marginBottom: '0.2rem'
+                  }}
+                >
+                  <strong>Thời gian</strong>
+                </Typography>
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18'
+                  }}
+                >
+                  {resDate}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  p: 1,
+                  justifyContent: 'space-between'
+                }}
+              >
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18',
+                    marginBottom: '0.2rem'
+                  }}
+                >
+                  <strong>Nguồn tiền</strong>
+                </Typography>
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18'
+                  }}
+                >
+                  {resWalletName}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  p: 1,
+
+                  justifyContent: 'space-between'
+                }}
+              >
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18',
+
+                    marginBottom: '0.2rem'
+                  }}
+                >
+                  <strong>Phí giao dịch</strong>
+                </Typography>
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18'
+                  }}
+                >
+                  {resFee}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  p: 1,
+
+                  justifyContent: 'space-between'
+                }}
+              >
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18',
+
+                    marginBottom: '0.2rem'
+                  }}
+                >
+                  <strong>Mã giao dịch</strong>
+                </Typography>
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18'
+                  }}
+                >
+                  {resPaymentID}
+                </Typography>
+              </Box>
+            </Container>
+          </Stack>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
+            <Box>
+              <Button variant="contained" href={`${PATH_PAGE.details}/${projectID?.id}`}>
+                Trở về dự án
+              </Button>
+            </Box>
+          </Box>
+        </DialogContent>
+      </Dialog>
     </Page>
   );
 }

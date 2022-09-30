@@ -114,7 +114,7 @@ const SORT_OPTIONS_CONFIG = {
 
 // ----------------------------------------------------------------------
 
-export default function LandingMinimalHelps() {
+export default function LandingStartUp() {
   const [filters, setFilters] = useState('Mostfunded');
   const currentLanguageCode = cookies.get('i18next') || 'en';
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);

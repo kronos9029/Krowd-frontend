@@ -66,6 +66,17 @@ export const PATH_DASHBOARD = {
     editById: path(ROOTS_DASHBOARD, `/user/reece-chung/edit`),
     account: path(ROOTS_DASHBOARD, '/user/account')
   },
+  projectInvested: {
+    root: path(ROOTS_DASHBOARD, '/project-invested'),
+    list: path(ROOTS_DASHBOARD, '/project-invested/list')
+  },
+  // giao dịch
+  transaction: {
+    root: path(ROOTS_DASHBOARD, '/account-transaction'),
+    list: path(ROOTS_DASHBOARD, '/account-transaction/list'),
+    walletTransaction: path(ROOTS_DASHBOARD, '/account-transaction/wallet-transaction'),
+    payments: path(ROOTS_DASHBOARD, '/account-transaction/payments')
+  },
   eCommerce: {
     root: path(ROOTS_DASHBOARD, '/e-commerce'),
     shop: path(ROOTS_DASHBOARD, '/e-commerce/shop'),
@@ -121,13 +132,12 @@ export const PATH_DASHBOARD = {
     risk: path(ROOTS_DASHBOARD, '/other/risk'),
     investment: path(ROOTS_DASHBOARD, '/other/investment')
   },
-  // giao dịch
-  transaction: {
-    root: path(ROOTS_DASHBOARD, '/transaction/account-transaction'),
-    walletTransaction: path(ROOTS_DASHBOARD, '/transaction/wallet'),
-    accountTransaction: path(ROOTS_DASHBOARD, '/transaction/account-transaction'),
-    PeriodRevenueHistory: path(ROOTS_DASHBOARD, '/transaction/account')
-  },
+  // transaction: {
+  //   root: path(ROOTS_DASHBOARD, '/transaction/account-transaction'),
+  //   walletTransaction: path(ROOTS_DASHBOARD, '/transaction/wallet'),
+  //   accountTransaction: path(ROOTS_DASHBOARD, '/transaction/account-transaction'),
+  //   PeriodRevenueHistory: path(ROOTS_DASHBOARD, '/transaction/account')
+  // },
   blog: {
     root: path(ROOTS_DASHBOARD, '/blog'),
     posts: path(ROOTS_DASHBOARD, '/blog/posts'),

@@ -23,6 +23,7 @@ import {
 import { varFadeInUp, MotionInView, varFadeInDown } from '../../animate';
 import { PATH_SEARCHPAGE } from 'routes/paths';
 import { OverlayBackground } from 'assets';
+import { BlogPostsSearch } from 'components/_dashboard/project';
 
 // ----------------------------------------------------------------------
 const SearchbarStyle = styled('div')(({ theme }) => ({
@@ -32,6 +33,7 @@ const SearchbarStyle = styled('div')(({ theme }) => ({
   width: '100%',
   display: 'flex',
   // position: 'absolute',
+  backgroundColor: 'white',
   alignItems: 'center',
   backdropFilter: 'blur(6px)',
   WebkitBackdropFilter: 'blur(6px)', // Fix on Mobile
@@ -194,11 +196,10 @@ export default function LandingHero() {
               {t('Thumbnail_landing_hero_description2')}
             </Typography>
           </MotionInView>
-
           <MotionInView variants={varFadeInUp}>
             <Typography>
               <SearchbarStyle>
-                <SearchInput
+                {/* <SearchInput
                   disableUnderline={true}
                   fullWidth
                   placeholder={t('Search_hover')}
@@ -230,8 +231,9 @@ export default function LandingHero() {
                   variant="contained"
                 >
                   {t('Search')}
-                </Button>
+                </Button> */}
               </SearchbarStyle>
+              <BlogPostsSearch />
             </Typography>
           </MotionInView>
         </ContentStyle>
