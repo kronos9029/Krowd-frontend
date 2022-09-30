@@ -22,8 +22,8 @@ const RootStyle = styled(Card)(({ theme }) => ({
   width: '100%',
   boxShadow: 'none',
   position: 'relative',
-  color: theme.palette.primary.darker,
-  backgroundColor: '#ff9b26e0'
+  backgroundColor: '#ff9b26e0',
+  color: 'white'
 }));
 
 // ----------------------------------------------------------------------
@@ -76,7 +76,7 @@ export default function ProjectPaymentWallet({ wallet }: { wallet: Wallet }) {
               <Typography sx={{ typography: 'subtitle2' }}>{e.walletType.name}</Typography>
               <Typography sx={{ typography: 'h3' }}>{fCurrency(e.balance)}</Typography>
               <Stack direction="row" alignItems="center" flexWrap="wrap">
-                <Icon
+                {/* <Icon
                   width={20}
                   height={20}
                   icon={PERCENT >= 0 ? trendingUpFill : trendingDownFill}
@@ -84,7 +84,7 @@ export default function ProjectPaymentWallet({ wallet }: { wallet: Wallet }) {
                 <Typography variant="subtitle2" component="span" sx={{ ml: 0.5 }}>
                   {PERCENT > 0 && '+'}
                   {fPercent(PERCENT)}
-                </Typography>
+                </Typography> */}
                 <Typography variant="body2" component="span" sx={{ opacity: 0.72 }}>
                   &nbsp;Chưa cập nhật
                 </Typography>

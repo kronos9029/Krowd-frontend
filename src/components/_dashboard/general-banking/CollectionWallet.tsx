@@ -26,6 +26,7 @@ const RootStyle = styled(Card)(({ theme }) => ({
   backgroundRepeat: 'no-repeat',
   backgroundColor: theme.palette.primary.main,
   display: 'flex',
+  color: 'white',
   flexDirection: 'column',
   justifyContent: 'space-between'
 }));
@@ -83,22 +84,20 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                 </Grid>
                 <Grid sx={{ display: 'flex', gap: 1 }}>
                   <Button
-                    color="warning"
-                    sx={{ mt: 5, display: 'flex', backgroundColor: '#ff9c00' }}
+                    sx={{ mt: 5, display: 'flex', border: '1px solid white' }}
                     variant="contained"
                   >
-                    Chuyển tiền
+                    + Chuyển
                   </Button>
                   <Button
-                    color="warning"
-                    sx={{ mt: 5, display: 'flex', backgroundColor: '#ff9c00' }}
+                    sx={{ mt: 5, display: 'flex', border: '1px solid white' }}
                     variant="contained"
                   >
-                    Rút tiền
+                    - Rút tiền
                   </Button>
                 </Grid>
               </Grid>
-              <Stack direction="row" alignItems="center" flexWrap="wrap">
+              {/* <Stack direction="row" alignItems="center" flexWrap="wrap">
                 <Icon
                   width={20}
                   height={20}
@@ -111,7 +110,7 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                 <Typography variant="body2" component="span" sx={{ opacity: 0.72 }}>
                   &nbsp;Chưa cập nhật
                 </Typography>
-              </Stack>
+              </Stack> */}
             </Stack>
           </RootStyle>
         ))}

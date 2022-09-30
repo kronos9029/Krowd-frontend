@@ -7,6 +7,7 @@ import { Box, Container, Typography } from '@mui/material';
 import { getTransactionList } from 'redux/slices/krowd_slices/transaction';
 import useAuth from 'hooks/useAuth';
 import { TRANSACTION_STATUS_ENUM } from '../../@types/krowd/transaction';
+import { Icon } from '@iconify/react';
 const TABLE_HEAD = [
   { id: 'idx', label: 'STT', align: 'center' },
   //   { id: 'fromUserId', label: 'TỪ', align: '' },
@@ -71,12 +72,17 @@ export default function AccounTransactionTable() {
           //     value: _item.payType,
           //     type: DATA_TYPE.TEXT
           //   },
-
           {
             name: 'orderType',
-            value: _item.orderType,
-            type: DATA_TYPE.TEXT
+            value: '',
+            type: DATA_TYPE.ICONS
           },
+
+          // {
+          //   name: 'orderType',
+          //   value: _item.orderType === 'momo_wallet' ? 'Ví momo' : 'VN PAY',
+          //   type: DATA_TYPE.TEXT
+          // },
           {
             name: 'transId',
             value: _item.transId,

@@ -27,6 +27,7 @@ const RootStyle = styled(Card)(({ theme }) => ({
   backgroundRepeat: 'no-repeat',
   backgroundColor: theme.palette.primary.main,
   display: 'flex',
+  color: 'white',
   marginBottom: theme.spacing(2),
   flexDirection: 'column',
   justifyContent: 'space-between'
@@ -81,34 +82,34 @@ export default function SharedInvestmentWallet({ wallet }: { wallet: Wallet }) {
                 <Grid sx={{ display: 'flex', gap: 1 }}>
                   <Button
                     href={PATH_PAGE.pageTopUp}
-                    color="warning"
-                    sx={{ mt: 5, display: 'flex', backgroundColor: '#ff9c00' }}
+                    // color="info"
+                    sx={{
+                      mt: 5,
+                      display: 'flex',
+                      border: '1px solid white'
+                    }}
                     variant="contained"
                   >
-                    Nạp tiền
+                    + Nạp tiền
                   </Button>
                   <Button
-                    color="warning"
-                    sx={{ mt: 5, display: 'flex', backgroundColor: '#ff9c00' }}
+                    sx={{ mt: 5, display: 'flex', border: '1px solid white' }}
                     variant="contained"
                   >
-                    Rút tiền
+                    - Rút tiền
                   </Button>
                 </Grid>
               </Grid>
 
               <Stack direction="row" alignItems="center" flexWrap="wrap">
-                <Icon
+                {/* <Icon
                   width={20}
                   height={20}
                   icon={PERCENT >= 0 ? trendingUpFill : trendingDownFill}
-                />
-                <Typography variant="subtitle2" component="span" sx={{ ml: 0.5 }}>
-                  {PERCENT > 0 && '+'}
-                  {fPercent(PERCENT)}
-                </Typography>
+                /> */}
+
                 <Typography variant="body2" component="span" sx={{ opacity: 0.72 }}>
-                  &nbsp;Chưa cập nhật
+                  &nbsp;Ví dùng để đầu tư vào các dự án của KROWD
                 </Typography>
               </Stack>
             </Stack>

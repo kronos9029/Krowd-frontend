@@ -47,7 +47,7 @@ export default function AppWelcome({ user, investor }: AppWelcomeProps) {
       <BankingContainer sx={{ width: '50%', height: '100%' }}></BankingContainer>
       <CardContent
         sx={{
-          color: 'grey.800'
+          color: 'white'
         }}
       >
         <Typography variant="h4">

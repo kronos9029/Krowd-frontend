@@ -34,6 +34,7 @@ export enum DATA_TYPE {
   TEXT = 'text',
   CHIP_TEXT = 'chip_text',
   IMAGE = 'image',
+  ICONS = 'icons',
   LIST_TEXT = 'list_text',
   NUMBER_FORMAT = 'number_format',
   NUMBER = 'number',
@@ -245,6 +246,23 @@ export function KrowdTable({
                                 >
                                   <Stack direction="row" alignItems="center" spacing={2}>
                                     <Avatar alt={`__${_item.name}__${data.id}`} src={_item.value} />
+                                  </Stack>
+                                </TableCell>
+                              );
+                            case DATA_TYPE.ICONS:
+                              return (
+                                <TableCell
+                                  key={`__${_item.name}__${data.id}`}
+                                  component="th"
+                                  scope="row"
+                                  padding="normal"
+                                >
+                                  <Stack direction="row" alignItems="center" spacing={2}>
+                                    <img
+                                      style={{ width: 40 }}
+                                      src={`/static/icons/navbar/ic_momo.png`}
+                                    />
+                                    <Typography variant="body1"> Ví momo</Typography>
                                   </Stack>
                                 </TableCell>
                               );

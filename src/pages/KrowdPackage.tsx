@@ -725,7 +725,7 @@ export default function KrowdPackage() {
       )}
       <Dialog fullWidth maxWidth="sm" open={openModalInvestSuccess}>
         <DialogTitle sx={{ alignItems: 'center', textAlign: 'center' }}>
-          <Icon color="green" height={60} width={60} icon={check2Fill} />
+          <Icon color="#14b7cc" height={60} width={60} icon={check2Fill} />
         </DialogTitle>
         <DialogContent>
           <Box mt={1}>
@@ -743,7 +743,7 @@ export default function KrowdPackage() {
                 </Typography>
               </Box>
               <Box>
-                <Typography sx={{ textAlign: 'center', color: 'green', fontSize: 35 }}>
+                <Typography sx={{ textAlign: 'center', color: '#14b7cc', fontSize: 35 }}>
                   {fCurrency(`${dataInvestedSuccess}`)}
                 </Typography>
               </Box>
