@@ -10,6 +10,7 @@ import {
 } from '../../../@types/krowd/project';
 import { REACT_APP_API_URL } from '../../../config';
 import { ProjectAPI } from '_apis_/krowd_apis/project';
+import PackageVoucherCheckout from 'pages/dashboard/PackageVoucherCheckout';
 // ----------------------------------------------------------------------
 
 type ProjectState = {
@@ -266,13 +267,11 @@ export function getProjectListInvested() {
 }
 //------- GET PACKAGE WITH ID
 
-export function getPackageBYID(Id: string) {
+export function getPackageBYID({ package_param }: { package_param: Package }) {
   return async () => {
     dispatch(slice.actions.startPackageIDLoading());
     try {
-      const response = await ProjectAPI.getPackageBYID({ id: Id });
-      console.log(response);
-      dispatch(slice.actions.getPackageIDSuccess(response.data));
+      dispatch(slice.actions.getPackageIDSuccess(package_param));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

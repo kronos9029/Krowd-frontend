@@ -61,6 +61,7 @@ import alertFill from '@iconify/icons-eva/alert-triangle-outline';
 import { MIconButton } from 'components/@material-extend';
 import { getWalletList } from 'redux/slices/krowd_slices/wallet';
 import { PATH_PAGE } from 'routes/paths';
+import { Package } from '../@types/krowd/project';
 
 // ----------------------------------------------------------------------
 
@@ -86,19 +87,10 @@ const Language = [
     countryCode: 'en'
   }
 ];
-type Package = {
-  id: string;
-  name: string;
-  projectId: string;
-  price: number;
-  quantity: number;
-  descriptionList: string[];
-};
 
 export default function KrowdPackage() {
   const { user } = useAuth();
   const [open, setOpen] = useState(false);
-  const [balance, setBalance] = useState(0);
   const [showCurrency, setShowCurrency] = useState(true);
   const [showIDPayment, setShowIDPayment] = useState(true);
   const [openModalInvestSuccess, setOpenModalInvestSuccess] = useState(false);
@@ -127,7 +119,6 @@ export default function KrowdPackage() {
     dispatch(getUserKrowdDetail(user?.id));
     dispatch(getProjectListById(id));
     dispatch(getWalletList());
-    dispatch(getPackageBYID(id));
     dispatch(getProjectPackage(id));
   }, [dispatch]);
 
@@ -145,7 +136,7 @@ export default function KrowdPackage() {
   const { walletList } = useSelector((state: RootState) => state.walletKrowd);
   const { listOfInvestorWallet } = walletList;
   //-------------------PACKAGE-------------------------------
-  const { PackageDetails } = projectPackageDetails && projectPackageDetails;
+  const { PackageDetails } = projectPackageDetails;
   const { isPackageLoading } = packageLists;
   //-------------------LANGUAGE------------------------------
   const currentLanguageCode = cookies.get('i18next') || 'en';
@@ -153,8 +144,9 @@ export default function KrowdPackage() {
   const { t } = useTranslation();
 
   const handleClickOpenPackage2 = async (v: Package) => {
-    dispatch(getPackageBYID(v.id));
+    dispatch(getPackageBYID({ package_param: v }));
   };
+
   // const handleClickRefeshBalance = async (v: Package) => {
   //   dispatch(getWalletTypeByID(v.id));
   // };
@@ -285,25 +277,27 @@ export default function KrowdPackage() {
                             {t(`Project_package_invest.InvestmentAmount`)}
                           </Typography>
                         </Grid>
-                        {listOfInvestorWallet &&
-                          listOfInvestorWallet.slice(1, 2).map((e, i) => (
-                            <Grid key={i}>
-                              <Typography variant="h5"> Số tiền trong ví của bạn</Typography>
-                              <Stack direction="row" alignItems="center" spacing={1}>
-                                <Typography sx={{ typography: 'h5' }}>
-                                  {showCurrency ? '********' : e.balance && fCurrency(e.balance)}
-                                </Typography>
-                                <MIconButton
-                                  color="inherit"
-                                  onClick={onToggleShowCurrency}
-                                  sx={{ opacity: 0.48 }}
-                                  onClickCapture={() => setBalance(e.balance)}
-                                >
-                                  <Icon icon={showCurrency ? eyeFill : eyeOffFill} />
-                                </MIconButton>
-                              </Stack>
-                            </Grid>
-                          ))}
+                        {listOfInvestorWallet && (
+                          <Grid>
+                            <Typography variant="h5"> Số tiền trong ví của bạn</Typography>
+                            <Stack direction="row" alignItems="center" spacing={1}>
+                              <Typography sx={{ typography: 'h5' }}>
+                                {showCurrency
+                                  ? '********'
+                                  : listOfInvestorWallet.at(1)?.balance &&
+                                    fCurrency(`${listOfInvestorWallet.at(1)?.balance}`)}
+                              </Typography>
+                              <MIconButton
+                                color="inherit"
+                                onClick={onToggleShowCurrency}
+                                sx={{ opacity: 0.48 }}
+                                // onClickCapture={() => setBalance(e.balance)}
+                              >
+                                <Icon icon={showCurrency ? eyeFill : eyeOffFill} />
+                              </MIconButton>
+                            </Stack>
+                          </Grid>
+                        )}
                       </Grid>
                     </Box>
                     <Box sx={{ pt: 1.5, maxWidth: 600 }}>
@@ -319,10 +313,7 @@ export default function KrowdPackage() {
                           sx={{ width: 600 }}
                           disabled
                           label="Chọn gói của bạn muốn đầu tư"
-                          value={
-                            (PackageDetails?.name && PackageDetails?.name) ??
-                            'Lựa chọn gói bạn muốn'
-                          }
+                          value={PackageDetails?.name ?? 'Lựa chọn gói bạn muốn'}
                         />
 
                         <TextField
@@ -540,19 +531,21 @@ export default function KrowdPackage() {
                             <Button
                               color="inherit"
                               sx={{ opacity: 0.48 }}
-                              onClick={() => setBalance(e.balance)}
                               // onClick={() => handleClickRefeshBalance(e)}
                             >
                               <Icon icon={refresh} />
                             </Button>
-                            <Typography>{fCurrency(balance)}</Typography>
+                            <Typography>
+                              {fCurrency(`${listOfInvestorWallet.at(1)?.balance}`)}
+                            </Typography>
                           </Stack>
                         </Grid>
                       ))}
                     {PackageDetails?.price &&
                     values.checkBox &&
                     values.quantity > 0 &&
-                    balance >= PackageDetails!.price * values.quantity ? (
+                    listOfInvestorWallet.at(1)!.balance >=
+                      PackageDetails!.price * values.quantity ? (
                       // {values.checkBox ? (
                       <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end', width: 600 }}>
                         <FormikProvider value={formik}>
@@ -594,7 +587,9 @@ export default function KrowdPackage() {
 
                         <Box>
                           {PackageDetails?.price &&
-                            balance < PackageDetails!.price * values.quantity && (
+                            listOfInvestorWallet.at(1)?.balance &&
+                            listOfInvestorWallet.at(1)!.balance <
+                              PackageDetails!.price * values.quantity && (
                               <Box sx={{ my: 3, mx: 3, width: 570 }}>
                                 <Box sx={{ display: 'flex', mt: 2 }}>
                                   <Box>

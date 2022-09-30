@@ -21,7 +21,7 @@ import { styled } from '@mui/system';
 import checkmarkFill from '@iconify/icons-eva/checkmark-fill';
 import { Icon } from '@iconify/react';
 import { useSelector } from 'react-redux';
-import { Project1 } from '../../../@types/krowd/project';
+import { Package, Project1 } from '../../../@types/krowd/project';
 import { dispatch, RootState } from 'redux/store';
 import Label from 'components/Label';
 import { getPackageBYID, getProjectPackage } from 'redux/slices/krowd_slices/project';
@@ -43,9 +43,6 @@ const RootStyle = styled(Card)(({ theme }) => ({
     padding: theme.spacing(2)
   }
 }));
-type PACKAGE = {
-  id: string;
-};
 
 export default function ProjectPackage({ project }: { project: Project1 }) {
   const { packageLists } = useSelector((state: RootState) => state.project);
@@ -60,8 +57,8 @@ export default function ProjectPackage({ project }: { project: Project1 }) {
     }
   };
 
-  const handleGetPackageInvestByID = async (v: PACKAGE) => {
-    dispatch(getPackageBYID(v.id));
+  const handleGetPackageInvestByID = async (v: Package) => {
+    await dispatch(getPackageBYID({ package_param: v }));
     navigate(`${PATH_PAGE.checkout}/${project.id}`);
   };
   useEffect(() => {
