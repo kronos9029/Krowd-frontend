@@ -127,6 +127,7 @@ export default function KrowdPackage() {
     dispatch(getUserKrowdDetail(user?.id));
     dispatch(getProjectListById(id));
     dispatch(getWalletList());
+    dispatch(getPackageBYID(id));
     dispatch(getProjectPackage(id));
   }, [dispatch]);
 
@@ -318,14 +319,17 @@ export default function KrowdPackage() {
                           sx={{ width: 600 }}
                           disabled
                           label="Chọn gói của bạn muốn đầu tư"
-                          value={PackageDetails?.name && PackageDetails?.name}
+                          value={
+                            (PackageDetails?.name && PackageDetails?.name) ??
+                            'Lựa chọn gói bạn muốn'
+                          }
                         />
 
                         <TextField
                           sx={{ width: 300 }}
                           disabled
                           label="Giá"
-                          value={PackageDetails?.price && fCurrency(PackageDetails!.price)}
+                          value={(PackageDetails?.price && fCurrency(PackageDetails!.price)) ?? 0}
                         />
 
                         <TextField

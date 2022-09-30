@@ -43,6 +43,9 @@ const RootStyle = styled(Card)(({ theme }) => ({
     padding: theme.spacing(2)
   }
 }));
+type PACKAGE = {
+  id: string;
+};
 
 export default function ProjectPackage({ project }: { project: Project1 }) {
   const { packageLists } = useSelector((state: RootState) => state.project);
@@ -56,8 +59,14 @@ export default function ProjectPackage({ project }: { project: Project1 }) {
       navigate(PATH_DASHBOARD.root);
     }
   };
+
+  const handleGetPackageInvestByID = async (v: PACKAGE) => {
+    dispatch(getPackageBYID(v.id));
+    navigate(`${PATH_PAGE.checkout}/${project.id}`);
+  };
   useEffect(() => {
     dispatch(getProjectPackage(project.id));
+    //   dispatch(getPackageBYID(e.id));
   }, [dispatch]);
   return (
     <>
@@ -151,10 +160,10 @@ export default function ProjectPackage({ project }: { project: Project1 }) {
                   {user && user ? (
                     <Link
                       style={{ textDecoration: 'none' }}
-                      onClick={() => {
-                        dispatch(getPackageBYID(e.id));
-                      }}
-                      href={`${PATH_PAGE.checkout}/${project.id}`}
+                      // onClick={() => {
+                      //   dispatch(getPackageBYID(e.id));
+                      // }}
+                      onClick={() => handleGetPackageInvestByID(e)}
                     >
                       <Typography sx={{ textAlign: 'end' }}>
                         <Button

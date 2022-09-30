@@ -208,7 +208,7 @@ export default function ComponentsDetails() {
                             <Link
                               style={{ textDecoration: 'none' }}
                               onClick={() => {
-                                dispatch(getPackageBYID(''));
+                                dispatch(getProjectPackage(projectID.id));
                               }}
                               href={`${PATH_PAGE.checkout}/${projectID.id}`}
                             >
@@ -308,7 +308,7 @@ export default function ComponentsDetails() {
                     <Link
                       style={{ textDecoration: 'none' }}
                       onClick={() => {
-                        dispatch(getPackageBYID(''));
+                        dispatch(getProjectPackage(projectID.id));
                       }}
                       href={`${PATH_PAGE.checkout}/${projectID.id}`}
                     >

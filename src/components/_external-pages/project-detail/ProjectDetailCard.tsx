@@ -18,7 +18,7 @@ import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import useAuth from 'hooks/useAuth';
-import { getPackageBYID } from 'redux/slices/krowd_slices/project';
+import { getPackageBYID, getProjectPackage } from 'redux/slices/krowd_slices/project';
 import { dispatch } from 'redux/store';
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -232,7 +232,7 @@ function ProjectDetailCard({ project: p }: ProjectDetailCardProps) {
             <Link
               style={{ textDecoration: 'none' }}
               onClick={() => {
-                dispatch(getPackageBYID(''));
+                dispatch(getProjectPackage(p.id));
               }}
               href={`${PATH_PAGE.checkout}/${p.id}`}
             >
