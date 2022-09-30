@@ -8,6 +8,7 @@ import {
   Grid,
   Link,
   styled,
+  TextField,
   Typography
 } from '@mui/material';
 import { height } from '@mui/system';
@@ -71,7 +72,6 @@ function ProjectDetailAfterPitch({ press, nav }: PressListProps) {
                 const newspaperName = part[0];
                 const publicDate = part[1].substring(0, 10).trim();
                 const newLink = part[2];
-                const content = f.content?.substring(0, 150).concat('...');
                 return (
                   <>
                     <Grid xs={12} sm={5} md={4} lg={3}>
@@ -92,21 +92,36 @@ function ProjectDetailAfterPitch({ press, nav }: PressListProps) {
                             height={200}
                             src={`${f.link}`}
                           />
-                          <Typography
-                            px={2}
-                            mt={2}
-                            mb={1}
-                            sx={{ fontWeight: '700' }}
-                            variant="body1"
-                          >
-                            {f.title}
-                          </Typography>
-                          <Typography px={2} mb={1} variant="body1" color={'text.disabled'}>
-                            {newspaperName} · {publicDate}
-                          </Typography>
-                          {/* <Typography px={2} mb={1} pb={2} variant="body2" color={'text.primary'}>
-                            {content}
-                          </Typography> */}
+                          <Box>
+                            <Typography
+                              px={2}
+                              mt={2}
+                              mb={1}
+                              sx={{ fontWeight: '700' }}
+                              variant="body1"
+                              noWrap
+                            >
+                              {f.title}
+                            </Typography>
+                          </Box>
+
+                          <Box>
+                            <Typography px={2} mb={1} variant="body1" color={'text.disabled'}>
+                              {newspaperName} · {publicDate}
+                            </Typography>
+                          </Box>
+                          <Box>
+                            <Typography
+                              noWrap
+                              px={2}
+                              mb={1}
+                              pb={2}
+                              variant="body2"
+                              color={'text.primary'}
+                            >
+                              {f.content}
+                            </Typography>
+                          </Box>
                         </Card>
                       </Link>
                     </Grid>

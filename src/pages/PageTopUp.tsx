@@ -128,7 +128,7 @@ export default function PageTopUp() {
                   <Button sx={{ width: '40%', height: '50%' }}>
                     <img
                       style={{ width: '140px', height: '87px' }}
-                      src="/static/icons/navbar/VNpay.svg"
+                      src="/static/icons/navbar/VNPay.svg"
                     />
                   </Button>
                   <Button sx={{ width: '40%', height: '50%' }}>
@@ -140,7 +140,7 @@ export default function PageTopUp() {
                   <Button sx={{ width: '40%', height: '50%' }}>
                     <img
                       style={{ width: '140px', height: '87px' }}
-                      src="/static/icons/navbar/VNpay.svg"
+                      src="/static/icons/navbar/VNPay.svg"
                     />
                   </Button>
                   <Button sx={{ width: '40%', height: '50%' }}>

@@ -101,7 +101,7 @@ export default function KrowdPackage() {
   //Language
   const { user } = useAuth();
   const [open, setOpen] = useState(false);
-  const [balance, setBalance] = useState(1000000);
+  const [balance, setBalance] = useState(1);
   const [showCurrency, setShowCurrency] = useState(true);
   const onToggleShowCurrency = () => {
     setShowCurrency((prev) => !prev);
@@ -260,6 +260,7 @@ export default function KrowdPackage() {
                                   color="inherit"
                                   onClick={onToggleShowCurrency}
                                   sx={{ opacity: 0.48 }}
+                                  onClickCapture={() => setBalance(e.balance)}
                                 >
                                   <Icon icon={showCurrency ? eyeFill : eyeOffFill} />
                                 </MIconButton>
@@ -302,7 +303,7 @@ export default function KrowdPackage() {
                           }
                         />
                       </Stack>
-                      {PackageDetails?.price && PackageDetails?.price > 500000 ? (
+                      {PackageDetails?.price && PackageDetails?.price >= 2000000 ? (
                         <Input
                           type={'number'}
                           sx={{
@@ -334,7 +335,7 @@ export default function KrowdPackage() {
                           value={values.quantity}
                         />
                       )}
-                      {PackageDetails?.price && PackageDetails?.price <= 500000 ? (
+                      {PackageDetails?.price && PackageDetails?.price < 2000000 ? (
                         <Box sx={{ display: 'flex', mt: 2 }}>
                           <Box>
                             <Icon height={20} width={20} icon={checkFill} color={'#00cc17'} />
@@ -352,10 +353,9 @@ export default function KrowdPackage() {
                           </Box>
                           <Box>
                             <Typography>
-                              Đây là gói cao hơn giới hạn đầu tư còn lại của bạn (500,000 VND). Tùy
-                              thuộc vào thu nhập và giá trị ròng của bạn, bạn có thể đủ điều kiện
-                              cho giới hạn đầu tư cao hơn. Hãy cân nhắc về tài chính trước khi đầu
-                              tư
+                              Đây là gói "{PackageDetails?.name}". Tùy thuộc vào thu nhập và giá trị
+                              ròng của bạn, bạn có thể đủ điều kiện cho giới hạn đầu tư cao hơn. Hãy
+                              cân nhắc về tài chính trước khi đầu tư.
                             </Typography>
                           </Box>
                         </Box>
@@ -492,7 +492,9 @@ export default function KrowdPackage() {
                       </Box>
                     </Box>
                     <Divider sx={{ mt: 7, maxWidth: 600 }} />
-                    {PackageDetails?.price && balance >= PackageDetails!.price * values.quantity ? (
+                    {PackageDetails?.price &&
+                    values.quantity > 0 &&
+                    balance >= PackageDetails!.price * values.quantity ? (
                       // {values.checkBox ? (
                       <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end', width: 600 }}>
                         <FormikProvider value={formik}>
@@ -503,7 +505,7 @@ export default function KrowdPackage() {
                               variant="contained"
                               loading={isSubmitting}
                             >
-                              Xác nhận đầu tư {''}{' '}
+                              Xác nhận đầu tư {''} vào {projectID.name} với số tiền{' '}
                               {PackageDetails?.price &&
                                 fCurrency(PackageDetails?.price * values.quantity)}{' '}
                             </LoadingButton>
@@ -534,10 +536,23 @@ export default function KrowdPackage() {
                         <Box>
                           {PackageDetails?.price &&
                             balance < PackageDetails!.price * values.quantity && (
-                              <>
-                                <Typography>Bạn không đủ tiền vui lòng nạp vào ví Krowd</Typography>
-                                <Button href={PATH_PAGE.pageTopUp}>Nạp tiền</Button>
-                              </>
+                              <Box sx={{ my: 3, mx: 3, width: 570 }}>
+                                <Box sx={{ display: 'flex', mt: 2 }}>
+                                  <Box>
+                                    <Icon height={20} width={20} icon={alertFill} color={'red'} />
+                                  </Box>
+                                  <Box>
+                                    <Typography color={'red'} sx={{ ml: 1.4, mb: 1 }}>
+                                      Bạn không đủ tiền đê đàu tư vui lòng nạp vào ví Krowd bên dưới
+                                    </Typography>
+                                  </Box>
+                                </Box>
+                                <Typography sx={{ textAlign: 'end' }}>
+                                  <Button variant="contained" href={PATH_PAGE.pageTopUp}>
+                                    Nạp tiền
+                                  </Button>
+                                </Typography>
+                              </Box>
                             )}
                         </Box>
                       </>
