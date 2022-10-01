@@ -26,7 +26,10 @@ import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
 import { Button, Toolbar } from '@mui/material';
 // components
 import Page from 'components/Page';
-import { ProjectDetailDocument } from 'components/_external-pages/project-detail/index';
+import {
+  ProjectDetailDocument,
+  ProjectDetailHowItWorks
+} from 'components/_external-pages/project-detail/index';
 
 import { useEffect, useState } from 'react';
 //Language
@@ -158,12 +161,13 @@ export default function KrowdPackage() {
     setOpen(false);
   };
 
-  const getEntityList = (type: 'DOCUMENT') => {
+  const getEntityList = (type: 'DOCUMENT' | 'HOW_IT_WORKS') => {
     return projectID?.projectEntity.find((pe) => pe.type === type)?.typeItemList;
   };
 
-  const { documents } = {
-    documents: getEntityList('DOCUMENT')
+  const { documents, hows } = {
+    documents: getEntityList('DOCUMENT'),
+    hows: getEntityList('HOW_IT_WORKS')
   };
 
   const NewProjectSchema = Yup.object().shape({
@@ -308,7 +312,7 @@ export default function KrowdPackage() {
                         sx={{ pb: 3 }}
                       >
                         <TextField
-                          sx={{ width: 600 }}
+                          sx={{ width: 300 }}
                           disabled
                           label="Chọn gói của bạn muốn đầu tư"
                           value={PackageDetails?.name ?? 'Lựa chọn gói bạn muốn'}
@@ -317,7 +321,7 @@ export default function KrowdPackage() {
                         <TextField
                           sx={{ width: 300 }}
                           disabled
-                          label="Giá"
+                          label="Giá gói"
                           value={(PackageDetails?.price && fCurrency(PackageDetails!.price)) ?? 0}
                         />
 
@@ -338,7 +342,7 @@ export default function KrowdPackage() {
                           sx={{
                             border: '2px solid #ff8500ad',
                             borderRadius: 1,
-                            width: 400,
+                            width: 300,
                             height: 60,
                             p: 2
                           }}
@@ -353,7 +357,7 @@ export default function KrowdPackage() {
                           sx={{
                             border: '2px solid #0af50a85',
                             borderRadius: 1,
-                            width: 400,
+                            width: 300,
                             height: 60,
                             p: 2
                           }}
@@ -521,35 +525,18 @@ export default function KrowdPackage() {
                       </Box>
                     </Box>
                     <Divider sx={{ mt: 7, maxWidth: 600 }} />
-                    {listOfInvestorWallet &&
-                      listOfInvestorWallet.slice(1, 2).map((e, i) => (
-                        <Grid key={i}>
-                          <Typography variant="h5"> Cập nhật số dư ví</Typography>
-                          <Stack direction="row" alignItems="center" spacing={1}>
-                            <Button
-                              color="inherit"
-                              sx={{ opacity: 0.48 }}
-                              // onClick={() => handleClickRefeshBalance(e)}
-                            >
-                              <Icon icon={refresh} />
-                            </Button>
-                            <Typography>
-                              {fCurrency(`${listOfInvestorWallet.at(1)?.balance}`)}
-                            </Typography>
-                          </Stack>
-                        </Grid>
-                      ))}
+
                     {PackageDetails?.price &&
                     values.checkBox &&
                     values.quantity > 0 &&
                     listOfInvestorWallet.at(1)!.balance >=
                       PackageDetails!.price * values.quantity ? (
                       // {values.checkBox ? (
-                      <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end', width: 600 }}>
+                      <Box sx={{ mt: 3, display: 'flex' }}>
                         <FormikProvider value={formik}>
                           <Form noValidate autoComplete="off" onSubmit={handleSubmit}>
                             <LoadingButton
-                              sx={{ width: 600 }}
+                              sx={{ width: 300 }}
                               type="submit"
                               variant="contained"
                               loading={isSubmitting}
@@ -563,13 +550,11 @@ export default function KrowdPackage() {
                       </Box>
                     ) : (
                       <>
-                        <Box
-                          sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end', width: 600 }}
-                        >
+                        <Box sx={{ mt: 3, display: 'flex' }}>
                           <FormikProvider value={formik}>
                             <Form noValidate autoComplete="off" onSubmit={handleSubmit}>
                               <LoadingButton
-                                sx={{ width: 600 }}
+                                sx={{ width: 300 }}
                                 type="submit"
                                 disabled
                                 variant="contained"
@@ -708,6 +693,8 @@ export default function KrowdPackage() {
                       {documents && documents.length > 0 && (
                         <ProjectDetailDocument documents={documents} />
                       )}
+                      {/*HOW IT WORK */}
+                      {hows && hows.length > 0 && <ProjectDetailHowItWorks hows={hows} />}
                     </Grid>
                   )}
                 </Grid>

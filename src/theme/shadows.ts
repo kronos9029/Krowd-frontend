@@ -70,7 +70,7 @@ const createCustomShadow = (color: string) => {
   const transparent = alpha(color, 0.24);
   return {
     z1: `0 1px 2px 0 ${transparent}`,
-    z8: `0 8px 16px 0 ${transparent}`,
+    z8: `0 8px 16px 0 rgb(255 255 255 / 24%)`,
     z12: `0 0 2px 0 ${transparent}, 0 12px 24px 0 ${transparent}`,
     z16: `0 0 2px 0 ${transparent}, 0 16px 32px -4px ${transparent}`,
     z20: `0 0 2px 0 ${transparent}, 0 20px 40px -4px ${transparent}`,
