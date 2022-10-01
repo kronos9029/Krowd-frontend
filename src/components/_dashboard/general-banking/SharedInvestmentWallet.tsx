@@ -12,10 +12,11 @@ import { fCurrency, fPercent } from '../../../utils/formatNumber';
 //
 import BaseOptionChart from '../../charts/BaseOptionChart';
 import { useEffect } from 'react';
-import { getWalletList } from 'redux/slices/krowd_slices/wallet';
+import { getWalletByID, getWalletList } from 'redux/slices/krowd_slices/wallet';
 import { dispatch, RootState, useSelector } from 'redux/store';
 import { Wallet } from '../../../@types/krowd/wallet';
 import { PATH_PAGE } from 'routes/paths';
+import refresh from '@iconify/icons-eva/refresh-fill';
 
 // ----------------------------------------------------------------------
 
@@ -35,10 +36,9 @@ const RootStyle = styled(Card)(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-const TOTAL = 893800000;
-const PERCENT = -0.5;
-const CHART_DATA = [{ data: [76, 20, 84, 135, 56, 134, 122, 49] }];
-
+type Package = {
+  id: string;
+};
 export default function SharedInvestmentWallet({ wallet }: { wallet: Wallet }) {
   const theme = useTheme();
   const { isLoading, walletList } = useSelector((state: RootState) => state.walletKrowd);
@@ -62,7 +62,9 @@ export default function SharedInvestmentWallet({ wallet }: { wallet: Wallet }) {
     },
     fill: { gradient: { opacityFrom: 0.56, opacityTo: 0.56 } }
   });
-
+  const handleClickRefeshBalance = async (v: Package) => {
+    dispatch(getWalletByID(v.id));
+  };
   return (
     <>
       {listOfInvestorWallet &&
@@ -74,17 +76,34 @@ export default function SharedInvestmentWallet({ wallet }: { wallet: Wallet }) {
             </IconWrapperStyle> */}
 
             <Stack spacing={1} sx={{ p: 3 }}>
+              <Grid container display={'flex'}>
+                <Grid lg={8}>
+                  <Typography sx={{ typography: 'h6' }}>{e.walletType.name}</Typography>
+                </Grid>
+                <Grid>
+                  <Button
+                    sx={{
+                      display: 'flex',
+                      border: '1px solid white'
+                    }}
+                    variant="contained"
+                    onClick={() => handleClickRefeshBalance(e)}
+                  >
+                    <Icon icon={refresh} />
+                    <Typography sx={{ typography: 'subtitle2', gap: 1, pl: 1 }}>
+                      Cập nhật số dư
+                    </Typography>
+                  </Button>
+                </Grid>
+              </Grid>
               <Grid container>
                 <Grid lg={8}>
-                  <Typography sx={{ typography: 'subtitle2' }}>{e.walletType.name}</Typography>
                   <Typography sx={{ typography: 'h3' }}>{fCurrency(e.balance)}</Typography>
                 </Grid>
                 <Grid sx={{ display: 'flex', gap: 1 }}>
                   <Button
                     href={PATH_PAGE.pageTopUp}
-                    // color="info"
                     sx={{
-                      mt: 5,
                       display: 'flex',
                       border: '1px solid white'
                     }}
@@ -92,10 +111,7 @@ export default function SharedInvestmentWallet({ wallet }: { wallet: Wallet }) {
                   >
                     + Nạp tiền
                   </Button>
-                  <Button
-                    sx={{ mt: 5, display: 'flex', border: '1px solid white' }}
-                    variant="contained"
-                  >
+                  <Button sx={{ display: 'flex', border: '1px solid white' }} variant="contained">
                     - Rút tiền
                   </Button>
                 </Grid>

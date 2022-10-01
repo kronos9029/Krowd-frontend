@@ -28,8 +28,7 @@ import { useTranslation } from 'react-i18next';
 import Cookies from 'js-cookie';
 import { REACT_APP_API_URL } from 'config';
 import { dispatch, RootState, useSelector } from 'redux/store';
-import { getAllProject } from 'redux/slices/krowd_slices/project';
-import { Project1 } from '../../../@types/krowd/project';
+import { ALL_Project, Project1 } from '../../../@types/krowd/project';
 
 // ----------------------------------------------------------------------
 
@@ -71,9 +70,9 @@ export default function BlogPostsSearch({ sx }: BoxProps) {
   const [searchResults, setSearchResults] = useState([]);
   const linkTo = (title: string) => `${PATH_PAGE.details}/${paramCase(title)}`;
 
-  const { projectList } = useSelector((state: RootState) => state.project);
+  const { projectListLanding } = useSelector((state: RootState) => state.project);
 
-  const { listOfProject } = projectList;
+  const { listOfProject } = projectListLanding;
   const initialLanguage = Cookies.get('i18next') || 'vi';
   const [currentLanguage, setCurrentLanguage] = useState('');
   const { t } = useTranslation();
@@ -130,26 +129,6 @@ export default function BlogPostsSearch({ sx }: BoxProps) {
         ...sx
       }}
     >
-      {/* <Autocomplete
-        onInputChange={(event, value) => handleChangeSearch(value)}
-        options={listOfProject}
-        getOptionLabel={(option) => option.name}
-        renderOption={(props, option) => (
-          <Box component="li" {...props}>
-            {option.name}
-          </Box>
-        )}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            inputProps={{
-              ...params.inputProps,
-              autoComplete: 'new-password' // disable autocomplete and autofill
-            }}
-            placeholder={t(`landing_project_search.landing_project_search_placeholder`)}
-          />
-        )}
-      /> */}
       <Autocomplete
         size="small"
         disablePortal
@@ -157,7 +136,7 @@ export default function BlogPostsSearch({ sx }: BoxProps) {
         options={listOfProject}
         // options={searchResults}
         onInputChange={(event, value) => handleChangeSearch(value)}
-        getOptionLabel={(post: Project1) => post.name}
+        getOptionLabel={(post: ALL_Project) => post.name}
         noOptionsText={<SearchNotFound searchQuery={searchQuery} />}
         renderInput={(params) => (
           <TextField

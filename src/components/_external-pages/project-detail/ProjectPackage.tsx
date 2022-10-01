@@ -49,22 +49,12 @@ export default function ProjectPackage({ project }: { project: Project1 }) {
   const { isPackageLoading } = packageLists;
   const { user } = useAuth();
   const navigate = useNavigate();
-  const handleInvest = () => {
-    if (user) {
-      navigate(PATH_PAGE.checkout);
-    } else {
-      navigate(PATH_DASHBOARD.root);
-    }
-  };
 
   const handleGetPackageInvestByID = async (v: Package) => {
     await dispatch(getPackageBYID({ package_param: v }));
     navigate(`${PATH_PAGE.checkout}/${project.id}`);
   };
-  useEffect(() => {
-    dispatch(getProjectPackage(project.id));
-    //   dispatch(getPackageBYID(e.id));
-  }, [dispatch]);
+
   return (
     <>
       <Box py={1.4}>
@@ -154,31 +144,14 @@ export default function ProjectPackage({ project }: { project: Project1 }) {
                     ))}
                   </Stack>
 
-                  {user && user ? (
-                    <Link
-                      style={{ textDecoration: 'none' }}
-                      // onClick={() => {
-                      //   dispatch(getPackageBYID(e.id));
-                      // }}
-                      onClick={() => handleGetPackageInvestByID(e)}
-                    >
-                      <Typography sx={{ textAlign: 'end' }}>
-                        <Button
-                          sx={{
-                            backgroundColor: '#FF7F50',
-                            textDecoration: 'none',
-                            '&:hover': { backgroundColor: '#FF7F50' }
-                          }}
-                          disableElevation
-                          disableRipple
-                          variant="contained"
-                          size="large"
-                        >
-                          Chọn gói
-                        </Button>
-                      </Typography>
-                    </Link>
-                  ) : (
+                  <Link
+                    style={{ textDecoration: 'none' }}
+                    // onClick={() => {
+                    //   dispatch(getPackageBYID(e.id));
+                    // }}
+                    href={`${PATH_PAGE.checkout}/${project?.id}`}
+                    onClick={() => handleGetPackageInvestByID(e)}
+                  >
                     <Typography sx={{ textAlign: 'end' }}>
                       <Button
                         sx={{
@@ -186,7 +159,6 @@ export default function ProjectPackage({ project }: { project: Project1 }) {
                           textDecoration: 'none',
                           '&:hover': { backgroundColor: '#FF7F50' }
                         }}
-                        onClick={() => handleInvest()}
                         disableElevation
                         disableRipple
                         variant="contained"
@@ -195,7 +167,7 @@ export default function ProjectPackage({ project }: { project: Project1 }) {
                         Chọn gói
                       </Button>
                     </Typography>
-                  )}
+                  </Link>
                   <Divider sx={{ my: 3 }} variant="fullWidth" />
                 </Grid>
               ))}

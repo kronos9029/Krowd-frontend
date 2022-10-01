@@ -54,59 +54,16 @@ export default function Projects() {
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
   const { t } = useTranslation();
   // Redux
-  const { projectList } = useSelector((state: RootState) => state.project);
+  const { projectListLanding } = useSelector((state: RootState) => state.project);
   const { fieldList } = useSelector((state: RootState) => state.fieldKrowd);
   const { projects, sortBy, filters } = useSelector(
     (state: { project: ProjectState }) => state.project
   );
-  // State
-  const [openFilter, setOpenFilter] = useState(false);
-  const [selectedField, setSelectedField] = useState('');
-  // Formik
-  const formik = useFormik<ProjectFilter>({
-    initialValues: {
-      status: filters.status,
-      areaId: filters.areaId
-    },
-    onSubmit: async (values, { setSubmitting }) => {
-      try {
-        await fakeRequest(500);
-        setSubmitting(false);
-      } catch (error) {
-        console.error(error);
-        setSubmitting(false);
-      }
-    }
-  });
 
-  const { values, resetForm, handleSubmit } = formik;
-  useEffect(() => {
-    dispatch(getProducts());
-    dispatch(getProjectList());
-    dispatch(getFieldList());
-    dispatch(filterProjects(values));
-    setSelectedField(fieldList.listOfField[0]?.id);
-  }, [dispatch, fieldList.listOfField[0]?.id]);
-
-  const handleOpenFilter = () => {
-    setOpenFilter(true);
-  };
-
-  const handleCloseFilter = () => {
-    setOpenFilter(false);
-  };
-
-  const handleResetFilter = () => {
-    handleSubmit();
-    resetForm();
-  };
-
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    if (newValue !== 'more') {
-      setSelectedField(newValue);
-    } else {
-    }
-  };
+  // useEffect(() => {
+  //   dispatch(getProjectList());
+  //   dispatch(getFieldList());
+  // }, [dispatch]);
 
   return (
     <RootStyle title="Danh sách | Krowd">
@@ -147,18 +104,19 @@ export default function Projects() {
             </Box>
           </Box>
         </Box>
+
         <Box sx={{ display: 'flex', alignItems: 'end', my: 3 }}>
           <Typography variant="h3">
             {' '}
             {t(`landing_project_invest.landing_project_invest_chance`)}
           </Typography>
           <Typography color={'text.disabled'} fontWeight={1000} variant="h3" sx={{ ml: 1 }}>
-            {projectList && projectList.numOfProject}
+            {projectListLanding && projectListLanding.numOfProject}
           </Typography>
         </Box>
         <Grid container alignItems="center" justifyContent="center" spacing={5}>
-          {projectList.listOfProject &&
-            projectList.listOfProject
+          {projectListLanding.listOfProject &&
+            projectListLanding.listOfProject
               // .filter((p) => p.status === PROJECT_STATUS.CALLING_FOR_INVESTMENT)
               .map((p) => <ProjectCard key={p.id} row={p} />)}
         </Grid>

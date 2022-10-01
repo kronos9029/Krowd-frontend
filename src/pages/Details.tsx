@@ -1,25 +1,11 @@
 // material
-import {
-  Divider,
-  Container,
-  Grid,
-  Box,
-  Typography,
-  styled,
-  Link,
-  Tab,
-  Input,
-  CircularProgress
-} from '@mui/material';
+import { Divider, Container, Grid, Box, Typography, styled, Link } from '@mui/material';
 // redux
 import { dispatch, RootState, useSelector } from 'redux/store';
 // routes
-// icons
-import { Link as RouterLink, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 // material
-import { Button, AppBar, Toolbar, Select, FormControl, MenuItem, Menu } from '@mui/material';
-// @types
-// hooks
+import { Button, AppBar, Toolbar } from '@mui/material';
 // components
 import Page from 'components/Page';
 import {
@@ -38,26 +24,18 @@ import {
   ProjectDetailFAQsBusiness
 } from 'components/_external-pages/project-detail/index';
 import MHidden from 'components/@material-extend/MHidden';
-import KrowdPackage from './KrowdPackage';
 import MainNavbar from 'layouts/main/MainNavbar';
-import Logo from 'components/Logo';
-import Label from 'components/Label';
 import { PATH_DASHBOARD, PATH_PAGE } from 'routes/paths';
 import { useEffect, useState } from 'react';
 //Language
 import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
-import {
-  getPackageBYID,
-  getProjectListById,
-  getProjectPackage
-} from 'redux/slices/krowd_slices/project';
+import { getProjectListById, getProjectPackage } from 'redux/slices/krowd_slices/project';
 import { getAllProjectStage, getProjectStageList } from 'redux/slices/krowd_slices/stage';
 import { Icon } from '@iconify/react';
 import starFilled from '@iconify/icons-ant-design/star-filled';
 import useAuth from 'hooks/useAuth';
-// import chartMedian from '@iconify/icons-carbon/chart-median';
-// import tableIcon from '@iconify/icons-codicon/table';
+import LoadingScreen from 'components/LoadingScreen';
 // ----------------------------------------------------------------------
 
 const APP_BAR_MOBILE = 64;
@@ -89,9 +67,13 @@ export default function ComponentsDetails() {
   //Language
   const { id = '' } = useParams();
   useEffect(() => {
+    //PROJECT BY ID
     dispatch(getProjectListById(id));
+    //PACKAGE
     dispatch(getProjectPackage(id));
+    //CHART
     dispatch(getProjectStageList(id));
+    //STAGE TABLE
     dispatch(getAllProjectStage(id));
     window.addEventListener('scroll', listenScrollEvent);
     return () => {
@@ -107,7 +89,6 @@ export default function ComponentsDetails() {
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
   const { t } = useTranslation();
   const { user } = useAuth();
-  const navigate = useNavigate();
   const [isShowNav, setisShowNav] = useState(false);
   const listenScrollEvent = () => {
     window.scrollY > 1000 ? setisShowNav(true) : setisShowNav(false);
@@ -132,24 +113,15 @@ export default function ComponentsDetails() {
     faqs: getEntityList('FAQ'),
     highlights: getEntityList('HIGHLIGHT')
   };
-  const handleInvest = () => {
-    if (user) {
-      navigate(`${PATH_PAGE.checkout}/${projectID?.id}`);
-    } else {
-      navigate(PATH_DASHBOARD.root);
-    }
-  };
+
   return (
     <Page title="Chi tiết dự án | Krowd">
       {isLoadingDetailOfProjectID && (
         <Box sx={{ height: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <Box>
-            <CircularProgress
-              size={100}
-              sx={{ margin: '0px auto', padding: '1rem', display: 'flex' }}
-            />
-            <Typography variant="h5" sx={{ textAlign: 'center', padding: '1rem' }}>
-              Đang tải dữ liệu, vui lòng đợi giây lát...
+            <LoadingScreen />
+            <Typography variant="h5" sx={{ textAlign: 'center', padding: '1rem', pt: 7 }}>
+              KROWD Đang tải dữ liệu, vui lòng đợi giây lát...
             </Typography>
           </Box>
         </Box>
@@ -204,31 +176,13 @@ export default function ComponentsDetails() {
                             justifyContent: 'space-between'
                           }}
                         >
-                          {user && user ? (
-                            <Link
-                              style={{ textDecoration: 'none' }}
-                              onClick={() => {
-                                dispatch(getProjectPackage(projectID.id));
-                              }}
-                              href={`${PATH_PAGE.checkout}/${projectID.id}`}
-                            >
-                              <Typography sx={{ textAlign: 'end' }}>
-                                <Button
-                                  sx={{
-                                    backgroundColor: '#FF7F50',
-                                    textDecoration: 'none',
-                                    '&:hover': { backgroundColor: '#FF7F50' }
-                                  }}
-                                  disableElevation
-                                  disableRipple
-                                  variant="contained"
-                                  size="large"
-                                >
-                                  {t(`Project_detail_card.investNow`)} {projectID.name}
-                                </Button>
-                              </Typography>
-                            </Link>
-                          ) : (
+                          <Link
+                            style={{ textDecoration: 'none' }}
+                            onClick={() => {
+                              dispatch(getProjectPackage(projectID.id));
+                            }}
+                            href={`${PATH_PAGE.checkout}/${projectID.id}`}
+                          >
                             <Typography sx={{ textAlign: 'end' }}>
                               <Button
                                 sx={{
@@ -236,7 +190,6 @@ export default function ComponentsDetails() {
                                   textDecoration: 'none',
                                   '&:hover': { backgroundColor: '#FF7F50' }
                                 }}
-                                onClick={() => handleInvest()}
                                 disableElevation
                                 disableRipple
                                 variant="contained"
@@ -245,7 +198,7 @@ export default function ComponentsDetails() {
                                 {t(`Project_detail_card.investNow`)} {projectID.name}
                               </Button>
                             </Typography>
-                          )}
+                          </Link>
                         </Box>
                       </Container>
                     </ToolbarStyle>
@@ -336,7 +289,8 @@ export default function ComponentsDetails() {
                           textDecoration: 'none',
                           '&:hover': { backgroundColor: '#FF7F50' }
                         }}
-                        onClick={() => handleInvest()}
+                        // onClick={() => handleInvest()}
+                        href={`${PATH_PAGE.checkout}/${projectID.id}`}
                         disableElevation
                         disableRipple
                         variant="contained"

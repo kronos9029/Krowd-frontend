@@ -24,6 +24,7 @@ import Scrollbar from '../../components/Scrollbar';
 import NavSection from '../../components/NavSection';
 import { MHidden } from '../../components/@material-extend';
 //
+
 import sidebarConfig from './SidebarConfig';
 import { DocIllustration } from '../../assets';
 // ----------------------------------------------------------------------
@@ -57,38 +58,16 @@ type IconCollapseProps = {
 
 function IconCollapse({ onToggleCollapse, collapseClick }: IconCollapseProps) {
   return (
-    <Tooltip title="Mini Menu">
-      <CardActionArea
-        onClick={onToggleCollapse}
-        sx={{
-          width: 18,
-          height: 18,
-          display: 'flex',
-          cursor: 'pointer',
-          borderRadius: '50%',
-          alignItems: 'center',
-          color: 'text.primary',
-          justifyContent: 'center',
-          border: 'solid 1px currentColor',
-          ...(collapseClick && {
-            borderWidth: 2
-          })
-        }}
-      >
-        <Box
-          sx={{
-            width: 8,
-            height: 8,
-            borderRadius: '50%',
-            bgcolor: 'currentColor',
-            transition: (theme) => theme.transitions.create('all'),
-            ...(collapseClick && {
-              width: 0,
-              height: 0
-            })
-          }}
-        />
-      </CardActionArea>
+    <Tooltip title="Thu nhỏ bảng">
+      <>
+        {collapseClick && collapseClick ? (
+          <Typography>
+            <Button onClick={onToggleCollapse}>Mở rộng thanh</Button>
+          </Typography>
+        ) : (
+          <Button onClick={onToggleCollapse}>Thu hẹp</Button>
+        )}
+      </>
     </Tooltip>
   );
 }

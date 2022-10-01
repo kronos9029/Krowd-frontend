@@ -73,7 +73,7 @@ export default function AdvanceWallet({ wallet }: { wallet: Wallet }) {
             </IconWrapperStyle> */}
 
             <Stack spacing={1} sx={{ p: 3 }}>
-              <Typography sx={{ typography: 'subtitle2' }}>{e.walletType.name}</Typography>
+              <Typography sx={{ typography: 'h6' }}>{e.walletType.name}</Typography>
               <Typography sx={{ typography: 'h3' }}>{fCurrency(e.balance)}</Typography>
               <Stack direction="row" alignItems="center" flexWrap="wrap">
                 {/* <Icon

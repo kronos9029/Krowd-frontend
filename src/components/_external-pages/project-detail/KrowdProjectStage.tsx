@@ -11,6 +11,7 @@ import { Project1 } from '../../../@types/krowd/project';
 import HeaderBreadcrumbs from 'components/HeaderBreadcrumbs';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { styled } from '@mui/system';
+import { fCurrency } from 'utils/formatNumber';
 
 // ----------------------------------------------------------------------
 const NavbarTopAnchor = styled('div')(() => ({
@@ -71,6 +72,18 @@ export default function KrowdProjectStage({ project, nav }: AboutListProps) {
         'Kỳ 24',
         'Kỳ 25'
       ]
+    },
+    tooltip: {
+      shared: true,
+      intersect: false,
+      y: {
+        formatter: (y: number) => {
+          if (typeof y !== 'undefined') {
+            return `${fCurrency(y.toFixed(0))}`;
+          }
+          return y;
+        }
+      }
     }
   });
 
@@ -134,7 +147,7 @@ export default function KrowdProjectStage({ project, nav }: AboutListProps) {
                 <Box key={item.chartName} sx={{ mt: 3, mx: 3 }} dir="ltr">
                   {item.chartName === seriesData && (
                     <ReactApexChart
-                      type="line"
+                      type="bar"
                       series={item.lineList}
                       options={chartOptions}
                       height={364}

@@ -62,3 +62,14 @@ export function getWalletList() {
     }
   };
 }
+export function getWalletByID(Id: string) {
+  return async () => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await WalletAPI.getbyID({ id: Id });
+      dispatch(slice.actions.getWalletListSuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}

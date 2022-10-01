@@ -157,6 +157,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
   const logout = async () => {
     setSession(null);
     window.localStorage.removeItem('firebaseToken');
+    window.location.replace('/');
     dispatch({ type: Types.Logout });
   };
 

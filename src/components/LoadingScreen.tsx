@@ -3,7 +3,7 @@ import { useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 // material
 import { alpha, styled, useTheme } from '@mui/material/styles';
-import { Box, GlobalStyles } from '@mui/material';
+import { Box, GlobalStyles, Typography } from '@mui/material';
 //
 import Logo from './Logo';
 

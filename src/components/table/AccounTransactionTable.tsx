@@ -16,9 +16,8 @@ const TABLE_HEAD = [
   //   { id: 'orderId', label: 'BẠN ĐẦU TƯ', align: 'center' },
   { id: 'transId', label: 'MÃ GIAO DỊCH', align: 'center' },
   { id: 'type', label: 'LOẠI GIAO DỊCH', align: 'left' },
-  { id: 'amount', label: 'SỐ TIỀN', align: 'center' },
-
   { id: 'message', label: 'TRẠNG THÁI', align: 'center' },
+  { id: 'amount', label: 'SỐ TIỀN', align: 'center' },
   { id: 'createDate', label: 'NGÀY THỰC HIỆN', align: 'left' }
   // { id: '', label: 'THAO TÁC', align: 'center' }
 ];
@@ -91,16 +90,16 @@ export default function AccounTransactionTable() {
           },
           {
             name: 'type',
-            value: _item.type,
+            value: _item.type === 'Top-up' ? 'Nạp tiền vào ví' : 'Chuyển tiền',
             type: DATA_TYPE.TEXT,
-            textColor: 'rgb(102, 187, 106)'
+            textColor: _item.message === 'Giao dịch thành công.' ? 'rgb(102, 187, 106)' : 'red'
           },
 
           {
             name: 'message',
             value: _item.message,
-            type: DATA_TYPE.TEXT,
-            textColor: _item.message === 'Giao dịch thành công.' ? 'rgb(102, 187, 106)' : 'red'
+            type: DATA_TYPE.LABLE
+            // textColor: _item.message === 'Giao dịch thành công.' ? 'rgb(102, 187, 106)' : 'red'
             // textMapColor: BUSINESS_STATUS
           },
           {

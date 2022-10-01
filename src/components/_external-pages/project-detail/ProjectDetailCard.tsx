@@ -228,36 +228,19 @@ function ProjectDetailCard({ project: p }: ProjectDetailCardProps) {
             justifyContent: 'space-between'
           }}
         >
-          {user && user ? (
-            <Link
-              style={{ textDecoration: 'none' }}
-              onClick={() => {
-                dispatch(getProjectPackage(p.id));
-              }}
-              href={`${PATH_PAGE.checkout}/${p.id}`}
-            >
-              <Button
-                sx={{
-                  backgroundColor: '#FF7F50',
-                  textDecoration: 'none',
-                  '&:hover': { backgroundColor: '#FF7F50' }
-                }}
-                disableElevation
-                disableRipple
-                variant="contained"
-                size="large"
-              >
-                {t(`Project_detail_card.investNow`)} {p.name}
-              </Button>
-            </Link>
-          ) : (
+          <Link
+            style={{ textDecoration: 'none' }}
+            onClick={() => {
+              dispatch(getProjectPackage(p.id));
+            }}
+            href={`${PATH_PAGE.checkout}/${p.id}`}
+          >
             <Button
               sx={{
                 backgroundColor: '#FF7F50',
                 textDecoration: 'none',
                 '&:hover': { backgroundColor: '#FF7F50' }
               }}
-              onClick={() => handleInvest()}
               disableElevation
               disableRipple
               variant="contained"
@@ -265,7 +248,7 @@ function ProjectDetailCard({ project: p }: ProjectDetailCardProps) {
             >
               {t(`Project_detail_card.investNow`)} {p.name}
             </Button>
-          )}
+          </Link>
         </Box>
       </Grid>
     </Grid>

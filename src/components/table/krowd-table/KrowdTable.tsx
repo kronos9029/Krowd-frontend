@@ -30,8 +30,11 @@ import { fCurrency } from '../../../utils/formatNumber';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import trash2Outline from '@iconify/icons-eva/trash-2-outline';
 import { SeverErrorIllustration } from 'assets';
+import LoadingScreen from 'components/LoadingScreen';
+import Label from 'components/Label';
 export enum DATA_TYPE {
   TEXT = 'text',
+  TEXT_FORMAT = 'text_format',
   CHIP_TEXT = 'chip_text',
   IMAGE = 'image',
   ICONS = 'icons',
@@ -40,7 +43,8 @@ export enum DATA_TYPE {
   NUMBER = 'number',
   WRAP_TEXT = 'wrap_text',
   DATE = 'date',
-  CURRENCY = 'currency'
+  CURRENCY = 'currency',
+  LABLE = 'lable'
 }
 
 export type RowData = {
@@ -72,7 +76,7 @@ export function KrowdTable({
   viewPath,
   deleteRecord
 }: KrowdTableProps) {
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
   const data = getData();
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -148,6 +152,30 @@ export function KrowdTable({
                                   </Stack>
                                 </TableCell>
                               );
+                            case DATA_TYPE.TEXT_FORMAT:
+                              return (
+                                <TableCell
+                                  key={`__${_item.name}__${data.id}`}
+                                  component="th"
+                                  scope="row"
+                                  padding="normal"
+                                >
+                                  <Stack
+                                    display={'flex'}
+                                    direction="row"
+                                    justifyContent={'center'}
+                                    spacing={2}
+                                  >
+                                    <Typography
+                                      variant="subtitle2"
+                                      noWrap
+                                      color={_item.textColor ?? 'text.primary'}
+                                    >
+                                      {_item.value}
+                                    </Typography>
+                                  </Stack>
+                                </TableCell>
+                              );
                             case DATA_TYPE.CURRENCY:
                               return (
                                 <TableCell
@@ -188,8 +216,14 @@ export function KrowdTable({
                                   scope="row"
                                   padding="normal"
                                 >
-                                  <Stack direction="row" alignItems="right" spacing={2}>
+                                  <Stack
+                                    display={'block'}
+                                    direction="row"
+                                    alignItems="right"
+                                    spacing={2}
+                                  >
                                     <Typography
+                                      sx={{ textAlign: 'right' }}
                                       variant="subtitle2"
                                       noWrap
                                       mx="auto"
@@ -281,6 +315,31 @@ export function KrowdTable({
                                   </Stack>
                                 </TableCell>
                               );
+
+                            case DATA_TYPE.LABLE:
+                              return (
+                                <TableCell
+                                  key={`__${_item.name}__${data.id}`}
+                                  component="th"
+                                  scope="row"
+                                  padding="normal"
+                                >
+                                  <Stack direction="row" alignItems="center" spacing={2}>
+                                    <Typography variant="subtitle2" noWrap>
+                                      <Label
+                                        variant={'ghost'}
+                                        color={
+                                          (_item.value === 'Giao dịch thành công.' && 'success') ||
+                                          'error'
+                                        }
+                                      >
+                                        {_item.value}
+                                      </Label>
+                                    </Typography>
+                                  </Stack>
+                                </TableCell>
+                              );
+
                             case DATA_TYPE.CHIP_TEXT:
                               return (
                                 <TableCell
@@ -369,13 +428,10 @@ export function KrowdTable({
             </Table>
           </TableContainer>
           {isLoading && (
-            <Box>
-              <CircularProgress
-                size={100}
-                sx={{ margin: '0px auto', padding: '1rem', display: 'flex' }}
-              />
-              <Typography variant="h5" sx={{ textAlign: 'center', padding: '1rem' }}>
-                Đang tải dữ liệu, vui lòng đợi giây lát...
+            <Box sx={{ pt: 7 }}>
+              <LoadingScreen />
+              <Typography variant="h5" sx={{ textAlign: 'center', padding: '1rem', pt: 7 }}>
+                KROWD đang tải dữ liệu, vui lòng đợi giây lát...
               </Typography>
             </Box>
           )}

@@ -11,6 +11,9 @@ import AuthGuard from '../guards/AuthGuard';
 // components
 import LoadingScreen from '../components/LoadingScreen';
 import PackageVoucherCheckout from '../pages/dashboard/PackageVoucherCheckout';
+import MainNavbar from 'layouts/main/MainNavbar';
+import MainFooter from 'layouts/main/MainFooter';
+import { Divider } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -189,7 +192,7 @@ export default function Router() {
         { path: 'contact-us', element: <Contact /> },
         { path: 'faqs', element: <Faqs /> },
         { path: 'details/:id', element: <Details /> },
-        { path: 'package/invest/:id', element: <KrowdPackage /> },
+        // { path: 'package/invest/:id', element: <KrowdPackage /> },
 
         { path: 'project', element: <Projects /> },
         {
@@ -198,6 +201,22 @@ export default function Router() {
         }
       ]
     },
+    {
+      path: '/',
+      element: (
+        <AuthGuard>
+          <MainNavbar />
+          <KrowdPackage />
+          <Divider />
+          <MainFooter />
+        </AuthGuard>
+      ),
+      children: [
+        { element: <Navigate to="/package/invest/:id" replace /> },
+        { path: 'package/invest/:id', element: <KrowdPackage /> }
+      ]
+    },
+
     { path: '*', element: <Navigate to="/404" replace /> }
   ]);
 }

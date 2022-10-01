@@ -25,7 +25,7 @@ import { useTranslation } from 'react-i18next';
 //Project
 import { ProjectCard } from '../project';
 import { PROJECT_STATUS } from '../../../@types/krowd/project';
-import { getProjectList } from 'redux/slices/krowd_slices/project';
+import { getAllProjectLanding, getProjectList } from 'redux/slices/krowd_slices/project';
 import { getFieldList } from 'redux/slices/krowd_slices/field';
 //Icon
 import { Icon } from '@iconify/react';
@@ -119,7 +119,7 @@ export default function LandingStartUp() {
   const currentLanguageCode = cookies.get('i18next') || 'en';
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
   const { t } = useTranslation();
-  const { projectList } = useSelector((state: RootState) => state.project);
+  const { projectListLanding } = useSelector((state: RootState) => state.project);
   const { fieldList } = useSelector((state: RootState) => state.fieldKrowd);
   const handleChangeSort = (value?: string) => {
     if (value) {
@@ -127,7 +127,7 @@ export default function LandingStartUp() {
     }
   };
   useEffect(() => {
-    dispatch(getProjectList());
+    dispatch(getAllProjectLanding());
   }, [dispatch]);
 
   const [openHighLight, setOpenHighLight] = useState(false);
@@ -223,8 +223,8 @@ export default function LandingStartUp() {
               .map((p) => <ProjectCard key={p.id} row={p} />)}
         </Grid> */}
         <Grid container alignItems="center" justifyContent="center" spacing={5}>
-          {projectList.listOfProject &&
-            projectList.listOfProject
+          {projectListLanding.listOfProject &&
+            projectListLanding.listOfProject
               .filter((value) => value.status === PROJECT_STATUS.CALLING_FOR_INVESTMENT)
               .slice(0, 9)
               .map((p) => <ProjectCard key={p.id} row={p} />)}
@@ -563,8 +563,8 @@ export default function LandingStartUp() {
           </Box>
         )}
         <Grid container alignItems="center" justifyContent="center" spacing={5}>
-          {projectList.listOfProject &&
-            projectList.listOfProject
+          {projectListLanding.listOfProject &&
+            projectListLanding.listOfProject
               .filter((value) => value.status === PROJECT_STATUS.CALLING_FOR_INVESTMENT)
               .slice(0, 9)
               .map((p) => <ProjectCard key={p.id} row={p} />)}

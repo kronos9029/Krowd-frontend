@@ -79,7 +79,7 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
             <Stack spacing={1} sx={{ p: 3 }}>
               <Grid container>
                 <Grid lg={8}>
-                  <Typography sx={{ typography: 'subtitle2' }}>{e.walletType.name}</Typography>
+                  <Typography sx={{ typography: 'h6' }}>{e.walletType.name}</Typography>
                   <Typography sx={{ typography: 'h3' }}>{fCurrency(e.balance)}</Typography>
                 </Grid>
                 <Grid sx={{ display: 'flex', gap: 1 }}>

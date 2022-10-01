@@ -4,6 +4,7 @@ import ReactApexChart from 'react-apexcharts';
 import { Card, CardHeader, Box } from '@mui/material';
 //
 import { BaseOptionChart } from '../../charts';
+import { fCurrency } from 'utils/formatNumber';
 
 // ----------------------------------------------------------------------
 
@@ -11,7 +12,7 @@ const CHART_DATA = [
   {
     name: 'Dự án A',
     type: 'line',
-    data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30]
+    data: [23000000000, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30]
   },
   {
     name: 'Dự án B',
@@ -50,7 +51,7 @@ export default function AnalyticsWebsiteVisits() {
       y: {
         formatter: (y: number) => {
           if (typeof y !== 'undefined') {
-            return `${y.toFixed(0)} đầu tư`;
+            return `${fCurrency(y.toFixed(0))} đầu tư`;
           }
           return y;
         }

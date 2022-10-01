@@ -9,7 +9,7 @@ function getHeader() {
   const token = getToken();
   return { Authorization: `Bearer ${token}` };
 }
-async function get({ id }: { id: string }) {
+async function getbyID({ id }: { id: string }) {
   const headers = getHeader();
   const response = await axios.get(REACT_APP_API_URL + `${API_FIELD}/${id}`, {
     headers: headers
@@ -26,5 +26,5 @@ async function gets() {
 
 export const WalletAPI = {
   gets: gets,
-  get: get
+  getbyID: getbyID
 };

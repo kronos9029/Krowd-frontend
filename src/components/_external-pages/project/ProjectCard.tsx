@@ -17,7 +17,7 @@ import { getProjectListById } from 'redux/slices/krowd_slices/project';
 import { dispatch } from 'redux/store';
 import { PATH_PAGE } from 'routes/paths';
 import { fCurrency } from 'utils/formatNumber';
-import { Project1 } from '../../../@types/krowd/project';
+import { ALL_Project } from '../../../@types/krowd/project';
 //language
 import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
@@ -88,7 +88,7 @@ const Language = [
     countryCode: 'en'
   }
 ];
-function ProjectCard({ row }: { row: Project1 }) {
+function ProjectCard({ row }: { row: ALL_Project }) {
   const [isHover, setIsHover] = useState(false);
   const currentLanguageCode = cookies.get('i18next') || 'en';
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
@@ -120,7 +120,7 @@ function ProjectCard({ row }: { row: Project1 }) {
                   alignItems: 'center'
                 }}
               >
-                <img style={{ width: '4em' }} src={row.business.image} />
+                <img style={{ width: '4em' }} src={row.businessImage} />
               </Card>
               <CardMedia
                 style={{
@@ -173,12 +173,12 @@ function ProjectCard({ row }: { row: Project1 }) {
                     </Box>
                     <Box sx={{ display: 'flex' }}>
                       <Chip
-                        label={<Typography variant="caption">{row.field.name}</Typography>}
+                        label={<Typography variant="caption">{row.fieldName}</Typography>}
                         variant="filled"
                         sx={{ borderRadius: '3px', color: 'rgba(0,0,0,0.6)' }}
                       />
                       <Chip
-                        label={<Typography variant="caption">{row.field.description}</Typography>}
+                        label={<Typography variant="caption">{row.fieldDescription}</Typography>}
                         variant="filled"
                         sx={{ ml: 1, borderRadius: '3px', color: 'rgba(0,0,0,0.6)' }}
                       />

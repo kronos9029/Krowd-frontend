@@ -9,8 +9,7 @@ const TABLE_HEAD = [
   { id: 'idx', label: 'STT', align: 'center' },
   { id: 'image', label: 'HÌNH ẢNH', align: '' },
   { id: 'name', label: 'DỰ ÁN', align: 'left' },
-  { id: 'business.name', label: 'TÊN DOANH NGHIỆP', align: 'left' },
-  { id: 'investedCapital', label: 'BẠN ĐẦU TƯ', align: 'center' },
+  { id: 'investedCapital', label: 'DỰ ÁN ĐÃ ĐẦU TƯ', align: 'center' },
   { id: 'investmentTargetCapital', label: 'MỤC TIÊU DỰ ÁN', align: 'center' },
   { id: 'multiplier', label: 'HỆ SỐ NHÂN', align: 'center' },
   { id: 'duration', label: 'SỐ KỲ', align: 'left' },
@@ -49,11 +48,11 @@ export default function ProjectTable() {
             value: _item.name,
             type: DATA_TYPE.TEXT
           },
-          {
-            name: 'business',
-            value: _item.business.name,
-            type: DATA_TYPE.LIST_TEXT
-          },
+          // {
+          //   name: 'business',
+          //   value: _item.business.name,
+          //   type: DATA_TYPE.LIST_TEXT
+          // },
           {
             name: 'investedCapital',
             value: _item.investedCapital,

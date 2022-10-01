@@ -10,7 +10,7 @@ import { User_Investor } from '../../../@types/krowd/investor';
 const RootStyle = styled(Card)(({ theme }) => ({
   boxShadow: 'none',
   textAlign: 'center',
-  backgroundColor: 'rgb(125 240 255)',
+  backgroundColor: '#14b7cc',
   [theme.breakpoints.up('md')]: {
     height: '100%',
     display: 'flex',
@@ -43,12 +43,13 @@ export default function AppWelcome({ user, investor }: AppWelcomeProps) {
         </Typography>
       </CardContent>
 
-      <SeoIllustration
-        sx={{
-          p: 3,
-          width: 360,
-          margin: { xs: 'auto', md: 'inherit' }
+      <img
+        style={{
+          padding: 3,
+          width: 460
+          // margin: { xs: 'auto', md: 'inherit' }
         }}
+        src={'/static/illustrations/AppIllustation.png'}
       />
     </RootStyle>
   );

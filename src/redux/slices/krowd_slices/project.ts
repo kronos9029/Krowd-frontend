@@ -3,6 +3,7 @@ import { dispatch, store } from '../../store';
 // utils
 import axios from 'axios';
 import {
+  ALL_Project,
   business,
   NewProjectEntityFormValues,
   Package,
@@ -16,6 +17,12 @@ import PackageVoucherCheckout from 'pages/dashboard/PackageVoucherCheckout';
 type ProjectState = {
   isLoading: boolean;
   error: boolean;
+  projectListLanding: {
+    isLoadingProjectListLanding: boolean;
+    numOfProject: number;
+    listOfProject: ALL_Project[];
+    errorProjectList: boolean;
+  };
   projectList: {
     isLoadingProjectList: boolean;
     numOfProject: number;
@@ -82,6 +89,13 @@ const initialState: ProjectState = {
     errorProjectList: false
   },
 
+  projectListLanding: {
+    isLoadingProjectListLanding: false,
+    numOfProject: 0,
+    listOfProject: [],
+    errorProjectList: false
+  },
+
   projectListInvested: {
     isLoadingProjectListInvested: false,
     numOfProject: 0,
@@ -135,6 +149,18 @@ const slice = createSlice({
     getProjectListSuccess(state, action) {
       state.isLoading = false;
       state.projectList = action.payload;
+    },
+    // ------ GET ALL PROJECT 1/10/2022 ------------ //
+    startLoadingProjectListLanding(state) {
+      state.projectListLanding.isLoadingProjectListLanding = true;
+    },
+    hasGetAllProjectLandingError(state, action) {
+      state.projectListLanding.isLoadingProjectListLanding = false;
+      state.projectListLanding.errorProjectList = action.payload;
+    },
+    getProjectListLandingSuccess(state, action) {
+      state.isLoading = false;
+      state.projectListLanding = action.payload;
     },
     // ------ GET ALL PROJECT INVESTED ------------ //
     startLoadingProjectInvestedList(state) {
@@ -225,6 +251,18 @@ export function getAllProject() {
       dispatch(slice.actions.getProjectListSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasGetAllProjectError(error));
+    }
+  };
+}
+// ALL PROJECT 1/10/2022
+export function getAllProjectLanding() {
+  return async () => {
+    dispatch(slice.actions.startLoadingProjectListLanding());
+    try {
+      const response = await ProjectAPI.getAllProject();
+      dispatch(slice.actions.getProjectListLandingSuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasGetAllProjectLandingError(error));
     }
   };
 }

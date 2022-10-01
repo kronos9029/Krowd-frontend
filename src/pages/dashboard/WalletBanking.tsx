@@ -61,7 +61,6 @@ export default function WalletBanking({ wallet }: { wallet: Wallet }) {
 
           <Grid item xs={12} md={12}>
             <Stack spacing={3}>
-              <BankingBalanceStatistics />
               {/* <BankingExpensesCategories /> */}
               <BankingRecentTransitions />
             </Stack>

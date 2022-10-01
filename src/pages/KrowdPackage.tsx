@@ -62,6 +62,7 @@ import { MIconButton } from 'components/@material-extend';
 import { getWalletList } from 'redux/slices/krowd_slices/wallet';
 import { PATH_PAGE } from 'routes/paths';
 import { Package } from '../@types/krowd/project';
+import LoadingScreen from 'components/LoadingScreen';
 
 // ----------------------------------------------------------------------
 
@@ -242,12 +243,9 @@ export default function KrowdPackage() {
       {isLoadingDetailOfProjectID && (
         <Box sx={{ height: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <Box>
-            <CircularProgress
-              size={100}
-              sx={{ margin: '0px auto', padding: '1rem', display: 'flex' }}
-            />
-            <Typography variant="h5" sx={{ textAlign: 'center', padding: '1rem' }}>
-              Đang tải dữ liệu, vui lòng đợi giây lát...
+            <LoadingScreen />
+            <Typography variant="h5" sx={{ textAlign: 'center', padding: '1rem', pt: 7 }}>
+              KROWD Đang tải dữ liệu, vui lòng đợi giây lát...
             </Typography>
           </Box>
         </Box>
