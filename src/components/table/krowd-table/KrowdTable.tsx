@@ -85,6 +85,7 @@ export function KrowdTable({
   };
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
+
   const dataInPage: RowData[] =
     data && data.length > 0 ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : [];
 
@@ -263,7 +264,11 @@ export function KrowdTable({
                                   scope="row"
                                   padding="normal"
                                 >
-                                  <Stack direction="row" alignItems="center" spacing={2}>
+                                  <Stack
+                                    direction="row"
+                                    sx={{ justifyContent: 'center' }}
+                                    spacing={2}
+                                  >
                                     <Typography variant="subtitle2" noWrap>
                                       {date}
                                     </Typography>
@@ -448,7 +453,15 @@ export function KrowdTable({
           )}
         </Scrollbar>
       ) : (
-        <ErrorProject type="EMPTY" />
+        <Box>
+          <img
+            src="https://minimals.cc/assets/illustrations/illustration_empty_content.svg"
+            style={{ margin: '0px auto', padding: '1rem' }}
+          />
+          <Typography variant="h5" sx={{ textAlign: 'center', padding: '1rem' }}>
+            Chưa có dữ liệu để hiển thị
+          </Typography>
+        </Box>
       )}
 
       <TablePagination

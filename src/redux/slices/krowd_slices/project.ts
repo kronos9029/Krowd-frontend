@@ -5,6 +5,7 @@ import axios from 'axios';
 import {
   ALL_Project,
   business,
+  ListOfProjectInvested,
   NewProjectEntityFormValues,
   Package,
   Project1
@@ -32,7 +33,7 @@ type ProjectState = {
   projectListInvested: {
     isLoadingProjectListInvested: boolean;
     numOfProject: number;
-    listOfProject: Project1[];
+    listOfProject: ListOfProjectInvested[];
     errorProjectListInvested: boolean;
   };
 

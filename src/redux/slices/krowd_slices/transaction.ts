@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { dispatch } from '../../store';
 // utils
-import { Transaction, WalletTransaction } from '../../../@types/krowd/transaction';
+import { Payment, Transaction, WalletTransaction } from '../../../@types/krowd/transaction';
 import { TransactionAPI } from '../../../_apis_/krowd_apis/transaction';
 // ----------------------------------------------------------------------
 
@@ -18,6 +18,16 @@ type TransactionState = {
 
     error: boolean;
   };
+  paymentListState: {
+    isLoading: boolean;
+    paymentList: Payment[];
+    error: boolean;
+  };
+  paymentListRevenueState: {
+    isLoadingPeriodRevenue: boolean;
+    paymentListPeriodRevenue: Payment[];
+    errorPeriodRevenue: boolean;
+  };
 };
 
 const initialState: TransactionState = {
@@ -30,6 +40,16 @@ const initialState: TransactionState = {
     isLoading: false,
     walletTransactionList: [],
     error: false
+  },
+  paymentListState: {
+    isLoading: false,
+    paymentList: [],
+    error: false
+  },
+  paymentListRevenueState: {
+    isLoadingPeriodRevenue: false,
+    paymentListPeriodRevenue: [],
+    errorPeriodRevenue: false
   }
 };
 
@@ -60,6 +80,30 @@ const slice = createSlice({
     getWalletTransactionListSuccess(state, action) {
       state.walletTransactionState.isLoading = false;
       state.walletTransactionState.walletTransactionList = action.payload;
+    },
+    // ------ GET ALL PAYMETS ------------ //
+    startLoadingPaymentList(state) {
+      state.paymentListState.isLoading = true;
+    },
+    hasGetPaymentError(state, action) {
+      state.paymentListState.isLoading = false;
+      state.paymentListState.error = action.payload;
+    },
+    getPaymentListSuccess(state, action) {
+      state.paymentListState.isLoading = false;
+      state.paymentListState.paymentList = action.payload;
+    },
+    // ------ GET ALL REVENUE ------------ //
+    startLoadingPeriodRevenueList(state) {
+      state.paymentListRevenueState.isLoadingPeriodRevenue = true;
+    },
+    hasGetPeriodRevenueError(state, action) {
+      state.paymentListRevenueState.isLoadingPeriodRevenue = false;
+      state.paymentListRevenueState.errorPeriodRevenue = action.payload;
+    },
+    getPeriodRevenueListSuccess(state, action) {
+      state.paymentListRevenueState.isLoadingPeriodRevenue = false;
+      state.paymentListRevenueState.paymentListPeriodRevenue = action.payload;
     }
   }
 });
@@ -67,7 +111,7 @@ const slice = createSlice({
 // Reducer
 export default slice.reducer;
 
-//------- GET ALL TRANSACTION
+//---------------------------- GET ALL TRANSACTION------------------------------
 
 export function getTransactionList() {
   return async () => {
@@ -80,6 +124,8 @@ export function getTransactionList() {
     }
   };
 }
+//---------------------------- GET WALLET TRANSACTION------------------------------
+
 export function getWalletTransactionList() {
   return async () => {
     dispatch(slice.actions.startLoadingWalletTransactionList());
@@ -88,6 +134,32 @@ export function getWalletTransactionList() {
       dispatch(slice.actions.getWalletTransactionListSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasGetWalletTransactionError(error));
+    }
+  };
+}
+//---------------------------- GET ALL PAYMENTS------------------------------
+
+export function getAllPaymentList() {
+  return async () => {
+    dispatch(slice.actions.startLoadingPaymentList());
+    try {
+      const response = await TransactionAPI.getsPayment();
+      dispatch(slice.actions.getPaymentListSuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasGetPaymentError(error));
+    }
+  };
+}
+//---------------------------- GET ALL PAYMENTS------------------------------
+
+export function getAllPaymentListRevenue() {
+  return async () => {
+    dispatch(slice.actions.startLoadingPeriodRevenueList());
+    try {
+      const response = await TransactionAPI.getsPaymentRevenue();
+      dispatch(slice.actions.getPeriodRevenueListSuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasGetPeriodRevenueError(error));
     }
   };
 }

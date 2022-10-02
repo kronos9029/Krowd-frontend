@@ -4,7 +4,10 @@ import numeral from 'numeral';
 // ----------------------------------------------------------------------
 
 export function fCurrency(number: string | number) {
-  return numeral(number).format('0,0[.]00đ').concat(' VND');
+  return numeral(number).format('0,0[.]00đ').concat(' đ');
+}
+export function fCurrencyChart(number: string | number) {
+  return numeral(number).format('0,0[.]00đ');
 }
 export function fCurrencyPackage(number: string | number) {
   return numeral(number).format('0,0[.]00đ');

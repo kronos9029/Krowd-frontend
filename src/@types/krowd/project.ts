@@ -2,6 +2,7 @@ import { FormikProps } from 'formik';
 export type FormikPropsShopView = FormikProps<ProjectFilter>;
 export enum PROJECT_STATUS {
   CALLING_FOR_INVESTMENT = 'CALLING_FOR_INVESTMENT',
+  OVERDATE = 'OVERDATE',
   ACTIVE = 'ACTIVE',
   DARFT = 'DARFT'
 }
@@ -224,6 +225,43 @@ export type ALL_Project = {
   updateDate: string;
   updateBy: string;
   isDeleted: boolean;
+  name: string;
+  description: string;
+  address: string;
+  investmentTargetCapital: number;
+  sharedRevenue: number;
+  multiplier: number;
+  duration: number;
+  startDate: string;
+  endDate: string;
+};
+
+export type ProjectInvested = {
+  numOfProject: number;
+  listOfProject: ListOfProjectInvested[];
+};
+
+export type ListOfProjectInvested = {
+  id: string;
+  managerId: string;
+  fieldId: string;
+  areaId: string;
+  image: string;
+  investedCapital: number;
+  numOfStage: number;
+  remainAmount: number;
+  businessLicense: string;
+  approvedDate: string;
+  approvedBy: string;
+  status: string;
+  createDate: string;
+  createBy: string;
+  updateDate: string;
+  updateBy: string;
+  isDeleted: boolean;
+  investedAmount: number;
+  receivedAmount: number;
+  lastestInvestmentDate: string;
   name: string;
   description: string;
   address: string;

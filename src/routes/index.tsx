@@ -124,7 +124,8 @@ export default function Router() {
           children: [
             { element: <Navigate to="/dashboard/account-transaction/list" replace /> },
             { path: 'list', element: <UserAccountTransaction /> },
-            { path: 'wallet-transaction', element: <UserWalletTransaction /> }
+            { path: 'wallet-transaction', element: <UserWalletTransaction /> },
+            { path: 'payments/list', element: <UserPaymentProject /> }
           ]
         },
         {
@@ -267,6 +268,9 @@ const UserAccountTransaction = Loadable(
 );
 const UserWalletTransaction = Loadable(
   lazy(() => import('../pages/dashboard/AccountManager/UserWalletTransaction'))
+);
+const UserPaymentProject = Loadable(
+  lazy(() => import('../pages/dashboard/AccountManager/UserPaymentProject'))
 );
 const ProjectListInvested = Loadable(
   lazy(() => import('../pages/dashboard/ProjectKrowdManager/ProjectListInvested'))

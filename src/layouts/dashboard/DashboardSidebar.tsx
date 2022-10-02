@@ -134,7 +134,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
                   {user?.fullName}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  {user?.role}
+                  {user?.role === 'INVESTOR' && 'Nhà đầu tư'}
                 </Typography>
               </Box>
             </AccountStyle>
@@ -154,7 +154,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
 
           <div>
             <Typography gutterBottom variant="subtitle1">
-              Hi, {user?.fullName}
+              Xin chào, {user?.fullName}
             </Typography>
           </div>
         </Stack>

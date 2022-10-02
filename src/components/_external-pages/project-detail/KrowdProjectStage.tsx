@@ -11,7 +11,7 @@ import { Project1 } from '../../../@types/krowd/project';
 import HeaderBreadcrumbs from 'components/HeaderBreadcrumbs';
 import { PATH_DASHBOARD } from 'routes/paths';
 import { styled } from '@mui/system';
-import { fCurrency } from 'utils/formatNumber';
+import { fCurrencyChart } from 'utils/formatNumber';
 
 // ----------------------------------------------------------------------
 const NavbarTopAnchor = styled('div')(() => ({
@@ -45,33 +45,7 @@ export default function KrowdProjectStage({ project, nav }: AboutListProps) {
   const { listOfChartStage } = useSelector((state: RootState) => state.stage);
   const chartOptions = merge(BaseOptionChart(), {
     xaxis: {
-      categories: [
-        'Kỳ 1',
-        'Kỳ 2',
-        'Kỳ 3',
-        'Kỳ 4',
-        'Kỳ 5',
-        'Kỳ 6',
-        'Kỳ 7',
-        'Kỳ 8',
-        'Kỳ 9',
-        'Kỳ 10',
-        'Kỳ 11',
-        'Kỳ 12',
-        'Kỳ 13',
-        'Kỳ 14',
-        'Kỳ 15',
-        'Kỳ 16',
-        'Kỳ 17',
-        'Kỳ 18',
-        'Kỳ 19',
-        'Kỳ 20',
-        'Kỳ 21',
-        'Kỳ 22',
-        'Kỳ 23',
-        'Kỳ 24',
-        'Kỳ 25'
-      ]
+      categories: []
     },
     tooltip: {
       shared: true,
@@ -79,7 +53,7 @@ export default function KrowdProjectStage({ project, nav }: AboutListProps) {
       y: {
         formatter: (y: number) => {
           if (typeof y !== 'undefined') {
-            return `${fCurrency(y.toFixed(0))}`;
+            return `${fCurrencyChart(y.toFixed(0))}`;
           }
           return y;
         }
@@ -156,7 +130,15 @@ export default function KrowdProjectStage({ project, nav }: AboutListProps) {
                 </Box>
               ))}
           </Card>
-          <Typography variant="body2">* Số liệu chỉ mang tính chất tham khảo</Typography>
+          <Typography variant="body2">
+            * Số hiển thị ngang tương ứng với các kỳ của dụ án
+          </Typography>
+          <Typography sx={{ my: 2 }} variant="body2">
+            * Đơn vị doanh thu VND và tỉ lệ sẽ là phần trăm (%)
+          </Typography>
+          <Typography sx={{ my: 2 }} variant="body2">
+            * Số liệu chỉ mang tính chất tham khảo
+          </Typography>
         </Grid>
         <Grid lg={2}></Grid>
       </Grid>

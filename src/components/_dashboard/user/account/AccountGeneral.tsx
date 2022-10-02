@@ -217,7 +217,6 @@ export default function AccountGeneral({ investor }: UserAccountProps) {
                     value={taxIdentificationNumber ?? '<Chưa cập nhật>'}
                   />
                 </Stack>
-                {/* <TextField fullWidth disabled label="Vai trò" value={role.name} /> */}
               </Stack>
             </Card>
           </Grid>

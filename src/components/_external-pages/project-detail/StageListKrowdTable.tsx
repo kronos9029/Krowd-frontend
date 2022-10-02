@@ -100,7 +100,12 @@ export default function StageListKrowdTable({ project }: { project: Project1 }) 
         getData={getData}
         isLoading={isLoading}
       />
-      <Typography variant="body2">* Số liệu chỉ mang tính chất tham khảo</Typography>
+      <Typography sx={{ my: 2 }} variant="body2">
+        * Đơn vị doanh thu VND và tỉ lệ sẽ là phần trăm (%)
+      </Typography>
+      <Typography sx={{ my: 2 }} variant="body2">
+        * Số liệu chỉ mang tính chất tham khảo
+      </Typography>
     </Container>
   );
 }

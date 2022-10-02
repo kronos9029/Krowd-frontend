@@ -49,3 +49,24 @@ export type WalletTransaction = {
   updateBy: string;
   isDeleted: boolean;
 };
+
+export type Payment = {
+  projectId: string;
+  projectName: string;
+  packageId: string;
+  packageName: string;
+  investedQuantity: number;
+  fromWalletName: string;
+  fee: null;
+  id: string;
+  periodRevenueId: null;
+  investmentId: string;
+  amount: number;
+  description: string;
+  type: string;
+  fromId: string;
+  toId: string;
+  createDate: string;
+  createBy: string;
+  status: string;
+};

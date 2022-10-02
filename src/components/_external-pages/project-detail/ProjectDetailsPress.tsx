@@ -79,7 +79,7 @@ function ProjectDetailAfterPitch({ press, nav }: PressListProps) {
                         <Card
                           sx={{
                             width: '100%',
-                            minHeight: 400,
+                            minHeight: 420,
                             boxShadow: '40px 40px 80px 0 20%',
                             alignItems: 'center'
                           }}
@@ -94,12 +94,19 @@ function ProjectDetailAfterPitch({ press, nav }: PressListProps) {
                           />
                           <Box>
                             <Typography
+                              sx={{
+                                textOverflow: 'ellipsis',
+                                overflow: 'hidden',
+                                display: '-webkit-box',
+                                WebkitBoxOrient: 'vertical',
+                                fontWeight: '700',
+                                WebkitLineClamp: 2
+                              }}
+                              pb={0.5}
                               px={2}
                               mt={2}
-                              mb={1}
-                              sx={{ fontWeight: '700' }}
                               variant="body1"
-                              noWrap
+                              color={'text.primary'}
                             >
                               {f.title}
                             </Typography>
@@ -112,10 +119,14 @@ function ProjectDetailAfterPitch({ press, nav }: PressListProps) {
                           </Box>
                           <Box>
                             <Typography
-                              noWrap
+                              sx={{
+                                textOverflow: 'ellipsis',
+                                overflow: 'hidden',
+                                display: '-webkit-box',
+                                WebkitBoxOrient: 'vertical',
+                                WebkitLineClamp: 5
+                              }}
                               px={2}
-                              mb={1}
-                              pb={2}
                               variant="body2"
                               color={'text.primary'}
                             >

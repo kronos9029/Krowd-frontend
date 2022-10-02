@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react';
 import { useRef, useState, useCallback, useEffect } from 'react';
-import peopleFill from '@iconify/icons-eva/people-fill';
+import nofication from '@iconify/icons-ic/notifications';
 // material
 import { alpha } from '@mui/material/styles';
 import { Avatar, Typography, ListItemText, ListItemButton, ListItemAvatar } from '@mui/material';
@@ -62,10 +62,10 @@ export default function ContactsPopover() {
           })
         }}
       >
-        <Icon icon={peopleFill} width={20} height={20} />
+        <Icon icon={nofication} width={20} height={20} />
       </MIconButton>
 
-      <MenuPopover
+      {/* <MenuPopover
         open={open}
         onClose={handleClose}
         anchorEl={anchorRef.current}
@@ -95,7 +95,7 @@ export default function ContactsPopover() {
             );
           })}
         </Scrollbar>
-      </MenuPopover>
+      </MenuPopover> */}
     </>
   );
 }

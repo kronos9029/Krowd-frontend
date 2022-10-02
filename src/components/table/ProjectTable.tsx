@@ -1,21 +1,23 @@
 import { useEffect } from 'react';
 import { dispatch, RootState, useSelector } from '../../redux/store';
-import { PATH_DASHBOARD } from '../../routes/paths';
+import { PATH_DASHBOARD, PATH_PAGE } from '../../routes/paths';
 import { DATA_TYPE, KrowdTable, RowData } from './krowd-table/KrowdTable';
 import { getProjectListInvested } from '../../redux/slices/krowd_slices/project';
 import React from 'react';
 import { Box, Container, Typography } from '@mui/material';
+import { PROJECT_STATUS } from '../../@types/krowd/project';
 const TABLE_HEAD = [
   { id: 'idx', label: 'STT', align: 'center' },
   { id: 'image', label: 'HÌNH ẢNH', align: '' },
   { id: 'name', label: 'DỰ ÁN', align: 'left' },
-  { id: 'investedCapital', label: 'DỰ ÁN ĐÃ ĐẦU TƯ', align: 'center' },
-  { id: 'investmentTargetCapital', label: 'MỤC TIÊU DỰ ÁN', align: 'center' },
+  { id: 'investedAmount', label: 'BẠN ĐẦU TƯ', align: 'center' },
+  { id: 'receivedAmount', label: 'SỐ TIỀN NHẬN ĐƯỢC', align: 'center' },
+  { id: 'lastestInvestmentDate', label: 'NGÀY ĐẦU TƯ', align: 'center' },
   { id: 'multiplier', label: 'HỆ SỐ NHÂN', align: 'center' },
   { id: 'duration', label: 'SỐ KỲ', align: 'left' },
   { id: 'sharedRevenue', label: 'DOANH THU CHIA SẺ', align: 'left' },
-  { id: 'remainAmount', label: 'VỐN MỤC TIÊU CÒN THIẾU', align: 'left' }
-  // { id: '', label: 'THAO TÁC', align: 'center' }
+  { id: 'status', label: 'TRẠNG THÁI DỰ ÁN', align: 'left' },
+  { id: '', label: 'Chi tiết', align: 'center' }
 ];
 
 export default function ProjectTable() {
@@ -54,17 +56,23 @@ export default function ProjectTable() {
           //   type: DATA_TYPE.LIST_TEXT
           // },
           {
-            name: 'investedCapital',
-            value: _item.investedCapital,
+            name: 'investedAmount',
+            value: _item.investedAmount,
             type: DATA_TYPE.NUMBER_FORMAT,
             textColor: 'rgb(20, 183, 204)'
           },
           {
-            name: 'investmentTargetCapital',
-            value: _item.investmentTargetCapital,
+            name: 'receivedAmount',
+            value: _item.receivedAmount,
             type: DATA_TYPE.NUMBER_FORMAT,
-            textColor: 'rgb(102, 187, 106)'
+            textColor: 'green'
           },
+          {
+            name: 'lastestInvestmentDate',
+            value: _item.lastestInvestmentDate,
+            type: DATA_TYPE.TEXT
+          },
+
           {
             name: 'multiplier',
             value: `${_item.multiplier} x`,
@@ -80,11 +88,20 @@ export default function ProjectTable() {
             value: `${_item.sharedRevenue} %`,
             type: DATA_TYPE.NUMBER
           },
+
           {
-            name: 'remainAmount',
-            value: _item.remainAmount,
-            type: DATA_TYPE.NUMBER_FORMAT,
-            textColor: 'rgb(255, 127, 86)'
+            name: 'status',
+            value:
+              (_item.status === PROJECT_STATUS.CALLING_FOR_INVESTMENT && 'Đang kêu gọi đầu tư') ||
+              (_item.status === PROJECT_STATUS.OVERDATE && 'Quá hạn đầu tư') ||
+              (_item.status === PROJECT_STATUS.ACTIVE && 'Đang hoạt động'),
+            type: DATA_TYPE.TEXT,
+            textColor:
+              _item.status === 'CALLING_FOR_INVESTMENT'
+                ? '#14b7cc'
+                : 'green' || _item.status === 'OVERDATE'
+                ? 'red'
+                : 'green'
           }
         ]
       };
@@ -96,7 +113,7 @@ export default function ProjectTable() {
       header={TABLE_HEAD}
       getData={getData}
       isLoading={isLoadingProjectListInvested}
-      // viewPath={PATH_DASHBOARD.business.details}
+      viewPath={PATH_PAGE.details}
     />
   );
 }

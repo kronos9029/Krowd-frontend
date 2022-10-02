@@ -80,55 +80,52 @@ export default function BankingRecentTransitions() {
       <Card>
         <CardHeader title="Giao dịch gần đây" sx={{ mb: 3 }} />
         <Scrollbar>
-          <TableContainer sx={{ minWidth: 720 }}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Mô tả giao dịch</TableCell>
-                  <TableCell>Ngày gửi</TableCell>
-                  <TableCell>Số tiền</TableCell>
-                  <TableCell>Trạng thái</TableCell>
-                  <TableCell />
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {list.slice(0, 5).map((row) => (
-                  <TableRow key={row.id}>
-                    <TableCell>
-                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <Box sx={{ position: 'relative' }}>
-                          <img style={{ width: 40 }} src={`/static/icons/navbar/ic_momo.png`} />{' '}
-                        </Box>
-                        <Box sx={{ ml: 2 }}>
-                          <Typography>Ví momo</Typography>
-                        </Box>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Mô tả giao dịch</TableCell>
+                <TableCell>Ngày gửi</TableCell>
+                <TableCell>Số tiền</TableCell>
+                <TableCell>Trạng thái</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {list.slice(0, 5).map((row) => (
+                <TableRow key={row.id}>
+                  <TableCell>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                      <Box sx={{ position: 'relative' }}>
+                        <img style={{ width: 40 }} src={`/static/icons/navbar/ic_momo.png`} />{' '}
                       </Box>
-                    </TableCell>
+                      <Box sx={{ ml: 2 }}>
+                        <Typography>Ví momo</Typography>
+                      </Box>
+                    </Box>
+                  </TableCell>
 
-                    <TableCell>
-                      <Typography variant="subtitle2">
-                        {row.createDate.toString().substring(0, 10)}
-                      </Typography>
-                      <Typography variant="subtitle2">
-                        {row.createDate.toString().substring(10, 20)}
-                      </Typography>
-                    </TableCell>
+                  <TableCell>
+                    <Typography variant="subtitle2">
+                      {row.createDate.toString().substring(0, 10)}
+                    </Typography>
+                    <Typography variant="subtitle2">
+                      {row.createDate.toString().substring(10, 20)}
+                    </Typography>
+                  </TableCell>
 
-                    <TableCell>{fCurrency(row.amount)}</TableCell>
+                  <TableCell>{fCurrency(row.amount)}</TableCell>
 
-                    <TableCell>
-                      <Label
-                        variant={isLight ? 'ghost' : 'filled'}
-                        color={(row.message === 'Giao dịch thành công.' && 'success') || 'error'}
-                      >
-                        {row.message}
-                      </Label>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                  <TableCell>
+                    <Label
+                      variant={isLight ? 'ghost' : 'filled'}
+                      color={(row.message === 'Giao dịch thành công.' && 'success') || 'error'}
+                    >
+                      {row.message}
+                    </Label>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </Scrollbar>
 
         <Divider />

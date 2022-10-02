@@ -15,9 +15,13 @@ const ICONS = {
   banking: getIcon('ic_banking'),
   analytics: getIcon('ic_analytics'),
   dashboard: getIcon('ic_dashboard'),
+  krowd: getIcon('ic_krowd'),
   booking: getIcon('ic_booking'),
   project: getIcon('ic_project'),
-  bankTransaction: getIcon('ic_bankTransaction')
+  bankTransaction: getIcon('ic_bankTransaction'),
+  transaction: getIcon('ic_transaction'),
+  payment: getIcon('ic_payment'),
+  walletTransaction: getIcon('ic_walletTransaction')
 };
 
 const sidebarConfig = [
@@ -27,7 +31,7 @@ const sidebarConfig = [
       {
         title: 'app',
         path: PATH_DASHBOARD.general.app,
-        icon: ICONS.dashboard
+        icon: ICONS.krowd
       },
       // { title: 'Chung', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics },
       { title: 'Ví của bạn', path: PATH_DASHBOARD.general.banking, icon: ICONS.wallet }
@@ -35,10 +39,10 @@ const sidebarConfig = [
     ]
   },
   {
-    subheader: 'Quản lý',
+    subheader: 'Quản lý dự án ',
     items: [
       {
-        title: 'Dự án đang đầu tư',
+        title: 'Đang đầu tư',
         path: PATH_DASHBOARD.projectInvested.list,
         icon: ICONS.project
       }
@@ -51,17 +55,17 @@ const sidebarConfig = [
       {
         title: 'Nạp tiền và rút tiền',
         path: PATH_DASHBOARD.transaction.list,
-        icon: ICONS.project
+        icon: ICONS.transaction
       },
       {
-        title: 'Ví Krowd',
+        title: 'Giao dịch ví',
         path: PATH_DASHBOARD.transaction.walletTransaction,
-        icon: ICONS.project
+        icon: ICONS.walletTransaction
       },
       {
         title: 'Đầu tư dự án',
         path: PATH_DASHBOARD.transaction.payments,
-        icon: ICONS.project
+        icon: ICONS.payment
       }
     ]
   }

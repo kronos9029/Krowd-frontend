@@ -75,7 +75,7 @@ export const PATH_DASHBOARD = {
     root: path(ROOTS_DASHBOARD, '/account-transaction'),
     list: path(ROOTS_DASHBOARD, '/account-transaction/list'),
     walletTransaction: path(ROOTS_DASHBOARD, '/account-transaction/wallet-transaction'),
-    payments: path(ROOTS_DASHBOARD, '/account-transaction/payments')
+    payments: path(ROOTS_DASHBOARD, '/account-transaction/payments/list')
   },
   eCommerce: {
     root: path(ROOTS_DASHBOARD, '/e-commerce'),

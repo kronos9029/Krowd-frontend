@@ -33,12 +33,14 @@ export default function AppWelcome({ user, investor }: AppWelcomeProps) {
       <CardContent
         sx={{
           p: { md: 0 },
-          pl: { md: 5 },
-          color: 'grey.800'
+          pl: { md: 5 }
         }}
       >
-        <Typography gutterBottom variant="h4">
-          Chào mừng trở lại,
+        <Typography gutterBottom variant="h4" sx={{ color: '#FFFFFf' }}>
+          Bảng tổng quan hệ thống
+        </Typography>
+        <Typography gutterBottom variant="h4" sx={{ color: '#FFFFFf' }}>
+          Chào mừng bạn trở lại,
           <br /> {user.fullName}
         </Typography>
       </CardContent>
