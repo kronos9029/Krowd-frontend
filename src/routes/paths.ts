@@ -6,6 +6,7 @@ function path(root: string, sublink: string) {
 
 const ROOTS_AUTH = '/auth';
 const ROOTS_DASHBOARD = '/dashboard';
+const ROOTS_DASHBOARD_LEARN = '/learn';
 
 // ----------------------------------------------------------------------
 
@@ -39,6 +40,15 @@ export const PATH_PAGE = {
   details: '/details'
 };
 
+export const PATH_DASHBOARD_LEARN = {
+  root: ROOTS_DASHBOARD_LEARN,
+  learn: {
+    app: path(ROOTS_DASHBOARD_LEARN, '/investors/what-the-deal-terms-mean'),
+    how_it_work: path(ROOTS_DASHBOARD_LEARN, '/investors/how-it-works'),
+    what_get_invested: path(ROOTS_DASHBOARD_LEARN, '/investors/what-do-i-get-when-i-invest'),
+    risk_invested: path(ROOTS_DASHBOARD_LEARN, '/investors/risks')
+  }
+};
 export const PATH_DASHBOARD = {
   root: ROOTS_DASHBOARD,
   general: {

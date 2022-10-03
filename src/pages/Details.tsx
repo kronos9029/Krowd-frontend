@@ -25,7 +25,7 @@ import {
 } from 'components/_external-pages/project-detail/index';
 import MHidden from 'components/@material-extend/MHidden';
 import MainNavbar from 'layouts/main/MainNavbar';
-import { PATH_DASHBOARD, PATH_PAGE } from 'routes/paths';
+import { PATH_DASHBOARD, PATH_DASHBOARD_LEARN, PATH_PAGE } from 'routes/paths';
 import { useEffect, useState } from 'react';
 //Language
 import cookies from 'js-cookie';
@@ -93,6 +93,7 @@ export default function ComponentsDetails() {
   const listenScrollEvent = () => {
     window.scrollY > 1000 ? setisShowNav(true) : setisShowNav(false);
   };
+  const navigate = useNavigate();
   const handleClickOpenStage = () => {
     setOpenStage('table');
   };
@@ -223,8 +224,15 @@ export default function ComponentsDetails() {
                   {documents && documents.length > 0 && (
                     <ProjectDetailDocument documents={documents} />
                   )}
+                  <Button
+                    fullWidth
+                    sx={{ my: 3, border: '1px solid' }}
+                    onClick={() => navigate(`${PATH_DASHBOARD_LEARN.learn.how_it_work}`)}
+                  >
+                    Cách thức hoạt động
+                  </Button>
                   {packageLists.listOfPackage && packageLists.listOfPackage.length > 0 && (
-                    <Grid container sx={{ mt: 4 }}>
+                    <Grid container sx={{ mt: 1 }}>
                       <Grid container sx={{ mt: 4 }}>
                         <Grid xs={12} sm={5} md={4} lg={5}>
                           <ProjectPackage project={projectID} />

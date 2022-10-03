@@ -3,6 +3,7 @@ import { Navigate, useRoutes, useLocation } from 'react-router-dom';
 // layouts
 import MainLayout from '../layouts/main';
 import DashboardLayout from '../layouts/dashboard';
+import DashboardLayoutLearn from '../layouts/learnInvest';
 import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
 // guards
 import GuestGuard from '../guards/GuestGuard';
@@ -71,6 +72,7 @@ export default function Router() {
     },
 
     // Dashboard Routes
+
     {
       path: 'dashboard',
       element: (
@@ -167,6 +169,17 @@ export default function Router() {
         }
       ]
     },
+    {
+      path: 'learn',
+      element: <DashboardLayoutLearn />,
+      children: [
+        { element: <Navigate to="/learn/investors/what-the-deal-terms-mean" replace /> },
+        { path: '/learn/investors/how-it-works', element: <LearnHowItWork /> },
+        { path: '/learn/investors/what-the-deal-terms-mean', element: <GeneralAppLearn /> },
+        { path: '/learn/investors/what-do-i-get-when-i-invest', element: <WhatIGetInvest /> },
+        { path: '/learn/investors/risks', element: <RiskInvest /> }
+      ]
+    },
 
     // Main Routes
     {
@@ -230,6 +243,10 @@ const Register = Loadable(lazy(() => import('../pages/authentication/Register'))
 const VerifyCode = Loadable(lazy(() => import('../pages/authentication/VerifyCode')));
 // Dashboard
 const GeneralApp = Loadable(lazy(() => import('../pages/dashboard/GeneralApp')));
+const GeneralAppLearn = Loadable(lazy(() => import('../pages/learn/GeneralAppLearn')));
+const LearnHowItWork = Loadable(lazy(() => import('../pages/learn/LearnHowItWork')));
+const WhatIGetInvest = Loadable(lazy(() => import('../pages/learn/WhatIGetInvest')));
+const RiskInvest = Loadable(lazy(() => import('../pages/learn/RiskInvest')));
 const GeneralEcommerce = Loadable(lazy(() => import('../pages/dashboard/GeneralEcommerce')));
 const GeneralAnalytics = Loadable(lazy(() => import('../pages/dashboard/GeneralAnalytics')));
 const WalletBanking = Loadable(lazy(() => import('../pages/dashboard/WalletBanking')));

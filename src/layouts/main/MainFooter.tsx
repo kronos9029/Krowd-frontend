@@ -4,7 +4,7 @@ import twitterFill from '@iconify/icons-eva/twitter-fill';
 import facebookFill from '@iconify/icons-eva/facebook-fill';
 import linkedinFill from '@iconify/icons-eva/linkedin-fill';
 import { Link as ScrollLink } from 'react-scroll';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, matchPath, useLocation, useNavigate } from 'react-router-dom';
 
 // material
 import { styled } from '@mui/material/styles';
@@ -19,7 +19,7 @@ import {
   Button
 } from '@mui/material';
 // routes
-import { PATH_PAGE } from '../../routes/paths';
+import { PATH_DASHBOARD_LEARN, PATH_DOCS, PATH_FIELDPAGE, PATH_PAGE } from '../../routes/paths';
 //
 import Logo from '../../components/Logo';
 //i18n
@@ -53,7 +53,7 @@ const LINKS = [
     headline: '2',
     children: [
       { name: '  Điều khoản sử dụng dịch vụ', href: PATH_PAGE.maintenance, target: '' },
-      { name: 'Chính sách bảo mật', href: PATH_PAGE.maintenance, target: '' },
+      { name: 'Chính sách bảo mật', href: PATH_PAGE.maintenance },
       { name: 'Cảnh báo rủi ro đầu tư', href: PATH_PAGE.maintenance, target: '' },
       { name: 'Hợp đồng pháp lý liên quan', href: PATH_PAGE.maintenance, target: '' }
     ]
@@ -95,6 +95,8 @@ export default function MainFooter() {
   const currentLanguageCode = cookies.get('i18next') || 'en';
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const handleLearn = () => {};
   // useEffect(() => {
   //   document.title = t('app_title');
   // }, [currentLanguage, t]);
@@ -193,18 +195,6 @@ export default function MainFooter() {
         >
           {t('policy_description_legal_3')}
         </Typography>
-        {/* <Typography
-          component="p"
-          variant="body2"
-          sx={{
-            mt: 3,
-            pb: 5,
-            fontSize: 11,
-            textAlign: { xs: 'center', md: 'left' }
-          }}
-        >
-          © 2022. All rights reserved
-        </Typography> */}
       </Container>
     </RootStyle>
   );

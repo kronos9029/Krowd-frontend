@@ -57,7 +57,7 @@ export default function ProjectPackage({ project }: { project: Project1 }) {
 
   return (
     <>
-      <Box py={1.4}>
+      <Box>
         <Typography variant="h4" color={'#666'}>
           Gói đầu tư
         </Typography>

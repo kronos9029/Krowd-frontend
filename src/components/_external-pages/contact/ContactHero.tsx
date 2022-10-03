@@ -4,6 +4,7 @@ import { styled } from '@mui/material/styles';
 import { Box, Container, Typography, Grid } from '@mui/material';
 //
 import { varFadeIn, varWrapEnter, varFadeInRight, TextAnimate } from '../../animate';
+import DashboardLayoutLearn from 'layouts/learnInvest';
 
 // ----------------------------------------------------------------------
 
@@ -33,7 +34,7 @@ const CONTACTS = [
 const RootStyle = styled(motion.div)(({ theme }) => ({
   backgroundSize: 'cover',
   backgroundPosition: 'center',
-  backgroundImage: 'url(/static/overlay.svg), url(/static/contact/hero.jpg)',
+  // backgroundImage: 'url(/static/overlay.svg), url(/static/contact/hero.jpg)',
   padding: theme.spacing(10, 0),
   [theme.breakpoints.up('md')]: {
     height: 560,
@@ -58,31 +59,26 @@ export default function ContactHero() {
       <Container maxWidth="lg" sx={{ position: 'relative', height: '100%' }}>
         <ContentStyle>
           <TextAnimate text="Where" sx={{ color: 'primary.main' }} variants={varFadeInRight} />
-          <br />
-          <Box sx={{ display: 'inline-flex', color: 'common.white' }}>
-            <TextAnimate text="to" sx={{ mr: 2 }} />
-            <TextAnimate text="find" sx={{ mr: 2 }} />
-            <TextAnimate text="us?" />
+          <Box>
+            <Typography sx={{ mr: 2 }}> How it works</Typography>
           </Box>
-
-          <Grid container spacing={5} sx={{ mt: 5, color: 'common.white' }}>
-            {CONTACTS.map((contact) => (
-              <Grid key={contact.country} item xs={12} sm={6} md={3} lg={2} sx={{ pr: { md: 5 } }}>
-                <motion.div variants={varFadeIn}>
-                  <Typography variant="h6" paragraph>
-                    {contact.country}
-                  </Typography>
-                </motion.div>
-                <motion.div variants={varFadeInRight}>
-                  <Typography variant="body2">
-                    {contact.address}
-                    <br /> {contact.phoneNumber}
-                  </Typography>
-                </motion.div>
-              </Grid>
-            ))}
-          </Grid>
+          <Box>
+            <Typography sx={{ mr: 2 }}> How it works</Typography>
+          </Box>
+          <Box>
+            <Typography sx={{ mr: 2 }}> How it works</Typography>
+          </Box>
+          <Box>
+            <Typography sx={{ mr: 2 }}> How it works</Typography>
+          </Box>
+          <Box>
+            <Typography sx={{ mr: 2 }}> How it works</Typography>
+          </Box>
+          <Box>
+            <Typography sx={{ mr: 2 }}> How it works</Typography>
+          </Box>
         </ContentStyle>
+        <DashboardLayoutLearn />
       </Container>
     </RootStyle>
   );

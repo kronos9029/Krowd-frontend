@@ -67,7 +67,7 @@ export function getWalletByID(Id: string) {
     dispatch(slice.actions.startLoading());
     try {
       const response = await WalletAPI.getbyID({ id: Id });
-      dispatch(slice.actions.getWalletListSuccess(response.data));
+      dispatch(getWalletList());
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
