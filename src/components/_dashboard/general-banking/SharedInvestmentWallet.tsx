@@ -103,6 +103,7 @@ export default function SharedInvestmentWallet({ wallet }: { wallet: Wallet }) {
                 <Grid sx={{ display: 'flex', gap: 1 }}>
                   <Button
                     href={PATH_PAGE.pageTopUp}
+                    target="_blank"
                     sx={{
                       display: 'flex',
                       border: '1px solid white'

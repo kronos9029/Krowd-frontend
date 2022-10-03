@@ -6,12 +6,14 @@ const TABLE_HEAD = [
   { id: 'idx', label: 'STT', align: 'center' },
   //   { id: 'fromUserId', label: 'TỪ', align: '' },
   //   { id: 'payType', label: 'LOẠI HÌNH THANH TOÁN', align: 'center' },
-  { id: 'paymentId', label: 'MÃ THANH TOÁN', align: 'left' },
-  { id: 'fee', label: 'PHÍ GIAO DỊCH', align: 'left' },
+  { id: 'id', label: 'MÃ GIAO DỊCH VÍ', align: 'left' },
+  { id: 'type', label: 'LOẠI', align: 'left' },
+
   //   { id: 'orderId', label: 'BẠN ĐẦU TƯ', align: 'center' },
   { id: 'amount', label: 'SỐ TIỀN', align: 'center' },
-  { id: 'type', label: 'LOẠI GIAO DỊCH', align: 'left' },
-  { id: 'message', label: 'TRẠNG THÁI', align: 'center' },
+  { id: 'fee', label: 'PHÍ GIAO DỊCH', align: 'left' },
+
+  { id: 'description', label: 'NỘI DUNG', align: 'center' },
   { id: 'createDate', label: 'NGÀY THỰC HIỆN', align: 'left' }
   // { id: '', label: 'THAO TÁC', align: 'center' }
 ];
@@ -37,22 +39,23 @@ export default function WalletTransactionTable() {
             type: DATA_TYPE.NUMBER
           },
           {
-            name: 'paymentId',
-            value: _item.paymentId,
+            name: 'id',
+            value: _item.id,
             type: DATA_TYPE.TEXT
           },
 
           {
             name: 'type',
-            value: _item.type === 'INVESTMENT' ? 'Đầu tư dự án' : 'Nạp tiền vào ví',
+            value: _item.type === 'CASH_IN' ? 'Tiền vào' : 'Tiền ra',
             type: DATA_TYPE.TEXT,
-            textColor: 'rgb(102, 187, 106)'
+            textColor: _item.type === 'CASH_IN' ? 'green' : 'red'
           },
 
           {
             name: 'amount',
-            value: _item.amount,
-            type: DATA_TYPE.NUMBER_FORMAT
+            value: _item.type === 'CASH_IN' ? `+ ${_item.amount}` : `- ${_item.amount}`,
+            type: DATA_TYPE.NUMBER_FORMAT,
+            textColor: _item.type === 'CASH_IN' ? 'green' : 'red'
           },
           {
             name: 'fee',
@@ -61,7 +64,13 @@ export default function WalletTransactionTable() {
           },
           {
             name: 'description',
-            value: _item.description,
+            value:
+              (_item.description === 'Transfer from I2 to I3 to invest' &&
+                'Chuyển tiền từ VÍ ĐẦU TƯ CHUNG sang VÍ TẠM ỨNG') ||
+              (_item.description === 'Investor deposit monney into I1 Wallet' &&
+                'Nạp tiền vào VÍ TẠM THỜI') ||
+              (_item.description === 'Investor transfer money from I1 wallet to I2 wallet' &&
+                'Chuyển tiền từ VÍ ĐẦU TƯ CHUNG'),
             type: DATA_TYPE.TEXT
           },
           {

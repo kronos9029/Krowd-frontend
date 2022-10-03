@@ -26,22 +26,26 @@ const MENU_OPTIONS = [
   {
     label: 'Trang chủ',
     icon: homeFill,
-    linkTo: '/'
+    linkTo: '/',
+    target: ''
   },
   {
     label: 'Dự án của bạn',
     icon: projectIcon,
-    linkTo: PATH_DASHBOARD.userKrowd.list
+    linkTo: PATH_DASHBOARD.userKrowd.list,
+    target: ''
   },
   {
     label: 'Thông tin cá nhân',
     icon: personFill,
-    linkTo: PATH_DASHBOARD.user.account
+    linkTo: PATH_DASHBOARD.user.account,
+    target: ''
   },
   {
     label: 'Nạp tiền vào ví',
     icon: walletIcon,
-    linkTo: PATH_PAGE.pageTopUp
+    linkTo: PATH_PAGE.pageTopUp,
+    target: '_blank'
   }
 ];
 
@@ -121,6 +125,7 @@ export default function AccountPopover() {
           <MenuItem
             key={option.label}
             to={option.linkTo}
+            target={option.target}
             component={RouterLink}
             onClick={handleClose}
             sx={{ typography: 'body2', py: 1, px: 2.5 }}

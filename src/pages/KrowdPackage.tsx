@@ -432,53 +432,56 @@ export default function KrowdPackage() {
                     </Box>
                     <Box sx={{ pt: 1.5, pb: 1.5, maxWidth: 600 }}>
                       <LIST_TERM>
-                        I understand that I can cancel my investment up until 01/17/23 (48 hours
-                        prior to the deal deadline)
+                        Nhà đầu tư có thể hủy bỏ số tiền Nhà đầu tư khi đầu tư vào dự án (trong vòng
+                        24 giờ) và hệ thống sẽ hoàn tiền cho Nhà đầu tư và chuyển vào ví có trong hệ
+                        thống
                       </LIST_TERM>
                       <LIST_TERM>
-                        I understand that Republic will receive cash and security commission based
-                        on these rates
+                        Nhà đầu tư sẽ nhận được số tiền (chuyển vào ví Krowd) và hoa hồng dựa trên
+                        các tỷ lệ doanh thu chia sẻ của {projectID.name} là{' '}
+                        {projectID.sharedRevenue} %.
                       </LIST_TERM>
                       <LIST_TERM>
-                        I understand I will not have voting rights and will grant a third-party
-                        nominee broad authority to act on my behalf.
+                        Nhà đầu tư sẽ không có quyền biểu quyết và sẽ cấp cho một ứng cử viên bên
+                        thứ ba quyền hạn rộng rãi để hành động thay mặt Nhà đầu tư.
                       </LIST_TERM>
                       <LIST_TERM>
-                        I understand I may never become an equity holder, only a beneficial owner of
-                        equity interest in the Company.
+                        Nhà đầu tư có thể không trở thành chủ sở hữu vốn chủ sở hữu, nhà đầu tư có
+                        lợi và các lợi ích từ vốn chủ sở hữu trong dự án.
                       </LIST_TERM>
                       <LIST_TERM>
-                        I understand that investing this amount into several deals would better
-                        diversify my risk
+                        Nhà đầu tư khi đầu tư số tiền vào một số gói đầu tư của dự án sẽ đa dạng hóa
+                        rủi ro của bạn sẽ tốt hơn.
                       </LIST_TERM>
                       <LIST_TERM>
-                        I understand that there is no guarantee of a relationship between Republic
-                        and AlphaFlow: Pre-Series B post-offering{' '}
+                        Nhà đầu tư hiểu không có gì đảm bảo về mối quan hệ giữa KROWD và{' '}
+                        {projectID.name} sau khi cung cấp đã đầu tư dự án
                       </LIST_TERM>
                       <LIST_TERM>
-                        I consent to electronic delivery of all documents, notices and agreements as
-                        related to my investment
+                        Nhà đầu tư đồng ý thực hiện các phương tiện thanh toán tất cả các tài liệu,
+                        thông báo và thỏa thuận liên quan đến khoản đầu tư của nhà đầu tư.
                       </LIST_TERM>
                       <LIST_TERM>
-                        I understand my investment won't be transferable for 12 months and may not
-                        have a market for resale
+                        Khoản đầu tư của nhà đầu tư sẽ không thể chuyển nhượng trong khi dự án vẫn
+                        còn đang vận hành.
                       </LIST_TERM>
                       <LIST_TERM>
-                        I have read the educational materials and agree to the Terms of Service,
-                        including arbitration provisions{' '}
+                        Nhà đầu tư chắc rằng đã đọc các tài liệu liên quan và đồng ý với Điều khoản
+                        dịch vụ, bao gồm các điều khoản của {projectID.name}{' '}
                       </LIST_TERM>
                       <LIST_TERM>
-                        I understand this investment is risky and that I shouldn't invest unless I
-                        can afford to lose all invested funds
+                        Nhà đầu tư hiểu các khoản đầu tư này rất rủi ro và nhà đầu tư không nên đầu
+                        tư trừ khi có thể đủ khả năng để mất tất cả các khoản tiền đầu tư
                       </LIST_TERM>
                       <LIST_TERM>
-                        I understand I am responsible for all fees and charges associated with the
-                        use of my payment method
+                        Nhà đầu tư nên hiểu rằng sẽ chịu trách nhiệm về tất cả các khoản phí và lệ
+                        phí liên quan đến sử dụng phương thức thanh toán.
                       </LIST_TERM>
                       <LIST_TERM>
-                        I confirm that this investment, together with all my other Regulation
-                        Crowdfunding investments during the past 12 months on any crowdfunding
-                        portal, does not exceed my investment limit
+                        Nhà đầu tư xác nhận rằng khoản đầu tư này, cùng với tất cả các Quy định khác
+                        của {projectID.name} Các khoản đầu tư huy động vốn từ cộng đồng trong suốt
+                        quá trình vận hành vào bất kỳ hoạt động huy động vốn từ cộng đồng nào cổng
+                        thông tin, không vượt quá giới hạn đầu tư.
                       </LIST_TERM>
                       <LIST_TERM>
                         <Box sx={{ display: 'flex' }}>
@@ -488,14 +491,14 @@ export default function KrowdPackage() {
                             {...getFieldProps('checkBox')}
                           />
                           <Typography sx={{ pl: 3 }}>
-                            I have readand accept the terms of investment
+                            Tôi đã đọc và chấp nhận các điều khoản đầu tư{' '}
                           </Typography>
                         </Box>
                       </LIST_TERM>
                     </Box>
                   </Container>
                   <Container sx={{ p: 5 }}>
-                    <Box>
+                    {/* <Box>
                       <Typography variant="h3">
                         {t(`Project_package_invest.AdditionalInformation`)}
                       </Typography>
@@ -524,7 +527,7 @@ export default function KrowdPackage() {
                         thay thế W-8BEN được bao gồm trong Thỏa thuận đăng ký trong Mẫu C.
                       </Box>
                     </Box>
-                    <Divider sx={{ mt: 7, maxWidth: 600 }} />
+                    <Divider sx={{ mt: 7, maxWidth: 600 }} /> */}
 
                     {PackageDetails?.price &&
                     values.checkBox &&
@@ -585,7 +588,11 @@ export default function KrowdPackage() {
                                   </Box>
                                 </Box>
                                 <Typography sx={{ textAlign: 'end' }}>
-                                  <Button variant="contained" href={PATH_PAGE.pageTopUp}>
+                                  <Button
+                                    variant="contained"
+                                    target="_blank"
+                                    href={PATH_PAGE.pageTopUp}
+                                  >
                                     Nạp tiền
                                   </Button>
                                 </Typography>

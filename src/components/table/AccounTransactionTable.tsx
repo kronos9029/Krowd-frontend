@@ -76,6 +76,11 @@ export default function AccounTransactionTable() {
             value: '',
             type: DATA_TYPE.ICONS
           },
+          // {
+          //   name: 'paytype',
+          //   value: _item.payType,
+          //   type: DATA_TYPE.TEXT
+          // },
 
           // {
           //   name: 'orderType',
