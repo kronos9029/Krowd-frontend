@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react';
 import homeFill from '@iconify/icons-eva/home-fill';
 // routes
-import { PATH_PAGE } from '../../routes/paths';
+import { PATH_DASHBOARD_LEARN, PATH_PAGE } from '../../routes/paths';
 
 // ----------------------------------------------------------------------
 const ICON_SIZE = {
@@ -25,6 +25,12 @@ const navConfig = {
       title: 'Về chúng tôi',
       icon: <Icon icon="fluent:people-12-regular" {...ICON_SIZE} />,
       path: PATH_PAGE.about
+      // path: PATH_DOCS
+    },
+    {
+      title: 'Tìm hiểu',
+      icon: <Icon icon="fluent:people-12-regular" {...ICON_SIZE} />,
+      path: PATH_DASHBOARD_LEARN.learn.how_it_work
       // path: PATH_DOCS
     }
   ],

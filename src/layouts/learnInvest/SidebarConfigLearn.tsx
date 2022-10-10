@@ -31,7 +31,7 @@ const SidebarConfigLearn = [
     subheader: 'Dành cho nhà đầu tư',
     items: [
       {
-        title: 'How it works',
+        title: 'Cách thức hoạt động',
         path: PATH_DASHBOARD_LEARN.learn.how_it_work,
         icon: ICONS.krowd
       },

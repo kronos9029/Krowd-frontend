@@ -125,7 +125,6 @@ export default function MainNavbar() {
     setAnchorEl(null);
   };
   const handleLogout = async () => {
-    console.log('aaa');
     try {
       await logout?.();
       if (isMountedRef.current) {
