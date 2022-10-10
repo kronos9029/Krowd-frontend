@@ -36,7 +36,7 @@ const SidebarConfigLearn = [
         icon: ICONS.krowd
       },
       {
-        title: 'Hiểu các điều khoản giao dịch',
+        title: 'Các điều khoản giao dịch cho chiến dịch kêu gọi',
         path: PATH_DASHBOARD_LEARN.learn.app,
         icon: ICONS.krowd
       },

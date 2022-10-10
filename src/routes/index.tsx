@@ -11,7 +11,6 @@ import AuthGuard from '../guards/AuthGuard';
 // import RoleBasedGuard from '../guards/RoleBasedGuard';
 // components
 import LoadingScreen from '../components/LoadingScreen';
-import PackageVoucherCheckout from '../pages/dashboard/PackageVoucherCheckout';
 import MainNavbar from 'layouts/main/MainNavbar';
 import MainFooter from 'layouts/main/MainFooter';
 import { Divider } from '@mui/material';
@@ -175,7 +174,7 @@ export default function Router() {
       children: [
         { element: <Navigate to="/learn/investors/what-the-deal-terms-mean" replace /> },
         { path: '/learn/investors/how-it-works', element: <LearnHowItWork /> },
-        { path: '/learn/investors/what-the-deal-terms-mean', element: <GeneralAppLearn /> },
+        { path: '/learn/investors/what-the-deal-terms-mean', element: <DealTerm /> },
         { path: '/learn/investors/what-do-i-get-when-i-invest', element: <WhatIGetInvest /> },
         { path: '/learn/investors/risks', element: <RiskInvest /> }
       ]
@@ -243,7 +242,7 @@ const Register = Loadable(lazy(() => import('../pages/authentication/Register'))
 const VerifyCode = Loadable(lazy(() => import('../pages/authentication/VerifyCode')));
 // Dashboard
 const GeneralApp = Loadable(lazy(() => import('../pages/dashboard/GeneralApp')));
-const GeneralAppLearn = Loadable(lazy(() => import('../pages/learn/GeneralAppLearn')));
+const DealTerm = Loadable(lazy(() => import('../pages/learn/DealTerm')));
 const LearnHowItWork = Loadable(lazy(() => import('../pages/learn/LearnHowItWork')));
 const WhatIGetInvest = Loadable(lazy(() => import('../pages/learn/WhatIGetInvest')));
 const RiskInvest = Loadable(lazy(() => import('../pages/learn/RiskInvest')));
