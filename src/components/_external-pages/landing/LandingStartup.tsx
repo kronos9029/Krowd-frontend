@@ -1,6 +1,8 @@
 // material
 import { alpha, useTheme, styled } from '@mui/material/styles';
 //React
+import searchFill from '@iconify/icons-eva/search-fill';
+
 import { useEffect, useState } from 'react';
 import { dispatch, RootState, useSelector } from 'redux/store';
 import useAuth from 'hooks/useAuth';
@@ -17,7 +19,10 @@ import {
   Button,
   Divider,
   Stack,
-  Chip
+  Chip,
+  Autocomplete,
+  InputAdornment,
+  OutlinedInput
 } from '@mui/material';
 //Languages
 import cookies from 'js-cookie';
@@ -25,8 +30,12 @@ import { useTranslation } from 'react-i18next';
 //Project
 import { ProjectCard } from '../project';
 import { PROJECT_STATUS } from '../../../@types/krowd/project';
-import { getAllProjectLanding, getProjectList } from 'redux/slices/krowd_slices/project';
-import { getFieldList } from 'redux/slices/krowd_slices/field';
+import {
+  getAllProjectLanding,
+  getProjectList,
+  getProjectListWithFieldId
+} from 'redux/slices/krowd_slices/project';
+import { getFieldList, getFieldListByBusinessId } from 'redux/slices/krowd_slices/field';
 //Icon
 import { Icon } from '@iconify/react';
 import barChartOutlined from '@iconify/icons-ant-design/bar-chart-outlined';
@@ -114,27 +123,52 @@ const SORT_OPTIONS_CONFIG = {
 
 // ----------------------------------------------------------------------
 
+const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
+  width: 240,
+  transition: theme.transitions.create(['box-shadow', 'width'], {
+    easing: theme.transitions.easing.easeInOut,
+    duration: theme.transitions.duration.shorter
+  }),
+  '&.Mui-focused': { width: 320, boxShadow: theme.customShadows.z8 },
+  '& fieldset': {
+    borderWidth: `1px !important`,
+    borderColor: `${theme.palette.grey[500_32]} !important`
+  }
+}));
 export default function LandingStartUp() {
   const [filters, setFilters] = useState('Mostfunded');
   const currentLanguageCode = cookies.get('i18next') || 'en';
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
   const { t } = useTranslation();
   const { projectListLanding } = useSelector((state: RootState) => state.project);
+  const { isLoadingProjectListLanding } = projectListLanding;
   const { fieldList } = useSelector((state: RootState) => state.fieldKrowd);
+  const [searchField, setSearchField] = useState('');
+  const [searchInvest, setSearchInvest] = useState('');
+  const [FieldID, setFieldId] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+
   const handleChangeSort = (value?: string) => {
     if (value) {
       setFilters(value);
     }
   };
   useEffect(() => {
-    dispatch(getAllProjectLanding());
+    dispatch(getProjectListWithFieldId(searchField, searchInvest));
   }, [dispatch]);
 
+  const handleChangeSearch = async (valuesearchQuery: string) => {
+    setSearchQuery(valuesearchQuery);
+    console.log('searchQuery', searchQuery);
+  };
   const [openHighLight, setOpenHighLight] = useState(false);
   const [openRevenue, setOpenRevenue] = useState(false);
   const [openCategory, setOpenCategory] = useState(false);
   const [openMore, setOpenMore] = useState(false);
   const [selectedFilter, setSelectFilter] = useState<String[]>([]);
+  const [selectedInvestmentTargetCapital, setSelectInvestmentTargetCapital] = useState<String[]>(
+    []
+  );
   const getHighLight = () => {
     setOpenHighLight(!openHighLight);
     setOpenCategory(false);
@@ -166,9 +200,30 @@ export default function LandingStartUp() {
   const handleClick = (func: VoidFunction) => {
     func();
   };
-  const addToSelectedFilterList = (newValue: String) => {
+  const addToSelectedInvestFilterList = (newValue: string) => {
+    const index = selectedInvestmentTargetCapital.indexOf(newValue);
+    let newList2 = [];
+    setSearchInvest(newValue);
+    if (index === -1) {
+      newList2 = [...selectedInvestmentTargetCapital, newValue];
+    } else {
+      selectedInvestmentTargetCapital.splice(index, 1);
+      newList2 = [...selectedInvestmentTargetCapital];
+    }
+    setSelectInvestmentTargetCapital(newList2);
+    dispatch(getProjectListWithFieldId(FieldID ?? '', searchInvest));
+  };
+  const handleDeleteInvestFilterList = (value: String) => {
+    const index = selectedInvestmentTargetCapital.indexOf(value);
+    let newList = [];
+    selectedInvestmentTargetCapital.splice(index, 1);
+    newList = [...selectedInvestmentTargetCapital];
+    setSelectInvestmentTargetCapital(newList);
+  };
+  const addToSelectedFilterList = (newValue: string) => {
     const index = selectedFilter.indexOf(newValue);
     let newList = [];
+    setSearchField(newValue);
     if (index === -1) {
       newList = [...selectedFilter, newValue];
     } else {
@@ -176,7 +231,7 @@ export default function LandingStartUp() {
       newList = [...selectedFilter];
     }
     setSelectFilter(newList);
-    console.log(selectedFilter);
+    dispatch(getProjectListWithFieldId(FieldID, searchInvest));
   };
   const handleDelete = (value: String) => {
     const index = selectedFilter.indexOf(value);
@@ -184,7 +239,7 @@ export default function LandingStartUp() {
     selectedFilter.splice(index, 1);
     newList = [...selectedFilter];
     setSelectFilter(newList);
-    console.log(selectedFilter);
+    console.log('selectedFilter', selectedFilter);
   };
 
   return (
@@ -214,18 +269,9 @@ export default function LandingStartUp() {
             </Typography>
           </Box>
         </Box>
-
-        {/* <Grid container>
-          {projectList &&
-            projectList.listOfProject
-              .filter((value) => value.status === PROJECT_STATUS.CALLING_FOR_INVESTMENT)
-              .slice(0, 3)
-              .map((p) => <ProjectCard key={p.id} row={p} />)}
-        </Grid> */}
         <Grid container alignItems="center" justifyContent="center" spacing={5}>
           {projectListLanding.listOfProject &&
             projectListLanding.listOfProject
-              .filter((value) => value.status === PROJECT_STATUS.CALLING_FOR_INVESTMENT)
               .slice(0, 9)
               .map((p) => <ProjectCard key={p.id} row={p} />)}
         </Grid>
@@ -251,6 +297,17 @@ export default function LandingStartUp() {
           <Grid container>
             <Grid xs={12} md={2} lg={4}>
               <BlogPostsSearch sx={{ display: 'flex' }} border="none" />
+
+              {/* <SearchStyle
+                value={searchQuery}
+                onChange={(e) => handleChangeSearch(e.target.value)}
+                placeholder="Bạn muốn tìm dự án gì đấy?"
+                startAdornment={
+                  <InputAdornment position="start">
+                    <Box component={Icon} icon={searchFill} sx={{ color: 'text.disabled' }} />
+                  </InputAdornment>
+                }
+              /> */}
             </Grid>
             <Grid xs={12} md={10} lg={8} p={0.1} textAlign={'center'}>
               <Grid container sx={{ mb: 3 }}>
@@ -357,6 +414,7 @@ export default function LandingStartUp() {
                         <ListItemButton onClick={() => addToSelectedFilterList(f.name)}>
                           <ListItemText
                             primary={f.name}
+                            onClick={() => setFieldId(f.id)}
                             sx={{ color: isSelected !== -1 ? 'primary.main' : 'text.secondary' }}
                           />
                         </ListItemButton>
@@ -393,8 +451,15 @@ export default function LandingStartUp() {
                     </ListItemButton>
                   </List>
                   <List component="div" disablePadding>
-                    <ListItemButton sx={{ pl: 4 }}>
-                      <ListItemText primary="25-49 employees" />
+                    <ListItemButton
+                      onClick={() => addToSelectedFilterList('25-49 employees')}
+                      sx={{ pl: 4 }}
+                    >
+                      <ListItemText
+                        onClick={() => setSearchInvest('25-49 employees')}
+                        defaultValue={'25-49 employees'}
+                        primary="25-49 employees"
+                      />
                     </ListItemButton>
                   </List>
                   <List component="div" disablePadding>
@@ -418,18 +483,36 @@ export default function LandingStartUp() {
               <Grid container sx={{ backgroundColor: '#f7f7f7' }} mb={5}>
                 <Grid container sx={{ py: 3, ml: 3 }} md={6} lg={6}>
                   <List component="div" disablePadding>
-                    <ListItemButton sx={{ pl: 4, mr: 6 }}>
-                      <ListItemText primary="$5M+ raised" />
+                    <ListItemButton
+                      sx={{ pl: 4, mr: 6 }}
+                      onClick={() => addToSelectedInvestFilterList('5,000,000đ')}
+                    >
+                      <ListItemText
+                        primary="5,000,000đ"
+                        onClick={() => setSearchInvest('5000000')}
+                      />
                     </ListItemButton>
                   </List>
                   <List component="div" disablePadding>
-                    <ListItemButton sx={{ pl: 4, mr: 4 }}>
-                      <ListItemText primary="$10M+ raised" />
+                    <ListItemButton
+                      sx={{ pl: 4, mr: 4 }}
+                      onClick={() => addToSelectedInvestFilterList('10,000,000đ')}
+                    >
+                      <ListItemText
+                        primary="10,000,000đ"
+                        onClick={() => setSearchInvest('10000000')}
+                      />
                     </ListItemButton>
                   </List>
                   <List component="div" disablePadding>
-                    <ListItemButton sx={{ pl: 4, mr: 4 }}>
-                      <ListItemText primary="$20M+ raised" />
+                    <ListItemButton
+                      sx={{ pl: 4, mr: 4 }}
+                      onClick={() => addToSelectedInvestFilterList('20,000,000đ')}
+                    >
+                      <ListItemText
+                        primary="20,000,000đ"
+                        onClick={() => setSearchInvest('20000000')}
+                      />
                     </ListItemButton>
                   </List>
                   <List component="div" disablePadding>
@@ -562,13 +645,37 @@ export default function LandingStartUp() {
             </Stack>
           </Box>
         )}
-        <Grid container alignItems="center" justifyContent="center" spacing={5}>
-          {projectListLanding.listOfProject &&
-            projectListLanding.listOfProject
-              .filter((value) => value.status === PROJECT_STATUS.CALLING_FOR_INVESTMENT)
-              .slice(0, 9)
-              .map((p) => <ProjectCard key={p.id} row={p} />)}
-        </Grid>
+        {selectedInvestmentTargetCapital && (
+          <Box mt={1} mb={3}>
+            <Stack direction="row" spacing={1}>
+              {selectedInvestmentTargetCapital.map((v, i) => (
+                <Chip key={i} label={v} onDelete={handleDeleteInvestFilterList} />
+              ))}
+            </Stack>
+          </Box>
+        )}
+
+        {searchField !== '' && selectedFilter.length > 0 ? (
+          <Grid container alignItems="center" justifyContent="center" spacing={5}>
+            {projectListLanding.listOfProject &&
+              projectListLanding.listOfProject
+                .filter((value) => value.fieldId === FieldID)
+                .slice(0, 9)
+                .map((p) => <ProjectCard key={p.id} row={p} />)}
+          </Grid>
+        ) : (
+          <Grid container alignItems="center" justifyContent="center" spacing={5}>
+            {projectListLanding.listOfProject &&
+              projectListLanding.listOfProject
+                .slice(0, 9)
+                .filter(
+                  (valueQuery) =>
+                    valueQuery.name.toLowerCase().includes(searchQuery) ||
+                    valueQuery.name.toUpperCase().includes(searchQuery)
+                )
+                .map((p) => <ProjectCard key={p.id} row={p} />)}
+          </Grid>
+        )}
       </Container>
     </RootStyle>
   );

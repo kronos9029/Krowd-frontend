@@ -4,9 +4,8 @@ import { Box, Grid, Card, Container, Typography, useMediaQuery } from '@mui/mate
 //
 import { varFadeInUp, MotionInView } from '../../animate';
 import CardMedia from '@mui/material/CardMedia';
-import cookies from 'js-cookie';
-import { useTranslation } from 'react-i18next';
-import { OverlayBackground } from 'assets';
+
+import useLocales from 'hooks/useLocales';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
@@ -64,18 +63,7 @@ const CardStyle = styled(Card)(({ theme }) => {
     }
   };
 });
-const Language = [
-  {
-    code: 'vi',
-    name: 'English',
-    countryCode: 'vi'
-  },
-  {
-    code: 'en',
-    name: 'Vietnamese',
-    countryCode: 'en'
-  }
-];
+
 // ----------------------------------------------------------------------
 const Advertisements = [
   {
@@ -98,10 +86,8 @@ export default function LandingMinimalHelps() {
   const theme = useTheme();
   const isLight = theme.palette.mode === 'light';
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
-  const bgLight = theme.palette.mode === 'light';
-  const currentLanguageCode = cookies.get('i18next') || 'en';
-  const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
-  const { t } = useTranslation();
+  const { translate } = useLocales();
+
   return (
     <RootStyle
       sx={{
@@ -112,7 +98,7 @@ export default function LandingMinimalHelps() {
       <Container maxWidth="lg">
         <Box sx={{ textAlign: 'center', padding: '1rem 0' }}>
           <Typography variant="h2" sx={{ mb: 3, my: '3rem' }}>
-            {t('advertise_title')}
+            {translate('advertise_title')}
           </Typography>
         </Box>
         <Grid container spacing={isDesktop ? 10 : 5}>
@@ -142,13 +128,14 @@ export default function LandingMinimalHelps() {
                       }}
                       paragraph
                     >
-                      {t(value.step_title)}
+                      {translate(value.step_title)}
+                      {/* {t(value.step_title)} */}
                     </Typography>
                     <Typography
                       style={{ paddingBottom: '2rem', textAlign: 'center' }}
                       sx={{ color: isLight ? 'text.secondary' : 'common.black' }}
                     >
-                      {t(value.step_content)}
+                      {translate(value.step_content)}
                     </Typography>
                   </CardStyle>
                 </MotionInView>

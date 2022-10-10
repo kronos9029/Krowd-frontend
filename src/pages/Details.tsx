@@ -25,7 +25,7 @@ import {
 } from 'components/_external-pages/project-detail/index';
 import MHidden from 'components/@material-extend/MHidden';
 import MainNavbar from 'layouts/main/MainNavbar';
-import { PATH_DASHBOARD, PATH_DASHBOARD_LEARN, PATH_PAGE } from 'routes/paths';
+import { PATH_DASHBOARD_LEARN, PATH_PAGE } from 'routes/paths';
 import { useEffect, useState } from 'react';
 //Language
 import cookies from 'js-cookie';
@@ -36,6 +36,7 @@ import { Icon } from '@iconify/react';
 import starFilled from '@iconify/icons-ant-design/star-filled';
 import useAuth from 'hooks/useAuth';
 import LoadingScreen from 'components/LoadingScreen';
+import useLocales from 'hooks/useLocales';
 // ----------------------------------------------------------------------
 
 const APP_BAR_MOBILE = 64;
@@ -51,20 +52,11 @@ const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
     height: APP_BAR_DESKTOP
   }
 }));
-const Language = [
-  {
-    code: 'vi',
-    name: 'English',
-    countryCode: 'vi'
-  },
-  {
-    code: 'en',
-    name: 'Vietnamese',
-    countryCode: 'en'
-  }
-];
+
 export default function ComponentsDetails() {
   //Language
+  const { translate: t } = useLocales();
+
   const { id = '' } = useParams();
   useEffect(() => {
     //PROJECT BY ID
@@ -85,9 +77,6 @@ export default function ComponentsDetails() {
   const [openStage, setOpenStage] = useState('chart');
   const { listOfChartStage } = useSelector((state: RootState) => state.stage);
 
-  const currentLanguageCode = cookies.get('i18next') || 'en';
-  const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
-  const { t } = useTranslation();
   const { user } = useAuth();
   const [isShowNav, setisShowNav] = useState(false);
   const listenScrollEvent = () => {
@@ -277,6 +266,7 @@ export default function ComponentsDetails() {
                         <Button
                           sx={{
                             backgroundColor: '#FF7F50',
+                            textTransform: 'none',
                             textDecoration: 'none',
                             '&:hover': { backgroundColor: '#FF7F50' }
                           }}
@@ -295,6 +285,8 @@ export default function ComponentsDetails() {
                         sx={{
                           backgroundColor: '#FF7F50',
                           textDecoration: 'none',
+                          textTransform: 'none',
+
                           '&:hover': { backgroundColor: '#FF7F50' }
                         }}
                         // onClick={() => handleInvest()}

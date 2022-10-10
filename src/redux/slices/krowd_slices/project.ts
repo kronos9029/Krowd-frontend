@@ -291,6 +291,20 @@ export function getProjectList() {
     }
   };
 }
+export function getProjectListWithFieldId(Id: string, investmentTargetCapital: string) {
+  return async () => {
+    dispatch(slice.actions.startLoadingProjectList());
+    try {
+      const response = await ProjectAPI.getProjectByFieldID({
+        id: Id,
+        investmentTargetCapital: investmentTargetCapital
+      });
+      dispatch(slice.actions.getProjectListSuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
 
 //------- GET ALL PROJECT INVESTED WITH PARAMS
 export function getProjectListInvested() {

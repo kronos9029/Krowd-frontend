@@ -11,6 +11,5 @@ export { default as ProjectPackage } from './ProjectPackage';
 export { default as ProjectDetailsPress } from './ProjectDetailsPress';
 export { default as KrowdProjectStage } from './KrowdProjectStage';
 export { default as StageListKrowdTable } from './StageListKrowdTable';
-export { default as ProjectPackageInvest } from './ProjectPackageInvest';
 export { default as ProjectDetailHowItWorks } from './ProjectDetailHowItWorks';
 export { default as ProjectDetailFAQsBusiness } from './ProjectDetailFAQsBusiness';

@@ -81,7 +81,7 @@ export default function ProjectPackage({ project }: { project: Project1 }) {
             {packageLists.listOfPackage &&
               packageLists.listOfPackage.length > 0 &&
               packageLists.listOfPackage.map((e, index) => (
-                <Grid sx={{ p: 2 }} item key={index} xs={12} sm={12} md={12} lg={12}>
+                <Grid item key={index} xs={12} sm={12} md={12} lg={12}>
                   <Typography
                     variant="overline"
                     sx={{ display: 'flex', color: 'text.secondary', justifyContent: 'center' }}
@@ -103,8 +103,7 @@ export default function ProjectPackage({ project }: { project: Project1 }) {
                     sx={{
                       textTransform: 'capitalize',
                       justifyContent: 'center',
-                      display: 'flex',
-                      mb: 2
+                      display: 'flex'
                     }}
                   >
                     (VND)
@@ -125,7 +124,7 @@ export default function ProjectPackage({ project }: { project: Project1 }) {
                     textAlign={'left'}
                     component="ul"
                     spacing={2}
-                    sx={{ my: 5, width: 1 }}
+                    sx={{ my: 2, width: 1 }}
                   >
                     {e.descriptionList.map((item, i) => (
                       <Stack
@@ -159,6 +158,7 @@ export default function ProjectPackage({ project }: { project: Project1 }) {
                           textDecoration: 'none',
                           '&:hover': { backgroundColor: '#FF7F50' }
                         }}
+                        fullWidth
                         disableElevation
                         disableRipple
                         variant="contained"

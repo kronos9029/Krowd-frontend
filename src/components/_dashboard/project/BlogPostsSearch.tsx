@@ -29,6 +29,7 @@ import Cookies from 'js-cookie';
 import { REACT_APP_API_URL } from 'config';
 import { dispatch, RootState, useSelector } from 'redux/store';
 import { ALL_Project, Project1 } from '../../../@types/krowd/project';
+import useLocales from 'hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
@@ -71,19 +72,14 @@ export default function BlogPostsSearch({ sx }: BoxProps) {
   const linkTo = (title: string) => `${PATH_PAGE.details}/${paramCase(title)}`;
 
   const { projectListLanding } = useSelector((state: RootState) => state.project);
-
   const { listOfProject } = projectListLanding;
-  const initialLanguage = Cookies.get('i18next') || 'vi';
-  const [currentLanguage, setCurrentLanguage] = useState('');
-  const { t } = useTranslation();
-
+  const { translate: t } = useLocales();
+  console.log(searchQuery);
   const handleChangeSearch = async (value: string) => {
     try {
       setSearchQuery(value);
       if (value) {
-        const response = await axios.get(`${REACT_APP_API_URL}/projects/`, {
-          params: { query: value }
-        });
+        const response = await axios.get(`${REACT_APP_API_URL}/projects?name=${searchQuery}`);
         setSearchResults(response.data.results);
         console.log(response);
       } else {
@@ -93,29 +89,7 @@ export default function BlogPostsSearch({ sx }: BoxProps) {
       console.error(error);
     }
   };
-  // const loadUsers = async () => {
-  //   const response = await axios.get('https://reqres.in/api/users');
-  //   console.log(response.data.data);
-  //   setUsers(response.data.data);
-  // };
-  console.log('searchQuery', searchQuery);
   useEffect(() => {
-    const handleChangeSearch = async (value: string) => {
-      try {
-        setSearchQuery(value);
-        if (value) {
-          const response = await axios.get(`${REACT_APP_API_URL}/projects`, {
-            params: { query: value }
-          });
-          setSearchResults(response.data.results);
-          console.log(response);
-        } else {
-          setSearchResults([]);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
     handleChangeSearch(searchQuery);
   }, []);
   return (

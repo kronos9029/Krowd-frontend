@@ -1,29 +1,14 @@
 import { Icon } from '@iconify/react';
 import { motion } from 'framer-motion';
-import searchFill from '@iconify/icons-eva/search-fill';
-// material
-import Particles from 'react-particles-js';
 
 import { styled } from '@mui/material/styles';
-import cookies from 'js-cookie';
-import { useTranslation } from 'react-i18next';
-import particlesConfig from 'assets/particlesConfig.json';
 
-import {
-  Button,
-  Box,
-  Container,
-  Typography,
-  Stack,
-  StackProps,
-  InputAdornment,
-  Input
-} from '@mui/material';
+import { Container, Typography, Stack, StackProps } from '@mui/material';
 // routes
 import { varFadeInUp, MotionInView, varFadeInDown } from '../../animate';
-import { PATH_SEARCHPAGE } from 'routes/paths';
 import { OverlayBackground } from 'assets';
 import { BlogPostsSearch } from 'components/_dashboard/project';
+import useLocales from 'hooks/useLocales';
 
 // ----------------------------------------------------------------------
 const SearchbarStyle = styled('div')(({ theme }) => ({
@@ -52,23 +37,6 @@ const RootStyle = styled('div')(({ theme }) => ({
     // display: 'flex',
     alignItems: 'center'
   }
-  // [theme.breakpoints.up('sm')]: {
-  //   paddingBottom: theme.spacing(8),
-  //   top: 0,
-  //   left: 0,
-  //   width: '100%',
-  //   // display: 'flex',
-  //   alignItems: 'center'
-  // },
-  // [theme.breakpoints.up('xs')]: {
-  //   paddingTop: theme.spacing(11),
-  //   paddingBottom: theme.spacing(4),
-  //   top: 0,
-  //   left: 0,
-  //   width: '100%',
-  //   // display: 'flex',
-  //   alignItems: 'center'
-  // }
 }));
 
 const ContentStyle = styled((props: StackProps) => <Stack spacing={5} {...props} />)(
@@ -120,69 +88,24 @@ const HeroImgStyle = styled(motion.iframe)(({ theme }) => ({
     display: 'none'
   }
 }));
-const SearchInput = styled(Input)(() => ({
-  backgroundColor: '#FAF4EF',
-  height: '50px',
-  borderRadius: '5px',
-  fontWeight: 'bold',
-  color: '#251E18'
-}));
+
 //
-const Language = [
-  {
-    code: 'vi',
-    name: 'English',
-    countryCode: 'vi'
-  },
-  {
-    code: 'en',
-    name: 'Vietnamese',
-    countryCode: 'en'
-  }
-];
+
 // ----------------------------------------------------------------------
 
 export default function LandingHero() {
-  const currentLanguageCode = cookies.get('i18next') || 'en';
-  const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
-  const { t } = useTranslation();
+  const { translate } = useLocales();
   return (
     <RootStyle>
-      {/* <Particles
-        className="myParticles"
-        params={{
-          particles: {
-            line_linked: {
-              color: '#528fcc'
-            },
-            number: {
-              value: 100
-            },
-            size: {
-              value: 8
-            },
-            color: {
-              value: '#336699'
-            }
-          },
-          interactivity: {
-            events: {
-              onhover: {
-                enable: false,
-                mode: 'repulse'
-              }
-            }
-          }
-        }}
-      /> */}
       <Container maxWidth="lg" sx={{ position: 'relative' }}>
         {/* <Container maxWidth={false}> */}
         <HeroImgStyle src="https://embed.lottiefiles.com/animation/71841" />
         <ContentStyle>
           <MotionInView variants={varFadeInUp}>
             <Typography variant="h1" sx={{ color: 'common.white' }}>
-              {t('Thumbnail_landing_hero_title')} {t('Thumbnail_landing_hero_title_1')}{' '}
-              {t('Thumbnail_landing_hero_title_2')}
+              {translate('Thumbnail_landing_hero_title')}{' '}
+              {translate('Thumbnail_landing_hero_title_1')}{' '}
+              {translate('Thumbnail_landing_hero_title_2')}
               <Typography component="span" variant="h1" sx={{ color: '#14B7CC' }}>
                 &nbsp;KROWD
               </Typography>
@@ -190,49 +113,16 @@ export default function LandingHero() {
           </MotionInView>
           <MotionInView variants={varFadeInUp}>
             <Typography sx={{ color: 'common.white', paddingBottom: '1rem' }}>
-              {t('Thumbnail_landing_hero_description')} {t('Thumbnail_landing_hero_description_1')}{' '}
+              {translate('Thumbnail_landing_hero_description')}{' '}
+              {translate('Thumbnail_landing_hero_description_1')}{' '}
             </Typography>
             <Typography sx={{ color: 'common.white', paddingBottom: '1rem' }}>
-              {t('Thumbnail_landing_hero_description2')}
+              {translate('Thumbnail_landing_hero_description2')}
             </Typography>
           </MotionInView>
           <MotionInView variants={varFadeInUp}>
             <Typography>
-              <SearchbarStyle>
-                {/* <SearchInput
-                  disableUnderline={true}
-                  fullWidth
-                  placeholder={t('Search_hover')}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <Box
-                        component={Icon}
-                        icon={searchFill}
-                        sx={{
-                          marginLeft: '10px',
-                          color: '#251E18',
-                          width: 20,
-                          height: 20
-                        }}
-                      />
-                    </InputAdornment>
-                  }
-                />
-                <Button
-                  href={PATH_SEARCHPAGE}
-                  style={{
-                    backgroundColor: '#14B7CC',
-                    color: '#FAF4EF',
-                    width: '150px',
-                    margin: '7px',
-                    fontSize: '15px',
-                    height: '50px'
-                  }}
-                  variant="contained"
-                >
-                  {t('Search')}
-                </Button> */}
-              </SearchbarStyle>
+              <SearchbarStyle></SearchbarStyle>
               <BlogPostsSearch />
             </Typography>
           </MotionInView>

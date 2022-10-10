@@ -54,7 +54,7 @@ import * as Yup from 'yup';
 import { fCurrency, fCurrencyPackage } from 'utils/formatNumber';
 import { LoadingButton } from '@mui/lab';
 import eyeFill from '@iconify/icons-eva/eye-fill';
-import refresh from '@iconify/icons-eva/refresh-fill';
+import sield from '@iconify/icons-eva/shield-outline';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 // import eyeOffFill from '@iconify/icons-eva/eye-off-2-fill';
 import checkFill from '@iconify/icons-eva/checkmark-fill';
@@ -99,7 +99,9 @@ export default function KrowdPackage() {
   const [showIDPayment, setShowIDPayment] = useState(true);
   const [openModalInvestSuccess, setOpenModalInvestSuccess] = useState(false);
   const [openModalInvestError, setOpenModalInvestError] = useState(false);
+  const [openInvestedConfirm, setOpenInvestedConfirm] = useState(false);
   const { id = '' } = useParams();
+  const [valueMin, setValueMin] = useState<Date | null>(new Date(Date.now()));
 
   //DATA RESPONSE SUCCESS
   const [resPaymentID, setDataInvestedIDPAY] = useState('');
@@ -116,6 +118,12 @@ export default function KrowdPackage() {
   };
   const onToggleShowIDPayment = () => {
     setShowIDPayment((prev) => !prev);
+  };
+  const handleConfilmInvested = () => {
+    setOpenInvestedConfirm(true);
+  };
+  const handleCloseConfilmInvested = () => {
+    setOpenInvestedConfirm(false);
   };
 
   //--------------------GET DATA----------------------------
@@ -536,39 +544,362 @@ export default function KrowdPackage() {
                       PackageDetails!.price * values.quantity ? (
                       // {values.checkBox ? (
                       <Box sx={{ mt: 3, display: 'flex' }}>
-                        <FormikProvider value={formik}>
-                          <Form noValidate autoComplete="off" onSubmit={handleSubmit}>
-                            <LoadingButton
-                              sx={{ width: 300 }}
-                              type="submit"
-                              variant="contained"
-                              loading={isSubmitting}
-                            >
-                              Xác nhận đầu tư {''} vào {projectID.name} với số tiền{' '}
-                              {PackageDetails?.price &&
-                                fCurrency(PackageDetails?.price * values.quantity)}{' '}
-                            </LoadingButton>
-                          </Form>
-                        </FormikProvider>
+                        {/* <FormikProvider value={formik}> */}
+                        {/* <Form noValidate autoComplete="off" onSubmit={handleSubmit}> */}
+                        <Button
+                          sx={{ width: 300 }}
+                          type="submit"
+                          variant="contained"
+                          // loading={isSubmitting}
+                          onClick={handleConfilmInvested}
+                        >
+                          Xác nhận đầu tư {''} vào {projectID.name} với số tiền{' '}
+                          {PackageDetails?.price &&
+                            fCurrency(PackageDetails?.price * values.quantity)}{' '}
+                        </Button>
+                        <Dialog fullWidth maxWidth="sm" open={openInvestedConfirm}>
+                          <DialogTitle sx={{ alignItems: 'center', textAlign: 'center' }}>
+                            <Icon color="#14b7cc" height={60} width={60} icon={sield} />
+                          </DialogTitle>
+                          <DialogContent>
+                            <Box mt={1}>
+                              <DialogContentText
+                                sx={{
+                                  textAlign: 'center',
+                                  fontWeight: 900,
+                                  fontSize: 20,
+                                  color: 'black'
+                                }}
+                              >
+                                Xác nhận đầu tư {''} vào {projectID.name}
+                              </DialogContentText>
+                            </Box>
+                            <Stack spacing={{ xs: 2, md: 1 }}>
+                              <Container sx={{ p: 2 }}>
+                                <Box>
+                                  <Typography
+                                    sx={{ textAlign: 'center', color: '#14b7cc', fontSize: 35 }}
+                                  >
+                                    Số tiền{' '}
+                                    {PackageDetails?.price &&
+                                      fCurrency(PackageDetails?.price * values.quantity)}{' '}
+                                  </Typography>
+                                </Box>
+                                <Divider sx={{ my: 2 }} />
+                                <Box
+                                  sx={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    mb: '0.5rem',
+                                    p: 1
+                                  }}
+                                >
+                                  <Typography
+                                    paragraph
+                                    sx={{
+                                      color: '#251E18',
+                                      marginBottom: '0.2rem'
+                                    }}
+                                  >
+                                    <strong>Dự án</strong>
+                                  </Typography>
+                                  <Typography
+                                    paragraph
+                                    sx={{
+                                      color: '#251E18',
+                                      marginBottom: '0.2rem'
+                                    }}
+                                  >
+                                    <strong>{projectID?.name}</strong>
+                                  </Typography>
+                                </Box>
+                                <Box
+                                  sx={{
+                                    display: 'flex',
+                                    p: 1,
+                                    justifyContent: 'space-between'
+                                  }}
+                                >
+                                  <Typography
+                                    paragraph
+                                    sx={{
+                                      color: '#251E18',
+
+                                      marginBottom: '0.2rem'
+                                    }}
+                                  >
+                                    <strong>Thời gian đầu tư</strong>
+                                  </Typography>
+                                  <Typography
+                                    paragraph
+                                    sx={{
+                                      color: '#251E18'
+                                    }}
+                                  >
+                                    {`${valueMin}`.toString().substring(8, 25)}
+                                  </Typography>
+                                </Box>
+
+                                <Box>
+                                  <Typography
+                                    sx={{ paddingLeft: 2, pt: 2, color: '#e8c163' }}
+                                    variant="h6"
+                                  >
+                                    Lưu ý:
+                                  </Typography>
+
+                                  <Typography
+                                    sx={{ paddingLeft: 0.4, pt: 2, color: '#e8c163' }}
+                                    variant="body2"
+                                  >
+                                    (*) Nhà đầu tư vui lòng kiểm tra những thông tin của mình trước
+                                    khi đầu tư (Họ và tên, SĐT, địa chỉ gmail).
+                                  </Typography>
+                                  <Typography
+                                    sx={{ paddingLeft: 0.4, pt: 2, color: '#e8c163' }}
+                                    variant="body2"
+                                  >
+                                    (*) Nhà đầu tư vui lòng kiểm tra gói đầu tư bao gồm (tên gói, số
+                                    gói đã mua, số tiền đầu tư) để tránh nhầm lẫn khi thanh toán.
+                                  </Typography>
+                                  <Typography
+                                    sx={{ paddingLeft: 0.4, pt: 2, color: '#e8c163' }}
+                                    variant="body2"
+                                  >
+                                    (*) Khi nhà đầu tư bấm xác nhận KROWD sẽ gửi tới hòm thư điện tử
+                                    thông qua địa chỉ gmail của nhà đầu tư (Bản hợp đồng, xác nhận
+                                    bạn đã đầu tư vào dự án, những thông tin liên quan tới dự án)
+                                  </Typography>
+                                </Box>
+                              </Container>
+                            </Stack>
+                            <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
+                              <Box>
+                                <Button
+                                  color="error"
+                                  onClick={() => setOpenInvestedConfirm(false)}
+                                  variant="contained"
+                                >
+                                  Đóng
+                                </Button>
+                              </Box>
+                              <FormikProvider value={formik}>
+                                <Form noValidate autoComplete="off" onSubmit={handleSubmit}>
+                                  <LoadingButton
+                                    sx={{ width: 300 }}
+                                    type="submit"
+                                    variant="contained"
+                                    loading={isSubmitting}
+                                  >
+                                    Xác nhận đầu tư {''}{' '}
+                                    {PackageDetails?.price &&
+                                      fCurrency(PackageDetails?.price * values.quantity)}{' '}
+                                  </LoadingButton>
+                                </Form>
+                              </FormikProvider>
+                            </Box>
+                          </DialogContent>
+                        </Dialog>
+                        <Dialog fullWidth maxWidth="sm" open={openModalInvestError}>
+                          <DialogTitle sx={{ alignItems: 'center', textAlign: 'center' }}>
+                            <Icon color="red" height={60} width={60} icon={redFill} />
+                          </DialogTitle>
+                          <DialogContent>
+                            <Box mt={1}>
+                              <DialogContentText
+                                sx={{
+                                  textAlign: 'center',
+                                  fontWeight: 900,
+                                  fontSize: 20,
+                                  color: 'black'
+                                }}
+                              >
+                                Giao dịch không thành công
+                              </DialogContentText>
+                            </Box>
+                            <Stack spacing={{ xs: 2, md: 1 }}>
+                              <Container sx={{ p: 2 }}>
+                                <Box>
+                                  <Typography sx={{ textAlign: 'center' }}>
+                                    Mua thất bại {resQuality} {PackageDetails?.name}{' '}
+                                  </Typography>
+                                </Box>
+                                <Box>
+                                  <Typography
+                                    sx={{ textAlign: 'center', color: 'red', fontSize: 35 }}
+                                  >
+                                    {fCurrency(`${dataInvestedSuccess}`)}
+                                  </Typography>
+                                </Box>
+                                <Divider sx={{ my: 2 }} />
+                                <Box
+                                  sx={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    mb: '0.5rem',
+                                    p: 1
+                                  }}
+                                >
+                                  <Typography
+                                    paragraph
+                                    sx={{
+                                      color: '#251E18',
+                                      marginBottom: '0.2rem'
+                                    }}
+                                  >
+                                    <strong>Dự án</strong>
+                                  </Typography>
+                                  <Typography
+                                    paragraph
+                                    sx={{
+                                      color: '#251E18',
+                                      marginBottom: '0.2rem'
+                                    }}
+                                  >
+                                    <strong>{projectID?.name}</strong>
+                                  </Typography>
+                                </Box>
+                                <Box
+                                  sx={{
+                                    display: 'flex',
+                                    p: 1,
+
+                                    justifyContent: 'space-between'
+                                  }}
+                                >
+                                  <Typography
+                                    paragraph
+                                    sx={{
+                                      color: '#251E18',
+
+                                      marginBottom: '0.2rem'
+                                    }}
+                                  >
+                                    <strong>Thời gian</strong>
+                                  </Typography>
+                                  <Typography
+                                    paragraph
+                                    sx={{
+                                      color: '#251E18'
+                                    }}
+                                  >
+                                    {resDate}
+                                  </Typography>
+                                </Box>
+                                <Box
+                                  sx={{
+                                    display: 'flex',
+                                    p: 1,
+                                    justifyContent: 'space-between'
+                                  }}
+                                >
+                                  <Typography
+                                    paragraph
+                                    sx={{
+                                      color: '#251E18',
+                                      marginBottom: '0.2rem'
+                                    }}
+                                  >
+                                    <strong>Nguồn tiền</strong>
+                                  </Typography>
+                                  <Typography
+                                    paragraph
+                                    sx={{
+                                      color: '#251E18'
+                                    }}
+                                  >
+                                    {resWalletName}
+                                  </Typography>
+                                </Box>
+                                <Box
+                                  sx={{
+                                    display: 'flex',
+                                    p: 1,
+
+                                    justifyContent: 'space-between'
+                                  }}
+                                >
+                                  <Typography
+                                    paragraph
+                                    sx={{
+                                      color: '#251E18',
+
+                                      marginBottom: '0.2rem'
+                                    }}
+                                  >
+                                    <strong>Phí giao dịch</strong>
+                                  </Typography>
+                                  <Typography
+                                    paragraph
+                                    sx={{
+                                      color: '#251E18'
+                                    }}
+                                  >
+                                    {resFee}
+                                  </Typography>
+                                </Box>
+                                <Box
+                                  sx={{
+                                    display: 'flex',
+                                    p: 1,
+
+                                    justifyContent: 'space-between'
+                                  }}
+                                >
+                                  <Typography
+                                    paragraph
+                                    sx={{
+                                      color: '#251E18',
+
+                                      marginBottom: '0.2rem'
+                                    }}
+                                  >
+                                    <strong>Mã giao dịch</strong>
+                                  </Typography>
+                                  <Typography
+                                    paragraph
+                                    sx={{
+                                      color: '#251E18'
+                                    }}
+                                  >
+                                    {resPaymentID}
+                                  </Typography>
+                                </Box>
+                              </Container>
+                            </Stack>
+                            <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
+                              <Box>
+                                <Button
+                                  variant="contained"
+                                  href={`${PATH_PAGE.details}/${projectID?.id}`}
+                                >
+                                  Trở về dự án
+                                </Button>
+                              </Box>
+                            </Box>
+                          </DialogContent>
+                        </Dialog>
+                        {/* </Form> */}
+                        {/* </FormikProvider> */}
                       </Box>
                     ) : (
                       <>
                         <Box sx={{ mt: 3, display: 'flex' }}>
-                          <FormikProvider value={formik}>
-                            <Form noValidate autoComplete="off" onSubmit={handleSubmit}>
-                              <LoadingButton
-                                sx={{ width: 300 }}
-                                type="submit"
-                                disabled
-                                variant="contained"
-                                loading={isSubmitting}
-                              >
-                                Xác nhận đầu tư {''}{' '}
-                                {PackageDetails?.price &&
-                                  fCurrency(PackageDetails?.price * values.quantity)}{' '}
-                              </LoadingButton>
-                            </Form>
-                          </FormikProvider>
+                          {/* <FormikProvider value={formik}> */}
+                          {/* <Form noValidate autoComplete="off" onSubmit={handleSubmit}> */}
+                          <LoadingButton
+                            sx={{ width: 300 }}
+                            type="submit"
+                            disabled
+                            variant="contained"
+                            loading={isSubmitting}
+                          >
+                            Xác nhận đầu tư {''}{' '}
+                            {PackageDetails?.price &&
+                              fCurrency(PackageDetails?.price * values.quantity)}{' '}
+                          </LoadingButton>
+                          {/* </Form> */}
+                          {/* </FormikProvider> */}
                         </Box>
 
                         <Box>
@@ -687,8 +1018,14 @@ export default function KrowdPackage() {
                             <Typography sx={{ textAlign: 'end' }}>
                               <Button
                                 variant="contained"
+                                fullWidth
                                 onClick={() => handleClickOpenPackage2(e)}
-                                sx={{ display: 'right', mb: 2 }}
+                                sx={{
+                                  backgroundColor: '#FF7F50',
+                                  textDecoration: 'none',
+                                  mb: 2,
+                                  '&:hover': { backgroundColor: '#FF7F50' }
+                                }}
                               >
                                 Chọn gói
                               </Button>

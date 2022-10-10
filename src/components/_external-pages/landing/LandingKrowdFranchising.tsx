@@ -3,8 +3,7 @@ import { alpha, useTheme, styled } from '@mui/material/styles';
 import { Box, Grid, Container, Typography } from '@mui/material';
 //
 import { varFadeInUp, MotionInView } from '../../animate';
-import cookies from 'js-cookie';
-import { useTranslation } from 'react-i18next';
+import useLocales from 'hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
@@ -69,27 +68,15 @@ const variantScreenRight = {
   initial: COMMON,
   animate: { ...COMMON, translateX: '50%', translateY: -40, opacity: 1 }
 };
-const Language = [
-  {
-    code: 'vi',
-    name: 'English',
-    countryCode: 'vi'
-  },
-  {
-    code: 'en',
-    name: 'Vietnamese',
-    countryCode: 'en'
-  }
-];
+
 // ----------------------------------------------------------------------
 
-export default function LandingHugePackElements() {
+export default function LandingKrowdFranchising() {
   const theme = useTheme();
   const isLight = theme.palette.mode === 'light';
   const isRTL = theme.direction === 'rtl';
-  const currentLanguageCode = cookies.get('i18next') || 'en';
-  const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
-  const { t } = useTranslation();
+  const { translate: t } = useLocales();
+
   const screenLeftAnimate = variantScreenLeft;
   const screenCenterAnimate = variantScreenCenter;
   const screenRightAnimate = variantScreenRight;

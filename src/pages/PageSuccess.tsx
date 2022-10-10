@@ -34,7 +34,7 @@ export default function PageSuccess() {
       setCount(count - 1);
     }, 1000);
     if (count === 0) {
-      navigate('/');
+      navigate('/dashboard/banking');
     }
     console.log('1 second', count);
   }, [count]);
@@ -50,7 +50,7 @@ export default function PageSuccess() {
               </Typography>
             </motion.div>
             <Typography sx={{ color: 'text.secondary' }}>
-              Chúng tôi sẽ quay lại trang chủ trong vòng {count} giây. <br />
+              Chúng tôi sẽ quay lại ví của bạn trong vòng {count} giây. <br />
               Nếu bạn có bất kỳ câu hỏi hoặc thắc mắc nào thì vui lòng liên hệ với chúng tôi. <br />{' '}
               <br /> Chúc bạn một ngày vui vẻ,
             </Typography>
@@ -59,8 +59,8 @@ export default function PageSuccess() {
               <SuccessIlustation2 sx={{ height: 460 }}></SuccessIlustation2>
             </motion.div>
 
-            <Button to="/" size="large" variant="contained" component={RouterLink}>
-              Trở về trang chủ
+            <Button to="/dashboard/banking" size="large" variant="contained" component={RouterLink}>
+              Trở về ví của bạn
             </Button>
           </Box>
         </MotionContainer>

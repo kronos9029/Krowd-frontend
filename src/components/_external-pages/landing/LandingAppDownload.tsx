@@ -3,10 +3,9 @@ import { styled } from '@mui/material/styles';
 import { Box, Grid, Container, Typography } from '@mui/material';
 //
 import { MotionInView, varFadeInUp } from '../../animate';
-import cookies from 'js-cookie';
-import { useTranslation } from 'react-i18next';
 import { OverlayBackground } from 'assets';
 import { motion } from 'framer-motion';
+import useLocales from 'hooks/useLocales';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
@@ -16,26 +15,6 @@ const RootStyle = styled('div')(({ theme }) => ({
   backgroundSize: 'cover'
 }));
 
-const HeroImgStyle = styled(motion.iframe)(({ theme }) => ({
-  top: 0,
-  right: 10,
-  bottom: 0,
-  zIndex: 9,
-  width: '100%',
-  height: '100%',
-  margin: 'auto',
-  position: 'absolute',
-  objectFit: 'cover',
-  opacity: 0.8,
-  [theme.breakpoints.up('md')]: {
-    width: 'auto',
-    height: '48vh'
-  },
-  [theme.breakpoints.down('md')]: {
-    display: 'none'
-  }
-}));
-//
 const ContentStyle = styled('div')(({ theme }) => ({
   textAlign: 'center',
   position: 'relative',
@@ -49,24 +28,12 @@ const ContentStyle = styled('div')(({ theme }) => ({
     alignItems: 'center'
   }
 }));
-const Language = [
-  {
-    code: 'vi',
-    name: 'English',
-    countryCode: 'vi'
-  },
-  {
-    code: 'en',
-    name: 'Vietnamese',
-    countryCode: 'en'
-  }
-];
+
 // ----------------------------------------------------------------------
 
-export default function LandingDarkMode() {
-  const currentLanguageCode = cookies.get('i18next') || 'en';
-  const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
-  const { t } = useTranslation();
+export default function LandingAppDownload() {
+  const { translate: t } = useLocales();
+
   return (
     <RootStyle>
       <Container maxWidth="lg" sx={{ position: 'relative' }}>
@@ -87,7 +54,6 @@ export default function LandingDarkMode() {
 
         <Grid container spacing={5} direction="row-reverse" justifyContent="space-evenly">
           <Grid item xs={6} sm={3} md={4} sx={{ position: 'relative' }}>
-            {/* <HeroImgStyle src="https://embed.lottiefiles.com/animation/45041" /> */}
             <img alt="dark mode" src="/static/home/AppDownload.svg" />
           </Grid>
 

@@ -21,9 +21,9 @@ async function getsTransaction() {
   });
   return response;
 }
-async function getsWalletTransaction() {
+async function getsWalletTransaction({ id }: { id: string }) {
   const headers = getHeader();
-  const response = await axios.get(REACT_APP_API_URL + `${API_WALLET_TRANSACTION}`, {
+  const response = await axios.get(REACT_APP_API_URL + `${API_WALLET_TRANSACTION}?walletId=${id}`, {
     headers: headers
   });
   return response;

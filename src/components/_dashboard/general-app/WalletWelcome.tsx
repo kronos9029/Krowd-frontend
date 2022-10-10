@@ -1,12 +1,7 @@
 // material
 import { styled } from '@mui/material/styles';
 import { Typography, Button, Card, CardContent, CardProps, Container } from '@mui/material';
-import {
-  bankingIllustration,
-  CheckOutIllustration,
-  OrderCompleteIllustration,
-  SeoIllustration
-} from '../../../assets';
+import { CheckOutIllustration, OrderCompleteIllustration, SeoIllustration } from '../../../assets';
 import { User_Investor } from '../../../@types/krowd/investor';
 
 // ----------------------------------------------------------------------
@@ -16,10 +11,15 @@ const RootStyle = styled(Card)(({ theme }) => ({
   textAlign: 'center',
   backgroundColor: '#14b7cc',
   [theme.breakpoints.up('md')]: {
-    height: '100%',
-    display: 'flex',
+    height: '70%',
+    display: 'center',
     textAlign: 'left',
     alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+  [theme.breakpoints.up('sm')]: {
+    height: '70%',
+    textAlign: 'center',
     justifyContent: 'space-between'
   }
 }));
@@ -30,31 +30,17 @@ interface AppWelcomeProps extends CardProps {
   investor?: User_Investor | null;
   user?: any;
 }
-const BankingContainer = styled('div')(({ theme }) => ({
-  padding: theme.spacing(15, 0, 4, 0),
-  backgroundImage: `url(${bankingIllustration})`,
-  backgroundSize: 'cover'
-}));
+
 export default function AppWelcome({ user, investor }: AppWelcomeProps) {
   return (
     <RootStyle>
-      {/* <OrderCompleteIllustration
-        sx={{
-          p: 3,
-          margin: { xs: 'auto', md: 'inherit' }
+      <img
+        style={{
+          padding: 3,
+          width: 460
         }}
-      /> */}
-      <BankingContainer sx={{ width: '50%', height: '100%' }}></BankingContainer>
-      <CardContent
-        sx={{
-          color: 'white'
-        }}
-      >
-        <Typography variant="h4">
-          Thống kê ví của bạn,
-          <br /> {user.fullName}
-        </Typography>
-      </CardContent>
+        src={'/static/icons/navbar/bankingIllustration.jpg'}
+      />
     </RootStyle>
   );
 }

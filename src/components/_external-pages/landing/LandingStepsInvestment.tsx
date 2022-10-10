@@ -3,9 +3,9 @@ import { alpha, useTheme, styled } from '@mui/material/styles';
 import { Box, Grid, Card, Container, Typography, useMediaQuery } from '@mui/material';
 //
 import { varFadeInUp, MotionInView } from '../../animate';
-import cookies from 'js-cookie';
-import { useTranslation } from 'react-i18next';
+
 import { OverlayBackground } from 'assets';
+import useLocales from 'hooks/useLocales';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
@@ -58,18 +58,7 @@ const CardStyle = styled(Card)(({ theme }) => {
     }
   };
 });
-const Language = [
-  {
-    code: 'vi',
-    name: 'English',
-    countryCode: 'vi'
-  },
-  {
-    code: 'en',
-    name: 'Vietnamese',
-    countryCode: 'en'
-  }
-];
+
 // ----------------------------------------------------------------------
 const ThreeSteps = [
   {
@@ -88,14 +77,14 @@ const ThreeSteps = [
     step_content: 'invest_step_3'
   }
 ];
-export default function LandingMinimalHelps() {
+export default function LandingStepsInvestment() {
   const theme = useTheme();
   const isLight = theme.palette.mode === 'light';
   const bgLight = theme.palette.mode === 'light';
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
-  const currentLanguageCode = cookies.get('i18next') || 'en';
-  const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
-  const { t } = useTranslation();
+
+  const { translate: t } = useLocales();
+
   return (
     <RootStyle
       sx={{

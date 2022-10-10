@@ -1,5 +1,6 @@
 import { Link as RouterLink } from 'react-router-dom';
 // material
+import { motion, useAnimation, MotionProps } from 'framer-motion';
 import { styled } from '@mui/material/styles';
 import { Typography, Button, Card, CardContent, CardProps } from '@mui/material';
 import { SeoIllustration } from '../../../assets';

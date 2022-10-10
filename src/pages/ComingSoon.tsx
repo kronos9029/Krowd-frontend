@@ -6,25 +6,16 @@ import instagramFilled from '@iconify/icons-ant-design/instagram-filled';
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
-import {
-  Box,
-  Button,
-  Tooltip,
-  Container,
-  Typography,
-  InputAdornment,
-  OutlinedInput
-} from '@mui/material';
+import { Box, Button, Tooltip, Container, Typography } from '@mui/material';
 // hooks
 import useCountdown from '../hooks/useCountdown';
 // components
 import { MIconButton } from '../components/@material-extend';
 import Page from '../components/Page';
 import { ComingSoonIllustration } from '../assets';
-import cookies from 'js-cookie';
-import i18next from 'i18next';
+
 import { useTranslation } from 'react-i18next';
-import { count } from 'console';
+import useLocales from 'hooks/useLocales';
 // ----------------------------------------------------------------------
 
 const SOCIALS = [
@@ -45,18 +36,7 @@ const SOCIALS = [
     icon: <Icon icon={twitterFill} width={24} height={24} color="#1C9CEA" />
   }
 ];
-const Language = [
-  {
-    code: 'en',
-    countrycode: 'vn',
-    name: 'Tiếng Việt'
-  },
-  {
-    code: 'am',
-    countrycode: 'en',
-    name: 'English'
-  }
-];
+
 const RootStyle = styled(Page)(({ theme }) => ({
   minHeight: '100%',
   display: 'flex',
@@ -80,10 +60,8 @@ const SeparatorStyle = styled(Typography)(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function ComingSoon() {
-  const countdown = useCountdown(new Date('04/07/2022 22:22'));
-  const currentLanguageCode = cookies.get('i18next') || 'en';
-  const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
-  const { t } = useTranslation();
+  const countdown = useCountdown(new Date('10/08/2022 22:22'));
+  const { translate: t } = useLocales();
   return (
     <RootStyle title="Coming Soon | Krowd">
       <Container>
@@ -129,7 +107,7 @@ export default function ComingSoon() {
             ))}
           </Box>
           <Button to="/" size="large" variant="contained" component={RouterLink}>
-            Go to Home
+            Trở về KROWD
           </Button>
         </Box>
       </Container>

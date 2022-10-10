@@ -15,7 +15,6 @@ type TransactionState = {
   walletTransactionState: {
     isLoading: boolean;
     walletTransactionList: WalletTransaction[];
-
     error: boolean;
   };
   paymentListState: {
@@ -126,11 +125,11 @@ export function getTransactionList() {
 }
 //---------------------------- GET WALLET TRANSACTION------------------------------
 
-export function getWalletTransactionList() {
+export function getWalletTransactionList(ID: string) {
   return async () => {
     dispatch(slice.actions.startLoadingWalletTransactionList());
     try {
-      const response = await TransactionAPI.getsWalletTransaction();
+      const response = await TransactionAPI.getsWalletTransaction({ id: ID });
       dispatch(slice.actions.getWalletTransactionListSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasGetWalletTransactionError(error));

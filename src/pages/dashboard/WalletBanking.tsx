@@ -36,32 +36,19 @@ export default function WalletBanking({ wallet }: { wallet: Wallet }) {
       <Container maxWidth={themeStretch ? false : 'xl'}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={12}>
-            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3}>
-              <Grid lg={6}>
-                <WalletWelcome user={user} investor={UserDetail} />
-              </Grid>
-              <Grid lg={6}>
-                <SharedInvestmentWallet wallet={wallet} />
-                <CollectionWallet wallet={wallet} />
-              </Grid>
-            </Stack>
-          </Grid>
-
-          {/* <Grid item xs={12} md={5}>
-            <BankingCurrentBalance />
-          </Grid> */}
-          <Grid item xs={12} md={12}>
-            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3}>
+            <Stack direction={{ xs: 'row', sm: 'row' }} sx={{ mb: 3 }} spacing={3}>
               <TempWallet wallet={wallet} />
-
+              <SharedInvestmentWallet wallet={wallet} />
+            </Stack>
+            <Stack direction={{ xs: 'row', sm: 'row' }} spacing={3}>
+              {/* <WalletWelcome user={user} investor={UserDetail} /> */}
+              <CollectionWallet wallet={wallet} />
               <AdvanceWallet wallet={wallet} />
               <ProjectPaymentWallet wallet={wallet} />
             </Stack>
           </Grid>
-
           <Grid item xs={12} md={12}>
             <Stack spacing={3}>
-              {/* <BankingExpensesCategories /> */}
               <BankingRecentTransitions />
             </Stack>
           </Grid>

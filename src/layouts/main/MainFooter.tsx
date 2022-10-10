@@ -19,13 +19,12 @@ import {
   Button
 } from '@mui/material';
 // routes
-import { PATH_DASHBOARD_LEARN, PATH_DOCS, PATH_FIELDPAGE, PATH_PAGE } from '../../routes/paths';
+import { PATH_PAGE } from '../../routes/paths';
 //
 import Logo from '../../components/Logo';
 //i18n
-import i18next from 'i18next';
-import cookies from 'js-cookie';
-import { useTranslation } from 'react-i18next';
+
+import useLocales from 'hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
@@ -77,29 +76,11 @@ const RootStyle = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.default
 }));
 
-const Language = [
-  {
-    code: 'vi',
-    name: 'English',
-    countryCode: 'vi'
-  },
-  {
-    code: 'en',
-    name: 'Vietnamese',
-    countryCode: 'en'
-  }
-];
 // ----------------------------------------------------------------------
 
 export default function MainFooter() {
-  const currentLanguageCode = cookies.get('i18next') || 'en';
-  const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
-  const { t } = useTranslation();
-  const navigate = useNavigate();
-  const handleLearn = () => {};
-  // useEffect(() => {
-  //   document.title = t('app_title');
-  // }, [currentLanguage, t]);
+  const { translate: t } = useLocales();
+
   return (
     <RootStyle>
       {/* <Divider /> */}
@@ -143,7 +124,7 @@ export default function MainFooter() {
                 var x = 1;
                 return (
                   <Stack key={headline} spacing={2}>
-                    <Typography component="p" variant="overline" sx={{ textAlign: 'center' }}>
+                    <Typography component="p" variant="overline" sx={{ textAlign: 'left' }}>
                       {t(`footer_title_${headline}.headline_name`)}
                     </Typography>
                     {children.map((link) => (
@@ -152,7 +133,7 @@ export default function MainFooter() {
                         key={link.name}
                         target={link.target}
                         color="inherit"
-                        sx={{ display: 'block', fontSize: '13px', fontWeight: 300 }}
+                        sx={{ display: 'block', fontSize: '13px', fontWeight: 300, p: 0 }}
                       >
                         {t(`footer_title_${headline}.headline_link_description_${x++}`)}
                         {/* {link.name} */}

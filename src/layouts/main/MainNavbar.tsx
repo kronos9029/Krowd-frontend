@@ -33,6 +33,7 @@ import useAuth from 'hooks/useAuth';
 import useIsMountedRef from 'hooks/useIsMountedRef';
 import { useSnackbar } from 'notistack';
 import { PATH_AUTH, PATH_DASHBOARD, PATH_PAGE } from 'routes/paths';
+import useLocales from 'hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
@@ -140,6 +141,7 @@ export default function MainNavbar() {
   const initialLanguage = cookies.get('i18next') || 'vi';
   const [currentLanguage, setCurrentLanguage] = useState('');
   const { t } = useTranslation();
+
   useEffect(() => {
     setCurrentLanguage(initialLanguage);
     localStorage.setItem('i18nextLng', initialLanguage);

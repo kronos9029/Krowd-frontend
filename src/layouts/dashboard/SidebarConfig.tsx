@@ -21,7 +21,8 @@ const ICONS = {
   bankTransaction: getIcon('ic_bankTransaction'),
   transaction: getIcon('ic_transaction'),
   payment: getIcon('ic_payment'),
-  walletTransaction: getIcon('ic_walletTransaction')
+  walletTransaction: getIcon('ic_walletTransaction'),
+  voucher: getIcon('ic_voucher')
 };
 
 const sidebarConfig = [
@@ -45,6 +46,11 @@ const sidebarConfig = [
         title: 'Đang đầu tư',
         path: PATH_DASHBOARD.projectInvested.list,
         icon: ICONS.project
+      },
+      {
+        title: 'Phiếu ưu đãi',
+        path: PATH_DASHBOARD.projectInvested.list,
+        icon: ICONS.voucher
       }
       // { title: 'Giao dịch', path: PATH_DASHBOARD.projectInvested.list, icon: ICONS.project }
     ]

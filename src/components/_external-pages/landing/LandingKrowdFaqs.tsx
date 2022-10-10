@@ -4,8 +4,7 @@ import { Grid, Container, Typography } from '@mui/material';
 // components
 import { FaqsList } from '../faqs';
 import Page from 'components/Page';
-import cookies from 'js-cookie';
-import { useTranslation } from 'react-i18next';
+import useLocales from 'hooks/useLocales';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
@@ -18,22 +17,10 @@ const RootStyle = styled(Page)(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-const Language = [
-  {
-    code: 'vi',
-    name: 'English',
-    countryCode: 'vi'
-  },
-  {
-    code: 'en',
-    name: 'Vietnamese',
-    countryCode: 'en'
-  }
-];
-export default function Faqs() {
-  const currentLanguageCode = cookies.get('i18next') || 'en';
-  const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
-  const { t } = useTranslation();
+
+export default function LandingKrowdFaqs() {
+  const { translate: t } = useLocales();
+
   return (
     <RootStyle>
       <Container sx={{ mt: 3, mb: 10 }}>

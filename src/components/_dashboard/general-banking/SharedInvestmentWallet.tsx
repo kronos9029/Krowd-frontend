@@ -6,17 +6,34 @@ import trendingDownFill from '@iconify/icons-eva/trending-down-fill';
 import diagonalArrowRightUpFill from '@iconify/icons-eva/diagonal-arrow-right-up-fill';
 // material
 import { styled, useTheme } from '@mui/material/styles';
-import { Card, Typography, Stack, Button, Box, Grid } from '@mui/material';
+import {
+  Card,
+  Typography,
+  Stack,
+  Button,
+  Box,
+  Grid,
+  Divider,
+  DialogContentText,
+  DialogTitle,
+  Dialog,
+  DialogContent
+} from '@mui/material';
 // utils
 import { fCurrency, fPercent } from '../../../utils/formatNumber';
 //
 import BaseOptionChart from '../../charts/BaseOptionChart';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getWalletByID, getWalletList } from 'redux/slices/krowd_slices/wallet';
 import { dispatch, RootState, useSelector } from 'redux/store';
 import { Wallet } from '../../../@types/krowd/wallet';
 import { PATH_PAGE } from 'routes/paths';
 import refresh from '@iconify/icons-eva/refresh-fill';
+import walletDetails from '@iconify/icons-ant-design/wallet-outlined';
+import { TextAnimate, varBounceInUp, varFadeInRight, varWrapEnter } from 'components/animate';
+import { motion } from 'framer-motion';
+import { Container } from '@mui/system';
+import user from 'redux/slices/krowd_slices/user';
 
 // ----------------------------------------------------------------------
 
@@ -29,11 +46,20 @@ const RootStyle = styled(Card)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
   display: 'flex',
   color: 'white',
-  marginBottom: theme.spacing(2),
+  marginBottom: theme.spacing(3),
   flexDirection: 'column',
   justifyContent: 'space-between'
 }));
-
+const RootStyleContainer = styled(motion.div)(({ theme }) => ({
+  backgroundPosition: 'center',
+  width: '100%',
+  backgroundSize: 'cover',
+  position: 'relative',
+  backgroundRepeat: 'no-repeat',
+  backgroundColor: theme.palette.primary.main,
+  flexDirection: 'column',
+  justifyContent: 'space-between'
+}));
 // ----------------------------------------------------------------------
 
 type Package = {
@@ -42,7 +68,12 @@ type Package = {
 export default function SharedInvestmentWallet({ wallet }: { wallet: Wallet }) {
   const theme = useTheme();
   const { isLoading, walletList } = useSelector((state: RootState) => state.walletKrowd);
+  const { investorKrowdDetail: mainInvestor } = useSelector(
+    (state: RootState) => state.user_InvestorStateKrowd
+  );
   const { listOfInvestorWallet } = walletList;
+  const [openModalShareInvest, setOpenModalShareInvest] = useState(false);
+
   const chartOptions = merge(BaseOptionChart(), {
     colors: [theme.palette.warning.main],
     chart: { sparkline: { enabled: true } },
@@ -64,9 +95,10 @@ export default function SharedInvestmentWallet({ wallet }: { wallet: Wallet }) {
   });
   const handleClickRefeshBalance = async (v: Package) => {
     dispatch(getWalletByID(v.id));
+    setOpenModalShareInvest(true);
   };
   return (
-    <>
+    <RootStyleContainer initial="initial" animate="animate" variants={varWrapEnter}>
       {listOfInvestorWallet &&
         listOfInvestorWallet.length > 0 &&
         listOfInvestorWallet.slice(1, 2).map((e, i) => (
@@ -89,16 +121,171 @@ export default function SharedInvestmentWallet({ wallet }: { wallet: Wallet }) {
                     variant="contained"
                     onClick={() => handleClickRefeshBalance(e)}
                   >
-                    <Icon icon={refresh} />
+                    {/* <Icon icon={refresh} /> */}
                     <Typography sx={{ typography: 'subtitle2', gap: 1, pl: 1 }}>
-                      Cập nhật số dư
+                      Chi tiết tài khoản ví
                     </Typography>
                   </Button>
+                  <Dialog fullWidth maxWidth="sm" open={openModalShareInvest}>
+                    <DialogTitle sx={{ alignItems: 'center', textAlign: 'center' }}>
+                      <Icon color="#14b7cc" height={60} width={60} icon={walletDetails} />
+                    </DialogTitle>
+                    <DialogContent>
+                      <Box mt={1}>
+                        <DialogContentText
+                          sx={{
+                            textAlign: 'center',
+                            fontWeight: 900,
+                            fontSize: 20,
+                            color: 'black'
+                          }}
+                        >
+                          Chi tiết tài khoản ví
+                        </DialogContentText>
+                      </Box>
+                      <Stack spacing={{ xs: 2, md: 1 }}>
+                        <Container sx={{ p: 2 }}>
+                          <Divider sx={{ my: 2 }} />
+                          <Card sx={{ p: 2, mb: 2 }}>
+                            <Box
+                              sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                mb: '0.5rem',
+                                p: 1
+                              }}
+                            >
+                              <Typography
+                                paragraph
+                                sx={{
+                                  color: '#251E18',
+                                  marginBottom: '0.2rem'
+                                }}
+                              >
+                                Số dư khả dụng: <br />
+                                <strong style={{ color: 'green' }}>{fCurrency(e.balance)}</strong>
+                              </Typography>
+                              <Typography
+                                paragraph
+                                sx={{
+                                  color: '#251E18',
+                                  marginBottom: '0.2rem'
+                                }}
+                              >
+                                Tổng số dư <br />
+                                <strong>{fCurrency(e.balance)}</strong>
+                              </Typography>
+                            </Box>
+                          </Card>
+
+                          <Card sx={{ p: 2 }}>
+                            <Typography sx={{ mb: 2 }}>THÔNG TIN CHI TIẾT</Typography>
+                            <Box
+                              sx={{
+                                display: 'flex',
+                                p: 1,
+                                mb: 1,
+                                justifyContent: 'space-between'
+                              }}
+                            >
+                              <Typography
+                                paragraph
+                                sx={{
+                                  color: '#251E18',
+
+                                  marginBottom: '0.2rem'
+                                }}
+                              >
+                                Loại tài khoản <br />
+                                <strong>{e.walletType.name}</strong>
+                              </Typography>
+                            </Box>
+                            <Divider />
+
+                            <Box
+                              sx={{
+                                display: 'flex',
+                                p: 1,
+                                mb: 1,
+
+                                justifyContent: 'space-between'
+                              }}
+                            >
+                              <Typography
+                                paragraph
+                                sx={{
+                                  color: '#251E18',
+                                  marginBottom: '0.2rem'
+                                }}
+                              >
+                                Tài khoản số điện thoại
+                                <br />
+                                <strong>{mainInvestor?.phoneNum}</strong>
+                              </Typography>
+                            </Box>
+                            <Divider />
+
+                            <Box
+                              sx={{
+                                display: 'flex',
+                                p: 1,
+                                mb: 1,
+
+                                justifyContent: 'space-between'
+                              }}
+                            >
+                              <Typography
+                                paragraph
+                                sx={{
+                                  color: '#251E18',
+                                  marginBottom: '0.2rem'
+                                }}
+                              >
+                                Ngày mở tài khoản <br />
+                                <strong>{e.createDate}</strong>
+                              </Typography>
+                            </Box>
+                          </Card>
+                          <Box my={2} p={2}>
+                            <Typography>Ví dùng để đầu tư vào các dự án của KROWD</Typography>
+                          </Box>
+                        </Container>
+                      </Stack>
+                      <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
+                        <Box>
+                          <Button
+                            variant="contained"
+                            color="error"
+                            onClick={() => setOpenModalShareInvest(false)}
+                          >
+                            Đóng
+                          </Button>
+                        </Box>
+                        <Button
+                          href={PATH_PAGE.pageTopUp}
+                          target="_blank"
+                          sx={{
+                            display: 'flex',
+                            border: '1px solid white'
+                          }}
+                          variant="contained"
+                        >
+                          + Nạp tiền
+                        </Button>
+                      </Box>
+                    </DialogContent>
+                  </Dialog>
                 </Grid>
               </Grid>
               <Grid container>
                 <Grid lg={8}>
-                  <Typography sx={{ typography: 'h3' }}>{fCurrency(e.balance)}</Typography>
+                  <Typography>
+                    <TextAnimate
+                      text={fCurrency(e.balance)}
+                      sx={{ typography: 'h3' }}
+                      variants={varBounceInUp}
+                    />
+                  </Typography>
                 </Grid>
                 <Grid sx={{ display: 'flex', gap: 1 }}>
                   <Button
@@ -134,6 +321,6 @@ export default function SharedInvestmentWallet({ wallet }: { wallet: Wallet }) {
             {/* <ReactApexChart type="area" series={CHART_DATA} options={chartOptions} height={120} /> */}
           </RootStyle>
         ))}
-    </>
+    </RootStyleContainer>
   );
 }

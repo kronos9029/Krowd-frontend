@@ -1,31 +1,13 @@
 // material
-import { alpha, useTheme, styled } from '@mui/material/styles';
-import { Grid, Card, Container, Typography, useMediaQuery } from '@mui/material';
+import { useTheme, styled } from '@mui/material/styles';
+import { Grid, Card, Container, Typography } from '@mui/material';
 //
 import { varFadeInUp, MotionInView } from '../../animate';
-import cookies from 'js-cookie';
-import { useTranslation } from 'react-i18next';
-import { fontSize } from '@mui/system';
+import useLocales from 'hooks/useLocales';
 // ----------------------------------------------------------------------
-const Language = [
-  {
-    code: 'vi',
-    name: 'English',
-    countryCode: 'vi'
-  },
-  {
-    code: 'en',
-    name: 'Vietnamese',
-    countryCode: 'en'
-  }
-];
 
 const RootStyle = styled('div')(({ theme }) => ({
   paddingTop: theme.spacing(12)
-
-  // [theme.breakpoints.up('sm')]: {
-  //   paddingBottom: theme.spacing(3.5)
-  // }
 }));
 
 const CenterItemContainerMd = styled(Container)(({ theme }) => ({
@@ -48,23 +30,6 @@ const CardStyle = styled(Card)(({ theme }) => {
     '&.card_title_2': {
       [theme.breakpoints.up('md')]: {
         backgroundColor: '#ffffff'
-        // boxShadow: '-20px 20px 40px 0 rgb(0 0 0 / 35%)',
-        // '&:before': {
-        //   top: 0,
-        //   left: 0,
-        //   right: 0,
-        //   bottom: 0,
-        //   zIndex: -1,
-        //   content: "''",
-        //   margin: 'auto',
-        //   position: 'absolute',
-        //   width: 'calc(100% - 20px)',
-        //   height: 'calc(100% - 40px)',
-        //   borderRadius: theme.shape.borderRadiusMd,
-        // backgroundColor: theme.palette.background.paper
-        //   backgroundColor: '#14b7cc0a'
-        // boxShadow: '-20px 20px 40px 0 rgb(0 0 0 / 15%)'
-        // }
       }
     }
   };
@@ -89,13 +54,11 @@ const MinimalContents = [
 ];
 // ----------------------------------------------------------------------
 
-export default function LandingMinimalHelps() {
+export default function LandingKrowdSteps() {
   const theme = useTheme();
   const isLight = theme.palette.mode === 'light';
-  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
-  const currentLanguageCode = cookies.get('i18next') || 'en';
-  const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
-  const { t } = useTranslation();
+  const { translate: t } = useLocales();
+
   return (
     <RootStyle>
       <CenterItemContainerMd maxWidth="lg">

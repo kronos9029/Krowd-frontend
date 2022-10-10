@@ -6,15 +6,13 @@ import { MessengerChat } from 'react-messenger-chat-plugin';
 
 import {
   LandingHero,
-  LandingMinimal,
-  LandingDarkMode,
-  // LandingLegal,
+  LandingKrowdSteps,
+  LandingAppDownload,
   LandingStartup,
-  LandingPricingFAQs,
+  LandingKrowdFaqs,
   LandingAdvertisement,
-  // LandingSteps,
-  LandingThreeSteps,
-  LandingHugePackElements
+  LandingStepsInvestment,
+  LandingKrowdFranchising
 } from '../components/_external-pages/landing';
 
 // ----------------------------------------------------------------------
@@ -36,41 +34,13 @@ export default function LandingPage() {
     <RootStyle title="Nền tảng gọi vốn cộng đồng cho doanh nghiệp nhỏ | Krowd" id="move_top">
       <ContentStyle>
         <LandingHero />
-        <LandingMinimal />
+        <LandingKrowdSteps />
         <LandingStartup />
-        <LandingHugePackElements />
+        <LandingKrowdFranchising />
         <LandingAdvertisement />
-        <LandingThreeSteps />
-        <LandingPricingFAQs />
-        <LandingDarkMode />
-        {/* <MessengerChat
-          pageId="100084621412328"
-          language="sv_SE"
-          themeColor={'#000000'}
-          bottomSpacing={300}
-          loggedInGreeting="loggedInGreeting"
-          loggedOutGreeting="loggedOutGreeting"
-          greetingDialogDisplay={'show'}
-          onMessengerShow={() => {
-            console.log('onMessengerShow');
-          }}
-          onMessengerHide={() => {
-            console.log('onMessengerHide');
-          }}
-          onMessengerDialogShow={() => {
-            console.log('onMessengerDialogShow');
-          }}
-          onMessengerDialogHide={() => {
-            console.log('onMessengerDialogHide');
-          }}
-          onMessengerMounted={() => {
-            console.log('onMessengerMounted');
-          }}
-          onMessengerLoad={() => {
-            console.log('onMessengerLoad');
-          }}
-        /> */}
-        {/* <MessengerCustomerChat pageId="" appId="596613965341821" />, */}
+        <LandingStepsInvestment />
+        <LandingKrowdFaqs />
+        <LandingAppDownload />
       </ContentStyle>
     </RootStyle>
   );

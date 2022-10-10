@@ -15,28 +15,41 @@ import { useEffect } from 'react';
 import { dispatch, RootState, useSelector } from 'redux/store';
 import { Wallet } from '../../../@types/krowd/wallet';
 import { getWalletList } from 'redux/slices/krowd_slices/wallet';
+import { TextAnimate, varBounceInUp, varWrapEnter } from 'components/animate';
+import { motion } from 'framer-motion';
 
 // ----------------------------------------------------------------------
 
+// const RootStyle = styled(Card)(({ theme }) => ({
+//   width: '100%',
+//   boxShadow: 'none',
+//   position: 'relative',
+//   backgroundColor: '#ff9b26e0',
+//   color: 'white',
+//   padding: theme.spacing(3),
+//   marginTop: theme.spacing(2)
+// }));
 const RootStyle = styled(Card)(({ theme }) => ({
   width: '100%',
-  boxShadow: 'none',
   position: 'relative',
-  backgroundColor: '#ff9b26e0',
-  color: 'white'
+  backgroundSize: 'cover',
+  padding: theme.spacing(3),
+  backgroundColor: '#d29f6370',
+  display: 'flex',
+  color: 'white',
+  flexDirection: 'column',
+  justifyContent: 'space-between'
 }));
-
 // ----------------------------------------------------------------------
 
-const TOTAL = 1876500000;
-const PERCENT = 2.6;
-const CHART_DATA = [{ data: [0] }];
+const RootStyleContainer = styled(motion.div)(({ theme }) => ({
+  backgroundPosition: 'center',
+  width: '100%',
+  backgroundRepeat: 'no-repeat',
+  backgroundColor: '#ff8900bf'
+}));
 
 export default function AdvanceWallet({ wallet }: { wallet: Wallet }) {
-  useEffect(() => {
-    dispatch(getWalletList());
-  }, [dispatch]);
-
   const { isLoading, walletList } = useSelector((state: RootState) => state.walletKrowd);
   const { listOfInvestorWallet } = walletList;
 
@@ -60,7 +73,7 @@ export default function AdvanceWallet({ wallet }: { wallet: Wallet }) {
   });
 
   return (
-    <>
+    <RootStyleContainer initial="initial" animate="animate" variants={varWrapEnter}>
       {/* {walletList.listOfInvestorWallet
         .filter((IS) => IS.type === 'I1')
         .map((e, i) => { */}
@@ -74,7 +87,11 @@ export default function AdvanceWallet({ wallet }: { wallet: Wallet }) {
 
             <Stack spacing={1} sx={{ p: 3 }}>
               <Typography sx={{ typography: 'h6' }}>{e.walletType.name}</Typography>
-              <Typography sx={{ typography: 'h3' }}>{fCurrency(e.balance)}</Typography>
+              <TextAnimate
+                sx={{ typography: 'h3' }}
+                text={fCurrency(e.balance)}
+                variants={varBounceInUp}
+              />{' '}
               <Stack direction="row" alignItems="center" flexWrap="wrap">
                 {/* <Icon
                   width={20}
@@ -92,6 +109,6 @@ export default function AdvanceWallet({ wallet }: { wallet: Wallet }) {
             </Stack>
           </RootStyle>
         ))}
-    </>
+    </RootStyleContainer>
   );
 }

@@ -38,6 +38,24 @@ async function getAllProject() {
   });
   return response;
 }
+async function getProjectByFieldID({
+  id,
+  investmentTargetCapital
+}: {
+  id: string;
+  investmentTargetCapital: string;
+}) {
+  const headers = getHeader();
+  const response = await axios.get(
+    REACT_APP_API_URL +
+      `${API_PROJECT}?fieldId=${id}?investmentTargetCapital=${investmentTargetCapital}`,
+    {
+      headers: headers
+    }
+  );
+  return response;
+}
+
 async function get({ id }: { id: string }) {
   const headers = getHeader();
   const response = await axios.get(REACT_APP_API_URL + `${API_PROJECT}/${id}`, {
@@ -82,5 +100,6 @@ export const ProjectAPI = {
   getStageId: getStageId,
   getPackageBYID: getPackageBYID,
   getProjectInvested: getProjectInvested,
-  getsTransaction: getsTransaction
+  getsTransaction: getsTransaction,
+  getProjectByFieldID: getProjectByFieldID
 };
