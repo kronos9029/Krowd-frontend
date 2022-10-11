@@ -28,7 +28,7 @@ const ICONS = {
 
 const SidebarConfigLearn = [
   {
-    subheader: 'Dành cho nhà đầu tư',
+    subheader: 'Tìm hiểu quy trình của Krowd',
     items: [
       {
         title: 'Cách thức hoạt động',
@@ -36,21 +36,70 @@ const SidebarConfigLearn = [
         icon: ICONS.krowd
       },
       {
-        title: 'Các điều khoản giao dịch cho chiến dịch kêu gọi',
+        title: 'Bạn được gì khi đầu tư ?',
+        path: PATH_DASHBOARD_LEARN.learn.what_get_invested,
+        icon: ICONS.krowd
+      },
+      {
+        title: 'Quy trình thanh khoản',
+        path: PATH_DASHBOARD_LEARN.learn.what_get_invested,
+        icon: ICONS.krowd
+      },
+      {
+        title: 'Các điều khoản giao dịch',
         path: PATH_DASHBOARD_LEARN.learn.app,
         icon: ICONS.krowd
       },
       {
-        title: 'Những gì bạn nhận được khi bạn đầu tư',
+        title: 'Rủi ro đầu tư',
+        path: PATH_DASHBOARD_LEARN.learn.risk_invested,
+        icon: ICONS.krowd
+      }
+    ]
+  },
+  {
+    subheader: 'Hướng dẫn tham gia',
+    items: [
+      {
+        title: 'Đầu tư',
         path: PATH_DASHBOARD_LEARN.learn.what_get_invested,
-        icon: ICONS.wallet
+        icon: ICONS.krowd
       },
       {
-        title: 'Rủi ro',
-        path: PATH_DASHBOARD_LEARN.learn.risk_invested,
-        icon: ICONS.wallet
+        title: 'Kêu gọi vốn đầu tư',
+        path: PATH_DASHBOARD_LEARN.learn.what_get_invested,
+        icon: ICONS.krowd
+      },
+      {
+        title: 'Tham gia KrowdEco',
+        path: PATH_DASHBOARD_LEARN.learn.what_get_invested,
+        icon: ICONS.krowd
       }
-      // { title: 'Tổng quan ngày', path: PATH_DASHBOARD.general.booking, icon: ICONS.booking }
+    ]
+  },
+  {
+    subheader: 'Thông tin thêm về Krowd',
+    items: [
+      {
+        title: 'Liên hệ',
+        path: PATH_DASHBOARD_LEARN.learn.what_get_invested,
+        icon: ICONS.krowd
+      },
+      {
+        title: 'Chính sách bảo mật',
+        path: PATH_DASHBOARD_LEARN.learn.what_get_invested,
+        icon: ICONS.krowd
+      },
+      {
+        title: 'Điều khoản dịch vụ',
+        path: PATH_DASHBOARD_LEARN.learn.what_get_invested,
+        icon: ICONS.krowd
+      },
+      {
+        title: 'Truyền thông',
+        path: PATH_DASHBOARD_LEARN.learn.what_get_invested,
+        icon: ICONS.krowd
+      }
     ]
   }
 ];
