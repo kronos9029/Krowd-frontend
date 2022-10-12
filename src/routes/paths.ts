@@ -46,7 +46,16 @@ export const PATH_DASHBOARD_LEARN = {
     app: path(ROOTS_DASHBOARD_LEARN, '/investors/what-the-deal-terms-mean'),
     how_it_work: path(ROOTS_DASHBOARD_LEARN, '/investors/how-it-works'),
     what_get_invested: path(ROOTS_DASHBOARD_LEARN, '/investors/what-do-i-get-when-i-invest'),
-    risk_invested: path(ROOTS_DASHBOARD_LEARN, '/investors/risks')
+    risk_invested: path(ROOTS_DASHBOARD_LEARN, '/investors/risks'),
+    how_return_work: path(ROOTS_DASHBOARD_LEARN, '/investors/how_return_work'),
+    how_to_invest: path(ROOTS_DASHBOARD_LEARN, '/investors/how_to_invest'),
+    how_to_call_invest: path(ROOTS_DASHBOARD_LEARN, '/investors/how_to_call_invest'),
+    how_to_join_krowdeco: path(ROOTS_DASHBOARD_LEARN, '/investors/how_to_join_krowdeco'),
+    how_to_contact: path(ROOTS_DASHBOARD_LEARN, '/investors/how_to_contact'),
+    privacy_policy: path(ROOTS_DASHBOARD_LEARN, '/investors/privacy_policy'),
+    term_of_service: path(ROOTS_DASHBOARD_LEARN, '/investors/term_of_service'),
+    communication: path(ROOTS_DASHBOARD_LEARN, '/investors/communication'),
+    coming_soon: path(ROOTS_DASHBOARD_LEARN, '/investors/coming-soon')
   }
 };
 export const PATH_DASHBOARD = {

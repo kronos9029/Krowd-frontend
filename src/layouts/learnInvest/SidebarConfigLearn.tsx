@@ -1,5 +1,5 @@
 // routes
-import { PATH_DASHBOARD, PATH_DASHBOARD_LEARN } from '../../routes/paths';
+import { PATH_DASHBOARD, PATH_DASHBOARD_LEARN, PATH_PAGE } from '../../routes/paths';
 // components
 import SvgIconStyle from '../../components/SvgIconStyle';
 import React from 'react';
@@ -42,7 +42,7 @@ const SidebarConfigLearn = [
       },
       {
         title: 'Quy trình thanh khoản',
-        path: PATH_DASHBOARD_LEARN.learn.what_get_invested,
+        path: PATH_DASHBOARD_LEARN.learn.how_return_work,
         icon: ICONS.krowd
       },
       {
@@ -58,21 +58,21 @@ const SidebarConfigLearn = [
     ]
   },
   {
-    subheader: 'Hướng dẫn tham gia',
+    subheader: 'Hướng dẫn',
     items: [
       {
         title: 'Đầu tư',
-        path: PATH_DASHBOARD_LEARN.learn.what_get_invested,
+        path: PATH_DASHBOARD_LEARN.learn.how_to_invest,
         icon: ICONS.krowd
       },
       {
-        title: 'Kêu gọi vốn đầu tư',
-        path: PATH_DASHBOARD_LEARN.learn.what_get_invested,
+        title: 'Trở thành chủ dự án',
+        path: PATH_DASHBOARD_LEARN.learn.how_to_call_invest,
         icon: ICONS.krowd
       },
       {
         title: 'Tham gia KrowdEco',
-        path: PATH_DASHBOARD_LEARN.learn.what_get_invested,
+        path: PATH_DASHBOARD_LEARN.learn.coming_soon,
         icon: ICONS.krowd
       }
     ]
@@ -82,22 +82,22 @@ const SidebarConfigLearn = [
     items: [
       {
         title: 'Liên hệ',
-        path: PATH_DASHBOARD_LEARN.learn.what_get_invested,
+        path: PATH_DASHBOARD_LEARN.learn.coming_soon,
         icon: ICONS.krowd
       },
       {
         title: 'Chính sách bảo mật',
-        path: PATH_DASHBOARD_LEARN.learn.what_get_invested,
+        path: PATH_DASHBOARD_LEARN.learn.coming_soon,
         icon: ICONS.krowd
       },
       {
         title: 'Điều khoản dịch vụ',
-        path: PATH_DASHBOARD_LEARN.learn.what_get_invested,
+        path: PATH_DASHBOARD_LEARN.learn.coming_soon,
         icon: ICONS.krowd
       },
       {
         title: 'Truyền thông',
-        path: PATH_DASHBOARD_LEARN.learn.what_get_invested,
+        path: PATH_DASHBOARD_LEARN.learn.coming_soon,
         icon: ICONS.krowd
       }
     ]
