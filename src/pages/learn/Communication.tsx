@@ -34,7 +34,7 @@ const ImageStyle = styled('img')(() => ({
   width: 80,
   height: 80
 }));
-export default function WhatIGetInvest() {
+export default function Communication() {
   const { themeStretch } = useSettings();
   const { user } = useAuth();
 

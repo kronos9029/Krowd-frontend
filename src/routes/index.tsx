@@ -11,7 +11,6 @@ import AuthGuard from '../guards/AuthGuard';
 // import RoleBasedGuard from '../guards/RoleBasedGuard';
 // components
 import LoadingScreen from '../components/LoadingScreen';
-import PackageVoucherCheckout from '../pages/dashboard/PackageVoucherCheckout';
 import MainNavbar from 'layouts/main/MainNavbar';
 import MainFooter from 'layouts/main/MainFooter';
 import { Divider } from '@mui/material';
@@ -175,9 +174,18 @@ export default function Router() {
       children: [
         { element: <Navigate to="/learn/investors/what-the-deal-terms-mean" replace /> },
         { path: '/learn/investors/how-it-works', element: <LearnHowItWork /> },
-        { path: '/learn/investors/what-the-deal-terms-mean', element: <GeneralAppLearn /> },
+        { path: '/learn/investors/what-the-deal-terms-mean', element: <DealTerm /> },
         { path: '/learn/investors/what-do-i-get-when-i-invest', element: <WhatIGetInvest /> },
-        { path: '/learn/investors/risks', element: <RiskInvest /> }
+        { path: '/learn/investors/risks', element: <RiskInvest /> },
+        { path: '/learn/investors/how_return_work', element: <HowReturnWork /> },
+        { path: '/learn/investors/how_to_invest', element: <HowToInvest /> },
+        { path: '/learn/investors/how_to_call_invest', element: <HowToCallInvest /> },
+        { path: '/learn/investors/how_to_join_krowdeco', element: <HowToJoinKrowdEco /> },
+        { path: '/learn/investors/how_to_contact', element: <HowToContact /> },
+        { path: '/learn/investors/privacy_policy', element: <PrivaryPolicy /> },
+        { path: '/learn/investors/term_of_service', element: <TermOfService /> },
+        { path: '/learn/investors/communication', element: <Communication /> },
+        { path: '/learn/investors/coming-soon', element: <ComingSoon /> }
       ]
     },
 
@@ -191,7 +199,14 @@ export default function Router() {
         { path: 'pricing', element: <KrowdPackage /> },
         { path: 'payment', element: <Payment /> },
         { path: '500', element: <Page500 /> },
-        { path: 'top-up', element: <PageTopUp /> },
+        {
+          path: 'top-up',
+          element: (
+            <AuthGuard>
+              <PageTopUp />
+            </AuthGuard>
+          )
+        },
         { path: 'page-success', element: <PageSuccess /> },
         { path: '404', element: <NotFound /> },
         { path: '*', element: <Navigate to="/404" replace /> }
@@ -243,10 +258,20 @@ const Register = Loadable(lazy(() => import('../pages/authentication/Register'))
 const VerifyCode = Loadable(lazy(() => import('../pages/authentication/VerifyCode')));
 // Dashboard
 const GeneralApp = Loadable(lazy(() => import('../pages/dashboard/GeneralApp')));
-const GeneralAppLearn = Loadable(lazy(() => import('../pages/learn/GeneralAppLearn')));
+//Learn
+const DealTerm = Loadable(lazy(() => import('../pages/learn/DealTerm')));
 const LearnHowItWork = Loadable(lazy(() => import('../pages/learn/LearnHowItWork')));
 const WhatIGetInvest = Loadable(lazy(() => import('../pages/learn/WhatIGetInvest')));
 const RiskInvest = Loadable(lazy(() => import('../pages/learn/RiskInvest')));
+const HowReturnWork = Loadable(lazy(() => import('../pages/learn/HowReturnWork')));
+const HowToInvest = Loadable(lazy(() => import('../pages/learn/HowToInvest')));
+const HowToCallInvest = Loadable(lazy(() => import('../pages/learn/HowToCallInvest')));
+const HowToJoinKrowdEco = Loadable(lazy(() => import('../pages/learn/HowToJoinKrowdEco')));
+const HowToContact = Loadable(lazy(() => import('../pages/learn/HowToContact')));
+const PrivaryPolicy = Loadable(lazy(() => import('../pages/learn/PrivaryPolicy')));
+const TermOfService = Loadable(lazy(() => import('../pages/learn/TermOfService')));
+const Communication = Loadable(lazy(() => import('../pages/learn/Communication')));
+//
 const GeneralEcommerce = Loadable(lazy(() => import('../pages/dashboard/GeneralEcommerce')));
 const GeneralAnalytics = Loadable(lazy(() => import('../pages/dashboard/GeneralAnalytics')));
 const WalletBanking = Loadable(lazy(() => import('../pages/dashboard/WalletBanking')));
