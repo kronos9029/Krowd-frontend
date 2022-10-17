@@ -6,8 +6,8 @@ import { styled, useTheme } from '@mui/material/styles';
 import useCollapseDrawer from '../../hooks/useCollapseDrawer';
 //
 import React from 'react';
-import DashboardNavbarLearn from './DashboardNavbarLearn';
 import DashboardSidebarLearn from './DashboardSidebarLearn';
+import MainNavbarLearn from 'layouts/main/MainNavbarLearn';
 
 // ----------------------------------------------------------------------
 
@@ -42,7 +42,9 @@ export default function DashboardLayoutLearn() {
 
   return (
     <RootStyle>
-      <DashboardNavbarLearn onOpenSidebar={() => setOpen(true)} />
+      {/* <DashboardNavbarLearn onOpenSidebar={() => setOpen(true)} /> */}
+      <MainNavbarLearn onOpenSidebar={() => setOpen(true)} />
+
       <DashboardSidebarLearn isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
       <MainStyle
         sx={{

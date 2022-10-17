@@ -13,6 +13,7 @@ import {
 import { REACT_APP_API_URL } from '../../../config';
 import { ProjectAPI } from '_apis_/krowd_apis/project';
 import PackageVoucherCheckout from 'pages/dashboard/PackageVoucherCheckout';
+import { BusinessAPI } from '_apis_/krowd_apis/business';
 // ----------------------------------------------------------------------
 
 type ProjectState = {
@@ -23,6 +24,12 @@ type ProjectState = {
     numOfProject: number;
     listOfProject: ALL_Project[];
     errorProjectList: boolean;
+  };
+  listAllProjectLanding: {
+    isLoadinglistAllProjectLanding: boolean;
+    numOfProject: number;
+    listOfProject: ALL_Project[];
+    errorProjectlistAllProjectLanding: boolean;
   };
   projectList: {
     isLoadingProjectList: boolean;
@@ -96,6 +103,12 @@ const initialState: ProjectState = {
     listOfProject: [],
     errorProjectList: false
   },
+  listAllProjectLanding: {
+    isLoadinglistAllProjectLanding: false,
+    numOfProject: 0,
+    listOfProject: [],
+    errorProjectlistAllProjectLanding: false
+  },
 
   projectListInvested: {
     isLoadingProjectListInvested: false,
@@ -151,7 +164,7 @@ const slice = createSlice({
       state.isLoading = false;
       state.projectList = action.payload;
     },
-    // ------ GET ALL PROJECT 1/10/2022 ------------ //
+    // ------ GET PROJECT BY FILTER 1/10/2022 ------------ //
     startLoadingProjectListLanding(state) {
       state.projectListLanding.isLoadingProjectListLanding = true;
     },
@@ -162,6 +175,18 @@ const slice = createSlice({
     getProjectListLandingSuccess(state, action) {
       state.isLoading = false;
       state.projectListLanding = action.payload;
+    },
+    // ------ GET ALL PROJECT IN LANDING 1/10/2022 ------------ //
+    startLoadingListAllProjectLanding(state) {
+      state.listAllProjectLanding.isLoadinglistAllProjectLanding = true;
+    },
+    hasGetListAllProjectLandingError(state, action) {
+      state.listAllProjectLanding.isLoadinglistAllProjectLanding = false;
+      state.listAllProjectLanding.errorProjectlistAllProjectLanding = action.payload;
+    },
+    getListAllProjectLandingSuccess(state, action) {
+      state.listAllProjectLanding.isLoadinglistAllProjectLanding = false;
+      state.listAllProjectLanding = action.payload;
     },
     // ------ GET ALL PROJECT INVESTED ------------ //
     startLoadingProjectInvestedList(state) {
@@ -255,8 +280,8 @@ export function getAllProject() {
     }
   };
 }
-// ALL PROJECT 1/10/2022
-export function getAllProjectLanding() {
+// ALL PROJECT BY FILTER 1/10/2022
+export function getProjectLandingByFilter() {
   return async () => {
     dispatch(slice.actions.startLoadingProjectListLanding());
     try {
@@ -264,6 +289,18 @@ export function getAllProjectLanding() {
       dispatch(slice.actions.getProjectListLandingSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasGetAllProjectLandingError(error));
+    }
+  };
+}
+// ALL PROJECT 1/10/2022
+export function getListAllProjectLanding() {
+  return async () => {
+    dispatch(slice.actions.startLoadingListAllProjectLanding());
+    try {
+      const response = await ProjectAPI.getAllProject();
+      dispatch(slice.actions.getListAllProjectLandingSuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasGetListAllProjectLandingError(error));
     }
   };
 }
@@ -291,15 +328,22 @@ export function getProjectList() {
     }
   };
 }
-export function getProjectListWithFieldId(Id: string, investmentTargetCapital: string) {
+export function getProjectListWithFilter(
+  fieldIds: string[],
+  businessId: string,
+  investmentTargetCapital: string,
+  status: string
+) {
   return async () => {
-    dispatch(slice.actions.startLoadingProjectList());
+    dispatch(slice.actions.startLoadingProjectListLanding());
     try {
-      const response = await ProjectAPI.getProjectByFieldID({
-        id: Id,
-        investmentTargetCapital: investmentTargetCapital
+      const response = await ProjectAPI.getProjectByFilter({
+        fieldIds: fieldIds,
+        businessId: businessId,
+        investmentTargetCapital: investmentTargetCapital,
+        status: status
       });
-      dispatch(slice.actions.getProjectListSuccess(response.data));
+      dispatch(slice.actions.getProjectListLandingSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
@@ -324,6 +368,7 @@ export function getPackageBYID({ package_param }: { package_param: Package }) {
   return async () => {
     dispatch(slice.actions.startPackageIDLoading());
     try {
+      const response = await BusinessAPI.gets();
       dispatch(slice.actions.getPackageIDSuccess(package_param));
     } catch (error) {
       dispatch(slice.actions.hasError(error));

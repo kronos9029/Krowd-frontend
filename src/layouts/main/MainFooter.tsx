@@ -124,7 +124,7 @@ export default function MainFooter() {
                 var x = 1;
                 return (
                   <Stack key={headline} spacing={2}>
-                    <Typography component="p" variant="overline" sx={{ textAlign: 'left' }}>
+                    <Typography component="p" variant="overline" sx={{ textAlign: 'center' }}>
                       {t(`footer_title_${headline}.headline_name`)}
                     </Typography>
                     {children.map((link) => (

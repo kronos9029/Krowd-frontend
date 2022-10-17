@@ -74,7 +74,6 @@ export default function BlogPostsSearch({ sx }: BoxProps) {
   const { projectListLanding } = useSelector((state: RootState) => state.project);
   const { listOfProject } = projectListLanding;
   const { translate: t } = useLocales();
-  console.log(searchQuery);
   const handleChangeSearch = async (value: string) => {
     try {
       setSearchQuery(value);

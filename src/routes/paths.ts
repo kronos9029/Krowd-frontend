@@ -37,7 +37,7 @@ export const PATH_PAGE = {
   homePage: '/',
   mediaKrowd: 'https://www.facebook.com/profile.php?id=100084621412328',
   paymentSuccess: '/payment-success',
-  details: '/details'
+  details: '/project'
 };
 
 export const PATH_DASHBOARD_LEARN = {

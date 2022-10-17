@@ -52,7 +52,7 @@ import LoadingScreen from 'components/LoadingScreen';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
-  paddingTop: theme.spacing(5),
+  paddingTop: theme.spacing(2.5),
   [theme.breakpoints.up('md')]: {
     paddingBottom: theme.spacing(4),
     backgroundColor:
@@ -64,7 +64,6 @@ const RootStyle = styled('div')(({ theme }) => ({
   },
 
   [theme.breakpoints.up('xs')]: {
-    paddingTop: theme.spacing(9),
     paddingBottom: theme.spacing(4),
     backgroundColor:
       theme.palette.mode === 'light'
@@ -128,19 +127,7 @@ const SORT_OPTIONS_CONFIG = {
 
 // ----------------------------------------------------------------------
 
-const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
-  width: 240,
-  transition: theme.transitions.create(['box-shadow', 'width'], {
-    easing: theme.transitions.easing.easeInOut,
-    duration: theme.transitions.duration.shorter
-  }),
-  '&.Mui-focused': { width: 320, boxShadow: theme.customShadows.z8 },
-  '& fieldset': {
-    borderWidth: `1px !important`,
-    borderColor: `${theme.palette.grey[500_32]} !important`
-  }
-}));
-export default function LandingStartUp() {
+export default function LandingInvest() {
   const [filters, setFilters] = useState('CALLING_FOR_INVESTMENT');
   const currentLanguageCode = cookies.get('i18next') || 'en';
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
@@ -177,7 +164,6 @@ export default function LandingStartUp() {
   };
   useEffect(() => {
     dispatch(getProjectListWithFilter([], '', '', ''));
-    dispatch(getListAllProjectLanding());
   }, [dispatch]);
   const getHighLight = () => {
     dispatch(getBusinessList());
@@ -192,13 +178,6 @@ export default function LandingStartUp() {
     setOpenHighLight(false);
     setOpenCategory(false);
     setOpenMore(false);
-  };
-
-  const getMore = () => {
-    setOpenMore(!openMore);
-    setOpenHighLight(false);
-    setOpenCategory(false);
-    setOpenRevenue(false);
   };
 
   const getCategory = () => {
@@ -245,53 +224,6 @@ export default function LandingStartUp() {
   return (
     <RootStyle>
       <Container maxWidth="lg">
-        <Box sx={{ mb: { xs: 10, md: 2, textAlign: 'left' } }}>
-          <Typography variant="h2" sx={{ mb: 3, color: 'text.primary' }}>
-            {t('highlight_project')}
-          </Typography>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: { sm: 'left', xs: 'center' },
-              alignItems: 'middle',
-              gap: '10'
-            }}
-          >
-            <Typography color="primary.main">
-              <Icon icon={barChartOutlined} width={40} display="inline" />
-            </Typography>
-            <Typography
-              fontWeight={400}
-              variant="h4"
-              sx={{ mb: 1, color: 'text.disabled', marginLeft: '1rem' }}
-            >
-              {t('highlight_project_description')}
-            </Typography>
-          </Box>
-        </Box>
-        <Grid container alignItems="center" justifyContent="center" spacing={5}>
-          {listAllProjectLanding.listOfProject.slice(0, 9).map((p) => (
-            <ProjectCard key={p.id} row={p} />
-          ))}
-        </Grid>
-
-        <Box sx={{ display: 'flex', alignItems: 'start', my: 3, pt: 2 }}>
-          <Typography color="primary.main">
-            <Icon icon={fileProtectOutlined} width={40} display="inline" />
-          </Typography>
-          <Typography
-            fontWeight={400}
-            variant="h4"
-            sx={{ mb: 1, color: 'text.disabled', marginLeft: '1rem' }}
-          >
-            {t(`landing_project_highlight.landing_highligh_transaction`)}
-            <Link to="/about-us" style={{ textDecoration: 'none' }}>
-              {' '}
-              {t(`landing_project_highlight.landing_highligh_by_about_us`)}
-            </Link>
-          </Typography>
-        </Box>
-
         <Box>
           <Grid container>
             <Grid xs={12} md={2} lg={4}>
@@ -357,26 +289,6 @@ export default function LandingStartUp() {
                     )}
                   </Button>
                 </Grid>
-                {/* <Grid item xs={12} md={2}>
-                  <Button
-                    sx={{ color: openMore ? 'primary.main' : 'text.secondary' }}
-                    onClick={() => handleClick(getMore)}
-                  >
-                    <Typography
-                      sx={{
-                        color: openMore ? 'primary.main' : 'text.secondary'
-                      }}
-                      mr={0.5}
-                    >
-                      {t(`landing_project_highlight.landing_highligh_by_more`)}
-                    </Typography>
-                    {openMore ? (
-                      <Icon icon={caretUpFilled} width={15} height={15} />
-                    ) : (
-                      <Icon icon={caretDownFilled} width={15} height={15} />
-                    )}
-                  </Button>
-                </Grid> */}
                 <Grid item xs={12} md={4}>
                   <BlogPostsSort
                     query={filters}
@@ -390,9 +302,9 @@ export default function LandingStartUp() {
             </Grid>
           </Grid>
         </Box>
-        <Box sx={{ backgroundColor: '#f7f7f7' }}>
+        <Box>
           <Collapse in={openCategory} timeout="auto" unmountOnExit>
-            <Grid container sx={{ backgroundColor: '#f7f7f7' }}>
+            <Grid container sx={{ backgroundColor: '#eaeaeacf' }} mb={5}>
               <Grid container sx={{ py: 3, ml: 3 }}>
                 {fieldList &&
                   fieldList.listOfField.map((f) => {
@@ -421,9 +333,9 @@ export default function LandingStartUp() {
           </Collapse>
         </Box>
         {/* Business */}
-        <Box sx={{ backgroundColor: '#f7f7f7' }}>
+        <Box sx={{ backgroundColor: '#eaeaeacf' }}>
           <Collapse in={openHighLight} timeout="auto" unmountOnExit>
-            <Grid container sx={{ backgroundColor: '#f7f7f7' }}>
+            <Grid container sx={{ backgroundColor: '#eaeaeacf' }}>
               <Grid container sx={{ py: 3, ml: 3 }}>
                 {businessLists &&
                   businessLists.listOfBusiness.map((b) => {
@@ -455,10 +367,10 @@ export default function LandingStartUp() {
           </Collapse>
         </Box>
 
-        <Box sx={{ backgroundColor: '#f7f7f7' }}>
+        <Box sx={{ backgroundColor: '#eaeaeacf' }}>
           <Grid container>
             <Collapse in={openRevenue} timeout="auto" unmountOnExit>
-              <Grid container sx={{ backgroundColor: '#f7f7f7' }}>
+              <Grid container sx={{ backgroundColor: '#eaeaeacf' }}>
                 <Grid container sx={{ py: 3, ml: 3 }} md={4} lg={4}>
                   <List component="div" disablePadding>
                     <ListItemButton
@@ -551,7 +463,7 @@ export default function LandingStartUp() {
         <Box>
           <Collapse in={openMore} timeout="auto" unmountOnExit>
             <Grid container sx={{ pb: 3 }}>
-              <Grid container sx={{ py: 3, backgroundColor: '#f7f7f7' }} md={6} lg={6}>
+              <Grid container sx={{ py: 3, backgroundColor: '#eaeaeacf' }} md={6} lg={6}>
                 <Grid container sx={{ py: 3 }} xs={5} sm={5} md={5} lg={5}>
                   <List component="div" disablePadding>
                     <Typography sx={{ fontWeight: '700', textAlign: 'center' }}>Impact</Typography>
@@ -596,7 +508,7 @@ export default function LandingStartUp() {
                   </List>
                 </Grid>
               </Grid>
-              <Grid container sx={{ py: 3, backgroundColor: '#f7f7f7' }} md={6} lg={6}>
+              <Grid container sx={{ py: 3, backgroundColor: '#eaeaeacf' }} md={6} lg={6}>
                 <Grid container sx={{ py: 3 }} xs={5} sm={5} md={5} lg={5}>
                   <List component="div" disablePadding>
                     <Typography sx={{ fontWeight: '700', textAlign: 'center' }}>
@@ -649,6 +561,7 @@ export default function LandingStartUp() {
             </Stack>
           </Box>
         )}
+
         <Grid container alignItems="center" justifyContent="center" spacing={5}>
           {isLoadingProjectListLanding && (
             <Box sx={{ pt: 7 }}>

@@ -62,6 +62,12 @@ const navConfig = {
       icon: <Icon icon="fluent:people-12-regular" {...ICON_SIZE} />,
       path: PATH_PAGE.about
       // path: PATH_DOCS
+    },
+    {
+      title: 'Learn',
+      icon: <Icon icon="fluent:people-12-regular" {...ICON_SIZE} />,
+      path: PATH_DASHBOARD_LEARN.learn.how_it_work
+      // path: PATH_DOCS
     }
   ]
 };

@@ -24,14 +24,15 @@ import { ProjectFilter, ProjectState, PROJECT_STATUS } from '../../@types/krowd/
 import { getFieldList } from 'redux/slices/krowd_slices/field';
 import { Link } from 'react-router-dom';
 import { ProjectCard } from 'components/_external-pages/project';
+import LandingStartUp from 'components/_external-pages/landing/LandingStartup';
+import { LandingInvest } from 'components/_external-pages/landing';
 // import ProjectCard from '../../../components/ProjectCard';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
   marginBottom: '3rem',
   [theme.breakpoints.up('md')]: {
-    paddingBottom: theme.spacing(10),
-    backgroundColor: '#f4f6f8'
+    paddingBottom: theme.spacing(10)
   }
 }));
 
@@ -49,16 +50,11 @@ const Language = [
 ];
 
 export default function Projects() {
-  const dispatch = useDispatch();
   const currentLanguageCode = cookies.get('i18next') || 'en';
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
   const { t } = useTranslation();
   // Redux
   const { projectListLanding } = useSelector((state: RootState) => state.project);
-  const { fieldList } = useSelector((state: RootState) => state.fieldKrowd);
-  const { projects, sortBy, filters } = useSelector(
-    (state: { project: ProjectState }) => state.project
-  );
 
   // useEffect(() => {
   //   dispatch(getProjectList());
@@ -69,7 +65,7 @@ export default function Projects() {
     <RootStyle title="Danh sách | Krowd">
       <Container maxWidth="lg">
         <Box sx={{ mb: { xs: 5, md: 5, paddingTop: '7rem' } }}>
-          <Typography variant="h2" sx={{ mb: 3 }}>
+          <Typography variant="h2" sx={{ mb: 1 }}>
             {t(`landing_project_invest.landing_project_invest_now`)}
           </Typography>
 
@@ -82,45 +78,18 @@ export default function Projects() {
               {t(`landing_project_invest.landing_project_invest_appraisal`)}
             </Link>
           </Typography>
-          <Box
-            sx={{
-              my: { lg: 2, sm: 2 },
-              display: { sm: 'flex' },
-              justifyContent: { sm: 'space-between' },
-              alignItems: 'center'
-            }}
-          >
-            <BlogPostsSearch sx={{ display: 'flex' }} border="none" />
-            <Box
-              component="div"
-              sx={{
-                ml: { lg: 5, sm: 2 },
-                mt: { sm: 0, xs: 3 },
-                display: { sm: 'flex' },
-                flexDirection: 'row-reverse'
-              }}
-            >
-              <ShopProductSort />
-            </Box>
-          </Box>
         </Box>
 
-        <Box sx={{ display: 'flex', alignItems: 'end', my: 3 }}>
+        <Box sx={{ display: 'flex', alignItems: 'end', my: 1 }}>
           <Typography variant="h3">
-            {' '}
             {t(`landing_project_invest.landing_project_invest_chance`)}
           </Typography>
           <Typography color={'text.disabled'} fontWeight={1000} variant="h3" sx={{ ml: 1 }}>
             {projectListLanding && projectListLanding.numOfProject}
           </Typography>
         </Box>
-        <Grid container alignItems="center" justifyContent="center" spacing={5}>
-          {projectListLanding.listOfProject &&
-            projectListLanding.listOfProject
-              // .filter((p) => p.status === PROJECT_STATUS.CALLING_FOR_INVESTMENT)
-              .map((p) => <ProjectCard key={p.id} row={p} />)}
-        </Grid>
       </Container>
+      <LandingInvest />
     </RootStyle>
   );
 }

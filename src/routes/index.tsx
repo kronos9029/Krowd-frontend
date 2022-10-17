@@ -220,7 +220,7 @@ export default function Router() {
         { path: 'about-us', element: <About /> },
         { path: 'contact-us', element: <Contact /> },
         { path: 'faqs', element: <Faqs /> },
-        { path: 'details/:id', element: <Details /> },
+        { path: 'project/:id', element: <Details /> },
         // { path: 'package/invest/:id', element: <KrowdPackage /> },
 
         { path: 'project', element: <Projects /> },

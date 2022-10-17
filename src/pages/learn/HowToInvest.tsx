@@ -50,7 +50,7 @@ export default function HowToInvest() {
   const { user } = useAuth();
 
   return (
-    <Page title="Những gì bạn nhận được khi bạn đầu tư | Krowd">
+    <Page title="Làm thế nào để bắt đầu đầu tư | Krowd">
       <Container maxWidth={'lg'}>
         <Grid container sx={{ py: 2 }}>
           <Typography variant="h2" sx={{ py: 1 }}>

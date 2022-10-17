@@ -7,6 +7,7 @@ import { useSnackbar } from 'notistack';
 import closeFill from '@iconify/icons-eva/close-fill';
 import { REACT_APP_API_URL } from 'config';
 import { Business } from '../../../@types/krowd/bussiness';
+import { BusinessAPI } from '_apis_/krowd_apis/business';
 
 // ----------------------------------------------------------------------
 
@@ -14,9 +15,12 @@ type BusinessState = {
   isLoading: boolean;
   error: boolean;
   businessLists: {
+    isLoadingBusinessLists: boolean;
+
     numOfBusiness: number;
     listOfBusiness: Business[];
   };
+
   activeBussinessId: Business | null;
   status: string[];
 };
@@ -25,7 +29,7 @@ const initialState: BusinessState = {
   isLoading: false,
   error: false,
   activeBussinessId: null,
-  businessLists: { numOfBusiness: 0, listOfBusiness: [] },
+  businessLists: { isLoadingBusinessLists: false, numOfBusiness: 0, listOfBusiness: [] },
 
   status: ['Đang hoạt động', 'Ngừng hoạt động', 'Bị khóa']
 };
@@ -47,7 +51,7 @@ const slice = createSlice({
 
     // GET MANAGE USERS
     getBusinessListSuccess(state, action) {
-      state.isLoading = false;
+      state.businessLists.isLoadingBusinessLists = false;
       state.businessLists = action.payload;
     },
 
@@ -66,28 +70,13 @@ export default slice.reducer;
 
 // Actions
 
-export function getBusinessList(temp_field_role: 'ADMIN') {
+export function getBusinessList() {
   return async () => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get(REACT_APP_API_URL + 'businesses', {
-        params: { temp_field_role }
-      });
+      const response = await BusinessAPI.gets();
       dispatch(slice.actions.getBusinessListSuccess(response.data));
-      console.log('aaaaa', response.data);
     } catch (error) {
-      dispatch(slice.actions.hasError(error));
-    }
-  };
-}
-export function getBusinessListById(bussinessId: string) {
-  return async () => {
-    dispatch(slice.actions.startLoading());
-    try {
-      const response = await axios.get(REACT_APP_API_URL + `businesses/${bussinessId}`);
-      dispatch(slice.actions.getBusinessListIDSuccess(response.data));
-    } catch (error) {
-      console.log('...');
       dispatch(slice.actions.hasError(error));
     }
   };

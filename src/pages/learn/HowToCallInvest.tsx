@@ -6,6 +6,7 @@ import useSettings from '../../hooks/useSettings';
 // components
 import React from 'react';
 import Page from '../../components/Page';
+import useLocales from 'hooks/useLocales';
 const ContentStyle = styled(Typography)(() => ({
   fontSize: '18px'
 }));
@@ -46,10 +47,10 @@ const ImageStyle = styled('img')(() => ({
 }));
 export default function HowToCallInvest() {
   const { themeStretch } = useSettings();
-  const { user } = useAuth();
+  const { translate: t } = useLocales();
 
   return (
-    <Page title="Những gì bạn nhận được khi bạn đầu tư | Krowd">
+    <Page title="Làm thể nào để trở thành chủ dự án của Krowd | Krowd">
       <Container maxWidth={'lg'}>
         <Grid container sx={{ py: 2 }}>
           <Typography variant="h2" sx={{ py: 1 }}>
@@ -238,7 +239,7 @@ export default function HowToCallInvest() {
           <Grid container spacing={2} sx={{ py: 2 }}>
             <Grid item md={1}>
               <BorderBoxStyle>
-                <StepStyle>5</StepStyle>
+                <StepStyle>6</StepStyle>
               </BorderBoxStyle>
             </Grid>
             <Grid item md={10}>

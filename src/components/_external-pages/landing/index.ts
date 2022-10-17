@@ -3,6 +3,7 @@ export { default as LandingKrowdSteps } from './LandingKrowdSteps';
 export { default as LandingAppDownload } from './LandingAppDownload';
 export { default as LandingStartup } from './LandingStartup';
 export { default as LandingSteps } from './LandingSteps';
+export { default as LandingInvest } from './LandingInvest';
 export { default as LandingKrowdFaqs } from './LandingKrowdFaqs';
 export { default as LandingAdvertisement } from './LandingAdvertisement';
 export { default as LandingStepsInvestment } from './LandingStepsInvestment';

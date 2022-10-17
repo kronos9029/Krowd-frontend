@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { string } from 'yup';
 import { REACT_APP_API_URL } from '../../config';
 const API_PACKAGE_ID = '/packages/project';
 const API_PACKAGE_BY_ID = '/packages';
@@ -38,21 +39,33 @@ async function getAllProject() {
   });
   return response;
 }
-async function getProjectByFieldID({
-  id,
-  investmentTargetCapital
+async function getProjectByFilter({
+  fieldIds,
+  businessId,
+  investmentTargetCapital,
+  status
 }: {
-  id: string;
+  fieldIds: string[];
+  businessId: string;
   investmentTargetCapital: string;
+  status: string;
 }) {
   const headers = getHeader();
-  const response = await axios.get(
-    REACT_APP_API_URL +
-      `${API_PROJECT}?fieldId=${id}?investmentTargetCapital=${investmentTargetCapital}`,
-    {
-      headers: headers
-    }
-  );
+  const fieldQueryString =
+    fieldIds.length > 0
+      ? `${fieldIds.map((_value) => `listFieldId=${_value}&`)}`.split(',').join('')
+      : '';
+  const businessIdQueryString = businessId ? `businessId=${businessId}&` : '';
+  const investmentTargetCapitalQueryString = '';
+  const statusQueryString = status ? `status=${status}` : '';
+  const paramQueryString =
+    fieldQueryString +
+    businessIdQueryString +
+    investmentTargetCapitalQueryString +
+    statusQueryString;
+  const response = await axios.get(REACT_APP_API_URL + `${API_PROJECT}?${paramQueryString}`, {
+    headers: headers
+  });
   return response;
 }
 
@@ -101,5 +114,5 @@ export const ProjectAPI = {
   getPackageBYID: getPackageBYID,
   getProjectInvested: getProjectInvested,
   getsTransaction: getsTransaction,
-  getProjectByFieldID: getProjectByFieldID
+  getProjectByFilter: getProjectByFilter
 };
