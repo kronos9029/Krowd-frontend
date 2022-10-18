@@ -176,7 +176,7 @@ export default function Router() {
         { path: '/learn/investors/how-it-works', element: <LearnHowItWork /> },
         { path: '/learn/investors/what-the-deal-terms-mean', element: <DealTerm /> },
         { path: '/learn/investors/what-do-i-get-when-i-invest', element: <WhatIGetInvest /> },
-        { path: '/learn/investors/risks', element: <RiskInvest /> },
+        { path: '/learn/investors/risks_invested', element: <RiskInvest /> },
         { path: '/learn/investors/how_return_work', element: <HowReturnWork /> },
         { path: '/learn/investors/how_to_invest', element: <HowToInvest /> },
         { path: '/learn/investors/how_to_call_invest', element: <HowToCallInvest /> },
@@ -185,6 +185,9 @@ export default function Router() {
         { path: '/learn/investors/privacy_policy', element: <PrivaryPolicy /> },
         { path: '/learn/investors/term_of_service', element: <TermOfService /> },
         { path: '/learn/investors/communication', element: <Communication /> },
+        { path: '/learn/investors/risk_franchise', element: <RiskFranchise /> },
+        { path: '/learn/investors/risk_manager', element: <RiskManager /> },
+        { path: '/learn/investors/risk_for_field', element: <RiskForField /> },
         { path: '/learn/investors/coming-soon', element: <ComingSoon /> }
       ]
     },
@@ -263,6 +266,9 @@ const DealTerm = Loadable(lazy(() => import('../pages/learn/DealTerm')));
 const LearnHowItWork = Loadable(lazy(() => import('../pages/learn/LearnHowItWork')));
 const WhatIGetInvest = Loadable(lazy(() => import('../pages/learn/WhatIGetInvest')));
 const RiskInvest = Loadable(lazy(() => import('../pages/learn/RiskInvest')));
+const RiskFranchise = Loadable(lazy(() => import('../pages/learn/RiskFranchise')));
+const RiskManager = Loadable(lazy(() => import('../pages/learn/RiskManager')));
+const RiskForField = Loadable(lazy(() => import('../pages/learn/RiskForField')));
 const HowReturnWork = Loadable(lazy(() => import('../pages/learn/HowReturnWork')));
 const HowToInvest = Loadable(lazy(() => import('../pages/learn/HowToInvest')));
 const HowToCallInvest = Loadable(lazy(() => import('../pages/learn/HowToCallInvest')));

@@ -34,7 +34,7 @@ const ImageStyle = styled('img')(() => ({
   width: 80,
   height: 80
 }));
-export default function RiskInvest() {
+export default function RiskManager() {
   const { themeStretch } = useSettings();
   const { user } = useAuth();
 

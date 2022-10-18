@@ -34,7 +34,7 @@ const ImageStyle = styled('img')(() => ({
   width: 80,
   height: 80
 }));
-export default function RiskInvest() {
+export default function RiskFranchise() {
   const { themeStretch } = useSettings();
   const { user } = useAuth();
 
@@ -43,7 +43,7 @@ export default function RiskInvest() {
       <Container maxWidth={'lg'}>
         <Grid container sx={{ py: 2 }}>
           <Typography variant="h2" sx={{ py: 1 }}>
-            Rủi ro khi đầu tư
+            Rủi ro khi nhượng quyền thương hiệu
           </Typography>
           <ContentStyle>
             Chúng tôi đã chuẩn bị phần sau dưới dạng một đoạn trích từ các tiết lộ rủi ro đầy đủ của

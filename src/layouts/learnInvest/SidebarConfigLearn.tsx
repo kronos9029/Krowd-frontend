@@ -49,11 +49,6 @@ const SidebarConfigLearn = [
         title: 'Các điều khoản giao dịch',
         path: PATH_DASHBOARD_LEARN.learn.app,
         icon: ICONS.krowd
-      },
-      {
-        title: 'Rủi ro đầu tư',
-        path: PATH_DASHBOARD_LEARN.learn.risk_invested,
-        icon: ICONS.krowd
       }
     ]
   },
@@ -73,6 +68,31 @@ const SidebarConfigLearn = [
       {
         title: 'Tham gia KrowdEco',
         path: PATH_DASHBOARD_LEARN.learn.coming_soon,
+        icon: ICONS.krowd
+      }
+    ]
+  },
+  {
+    subheader: 'Rủi ro',
+    items: [
+      {
+        title: 'Rủi ro đầu tư',
+        path: PATH_DASHBOARD_LEARN.learn.risk_invested,
+        icon: ICONS.krowd
+      },
+      {
+        title: 'Rủi ro nhượng quyền',
+        path: PATH_DASHBOARD_LEARN.learn.risk_franchise,
+        icon: ICONS.krowd
+      },
+      {
+        title: 'Rủi ro chủ dự án',
+        path: PATH_DASHBOARD_LEARN.learn.risk_manager,
+        icon: ICONS.krowd
+      },
+      {
+        title: 'Rủi ro từng lĩnh vực đầu tư',
+        path: PATH_DASHBOARD_LEARN.learn.risk_for_field,
         icon: ICONS.krowd
       }
     ]
