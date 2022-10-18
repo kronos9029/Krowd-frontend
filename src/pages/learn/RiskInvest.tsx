@@ -30,6 +30,12 @@ export default function RiskInvest() {
           </Typography>
           <ContentStyle>
             {t('Learn_Investor_Risk_Invest.Project_Liquidity_Definition')}
+            {/* Khả năng thanh toán lại khoản đầu tư của bạn trong những kỳ đầu tiên sẽ bị hạn chế với
+            các lý do khác nhau. Bạn có thể phải neo khoản đầu tư của mình trong một khoảng thời
+            gian dài. Không giống như đầu tư vào các dự án được niêm yết trên sàn giao dịch chứng
+            khoán, tại Krowd không hỗ trợ hình thức bán lại khoản đầu tư của mình cho người khác để
+            thu hồi vốn đầu tư ban đầu. Song, nếu bạn thực hiện giao dịch đó ngoài nền tảng của
+            Krowd, mọi rủi ro và rắc rối về sau không nằm trong sự quản lý của Krowd. */}
           </ContentStyle>
         </Grid>
         <Grid container sx={{ py: 2 }}>
