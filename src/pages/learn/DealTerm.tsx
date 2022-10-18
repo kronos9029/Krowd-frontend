@@ -13,7 +13,7 @@ export default function DealTerm() {
   return (
     <Page title="Hiểu về các điều khoản giao dịch | Krowd">
       <Container maxWidth={'lg'}>
-        <Grid container spacing={3}>
+        <Grid container sx={{ py: 2 }}>
           <Typography variant="h2" sx={{ pt: 5 }}>
             {t('Learn_Investor_Deal_Term.Heading')}
           </Typography>
