@@ -168,7 +168,9 @@ function ProjectCard({ row }: { row: ALL_Project }) {
                           marginBottom: '0.3rem'
                         }}
                       >
-                        {row.address}
+                        {row.address.length > 40
+                          ? `${row.address.substring(0, 40)}...`
+                          : row.address}
                       </Typography>
                     </Box>
                     <Box sx={{ display: 'flex' }}>
