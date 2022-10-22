@@ -83,3 +83,20 @@ export type Investment = {
   packageId: string;
   quantity: number;
 };
+
+export type DailyReportProject = {
+  numOfDailyReport: number;
+  listOfDailyReport: ListOfDailyReport[];
+};
+
+export type ListOfDailyReport = {
+  id: string;
+  stageId: string;
+  amount: number;
+  reportDate: string;
+  createDate: Date | string;
+  createBy: string;
+  updateDate: string;
+  updateBy: string;
+  status: string;
+};

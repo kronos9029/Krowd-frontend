@@ -105,8 +105,14 @@ export default function PaymentProjectTable() {
           },
           {
             name: 'projectName',
-            value: _item.projectName,
-            type: DATA_TYPE.TEXT
+            value:
+              (_item.projectName === 'Dự án không còn tồn tại' && 'Dự án không còn tồn tại') ||
+              _item.projectName,
+
+            type: DATA_TYPE.TEXT,
+            textColor:
+              (_item.projectName === 'Dự án không còn tồn tại' && 'red') ||
+              (_item.projectName === 'Dự án không còn tồn tại' ? 'red' : 'black')
           },
           {
             name: 'packageName',
@@ -124,7 +130,6 @@ export default function PaymentProjectTable() {
             value: _item.amount,
             type: DATA_TYPE.NUMBER_FORMAT
           },
-
           {
             name: 'createDate',
             value: _item.createDate,

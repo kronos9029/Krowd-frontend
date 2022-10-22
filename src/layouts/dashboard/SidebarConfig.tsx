@@ -60,7 +60,7 @@ const sidebarConfig = [
         icon: ICONS.walletTransaction
       },
       {
-        title: 'Đầu tư dự án',
+        title: 'Thanh toán',
         path: PATH_DASHBOARD.transaction.payments,
         icon: ICONS.payment
       }

@@ -4,6 +4,8 @@ import { Icon } from '@iconify/react';
 import trendingUpFill from '@iconify/icons-eva/trending-up-fill';
 import trendingDownFill from '@iconify/icons-eva/trending-down-fill';
 import diagonalArrowLeftDownFill from '@iconify/icons-eva/diagonal-arrow-left-down-fill';
+import shieldCheck from '@iconify/icons-bi/shield-check';
+import question from '@iconify/icons-bi/question-circle';
 // material
 import { styled } from '@mui/material/styles';
 import {
@@ -18,7 +20,13 @@ import {
   Dialog,
   DialogContent,
   Container,
-  Box
+  Box,
+  Tooltip,
+  TextField,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  Checkbox
 } from '@mui/material';
 // utils
 import { fCurrency, fPercent } from '../../../utils/formatNumber';
@@ -40,6 +48,11 @@ import {
 } from 'components/animate';
 import { getUserKrowdDetail } from 'redux/slices/krowd_slices/investor';
 import useAuth from 'hooks/useAuth';
+import { Form, FormikProvider, useFormik } from 'formik';
+import { LoadingButton } from '@mui/lab';
+import axios from 'axios';
+import { REACT_APP_API_URL } from 'config';
+import { useSnackbar } from 'notistack';
 
 // ----------------------------------------------------------------------
 
@@ -72,47 +85,89 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
     (state: RootState) => state.user_InvestorStateKrowd
   );
   const { user } = useAuth();
+  const { enqueueSnackbar } = useSnackbar();
 
   const [openModalShareInvest, setOpenModalShareInvest] = useState(false);
+
+  const [openModalWithDraw, setOpenModalWithDraw] = useState(false);
+
+  const [check, setCheck] = useState(false);
+  const [bankName, setBankName] = useState('');
+
   const handleClickRefeshBalance = async (v: Package) => {
     dispatch(getWalletByID(v.id));
     dispatch(getUserKrowdDetail(user?.id));
-
     setOpenModalShareInvest(true);
   };
-  const chartOptions = merge(BaseOptionChart(), {
-    chart: { sparkline: { enabled: true } },
-    xaxis: { labels: { show: false } },
-    yaxis: { labels: { show: false } },
-    stroke: { width: 4 },
-    legend: { show: false },
-    grid: { show: false },
-    tooltip: {
-      marker: { show: false },
-      y: {
-        formatter: (seriesName: string) => fCurrency(seriesName),
-        title: {
-          formatter: () => ''
-        }
-      }
+  const handleClickWithDraw = async (v: Package) => {
+    setOpenModalWithDraw(true);
+    dispatch(getUserKrowdDetail(user?.id));
+  };
+  const handleCheckBox = async () => {
+    dispatch(getUserKrowdDetail(user?.id));
+    if (check === false) {
+      setCheck(true);
+      setFieldValue('bankName', mainInvestor?.bankName);
+      setFieldValue('bankAccount', mainInvestor?.bankAccount);
+      setFieldValue('userName', `${mainInvestor?.lastName} ${mainInvestor?.firstName}`);
+    } else {
+      setCheck(false);
+      setFieldValue('bankName', '');
+      setFieldValue('bankAccount', '');
+      setFieldValue('userName', '');
+    }
+  };
+
+  function getToken() {
+    return window.localStorage.getItem('accessToken');
+  }
+  function getHeaderFormData() {
+    const token = getToken();
+    return { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` };
+  }
+
+  const formik = useFormik({
+    initialValues: {
+      bankName: mainInvestor?.bankName ?? '',
+      bankAccount: mainInvestor?.bankAccount ?? '',
+      userName: '',
+      amount: 0
     },
-    fill: { gradient: { opacityFrom: 0.56, opacityTo: 0.56 } }
+    onSubmit: async (values, { setSubmitting, resetForm }) => {
+      try {
+        const formData = new FormData();
+        const header = getHeaderFormData();
+        formData.append('amount', `${values.amount}`);
+        await axios({
+          method: 'post',
+          url: REACT_APP_API_URL + '/momo/request',
+          data: formData,
+          headers: header
+        })
+          .then((res) => {
+            window.location.replace(res.data.result.payUrl);
+          })
+          .catch(() => {
+            enqueueSnackbar('Cập nhật số dư thất bại', {
+              variant: 'error'
+            });
+          })
+          .finally(() => {});
+      } catch (error) {
+        setSubmitting(false);
+      }
+    }
   });
 
+  const { errors, values, touched, isSubmitting, handleSubmit, getFieldProps, setFieldValue } =
+    formik;
+  console.log(formik);
   return (
     <RootStyleContainer initial="initial" animate="animate" variants={varWrapEnter}>
-      {/* {walletList.listOfInvestorWallet
-        .filter((IS) => IS.type === 'I1')
-        .map((e, i) => { */}
-
       {listOfInvestorWallet &&
         listOfInvestorWallet.length > 0 &&
         listOfInvestorWallet.slice(4, 5).map((e, i) => (
           <RootStyle key={i}>
-            {/* <IconWrapperStyle>
-              <Icon icon={diagonalArrowLeftDownFill} width={24} height={24} />
-            </IconWrapperStyle> */}
-
             <Stack spacing={1} sx={{ p: 3 }}>
               <Grid container>
                 <Grid lg={5}>
@@ -287,9 +342,153 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                     </Button>
                     <Button
                       sx={{ mt: 1, display: 'flex', border: '1px solid white', color: 'white' }}
+                      onClick={() => handleClickWithDraw(e)}
                     >
                       - Rút tiền
                     </Button>
+                    <Dialog fullWidth maxWidth="sm" open={openModalWithDraw}>
+                      <DialogTitle sx={{ alignItems: 'center', textAlign: 'center' }}>
+                        <Box mt={1} display={'flex'} justifyContent={'flex-end'}>
+                          <Box>
+                            <Button
+                              variant="contained"
+                              color="error"
+                              onClick={() => setOpenModalWithDraw(false)}
+                            >
+                              X
+                            </Button>
+                          </Box>
+                        </Box>
+                        <Icon color="#14b7cc" height={60} width={60} icon={walletDetails} />
+                      </DialogTitle>
+                      <DialogContent>
+                        <Box mt={1}>
+                          <DialogContentText
+                            sx={{
+                              textAlign: 'center',
+                              fontWeight: 900,
+                              fontSize: 20,
+                              color: 'black'
+                            }}
+                          >
+                            Tạo lệnh rút tiền
+                          </DialogContentText>
+                        </Box>
+                        <Typography>
+                          Số dư ví: <strong>{fCurrency(e.balance)}</strong>
+                        </Typography>
+                        <FormikProvider value={formik}>
+                          <Form noValidate autoComplete="off" onSubmit={handleSubmit}>
+                            <TextField
+                              required
+                              fullWidth
+                              label="Tài khoản ngân hàng"
+                              {...getFieldProps('bankName')}
+                              sx={{ mt: 2 }}
+                            />
+
+                            <TextField
+                              required
+                              fullWidth
+                              label="Tài khoản ngân hàng"
+                              {...getFieldProps('bankAccount')}
+                              sx={{ mt: 2 }}
+                            />
+
+                            <TextField
+                              required
+                              fullWidth
+                              label="Tên chủ tài khoản"
+                              {...getFieldProps('userName')}
+                              sx={{ mt: 2 }}
+                            />
+
+                            <Tooltip title="Giao dịch tối thiểu là 10,000đ" placement="bottom-end">
+                              <TextField
+                                fullWidth
+                                label="Số tiền VND"
+                                {...getFieldProps('amount')}
+                                sx={{ mt: 2 }}
+                                InputProps={{
+                                  endAdornment: <Icon color="#ff9b26e0" icon={question} />
+                                }}
+                              />
+                            </Tooltip>
+                            <Box display={'flex'} alignItems={'center'}>
+                              <Checkbox onClick={handleCheckBox} />
+                              <Typography>Sử dụng thông tin hiện có</Typography>
+                            </Box>
+                            <RadioGroup row sx={{ my: 2 }} {...getFieldProps('amount')}>
+                              <FormControlLabel
+                                value="300000"
+                                control={<Radio />}
+                                label="300,000đ"
+                                sx={{ px: 2 }}
+                              />
+                              <FormControlLabel
+                                value="500000"
+                                control={<Radio />}
+                                label="500,000đ"
+                                sx={{ px: 2.7 }}
+                              />
+                              <FormControlLabel
+                                value="1000000"
+                                control={<Radio />}
+                                label="1,000,000đ"
+                                sx={{ px: 2 }}
+                              />
+                              <FormControlLabel
+                                value="3000000"
+                                control={<Radio />}
+                                label="3,000,000đ"
+                                sx={{ px: 2 }}
+                              />
+                              <FormControlLabel
+                                value="5000000"
+                                control={<Radio />}
+                                label="5,000,000đ"
+                                sx={{ px: 1 }}
+                              />
+                              <FormControlLabel
+                                value="10000000"
+                                control={<Radio />}
+                                label="10,000,000đ"
+                                sx={{ px: 2.3 }}
+                              />
+                            </RadioGroup>
+                            <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
+                              <Icon color="green" width={30} height={30} icon={shieldCheck} />
+                              <Typography sx={{ mt: 3, textAlign: 'left', ml: 1 }}>
+                                Mọi thông tin khách hàng đều được mã hóa để bảo mật thông tin khách
+                                hàng.
+                              </Typography>
+                            </Box>
+                            {e.balance > 0 ? (
+                              <LoadingButton
+                                fullWidth
+                                type="submit"
+                                variant="contained"
+                                size="large"
+                                loading={isSubmitting}
+                              >
+                                Rút tiền
+                              </LoadingButton>
+                            ) : (
+                              <LoadingButton
+                                disabled
+                                fullWidth
+                                type="submit"
+                                variant="contained"
+                                size="large"
+                                loading={isSubmitting}
+                              >
+                                Rút tiền
+                              </LoadingButton>
+                            )}
+                          </Form>
+                        </FormikProvider>
+                      </DialogContent>
+                    </Dialog>
                   </Grid>
                 </Grid>
               </Grid>

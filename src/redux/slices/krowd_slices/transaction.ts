@@ -3,6 +3,7 @@ import { dispatch } from '../../store';
 // utils
 import {
   Investment,
+  ListOfDailyReport,
   Payment,
   Transaction,
   WalletTransaction
@@ -20,6 +21,12 @@ type TransactionState = {
   investmentState: {
     isLoading: boolean;
     investmentList: Investment[];
+    error: boolean;
+  };
+  dailyReportState: {
+    isLoading: boolean;
+    listOfDailyReport: ListOfDailyReport[];
+    numOfDailyReport: number;
     error: boolean;
   };
   walletTransactionState: {
@@ -48,6 +55,12 @@ const initialState: TransactionState = {
   investmentState: {
     isLoading: false,
     investmentList: [],
+    error: false
+  },
+  dailyReportState: {
+    isLoading: false,
+    listOfDailyReport: [],
+    numOfDailyReport: 0,
     error: false
   },
   walletTransactionState: {
@@ -130,6 +143,18 @@ const slice = createSlice({
     getInvestmentListSuccess(state, action) {
       state.investmentState.isLoading = false;
       state.investmentState.investmentList = action.payload;
+    },
+    // ------ GET ALL DAILY REPORT ------------ //
+    startLoadingDailyReportList(state) {
+      state.dailyReportState.isLoading = true;
+    },
+    hasGetDailyReportError(state, action) {
+      state.dailyReportState.isLoading = false;
+      state.dailyReportState.error = action.payload;
+    },
+    getDailyReportSuccess(state, action) {
+      state.dailyReportState.isLoading = false;
+      state.dailyReportState = action.payload;
     }
   }
 });
@@ -199,6 +224,19 @@ export function getInvestmentProjectID(projectId: string) {
       dispatch(slice.actions.getInvestmentListSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasGetInvestmentError(error));
+    }
+  };
+}
+//---------------------------- GET ALL DAILY REPORT------------------------------
+
+export function getDailyReportProjectID(projectId: string, pageIndex: number) {
+  return async () => {
+    dispatch(slice.actions.startLoadingDailyReportList());
+    try {
+      const response = await TransactionAPI.getsDailyReport(projectId, pageIndex);
+      dispatch(slice.actions.getDailyReportSuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasGetDailyReportError(error));
     }
   };
 }

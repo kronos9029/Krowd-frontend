@@ -76,7 +76,7 @@ export function KrowdReport({
   viewPath,
   deleteRecord
 }: KrowdTableProps) {
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(8);
   const [page, setPage] = useState(0);
   const data = getData();
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -126,7 +126,6 @@ export function KrowdReport({
                             case DATA_TYPE.TEXT:
                               return (
                                 <TableCell
-                                  sx={{ border: '1px solid' }}
                                   key={`__${_item.name}__${data.id}`}
                                   component="th"
                                   scope="row"
@@ -202,7 +201,6 @@ export function KrowdReport({
                             case DATA_TYPE.NUMBER_FORMAT:
                               return (
                                 <TableCell
-                                  sx={{ border: '1px solid' }}
                                   key={`__${_item.name}__${data.id}`}
                                   component="th"
                                   scope="row"
@@ -229,7 +227,6 @@ export function KrowdReport({
                             case DATA_TYPE.NUMBER:
                               return (
                                 <TableCell
-                                  sx={{ border: '1px solid' }}
                                   key={`__${_item.name}__${data.id}`}
                                   component="th"
                                   scope="row"
@@ -364,7 +361,7 @@ export function KrowdReport({
                           }
                         })}
                         {viewPath && (
-                          <TableCell align="center" sx={{ border: '1px solid' }}>
+                          <TableCell align="center">
                             <Link to={viewPath + `/${data.id}`}>
                               <Icon
                                 icon={eyeFill}
@@ -377,7 +374,7 @@ export function KrowdReport({
                           </TableCell>
                         )}
                         {deleteRecord && (
-                          <TableCell align="center" sx={{ border: '1px solid' }}>
+                          <TableCell align="center">
                             <Button onClick={() => deleteRecord(data.id)}>
                               <Icon
                                 icon={trash2Outline}
@@ -456,7 +453,7 @@ export function KrowdReport({
         </Box>
       )}
 
-      <TablePagination
+      {/* <TablePagination
         rowsPerPageOptions={[]}
         component="div"
         count={data.length}
@@ -464,7 +461,7 @@ export function KrowdReport({
         page={page}
         onPageChange={(e, page) => setPage(page)}
         onRowsPerPageChange={(e) => handleChangeRowsPerPage}
-      />
+      /> */}
     </>
   );
 }
