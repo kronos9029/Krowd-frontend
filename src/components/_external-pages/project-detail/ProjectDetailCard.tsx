@@ -12,14 +12,11 @@ import {
 import { Project1 } from '../../../@types/krowd/project';
 import { fCurrency } from 'utils/formatNumber';
 import { ProjectDetailAlbumCarousel } from 'components/_external-pages/project-detail/index';
-import { PATH_DASHBOARD, PATH_PAGE } from 'routes/paths';
-//Language
-import cookies from 'js-cookie';
-import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
-import useAuth from 'hooks/useAuth';
-import { getPackageBYID, getProjectPackage } from 'redux/slices/krowd_slices/project';
+import { PATH_PAGE } from 'routes/paths';
+
+import { getProjectPackage } from 'redux/slices/krowd_slices/project';
 import { dispatch } from 'redux/store';
+import useLocales from 'hooks/useLocales';
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
   borderRadius: 5,
@@ -35,30 +32,16 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 type ProjectDetailCardProps = {
   project: Project1;
 };
-const Language = [
-  {
-    code: 'vi',
-    name: 'English',
-    countryCode: 'vi'
-  },
-  {
-    code: 'en',
-    name: 'Vietnamese',
-    countryCode: 'en'
-  }
-];
+
 function ProjectDetailCard({ project: p }: ProjectDetailCardProps) {
-  //Language
-  const currentLanguageCode = cookies.get('i18next') || 'en';
-  const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
-  const { t } = useTranslation();
-  const { user } = useAuth();
-  const navigate = useNavigate();
   const getEntityList = (
     type: 'PITCH' | 'EXTENSION' | 'DOCUMENT' | 'ALBUM' | 'ABOUT' | 'HIGHLIGHT' | 'PRESS' | 'FAQ'
   ) => {
     return p.projectEntity.find((pe) => pe.type === type)?.typeItemList;
   };
+  //Language
+
+  const { translate: t } = useLocales();
   const album = [
     p.image,
     ...getEntityList('ALBUM')!
@@ -69,13 +52,6 @@ function ProjectDetailCard({ project: p }: ProjectDetailCardProps) {
   function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {
     return value !== null && value !== undefined;
   }
-  const handleInvest = () => {
-    if (user) {
-      navigate(PATH_PAGE.checkout);
-    } else {
-      navigate(PATH_DASHBOARD.root);
-    }
-  };
   return (
     <Grid container>
       <Grid
@@ -235,19 +211,21 @@ function ProjectDetailCard({ project: p }: ProjectDetailCardProps) {
             }}
             href={`${PATH_PAGE.checkout}/${p.id}`}
           >
-            <Button
-              sx={{
-                backgroundColor: '#FF7F50',
-                textDecoration: 'none',
-                '&:hover': { backgroundColor: '#FF7F50' }
-              }}
-              disableElevation
-              disableRipple
-              variant="contained"
-              size="large"
-            >
-              {t(`Project_detail_card.investNow`)} {p.name}
-            </Button>
+            {p.status === 'CALLING_FOR_INVESTMENT' && p.remainAmount > 0 && (
+              <Button
+                sx={{
+                  backgroundColor: '#FF7F50',
+                  textDecoration: 'none',
+                  '&:hover': { backgroundColor: '#FF7F50' }
+                }}
+                disableElevation
+                disableRipple
+                variant="contained"
+                size="large"
+              >
+                {t(`Project_detail_card.investNow`)} {p.name}
+              </Button>
+            )}
           </Link>
         </Box>
       </Grid>
@@ -255,47 +233,3 @@ function ProjectDetailCard({ project: p }: ProjectDetailCardProps) {
   );
 }
 export default ProjectDetailCard;
-{
-  /*                 <Divider sx={{  color: 'text.disabled' }} />
-   */
-}
-{
-  /* <Box
-                    sx={{
-                      my: 3,
-                      display: 'flex',
-                      justifyContent: 'space-between'
-                    }}
-                  >
-                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
-                      Doanh nghiệp
-                    </Typography>
-                    <Typography sx={{ mt: 0.2 }}>{p.business.name}</Typography>
-                  </Box>
-
-                  <Box
-                    sx={{
-                      mb: 3,
-                      display: 'flex',
-                      justifyContent: 'space-between'
-                    }}
-                  >
-                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
-                      Khu vực
-                    </Typography>
-                    <Typography sx={{ mt: 0.2 }}>{p.name}</Typography>
-                  </Box>
-
-                  <Box
-                    sx={{
-                      mb: 3,
-                      display: 'flex',
-                      justifyContent: 'space-between'
-                    }}
-                  >
-                    <Typography variant="subtitle1" sx={{ mt: 0.2 }}>
-                      Địa chỉ
-                    </Typography>
-                    <Typography sx={{ mt: 0.2 }}>{p.address}</Typography>
-                  </Box> */
-}

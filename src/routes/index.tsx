@@ -14,6 +14,7 @@ import LoadingScreen from '../components/LoadingScreen';
 import MainNavbar from 'layouts/main/MainNavbar';
 import MainFooter from 'layouts/main/MainFooter';
 import { Divider } from '@mui/material';
+import DashboardProjectLayout from 'layouts/dashboardProject';
 
 // ----------------------------------------------------------------------
 
@@ -69,7 +70,22 @@ export default function Router() {
         { path: 'verify', element: <VerifyCode /> }
       ]
     },
-
+    {
+      path: 'projectBoard',
+      element: (
+        <AuthGuard>
+          <DashboardProjectLayout />
+        </AuthGuard>
+      ),
+      children: [
+        { element: <Navigate to="/projectBoard/project" replace /> },
+        { path: 'project/projectDetail', element: <Details /> },
+        { path: 'project/projectDetail/:id', element: <Details /> },
+        { path: 'project/daily-revenue', element: <ReportDailyProject /> },
+        { path: 'project/investment-wallet', element: <UserInvestment /> }
+        // { path: 'project/payment-wallet', element: <WalletI4Project /> }
+      ]
+    },
     // Dashboard Routes
 
     {
@@ -283,6 +299,7 @@ const GeneralAnalytics = Loadable(lazy(() => import('../pages/dashboard/GeneralA
 const WalletBanking = Loadable(lazy(() => import('../pages/dashboard/WalletBanking')));
 const GeneralBooking = Loadable(lazy(() => import('../pages/dashboard/GeneralBooking')));
 const EcommerceShop = Loadable(lazy(() => import('../pages/dashboard/EcommerceShop')));
+
 const EcommerceProductDetails = Loadable(
   lazy(() => import('../pages/dashboard/EcommerceProductDetails'))
 );
@@ -320,9 +337,17 @@ const UserWalletTransaction = Loadable(
 const UserPaymentProject = Loadable(
   lazy(() => import('../pages/dashboard/AccountManager/UserPaymentProject'))
 );
+const UserInvestment = Loadable(
+  lazy(() => import('../pages/dashboard/AccountManager/UserInvestment'))
+);
+//===========================SIDEBAR PROJECT===================================
 const ProjectListInvested = Loadable(
   lazy(() => import('../pages/dashboard/ProjectKrowdManager/ProjectListInvested'))
 );
+const ReportDailyProject = Loadable(
+  lazy(() => import('../pages/dashboard/ProjectKrowdManager/ReportDailyProject'))
+);
+//==============================================================================
 const UserCreate = Loadable(lazy(() => import('../pages/dashboard/UserCreate')));
 const Chat = Loadable(lazy(() => import('../pages/dashboard/Chat')));
 const Mail = Loadable(lazy(() => import('../pages/dashboard/Mail')));
@@ -332,6 +357,7 @@ const About = Loadable(lazy(() => import('../pages/About')));
 const Contact = Loadable(lazy(() => import('../pages/Contact')));
 const Faqs = Loadable(lazy(() => import('../pages/Faqs')));
 const ComingSoon = Loadable(lazy(() => import('../pages/ComingSoon')));
+
 const Details = Loadable(lazy(() => import('../pages/Details')));
 //Page
 const Projects = Loadable(lazy(() => import('../pages/project/Project')));

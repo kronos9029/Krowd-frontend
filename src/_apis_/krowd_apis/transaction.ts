@@ -2,6 +2,7 @@ import axios from 'axios';
 import { REACT_APP_API_URL } from '../../config';
 const API_ACCOUNT_TRANSACTION = '/account_transactions';
 const API_WALLET_TRANSACTION = '/wallet_transactions';
+const API_INVESTMENT = '/investments';
 const API_PAYMENTS = '/payments/type/INVESTMENT';
 const PERIOD_REVENUE = '/payments/type/PERIOD_REVENUE';
 
@@ -17,6 +18,13 @@ function getHeader() {
 async function getsTransaction() {
   const headers = getHeader();
   const response = await axios.get(REACT_APP_API_URL + `${API_ACCOUNT_TRANSACTION}`, {
+    headers: headers
+  });
+  return response;
+}
+async function getsInvestment({ id }: { id: string }) {
+  const headers = getHeader();
+  const response = await axios.get(REACT_APP_API_URL + `${API_INVESTMENT}?projectId=${id}`, {
     headers: headers
   });
   return response;
@@ -47,5 +55,6 @@ export const TransactionAPI = {
   getsTransaction: getsTransaction,
   getsWalletTransaction: getsWalletTransaction,
   getsPayment: getsPayment,
-  getsPaymentRevenue: getsPaymentRevenue
+  getsPaymentRevenue: getsPaymentRevenue,
+  getsInvestment: getsInvestment
 };

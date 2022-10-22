@@ -1,10 +1,14 @@
 import { Box, Chip, Typography } from '@mui/material';
 import { MHidden } from 'components/@material-extend';
 import { Project1, PROJECT_STATUS } from '../../../@types/krowd/project';
-
 const StyleStatus = [
-  { name: PROJECT_STATUS.CALLING_FOR_INVESTMENT, bgcolor: 'primary.main', vn: 'ĐANG KÊU GỌI' },
-  { name: PROJECT_STATUS.ACTIVE, bgcolor: 'primary.success', vn: 'KÊU GỌI THÀNH CÔNG' }
+  {
+    name: PROJECT_STATUS.CALLING_FOR_INVESTMENT,
+    bgcolor: 'primary.main',
+    vn: 'ĐANG KÊU GỌI ĐẦU TƯ'
+  },
+
+  { name: PROJECT_STATUS.ACTIVE, bgcolor: 'green', vn: 'KÊU GỌI THÀNH CÔNG' }
 ];
 function ProjectDetailHeading({ p }: { p: Project1 }) {
   return (

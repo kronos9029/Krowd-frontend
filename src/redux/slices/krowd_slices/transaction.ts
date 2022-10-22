@@ -1,7 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { dispatch } from '../../store';
 // utils
-import { Payment, Transaction, WalletTransaction } from '../../../@types/krowd/transaction';
+import {
+  Investment,
+  Payment,
+  Transaction,
+  WalletTransaction
+} from '../../../@types/krowd/transaction';
 import { TransactionAPI } from '../../../_apis_/krowd_apis/transaction';
 // ----------------------------------------------------------------------
 
@@ -10,6 +15,11 @@ type TransactionState = {
     isLoading: boolean;
     TransactionList: Transaction[];
 
+    error: boolean;
+  };
+  investmentState: {
+    isLoading: boolean;
+    investmentList: Investment[];
     error: boolean;
   };
   walletTransactionState: {
@@ -33,6 +43,11 @@ const initialState: TransactionState = {
   transactionState: {
     isLoading: false,
     TransactionList: [],
+    error: false
+  },
+  investmentState: {
+    isLoading: false,
+    investmentList: [],
     error: false
   },
   walletTransactionState: {
@@ -103,6 +118,18 @@ const slice = createSlice({
     getPeriodRevenueListSuccess(state, action) {
       state.paymentListRevenueState.isLoadingPeriodRevenue = false;
       state.paymentListRevenueState.paymentListPeriodRevenue = action.payload;
+    },
+    // ------ GET ALL INVESTMENT ------------ //
+    startLoadingInvestmentList(state) {
+      state.investmentState.isLoading = true;
+    },
+    hasGetInvestmentError(state, action) {
+      state.investmentState.isLoading = false;
+      state.investmentState.error = action.payload;
+    },
+    getInvestmentListSuccess(state, action) {
+      state.investmentState.isLoading = false;
+      state.investmentState.investmentList = action.payload;
     }
   }
 });
@@ -159,6 +186,19 @@ export function getAllPaymentListRevenue() {
       dispatch(slice.actions.getPeriodRevenueListSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasGetPeriodRevenueError(error));
+    }
+  };
+}
+//---------------------------- GET ALL INVESTMENT------------------------------
+
+export function getInvestmentProjectID(projectId: string) {
+  return async () => {
+    dispatch(slice.actions.startLoadingInvestmentList());
+    try {
+      const response = await TransactionAPI.getsInvestment({ id: projectId });
+      dispatch(slice.actions.getInvestmentListSuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasGetInvestmentError(error));
     }
   };
 }

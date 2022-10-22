@@ -115,7 +115,7 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
 
             <Stack spacing={1} sx={{ p: 3 }}>
               <Grid container>
-                <Grid lg={6}>
+                <Grid lg={5}>
                   <Typography sx={{ typography: 'h6' }}>{e.walletType.name}</Typography>
                   <Typography>
                     <TextAnimate
@@ -126,6 +126,7 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                     {/* {fCurrency(e.balance)} */}
                   </Typography>
                 </Grid>
+
                 <Grid>
                   <Button
                     sx={{
@@ -135,7 +136,6 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                     }}
                     onClick={() => handleClickRefeshBalance(e)}
                   >
-                    {/* <Icon icon={refresh} /> */}
                     <Typography sx={{ typography: 'subtitle2', gap: 1, pl: 1 }}>
                       Chi tiết tài khoản ví
                     </Typography>
@@ -275,48 +275,29 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                             Đóng
                           </Button>
                         </Box>
-                        {/* <Button
-                          href={PATH_PAGE.pageTopUp}
-                          target="_blank"
-                          sx={{
-                            display: 'flex',
-                            border: '1px solid white'
-                          }}
-                          variant="contained"
-                        >
-                          + Nạp tiền
-                        </Button> */}
                       </Box>
                     </DialogContent>
                   </Dialog>
-                </Grid>
-                <Grid sx={{ display: 'flex', gap: 1 }}>
-                  <Button
-                    sx={{ mt: 5, display: 'flex', border: '1px solid white', color: 'white' }}
-                  >
-                    + Chuyển tiền
-                  </Button>
-                  <Button
-                    sx={{ mt: 5, display: 'flex', border: '1px solid white', color: 'white' }}
-                  >
-                    - Rút tiền
-                  </Button>
+
+                  <Grid sx={{ display: 'flex', gap: 1 }}>
+                    <Button
+                      sx={{ mt: 1, display: 'flex', border: '1px solid white', color: 'white' }}
+                    >
+                      + Chuyển tiền
+                    </Button>
+                    <Button
+                      sx={{ mt: 1, display: 'flex', border: '1px solid white', color: 'white' }}
+                    >
+                      - Rút tiền
+                    </Button>
+                  </Grid>
                 </Grid>
               </Grid>
-              {/* <Stack direction="row" alignItems="center" flexWrap="wrap">
-                <Icon
-                  width={20}
-                  height={20}
-                  icon={PERCENT >= 0 ? trendingUpFill : trendingDownFill}
-                />
-                <Typography variant="subtitle2" component="span" sx={{ ml: 0.5 }}>
-                  {PERCENT > 0 && '+'}
-                  {fPercent(PERCENT)}
-                </Typography>
+              <Stack direction="row" alignItems="center" flexWrap="wrap">
                 <Typography variant="body2" component="span" sx={{ opacity: 0.72 }}>
                   &nbsp;Chưa cập nhật
                 </Typography>
-              </Stack> */}
+              </Stack>
             </Stack>
           </RootStyle>
         ))}

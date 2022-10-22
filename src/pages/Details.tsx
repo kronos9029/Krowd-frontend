@@ -27,9 +27,7 @@ import MHidden from 'components/@material-extend/MHidden';
 import MainNavbar from 'layouts/main/MainNavbar';
 import { PATH_DASHBOARD_LEARN, PATH_PAGE } from 'routes/paths';
 import { useEffect, useState } from 'react';
-//Language
-import cookies from 'js-cookie';
-import { useTranslation } from 'react-i18next';
+
 import { getProjectListById, getProjectPackage } from 'redux/slices/krowd_slices/project';
 import { getAllProjectStage, getProjectStageList } from 'redux/slices/krowd_slices/stage';
 import { Icon } from '@iconify/react';
@@ -60,13 +58,21 @@ export default function ComponentsDetails() {
   const { id = '' } = useParams();
   useEffect(() => {
     //PROJECT BY ID
-    dispatch(getProjectListById(id));
-    //PACKAGE
-    dispatch(getProjectPackage(id));
-    //CHART
-    dispatch(getProjectStageList(id));
-    //STAGE TABLE
-    dispatch(getAllProjectStage(id));
+    if (id) {
+      dispatch(getProjectListById(id));
+      //PACKAGE
+      dispatch(getProjectPackage(id));
+      //CHART
+      dispatch(getProjectStageList(id));
+      //STAGE TABLE
+      dispatch(getAllProjectStage(id));
+    } else {
+      dispatch(getProjectListById(`${localStorage.getItem('projectId')}`));
+      dispatch(getProjectPackage(`${localStorage.getItem('projectId')}`));
+      dispatch(getProjectStageList(`${localStorage.getItem('projectId')}`));
+      dispatch(getAllProjectStage(`${localStorage.getItem('projectId')}`));
+    }
+
     window.addEventListener('scroll', listenScrollEvent);
     return () => {
       window.removeEventListener('scroll', listenScrollEvent);
@@ -76,7 +82,6 @@ export default function ComponentsDetails() {
   const { detailOfProjectID: projectID, isLoadingDetailOfProjectID } = detailOfProject;
   const [openStage, setOpenStage] = useState('chart');
   const { listOfChartStage } = useSelector((state: RootState) => state.stage);
-
   const { user } = useAuth();
   const [isShowNav, setisShowNav] = useState(false);
   const listenScrollEvent = () => {
@@ -174,19 +179,21 @@ export default function ComponentsDetails() {
                             href={`${PATH_PAGE.checkout}/${projectID.id}`}
                           >
                             <Typography sx={{ textAlign: 'end' }}>
-                              <Button
-                                sx={{
-                                  backgroundColor: '#FF7F50',
-                                  textDecoration: 'none',
-                                  '&:hover': { backgroundColor: '#FF7F50' }
-                                }}
-                                disableElevation
-                                disableRipple
-                                variant="contained"
-                                size="large"
-                              >
-                                {t(`Project_detail_card.investNow`)} {projectID.name}
-                              </Button>
+                              {projectID.status === 'CALLING_FOR_INVESTMENT' && (
+                                <Button
+                                  sx={{
+                                    backgroundColor: '#FF7F50',
+                                    textDecoration: 'none',
+                                    '&:hover': { backgroundColor: '#FF7F50' }
+                                  }}
+                                  disableElevation
+                                  disableRipple
+                                  variant="contained"
+                                  size="large"
+                                >
+                                  {t(`Project_detail_card.investNow`)} {projectID.name}
+                                </Button>
+                              )}
                             </Typography>
                           </Link>
                         </Box>
@@ -196,7 +203,7 @@ export default function ComponentsDetails() {
                 )}
               </MHidden>
 
-              {!isShowNav && <MainNavbar />}
+              {/* {!isShowNav && <MainNavbar />} */}
 
               <Grid container justifyContent="space-between">
                 <Grid xs={12} sm={7} md={6} lg={8}>
@@ -220,15 +227,17 @@ export default function ComponentsDetails() {
                   >
                     Cách thức hoạt động
                   </Button>
-                  {packageLists.listOfPackage && packageLists.listOfPackage.length > 0 && (
-                    <Grid container sx={{ mt: 1 }}>
-                      <Grid container sx={{ mt: 4 }}>
-                        <Grid xs={12} sm={5} md={4} lg={5}>
-                          <ProjectPackage project={projectID} />
+                  {projectID.status === 'CALLING_FOR_INVESTMENT' &&
+                    packageLists.listOfPackage &&
+                    packageLists.listOfPackage.length > 0 && (
+                      <Grid container sx={{ mt: 1 }}>
+                        <Grid container sx={{ mt: 4 }}>
+                          <Grid xs={12} sm={5} md={4} lg={5}>
+                            <ProjectPackage project={projectID} />
+                          </Grid>
                         </Grid>
                       </Grid>
-                    </Grid>
-                  )}
+                    )}
                 </Grid>
               </Grid>
             </Box>
@@ -236,40 +245,62 @@ export default function ComponentsDetails() {
           <Box sx={{ mb: 7 }}>
             <Divider variant="fullWidth" />
           </Box>
-          <Container maxWidth={'lg'} sx={{ mb: 6 }}>
-            <Grid container>
-              <Grid xs={12} sm={4} md={5} lg={3}>
-                <Box>
-                  <Button
-                    disableElevation
-                    size="large"
-                    sx={{
-                      border: 'solid',
-                      borderRadius: '5%'
-                    }}
-                  >
-                    {t(`Project_detail_card.hoverSologun`)}
-                  </Button>
-                </Box>
-              </Grid>
-              <Grid xs={12} sm={4} md={5} lg={7}>
-                <Box>
-                  {user && user ? (
-                    <Link
-                      style={{ textDecoration: 'none' }}
-                      onClick={() => {
-                        dispatch(getProjectPackage(projectID.id));
+          {projectID.status === 'CALLING_FOR_INVESTMENT' && (
+            <Container maxWidth={'lg'} sx={{ mb: 6 }}>
+              <Grid container>
+                <Grid xs={12} sm={4} md={5} lg={3}>
+                  <Box>
+                    <Button
+                      disableElevation
+                      size="large"
+                      sx={{
+                        border: 'solid',
+                        borderRadius: '5%'
                       }}
-                      href={`${PATH_PAGE.checkout}/${projectID.id}`}
                     >
-                      <Typography sx={{ display: 'flex', textAlign: 'end' }}>
+                      {t(`Project_detail_card.hoverSologun`)}
+                    </Button>
+                  </Box>
+                </Grid>
+                <Grid xs={12} sm={4} md={5} lg={7}>
+                  <Box>
+                    {user && user ? (
+                      <Link
+                        style={{ textDecoration: 'none' }}
+                        onClick={() => {
+                          dispatch(getProjectPackage(projectID.id));
+                        }}
+                        href={`${PATH_PAGE.checkout}/${projectID.id}`}
+                      >
+                        <Typography sx={{ display: 'flex', textAlign: 'end' }}>
+                          <Button
+                            sx={{
+                              backgroundColor: '#FF7F50',
+                              textTransform: 'none',
+                              textDecoration: 'none',
+                              '&:hover': { backgroundColor: '#FF7F50' }
+                            }}
+                            disableElevation
+                            disableRipple
+                            variant="contained"
+                            size="large"
+                          >
+                            {t(`Project_detail_card.investNow`)} {projectID.name}
+                          </Button>
+                        </Typography>
+                      </Link>
+                    ) : (
+                      <Typography sx={{ textAlign: 'end' }}>
                         <Button
                           sx={{
                             backgroundColor: '#FF7F50',
-                            textTransform: 'none',
                             textDecoration: 'none',
+                            textTransform: 'none',
+
                             '&:hover': { backgroundColor: '#FF7F50' }
                           }}
+                          // onClick={() => handleInvest()}
+                          href={`${PATH_PAGE.checkout}/${projectID.id}`}
                           disableElevation
                           disableRipple
                           variant="contained"
@@ -278,35 +309,17 @@ export default function ComponentsDetails() {
                           {t(`Project_detail_card.investNow`)} {projectID.name}
                         </Button>
                       </Typography>
-                    </Link>
-                  ) : (
-                    <Typography sx={{ textAlign: 'end' }}>
-                      <Button
-                        sx={{
-                          backgroundColor: '#FF7F50',
-                          textDecoration: 'none',
-                          textTransform: 'none',
-
-                          '&:hover': { backgroundColor: '#FF7F50' }
-                        }}
-                        // onClick={() => handleInvest()}
-                        href={`${PATH_PAGE.checkout}/${projectID.id}`}
-                        disableElevation
-                        disableRipple
-                        variant="contained"
-                        size="large"
-                      >
-                        {t(`Project_detail_card.investNow`)} {projectID.name}
-                      </Button>
-                    </Typography>
-                  )}
-                </Box>
+                    )}
+                  </Box>
+                </Grid>
               </Grid>
-            </Grid>
-          </Container>
-          <Box sx={{ mb: 7 }}>
-            <Divider variant="fullWidth" />
-          </Box>
+            </Container>
+          )}
+          {projectID.status === 'CALLING_FOR_INVESTMENT' && (
+            <Box sx={{ mb: 7 }}>
+              <Divider variant="fullWidth" />
+            </Box>
+          )}
           <Container maxWidth={'lg'}>
             <Grid
               container

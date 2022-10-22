@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react';
 import homeFill from '@iconify/icons-eva/home-fill';
+import bookFill from '@iconify/icons-eva/book-fill';
 // routes
 import { PATH_DASHBOARD_LEARN, PATH_PAGE } from '../../routes/paths';
 
@@ -29,7 +30,7 @@ const navConfig = {
     },
     {
       title: 'Tìm hiểu',
-      icon: <Icon icon="fluent:people-12-regular" {...ICON_SIZE} />,
+      icon: <Icon icon={bookFill} {...ICON_SIZE} />,
       path: PATH_DASHBOARD_LEARN.learn.how_it_work
       // path: PATH_DOCS
     }
@@ -65,7 +66,7 @@ const navConfig = {
     },
     {
       title: 'Learn',
-      icon: <Icon icon="fluent:people-12-regular" {...ICON_SIZE} />,
+      icon: <Icon icon={bookFill} {...ICON_SIZE} />,
       path: PATH_DASHBOARD_LEARN.learn.how_it_work
       // path: PATH_DOCS
     }

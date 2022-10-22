@@ -1,0 +1,69 @@
+// routes
+import { PATH_DASHBOARD, PATH_DASHBOARD_PROJECT } from '../../routes/paths';
+// components
+import SvgIconStyle from '../../components/SvgIconStyle';
+import React from 'react';
+
+// ----------------------------------------------------------------------
+
+const getIcon = (name: string) => (
+  <SvgIconStyle src={`/static/icons/navbar/${name}.svg`} sx={{ width: '100%', height: '100%' }} />
+);
+
+const ICONS = {
+  other: getIcon('ic_other'),
+  project: getIcon('ic_project'),
+  wallet: getIcon('ic_wallet'),
+  dashboard: getIcon('ic_dashboard'),
+  daily: getIcon('ic_dailyRevenue'),
+  term: getIcon('ic_termRevenue'),
+  booking: getIcon('ic_booking'),
+  walletTransaction: getIcon('ic_walletTransaction'),
+  bankTransaction: getIcon('ic_bankTransaction'),
+  PeriodRevenueHistory: getIcon('ic_historyTransaction')
+};
+
+const SidebarProjectConfig = [
+  {
+    subheader: 'Dự án',
+    items: [
+      {
+        title: 'Chi tiết dự án',
+        path: PATH_DASHBOARD_PROJECT.project.root,
+        icon: ICONS.project
+      }
+    ]
+  },
+  {
+    subheader: 'Báo cáo dự án',
+    items: [
+      {
+        title: 'Doanh thu hằng ngày',
+        path: PATH_DASHBOARD_PROJECT.project.reportRevenue,
+        icon: ICONS.daily
+      },
+      {
+        title: 'Tình hình thường kì',
+        path: PATH_DASHBOARD_PROJECT.project.reportUpdate,
+        icon: ICONS.term
+      }
+    ]
+  },
+  {
+    subheader: 'Ví dự án',
+    items: [
+      {
+        title: 'Ví đầu tư dự án',
+        path: PATH_DASHBOARD_PROJECT.wallet_project.walletP3,
+        icon: ICONS.wallet
+      },
+      {
+        title: 'Ví thanh toán dự án',
+        path: PATH_DASHBOARD_PROJECT.wallet_project.walletP4,
+        icon: ICONS.walletTransaction
+      }
+    ]
+  }
+];
+
+export default SidebarProjectConfig;
