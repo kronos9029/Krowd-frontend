@@ -171,7 +171,7 @@ export default function PageTopUp() {
       <Container>
         <Box sx={{ maxWidth: 480, margin: 'auto', textAlign: 'center' }}>
           <Typography variant="h6" sx={{ mb: 2 }}>
-            Thanh toán tiện dụng với Momo.
+            Thanh toán tiện dụng với Momo
           </Typography>
 
           <Card>

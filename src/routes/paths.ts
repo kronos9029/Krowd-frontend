@@ -7,6 +7,7 @@ function path(root: string, sublink: string) {
 const ROOTS_AUTH = '/auth';
 const ROOTS_DASHBOARD = '/dashboard';
 const ROOTS_DASHBOARD_LEARN = '/learn';
+const ROOTS_DASHBOARD_PROJECT = '/projectBoard';
 
 // ----------------------------------------------------------------------
 
@@ -56,6 +57,18 @@ export const PATH_DASHBOARD_LEARN = {
     term_of_service: path(ROOTS_DASHBOARD_LEARN, '/investors/term_of_service'),
     communication: path(ROOTS_DASHBOARD_LEARN, '/investors/communication'),
     coming_soon: path(ROOTS_DASHBOARD_LEARN, '/investors/coming-soon')
+  }
+};
+export const PATH_DASHBOARD_PROJECT = {
+  root: ROOTS_DASHBOARD_PROJECT,
+  project: {
+    root: path(ROOTS_DASHBOARD_PROJECT, `/project/projectDetail`),
+    reportRevenue: path(ROOTS_DASHBOARD_PROJECT, '/project/daily-revenue'),
+    reportUpdate: path(ROOTS_DASHBOARD_PROJECT, '/project/report_update')
+  },
+  wallet_project: {
+    walletP3: path(ROOTS_DASHBOARD_PROJECT, '/project/investment-wallet'),
+    walletP4: path(ROOTS_DASHBOARD_PROJECT, '/project/payment-wallet')
   }
 };
 export const PATH_DASHBOARD = {

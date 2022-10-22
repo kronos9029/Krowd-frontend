@@ -8,7 +8,7 @@ import Page from 'components/Page';
 
 export default function AccountTransactionList() {
   return (
-    <Page title="Dự án: Danh sách | Krowd">
+    <Page title="Giao dịch | Krowd">
       <Container maxWidth={false}>
         <AccounTransactionTable />
       </Container>

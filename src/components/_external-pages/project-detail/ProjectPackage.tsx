@@ -98,27 +98,33 @@ export default function ProjectPackage({ project }: { project: Project1 }) {
                       {e.price === 0 ? 'Free' : fCurrencyPackage(e.price)}
                     </Typography>
                   </Box>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      textTransform: 'capitalize',
-                      justifyContent: 'center',
-                      display: 'flex'
-                    }}
-                  >
-                    (VND)
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      color: 'primary.main',
-                      textTransform: 'capitalize',
-                      justifyContent: 'center',
-                      display: 'flex'
-                    }}
-                  >
-                    Số lượng {e.quantity}
-                  </Typography>
+
+                  {e.remainingQuantity > 0 ? (
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        color: 'primary.main',
+                        textTransform: 'capitalize',
+                        justifyContent: 'center',
+                        display: 'flex'
+                      }}
+                    >
+                      Số lượng giới hạn {e.remainingQuantity} / {e.quantity}
+                    </Typography>
+                  ) : (
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        color: 'red',
+                        textTransform: 'capitalize',
+                        justifyContent: 'center',
+                        display: 'flex'
+                      }}
+                    >
+                      Gói đã được đầu tư hết {e.remainingQuantity} / {e.quantity}
+                    </Typography>
+                  )}
+                  <Typography sx={{ my: 2, fontWeight: 600 }}>Bạn sẽ nhận được:</Typography>
                   <Stack
                     paddingLeft={0}
                     textAlign={'left'}
@@ -152,20 +158,22 @@ export default function ProjectPackage({ project }: { project: Project1 }) {
                     onClick={() => handleGetPackageInvestByID(e)}
                   >
                     <Typography sx={{ textAlign: 'end' }}>
-                      <Button
-                        sx={{
-                          backgroundColor: '#FF7F50',
-                          textDecoration: 'none',
-                          '&:hover': { backgroundColor: '#FF7F50' }
-                        }}
-                        fullWidth
-                        disableElevation
-                        disableRipple
-                        variant="contained"
-                        size="large"
-                      >
-                        Chọn gói
-                      </Button>
+                      {e.remainingQuantity > 0 && (
+                        <Button
+                          sx={{
+                            backgroundColor: '#FF7F50',
+                            textDecoration: 'none',
+                            '&:hover': { backgroundColor: '#FF7F50' }
+                          }}
+                          fullWidth
+                          disableElevation
+                          disableRipple
+                          variant="contained"
+                          size="large"
+                        >
+                          Chọn gói
+                        </Button>
+                      )}
                     </Typography>
                   </Link>
                   <Divider sx={{ my: 3 }} variant="fullWidth" />

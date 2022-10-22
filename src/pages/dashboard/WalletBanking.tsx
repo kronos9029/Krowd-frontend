@@ -32,7 +32,7 @@ export default function WalletBanking({ wallet }: { wallet: Wallet }) {
   const { UserDetail, isLoading } = UserDetailState;
 
   return (
-    <Page title="General: Banking | Krowd">
+    <Page title="Ví của bạn | Krowd">
       <Container maxWidth={themeStretch ? false : 'xl'}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={12}>

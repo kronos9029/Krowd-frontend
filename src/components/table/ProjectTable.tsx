@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { dispatch, RootState, useSelector } from '../../redux/store';
-import { PATH_DASHBOARD, PATH_PAGE } from '../../routes/paths';
+import { PATH_DASHBOARD, PATH_DASHBOARD_PROJECT, PATH_PAGE } from '../../routes/paths';
 import { DATA_TYPE, KrowdTable, RowData } from './krowd-table/KrowdTable';
 import { getProjectListInvested } from '../../redux/slices/krowd_slices/project';
 import React from 'react';
@@ -23,7 +23,6 @@ const TABLE_HEAD = [
 export default function ProjectTable() {
   const { projectListInvested } = useSelector((state: RootState) => state.project);
   const { isLoadingProjectListInvested, listOfProject: list } = projectListInvested;
-
   useEffect(() => {
     dispatch(getProjectListInvested());
   }, [dispatch]);
@@ -92,16 +91,26 @@ export default function ProjectTable() {
           {
             name: 'status',
             value:
-              (_item.status === PROJECT_STATUS.CALLING_FOR_INVESTMENT && 'Đang kêu gọi đầu tư') ||
-              (_item.status === PROJECT_STATUS.OVERDATE && 'Quá hạn đầu tư') ||
-              (_item.status === PROJECT_STATUS.ACTIVE && 'Đang hoạt động'),
+              (_item.status === 'CLOSED' && 'Đã đóng') ||
+              (_item.status === 'ACTIVE' && 'Đang hoạt động') ||
+              (_item.status === 'WAITING_TO_ACTIVATE' && 'Đang chờ hoạt động') ||
+              (_item.status === 'CALLING_TIME_IS_OVER' && 'Đã quá hạn đầu tư') ||
+              (_item.status === 'CALLING_FOR_INVESTMENT' && 'Đang kêu gọi đầu tư') ||
+              (_item.status === 'WAITING_TO_PUBLISH' && 'Đang chờ công khai') ||
+              (_item.status === 'DENIED' && 'Đã bị từ chối') ||
+              (_item.status === 'WAITING_FOR_APPROVAL' && 'Đang chờ duyệt') ||
+              (_item.status === 'DRAFT' && 'Bản nháp'),
             type: DATA_TYPE.TEXT,
             textColor:
-              _item.status === 'CALLING_FOR_INVESTMENT'
-                ? '#14b7cc'
-                : 'green' || _item.status === 'OVERDATE'
-                ? 'red'
-                : 'green'
+              (_item.status === 'CALLING_FOR_INVESTMENT' && '#14b7cc') ||
+              (_item.status === 'DRAFT' && 'black') ||
+              (_item.status === 'WAITING_FOR_APPROVAL' && '#eacb00') ||
+              (_item.status === 'WAITING_TO_ACTIVATE' && '#4dc0b5') ||
+              (_item.status === 'ACTIVE' && 'green') ||
+              (_item.status === 'WAITING_TO_PUBLISH' && '#f66d9b') ||
+              (_item.status === 'CLOSED' && '#6574cd') ||
+              (_item.status === 'DENIED' && 'red') ||
+              (_item.status === 'CALLING_TIME_IS_OVER' ? 'red' : 'black')
           }
         ]
       };
@@ -113,7 +122,8 @@ export default function ProjectTable() {
       header={TABLE_HEAD}
       getData={getData}
       isLoading={isLoadingProjectListInvested}
-      viewPath={PATH_PAGE.details}
+      // viewPath={PATH_PAGE.details}
+      viewPath={PATH_DASHBOARD_PROJECT.project.root}
     />
   );
 }

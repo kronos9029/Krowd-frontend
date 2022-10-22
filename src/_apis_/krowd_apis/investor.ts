@@ -82,7 +82,7 @@ async function postImage({ investorId, files }: { investorId: string; files: Fil
   formData.append('files', files);
   await axios({
     method: 'post',
-    url: REACT_APP_API_URL + '/upload-files',
+    url: REACT_APP_API_URL + '/upload-files/firebase',
     data: formData,
     headers: header
   });

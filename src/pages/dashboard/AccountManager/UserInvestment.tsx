@@ -1,7 +1,7 @@
 // material
 import { Container } from '@mui/material';
 
-import WalletTransactionTable from 'components/table/WalletTransactionTable';
+import InvestmentTable from 'components/table/InvestmentTable';
 import Page from 'components/Page';
 import { BlogPostsSearch, BlogPostsSort } from 'components/_dashboard/project';
 import { useEffect, useState } from 'react';
@@ -10,11 +10,11 @@ import { getWalletList } from 'redux/slices/krowd_slices/wallet';
 
 // ----------------------------------------------------------------------
 
-export default function UserWalletTransaction() {
+export default function UserInvestment() {
   return (
-    <Page title="Giao dịch ví | Krowd">
+    <Page title="Giao dịch đầu tư | Krowd">
       <Container maxWidth={false}>
-        <WalletTransactionTable />
+        <InvestmentTable />
       </Container>
     </Page>
   );

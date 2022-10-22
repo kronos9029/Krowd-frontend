@@ -278,15 +278,6 @@ export default function ProjectPaymentWallet({ wallet }: { wallet: Wallet }) {
                 variants={varBounceInUp}
               />
               <Stack direction="row" alignItems="center" flexWrap="wrap">
-                {/* <Icon
-                  width={20}
-                  height={20}
-                  icon={PERCENT >= 0 ? trendingUpFill : trendingDownFill}
-                />
-                <Typography variant="subtitle2" component="span" sx={{ ml: 0.5 }}>
-                  {PERCENT > 0 && '+'}
-                  {fPercent(PERCENT)}
-                </Typography> */}
                 <Typography variant="body2" component="span" sx={{ opacity: 0.72 }}>
                   &nbsp;Chưa cập nhật
                 </Typography>

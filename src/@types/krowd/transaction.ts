@@ -70,3 +70,16 @@ export type Payment = {
   createBy: string;
   status: string;
 };
+export type Investment = {
+  id: string;
+  investorId: string;
+  totalPrice: number;
+  status: string;
+  createDate: string;
+  createBy: string;
+  updateDate: string;
+  updateBy: string;
+  projectId: string;
+  packageId: string;
+  quantity: number;
+};

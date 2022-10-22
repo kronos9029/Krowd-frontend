@@ -243,37 +243,36 @@ export default function MenuMobile({ isOffset, isHome, navConfig }: MenuProps) {
     setDrawerOpen(false);
   };
 
-  if (user?.idToken == null) {
-    return (
-      <>
-        <MIconButton
-          onClick={handleDrawerOpen}
-          sx={{
-            ml: 1,
-            ...(isHome && { color: 'common.white' }),
-            ...(isOffset && { color: 'text.primary' })
-          }}
-        >
-          <Icon icon={menu2Fill} />
-        </MIconButton>
+  return (
+    <>
+      <MIconButton
+        onClick={handleDrawerOpen}
+        sx={{
+          ml: 1,
+          ...(isHome && { color: 'common.white' }),
+          ...(isOffset && { color: 'text.primary' })
+        }}
+      >
+        <Icon icon={menu2Fill} />
+      </MIconButton>
 
-        <Drawer
-          open={drawerOpen}
-          onClose={handleDrawerClose}
-          ModalProps={{ keepMounted: true }}
-          PaperProps={{ sx: { pb: 5, width: 260 } }}
-        >
-          <Scrollbar>
-            <Link component={RouterLink} to="/" sx={{ display: 'inline-flex' }}>
-              <Logo sx={{ mx: PADDING, my: 3 }} />
-            </Link>
+      <Drawer
+        open={drawerOpen}
+        onClose={handleDrawerClose}
+        ModalProps={{ keepMounted: true }}
+        PaperProps={{ sx: { pb: 5, width: 260 } }}
+      >
+        <Scrollbar>
+          <Link component={RouterLink} to="/" sx={{ display: 'inline-flex' }}>
+            <Logo sx={{ mx: PADDING, my: 3 }} />
+          </Link>
 
-            <List disablePadding>
-              {navConfig.map((link) => (
-                <MenuMobileItem key={link.title} item={link} isOpen={open} onOpen={handleOpen} />
-              ))}
-            </List>
-
+          <List disablePadding>
+            {navConfig.map((link) => (
+              <MenuMobileItem key={link.title} item={link} isOpen={open} onOpen={handleOpen} />
+            ))}
+          </List>
+          <Box sx={{ my: 1 }}>
             <div className="language-select">
               <div className="d-flex justify-content-end align-items-center language-select-root">
                 <div className="dropdown">
@@ -322,153 +321,60 @@ export default function MenuMobile({ isOffset, isHome, navConfig }: MenuProps) {
                 </div>
               </div>
             </div>
-            {(user && (
-              <>
-                <Button
-                  id="basic-button"
-                  aria-controls={open1 ? 'basic-menu' : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open1 ? 'true' : undefined}
-                  onClick={handleClick}
-                  variant="contained"
-                >
-                  {user?.fullName}
-                </Button>
-                <Menu
-                  id="basic-menu"
-                  anchorEl={anchorEl}
-                  open={open1}
-                  onClose={handleClose}
-                  MenuListProps={{
-                    'aria-labelledby': 'basic-button'
-                  }}
-                >
-                  <MenuItem component={Link} href={PATH_DASHBOARD.user.account}>
-                    {t(`mainNavbar_menu_item.mainNavbar_menu_item_profile`)}
-                  </MenuItem>
-                  <MenuItem component={Link} href={PATH_DASHBOARD.general.app}>
-                    {t(`mainNavbar_menu_item.mainNavbar_menu_item_console`)}
-                  </MenuItem>
-                  <MenuItem onClick={handleLogout}>
-                    {t(`mainNavbar_menu_item.mainNavbar_menu_item_logout`)}
-                  </MenuItem>
-                </Menu>
-              </>
-            )) || (
+          </Box>
+          {(user && (
+            <>
               <Button
-                sx={{
-                  marginRight: '1rem',
-                  bgcolor: 'rgb(255, 127, 80)',
-                  '&:hover': {
-                    bgcolor: 'rgb(255, 127, 80)',
-                    color: '#ffffff'
-                  }
-                }}
-                size="medium"
+                fullWidth
+                sx={{ my: 2 }}
+                id="basic-button"
+                aria-controls={open1 ? 'basic-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open1 ? 'true' : undefined}
+                onClick={handleClick}
                 variant="contained"
-                href={PATH_AUTH.login}
               >
-                {t('Navbar_login')}
+                {user?.fullName}
               </Button>
-            )}
-          </Scrollbar>
-        </Drawer>
-      </>
-    );
-  } else {
-    return (
-      <>
-        <MIconButton
-          onClick={handleDrawerOpen}
-          sx={{
-            ml: 1,
-            ...(isHome && { color: 'common.white' }),
-            ...(isOffset && { color: 'text.primary' })
-          }}
-        >
-          <Icon icon={menu2Fill} />
-        </MIconButton>
-
-        <Drawer
-          open={drawerOpen}
-          onClose={handleDrawerClose}
-          ModalProps={{ keepMounted: true }}
-          PaperProps={{ sx: { pb: 5, width: 260 } }}
-        >
-          <Scrollbar>
-            <Link component={RouterLink} to="/" sx={{ display: 'inline-flex' }}>
-              <Logo sx={{ mx: PADDING, my: 3 }} />
-            </Link>
-
-            <List disablePadding>
-              {navConfig.map((link) => (
-                <MenuMobileItem key={link.title} item={link} isOpen={open} onOpen={handleOpen} />
-              ))}
-            </List>
-
-            <div className="language-select">
-              <div className="d-flex justify-content-end align-items-center language-select-root">
-                <div className="dropdown">
-                  <button
-                    className="btn btn-link dropdown-toggle"
-                    type="button"
-                    id="dropdownMenuButton1"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                    style={{
-                      color: '#14b7cc',
-                      textDecoration: 'solid',
-                      marginRight: '7rem'
-                    }}
-                  >
-                    <GlobeIcon />
-                    {t('language')}
-                  </button>
-                  <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    {Language.map(({ code, name, countryCode }) => (
-                      <li key={countryCode}>
-                        <a
-                          href="#"
-                          className={classNames('dropdown-item', {
-                            disabled: currentLanguageCode === code
-                          })}
-                          onClick={() => {
-                            i18next.changeLanguage(code);
-                            localStorage.setItem('i18nextLng', code);
-                          }}
-                        >
-                          <span
-                            className={`/static/icons/ic_flag_${countryCode}.svg`}
-                            style={{
-                              opacity: currentLanguageCode === code ? 0.5 : 1
-                            }}
-                          >
-                            <img src={`/static/icons/ic_flag_${countryCode}.svg`} />
-                          </span>
-                          {/* <img src="/static/icons/ic_flag_${countryCode}.svg mx-2" /> */}
-                          {name}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open1}
+                onClose={handleClose}
+                MenuListProps={{
+                  'aria-labelledby': 'basic-button'
+                }}
+              >
+                <MenuItem component={Link} href={PATH_DASHBOARD.user.account}>
+                  {t(`mainNavbar_menu_item.mainNavbar_menu_item_profile`)}
+                </MenuItem>
+                <MenuItem component={Link} href={PATH_DASHBOARD.general.app}>
+                  {t(`mainNavbar_menu_item.mainNavbar_menu_item_console`)}
+                </MenuItem>
+                <MenuItem onClick={handleLogout}>
+                  {t(`mainNavbar_menu_item.mainNavbar_menu_item_logout`)}
+                </MenuItem>
+              </Menu>
+            </>
+          )) || (
             <Button
-              variant="contained"
               sx={{
-                backgroundColor: '#FF7F50',
-                color: '#FFF',
-                marginLeft: '1rem',
-                marginTop: '20rem'
+                marginRight: '1rem',
+                bgcolor: 'rgb(255, 127, 80)',
+                '&:hover': {
+                  bgcolor: 'rgb(255, 127, 80)',
+                  color: '#ffffff'
+                }
               }}
-              href="/dashboard/app"
+              size="medium"
+              variant="contained"
+              href={PATH_AUTH.login}
             >
-              {t('Back_to_dashboard')}
+              {t('Navbar_login')}
             </Button>
-          </Scrollbar>
-        </Drawer>
-      </>
-    );
-  }
+          )}
+        </Scrollbar>
+      </Drawer>
+    </>
+  );
 }

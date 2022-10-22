@@ -40,7 +40,7 @@ export default function GeneralApp() {
   const { UserDetail, isLoading } = UserDetailState;
 
   return (
-    <Page title="General: App | Krowd">
+    <Page title="Bảng điều khiển | Krowd">
       <Container maxWidth={themeStretch ? false : 'xl'}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={8}>

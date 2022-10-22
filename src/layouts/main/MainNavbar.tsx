@@ -241,14 +241,13 @@ export default function MainNavbar() {
             )) || (
               <Button
                 sx={{
-                  marginRight: '23px',
                   bgcolor: 'rgb(255, 127, 80)',
                   '&:hover': {
                     bgcolor: 'rgb(255, 127, 80)',
                     color: '#ffffff'
                   }
                 }}
-                size="medium"
+                size={'medium'}
                 variant="contained"
                 href={PATH_AUTH.login}
               >

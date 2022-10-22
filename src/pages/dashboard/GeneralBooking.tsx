@@ -24,7 +24,7 @@ export default function GeneralBooking() {
   const { themeStretch } = useSettings();
 
   return (
-    <Page title="General: Banking | Krowd">
+    <Page title="Ví của bạn | Krowd">
       <Container maxWidth={themeStretch ? false : 'xl'}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={4}>

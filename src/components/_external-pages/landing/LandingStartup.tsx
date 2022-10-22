@@ -163,20 +163,24 @@ export default function LandingStartUp() {
       filterType: string;
     }[]
   >([]);
-  const [selectedInvestmentTargetCapital, setSelectInvestmentTargetCapital] = useState<String[]>(
-    []
-  );
+  const [selectedInvestmentTargetCapital, setSelectInvestmentTargetCapital] = useState('0');
   const [FieldID, setFieldId] = useState<string[]>([]);
   const [BusinessID, setBusinessID] = useState('');
 
+  const handleClearAll = () => {
+    setSelectFilter([]);
+    dispatch(getProjectListWithFilter([], '', '0', ''));
+  };
   const handleChangeSort = (value?: string) => {
     if (value) {
       setFilters(value);
-      dispatch(getProjectListWithFilter(FieldID, BusinessID, '', value));
+      dispatch(
+        getProjectListWithFilter(FieldID, BusinessID, selectedInvestmentTargetCapital, value)
+      );
     }
   };
   useEffect(() => {
-    dispatch(getProjectListWithFilter([], '', '', ''));
+    dispatch(getProjectListWithFilter([], '', '0', ''));
     dispatch(getListAllProjectLanding());
   }, [dispatch]);
   const getHighLight = () => {
@@ -223,23 +227,33 @@ export default function LandingStartUp() {
         const removeIndex = selectedFilter.findIndex((value) => value.filterType === 'BUSINESS');
         if (removeIndex !== -1) selectedFilter.splice(removeIndex, 1, newValue);
         else selectedFilter.push(newValue);
-      } else {
+      } else if (newValue.filterType === 'TARGET') {
+        const removeIndex = selectedFilter.findIndex((value) => value.filterType === 'TARGET');
+        if (removeIndex !== -1) selectedFilter.splice(removeIndex, 1, newValue);
+        else selectedFilter.push(newValue);
+      } else if (newValue.filterType === 'FIELD') {
         selectedFilter.push(newValue);
       }
     } else {
       selectedFilter.splice(index, 1);
     }
+
     newFilter = [...selectedFilter];
     setSelectFilter(newFilter);
+
     const fieldIds = selectedFilter
       .filter((_value) => _value.filterType === 'FIELD')
       .map((_value) => _value.filterId) as Array<string>;
+
     const businessId =
       selectedFilter.find((_value) => _value.filterType === 'BUSINESS')?.filterId ?? '';
-    console.log(selectedFilter);
+
+    const targetNumber =
+      selectedFilter.find((_value) => _value.filterType === 'TARGET')?.filterId ?? '0';
     setFieldId(fieldIds);
     setBusinessID(businessId);
-    dispatch(getProjectListWithFilter(fieldIds, businessId, '', ''));
+    setSelectInvestmentTargetCapital(targetNumber);
+    dispatch(getProjectListWithFilter(fieldIds, businessId, targetNumber, ''));
   };
 
   return (
@@ -455,7 +469,7 @@ export default function LandingStartUp() {
           </Collapse>
         </Box>
 
-        <Box sx={{ backgroundColor: '#f7f7f7' }}>
+        <Box sx={{ backgroundColor: '#f7f7f7' }} mt={1} mb={3}>
           <Grid container>
             <Collapse in={openRevenue} timeout="auto" unmountOnExit>
               <Grid container sx={{ backgroundColor: '#f7f7f7' }}>
@@ -465,11 +479,12 @@ export default function LandingStartUp() {
                       onClick={() =>
                         handleInputChange({
                           filterId: '500000000',
-                          filterName: '500,000,000đ',
-                          filterType: 'INVEST'
+                          filterName: '500,000,000đ +',
+                          filterType: 'TARGET'
                         })
                       }
                     >
+                      {' '}
                       <ListItemText
                         primary={'500,000,000đ'}
                         // sx={{ color: isSelected !== -1 ? 'primary.main' : 'text.secondary' }}
@@ -481,8 +496,8 @@ export default function LandingStartUp() {
                       onClick={() =>
                         handleInputChange({
                           filterId: '750000000',
-                          filterName: '750,000,000đ',
-                          filterType: 'INVEST'
+                          filterName: '750,000,000đ +',
+                          filterType: 'TARGET'
                         })
                       }
                     >
@@ -497,15 +512,12 @@ export default function LandingStartUp() {
                       onClick={() =>
                         handleInputChange({
                           filterId: '1000000000',
-                          filterName: '1,000,000,000đ',
-                          filterType: 'INVEST'
+                          filterName: '1,000,000,000đ +',
+                          filterType: 'TARGET'
                         })
                       }
                     >
-                      <ListItemText
-                        primary={'1,000,000,000đ'}
-                        // sx={{ color: isSelected !== -1 ? 'primary.main' : 'text.secondary' }}
-                      />
+                      <ListItemText primary={'1,000,000,000đ'} />
                     </ListItemButton>
                   </List>
                 </Grid>
@@ -516,8 +528,8 @@ export default function LandingStartUp() {
                       onClick={() =>
                         handleInputChange({
                           filterId: '2000000000',
-                          filterName: '2,000,000,000đ',
-                          filterType: 'INVEST'
+                          filterName: '2,000,000,000đ +',
+                          filterType: 'TARGET'
                         })
                       }
                     >
@@ -532,8 +544,8 @@ export default function LandingStartUp() {
                       onClick={() =>
                         handleInputChange({
                           filterId: '2500000000',
-                          filterName: '2,500,000,000đ',
-                          filterType: 'INVEST'
+                          filterName: '2,500,000,000đ +',
+                          filterType: 'TARGET'
                         })
                       }
                     >
@@ -640,13 +652,16 @@ export default function LandingStartUp() {
           </Collapse>
         </Box>
 
-        {selectedFilter && (
-          <Box mt={1} mb={3}>
+        {selectedFilter.length > 0 && (
+          <Box mt={1} mb={3} display="flex" sx={{ alignItems: 'center' }}>
             <Stack direction="row" spacing={1}>
               {selectedFilter.map((v, i) => (
                 <Chip key={`${v.filterId}`} label={v.filterName} />
               ))}
             </Stack>
+            <Button onClick={handleClearAll}>
+              <Chip label={'Xóa bộ lọc'} />
+            </Button>
           </Box>
         )}
         <Grid container alignItems="center" justifyContent="center" spacing={5}>
@@ -674,7 +689,7 @@ export default function LandingStartUp() {
                     <Box sx={{ p: 1 }}>
                       <Typography variant="h5" sx={{ textAlign: 'center' }}>
                         Không tìm thấy giao dịch <br />
-                        <Typography>Hãy thử sử dụng các bộ lọc ít hơn</Typography>
+                        <Typography>Hãy thử sử dụng các bộ lọc ít điều kiện hơn</Typography>
                       </Typography>
                     </Box>
                   </Box>

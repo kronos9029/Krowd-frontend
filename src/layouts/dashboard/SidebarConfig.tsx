@@ -10,13 +10,9 @@ const getIcon = (name: string) => (
 );
 
 const ICONS = {
-  user: getIcon('ic_user'),
   wallet: getIcon('ic_wallet'),
-  banking: getIcon('ic_banking'),
-  analytics: getIcon('ic_analytics'),
   dashboard: getIcon('ic_dashboard'),
   krowd: getIcon('ic_krowd'),
-  booking: getIcon('ic_booking'),
   project: getIcon('ic_project'),
   bankTransaction: getIcon('ic_bankTransaction'),
   transaction: getIcon('ic_transaction'),
@@ -46,15 +42,10 @@ const sidebarConfig = [
         title: 'Đang đầu tư',
         path: PATH_DASHBOARD.projectInvested.list,
         icon: ICONS.project
-      },
-      {
-        title: 'Phiếu ưu đãi',
-        path: PATH_DASHBOARD.projectInvested.list,
-        icon: ICONS.voucher
       }
-      // { title: 'Giao dịch', path: PATH_DASHBOARD.projectInvested.list, icon: ICONS.project }
     ]
   },
+
   {
     subheader: 'Quản lý giao dịch',
     items: [
@@ -72,6 +63,16 @@ const sidebarConfig = [
         title: 'Đầu tư dự án',
         path: PATH_DASHBOARD.transaction.payments,
         icon: ICONS.payment
+      }
+    ]
+  },
+  {
+    subheader: 'Khuyến mãi',
+    items: [
+      {
+        title: 'Phiếu ưu đãi',
+        path: PATH_DASHBOARD.projectInvested.list,
+        icon: ICONS.voucher
       }
     ]
   }

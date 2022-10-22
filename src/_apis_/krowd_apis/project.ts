@@ -56,7 +56,7 @@ async function getProjectByFilter({
       ? `${fieldIds.map((_value) => `listFieldId=${_value}&`)}`.split(',').join('')
       : '';
   const businessIdQueryString = businessId ? `businessId=${businessId}&` : '';
-  const investmentTargetCapitalQueryString = '';
+  const investmentTargetCapitalQueryString = `investmentTargetCapital=${investmentTargetCapital}&`;
   const statusQueryString = status ? `status=${status}` : '';
   const paramQueryString =
     fieldQueryString +

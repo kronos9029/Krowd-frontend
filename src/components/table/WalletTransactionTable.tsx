@@ -70,6 +70,8 @@ export default function WalletTransactionTable() {
           {
             name: 'description',
             value:
+              (_item.description === 'Transfer money from I3 to P3 to prepare for activation' &&
+                'Chuyển tiền từ VÍ TẠM ỨNG của bạn sang VÍ ĐẦU TƯ DỰ ÁN của chủ dự án') ||
               (_item.description === 'Transfer money from I2 to I3 to invest' &&
                 'Chuyển tiền từ VÍ ĐẦU TƯ CHUNG sang VÍ TẠM ỨNG') ||
               (_item.description === 'Receive money from I2 to I3 to invest' &&
