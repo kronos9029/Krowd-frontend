@@ -82,6 +82,7 @@ export default function Router() {
         { path: 'project/projectDetail', element: <Details /> },
         { path: 'project/projectDetail/:id', element: <Details /> },
         { path: 'project/daily-revenue', element: <ReportDailyProject /> },
+        { path: 'project/bills/daily', element: <BillReportDailyProject /> },
         { path: 'project/investment-wallet', element: <UserInvestment /> }
         // { path: 'project/payment-wallet', element: <WalletI4Project /> }
       ]
@@ -346,6 +347,9 @@ const ProjectListInvested = Loadable(
 );
 const ReportDailyProject = Loadable(
   lazy(() => import('../pages/dashboard/ProjectKrowdManager/ReportDailyProject'))
+);
+const BillReportDailyProject = Loadable(
+  lazy(() => import('../pages/dashboard/ProjectKrowdManager/BillReportDailyProject'))
 );
 //==============================================================================
 const UserCreate = Loadable(lazy(() => import('../pages/dashboard/UserCreate')));

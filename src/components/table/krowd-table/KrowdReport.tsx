@@ -17,12 +17,13 @@ import {
   ListItemIcon,
   ListItemText,
   Chip,
-  Container
+  Container,
+  Tooltip
 } from '@mui/material';
 import HeaderBreadcrumbs from '../../HeaderBreadcrumbs';
 import Scrollbar from '../../Scrollbar';
-import { PATH_DASHBOARD } from '../../../routes/paths';
-import { Link, Link as RouterLink } from 'react-router-dom';
+import { PATH_DASHBOARD, PATH_DASHBOARD_PROJECT } from '../../../routes/paths';
+import { Link, Link as RouterLink, useNavigate } from 'react-router-dom';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Icon } from '@iconify/react';
 import KrowdTableListHead from '../components/KrowdTableListHead';
@@ -32,6 +33,8 @@ import trash2Outline from '@iconify/icons-eva/trash-2-outline';
 import { SeverErrorIllustration } from 'assets';
 import LoadingScreen from 'components/LoadingScreen';
 import Label from 'components/Label';
+import { dispatch } from 'redux/store';
+import { getDailyReportByID } from 'redux/slices/krowd_slices/transaction';
 export enum DATA_TYPE {
   TEXT = 'text',
   TEXT_FORMAT = 'text_format',
@@ -62,8 +65,10 @@ export type KrowdTableProps = {
   createNewRecordButton?: { pathTo: string; label: string };
   header: { id: string; label: string; align: string }[];
   getData: () => Array<RowData>;
-  viewPath?: string;
-  deleteRecord?: (id: string) => void;
+  viewPath?: () => void;
+  deleteRecord?: VoidFunction;
+  openKrowdReport?: () => void;
+  openClientReport?: () => void;
   isLoading: boolean;
 };
 
@@ -74,7 +79,9 @@ export function KrowdReport({
   getData,
   isLoading,
   viewPath,
-  deleteRecord
+  deleteRecord,
+  openKrowdReport,
+  openClientReport
 }: KrowdTableProps) {
   const [rowsPerPage, setRowsPerPage] = useState(8);
   const [page, setPage] = useState(0);
@@ -88,7 +95,21 @@ export function KrowdReport({
 
   const dataInPage: RowData[] =
     data && data.length > 0 ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : [];
+  const navigate = useNavigate();
 
+  const openUpdateForm = async (id: string) => {
+    await dispatch(getDailyReportByID(id));
+    localStorage.setItem('DailyId', id);
+    if (openKrowdReport) openKrowdReport();
+  };
+  const handleView = async (id: string) => {
+    localStorage.setItem('DailyId', id);
+    navigate(PATH_DASHBOARD_PROJECT.project.billDailyReport);
+  };
+  const openClientReportForm = async (id: string) => {
+    await dispatch(getDailyReportByID(id));
+    if (openClientReport) openClientReport();
+  };
   return (
     <>
       <HeaderBreadcrumbs
@@ -361,8 +382,8 @@ export function KrowdReport({
                           }
                         })}
                         {viewPath && (
-                          <TableCell align="center">
-                            <Link to={viewPath + `/${data.id}`}>
+                          <Tooltip title="Chi tiết đơn hàng">
+                            <Button onClick={() => handleView(data.id)}>
                               <Icon
                                 icon={eyeFill}
                                 width={24}
@@ -370,22 +391,10 @@ export function KrowdReport({
                                 style={{ margin: '0px auto' }}
                                 color={'rgb(255, 127, 80)'}
                               />
-                            </Link>
-                          </TableCell>
-                        )}
-                        {deleteRecord && (
-                          <TableCell align="center">
-                            <Button onClick={() => deleteRecord(data.id)}>
-                              <Icon
-                                icon={trash2Outline}
-                                width={24}
-                                height={24}
-                                style={{ margin: '0px auto' }}
-                                color={'rgb(255, 127, 80)'}
-                              />
                             </Button>
-                          </TableCell>
+                          </Tooltip>
                         )}
+
                         <TableCell
                           key={'__borderRowRight'}
                           component="th"

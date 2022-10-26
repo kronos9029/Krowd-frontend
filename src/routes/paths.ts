@@ -67,7 +67,8 @@ export const PATH_DASHBOARD_PROJECT = {
   project: {
     root: path(ROOTS_DASHBOARD_PROJECT, `/project/projectDetail`),
     reportRevenue: path(ROOTS_DASHBOARD_PROJECT, '/project/daily-revenue'),
-    reportUpdate: path(ROOTS_DASHBOARD_PROJECT, '/project/report_update')
+    reportUpdate: path(ROOTS_DASHBOARD_PROJECT, '/project/report_update'),
+    billDailyReport: path(ROOTS_DASHBOARD_PROJECT, '/project/bills/daily')
   },
   wallet_project: {
     walletP3: path(ROOTS_DASHBOARD_PROJECT, '/project/investment-wallet'),

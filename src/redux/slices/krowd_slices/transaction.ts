@@ -6,7 +6,8 @@ import {
   ListOfDailyReport,
   Payment,
   Transaction,
-  WalletTransaction
+  WalletTransaction,
+  Bill
 } from '../../../@types/krowd/transaction';
 import { TransactionAPI } from '../../../_apis_/krowd_apis/transaction';
 // ----------------------------------------------------------------------
@@ -29,6 +30,12 @@ type TransactionState = {
     numOfDailyReport: number;
     error: boolean;
   };
+  dailyReportDetails: {
+    isLoading: boolean;
+    DailyDetails: ListOfDailyReport | null;
+    numOfDailyReport: number;
+    error: boolean;
+  };
   walletTransactionState: {
     isLoading: boolean;
     walletTransactionList: WalletTransaction[];
@@ -37,6 +44,13 @@ type TransactionState = {
   paymentListState: {
     isLoading: boolean;
     paymentList: Payment[];
+    error: boolean;
+  };
+  //====================BILLS IN DAILY REPORT=========================
+  biilDailyReportState: {
+    isLoading: boolean;
+    listOfBill: Bill[];
+    numOfBill: number;
     error: boolean;
   };
   paymentListRevenueState: {
@@ -63,6 +77,13 @@ const initialState: TransactionState = {
     numOfDailyReport: 0,
     error: false
   },
+  //====================BILLS IN DAILY REPORT=========================
+  biilDailyReportState: {
+    isLoading: false,
+    listOfBill: [],
+    numOfBill: 0,
+    error: false
+  },
   walletTransactionState: {
     isLoading: false,
     walletTransactionList: [],
@@ -71,6 +92,12 @@ const initialState: TransactionState = {
   paymentListState: {
     isLoading: false,
     paymentList: [],
+    error: false
+  },
+  dailyReportDetails: {
+    isLoading: false,
+    DailyDetails: null,
+    numOfDailyReport: 0,
     error: false
   },
   paymentListRevenueState: {
@@ -155,6 +182,30 @@ const slice = createSlice({
     getDailyReportSuccess(state, action) {
       state.dailyReportState.isLoading = false;
       state.dailyReportState = action.payload;
+    },
+    // ------ GET ALL BILL IN DAILY REPORT------------ //
+    startLoadingBillDailyReportList(state) {
+      state.biilDailyReportState.isLoading = true;
+    },
+    hasGetBillDailyReportError(state, action) {
+      state.biilDailyReportState.isLoading = false;
+      state.biilDailyReportState.error = action.payload;
+    },
+    getBillDailyReportSuccess(state, action) {
+      state.biilDailyReportState.isLoading = false;
+      state.biilDailyReportState = action.payload;
+    },
+    // ------ GET ALL DAILY WITH ID------------ //
+    startLoadingDailyReportDetails(state) {
+      state.dailyReportDetails.isLoading = true;
+    },
+    hasGetDailyReportDetailsError(state, action) {
+      state.dailyReportDetails.isLoading = false;
+      state.dailyReportDetails.error = action.payload;
+    },
+    getDailyReportDetailsSuccess(state, action) {
+      state.dailyReportDetails.isLoading = false;
+      state.dailyReportDetails.DailyDetails = action.payload;
     }
   }
 });
@@ -237,6 +288,32 @@ export function getDailyReportProjectID(projectId: string, pageIndex: number) {
       dispatch(slice.actions.getDailyReportSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasGetDailyReportError(error));
+    }
+  };
+}
+//---------------------------- GET DAILY REPORT ID------------------------------
+
+export function getDailyReportByID(id: string) {
+  return async () => {
+    dispatch(slice.actions.startLoadingDailyReportDetails());
+    try {
+      const response = await TransactionAPI.getsDailyReportByID(id);
+      dispatch(slice.actions.getDailyReportDetailsSuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasGetDailyReportDetailsError(error));
+    }
+  };
+}
+//---------------------------- GET ALL BILL IN DAILY REPORT------------------------------
+
+export function getBillDailyReport(dailyId: string, pageIndex: number) {
+  return async () => {
+    dispatch(slice.actions.startLoadingBillDailyReportList());
+    try {
+      const response = await TransactionAPI.getsBillDailyReport(dailyId, pageIndex);
+      dispatch(slice.actions.getBillDailyReportSuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasGetBillDailyReportError(error));
     }
   };
 }

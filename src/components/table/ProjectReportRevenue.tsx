@@ -2,17 +2,15 @@ import { useEffect, useState } from 'react';
 import { dispatch, RootState, useSelector } from '../../redux/store';
 import { PATH_DASHBOARD, PATH_DASHBOARD_PROJECT, PATH_PAGE } from '../../routes/paths';
 import { DATA_TYPE, KrowdReport, RowData } from './krowd-table/KrowdReport';
-import { getProjectListInvested } from '../../redux/slices/krowd_slices/project';
-import React from 'react';
 import { Box, Button, Container, Typography } from '@mui/material';
-import { PROJECT_STATUS } from '../../@types/krowd/project';
 import { getDailyReportProjectID } from 'redux/slices/krowd_slices/transaction';
+import { useNavigate } from 'react-router';
 const TABLE_HEAD = [
   { id: 'idx', label: 'STT', align: 'center' },
   { id: 'amount', label: 'SỐ TIỀN', align: 'center' },
   { id: 'reportDate', label: 'NGÀY BÁO CÁO', align: 'center' },
   { id: 'updateBy', label: 'CẬP NHẬT', align: 'center' },
-  { id: '', label: 'Chi tiết', align: 'center' }
+  { id: '', label: '', align: 'center' }
 ];
 
 export default function ProjectReportRevenue() {
@@ -21,6 +19,11 @@ export default function ProjectReportRevenue() {
   const [pageIndex, setPageIndex] = useState(1);
   const [pageSize1, setPageSize1] = useState(1);
   const [pageSize, setPageSize] = useState(8);
+  const navigate = useNavigate();
+
+  const handleClickView = async () => {
+    navigate(PATH_DASHBOARD_PROJECT.project.billDailyReport);
+  };
   useEffect(() => {
     dispatch(getDailyReportProjectID(localStorage.getItem('projectId') ?? '', pageIndex ?? 1));
   }, [dispatch, pageIndex]);
@@ -83,7 +86,7 @@ export default function ProjectReportRevenue() {
         getData={getData}
         isLoading={isLoading}
         // viewPath={PATH_PAGE.details}
-        viewPath={PATH_DASHBOARD_PROJECT.project.root}
+        viewPath={() => handleClickView()}
       />
       <Box sx={{ my: 5 }} display={'flex'} justifyContent={'flex-end'} alignItems={'center'}>
         {pageSize1} {'-'}

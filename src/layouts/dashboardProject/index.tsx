@@ -40,8 +40,9 @@ export default function DashboardLayout() {
   const [open, setOpen] = useState(false);
   const { id = '' } = useParams();
   useEffect(() => {
-    if (id && (!localStorage.getItem('projectId') || localStorage.getItem('projectId') !== id))
+    if (id && (!localStorage.getItem('projectId') || localStorage.getItem('projectId') !== id)) {
       localStorage.setItem('projectId', id);
+    }
   }, [id]);
   return (
     <RootStyle>

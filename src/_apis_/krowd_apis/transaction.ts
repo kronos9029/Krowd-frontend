@@ -6,6 +6,8 @@ const API_INVESTMENT = '/investments';
 const API_DAILY_REPORT = '/daily_reports/project';
 const API_PAYMENTS = '/payments/type/INVESTMENT';
 const PERIOD_REVENUE = '/payments/type/PERIOD_REVENUE';
+const API_BILL_DAILY_REPORT = '/bills/dailyReport';
+const API_DAILY_REPORT_BY_ID = '/daily_reports';
 
 function getToken() {
   return window.localStorage.getItem('accessToken');
@@ -62,12 +64,32 @@ async function getsPaymentRevenue() {
   });
   return response;
 }
+async function getsBillDailyReport(id: string, pageIndex: number) {
+  const headers = getHeader();
 
+  const response = await axios.get(
+    REACT_APP_API_URL + `${API_BILL_DAILY_REPORT}/${id}?pageIndex=${pageIndex}&pageSize=8`,
+    {
+      headers: headers
+    }
+  );
+  return response;
+}
+async function getsDailyReportByID(id: string) {
+  const headers = getHeader();
+
+  const response = await axios.get(REACT_APP_API_URL + `${API_DAILY_REPORT_BY_ID}/${id}`, {
+    headers: headers
+  });
+  return response;
+}
 export const TransactionAPI = {
   getsTransaction: getsTransaction,
   getsWalletTransaction: getsWalletTransaction,
   getsPayment: getsPayment,
   getsPaymentRevenue: getsPaymentRevenue,
   getsInvestment: getsInvestment,
-  getsDailyReport: getsDailyReport
+  getsDailyReport: getsDailyReport,
+  getsBillDailyReport: getsBillDailyReport,
+  getsDailyReportByID: getsDailyReportByID
 };

@@ -78,6 +78,8 @@ export default function SharedInvestmentWallet({ wallet }: { wallet: Wallet }) {
   const { investorKrowdDetail: mainInvestor } = useSelector(
     (state: RootState) => state.user_InvestorStateKrowd
   );
+  const [walletIDWithDraw, setWalletIDWithDraw] = useState('');
+
   const { user } = useAuth();
   const { listOfInvestorWallet } = walletList;
   const [openModalShareInvest, setOpenModalShareInvest] = useState(false);
@@ -88,6 +90,7 @@ export default function SharedInvestmentWallet({ wallet }: { wallet: Wallet }) {
   const [check, setCheck] = useState(false);
   const handleClickWithDraw = async (v: Package) => {
     setOpenModalWithDraw(true);
+    setWalletIDWithDraw(v.id);
 
     dispatch(getUserKrowdDetail(user?.id));
   };
@@ -96,14 +99,14 @@ export default function SharedInvestmentWallet({ wallet }: { wallet: Wallet }) {
 
     if (check === false) {
       setCheck(true);
-      setFieldValue('bankName', mainInvestor?.bankName);
-      setFieldValue('bankAccount', mainInvestor?.bankAccount);
-      setFieldValue('userName', `${mainInvestor?.lastName} ${mainInvestor?.firstName}`);
+      setFieldValueWithDraw('bankName', mainInvestor?.bankName);
+      setFieldValueWithDraw('bankAccount', mainInvestor?.bankAccount);
+      setFieldValueWithDraw('accountName', `${mainInvestor?.lastName} ${mainInvestor?.firstName}`);
     } else {
       setCheck(false);
-      setFieldValue('bankName', '');
-      setFieldValue('bankAccount', '');
-      setFieldValue('userName', '');
+      setFieldValueWithDraw('bankName', '');
+      setFieldValueWithDraw('bankAccount', '');
+      setFieldValueWithDraw('accountName', '');
     }
   };
 
@@ -113,6 +116,10 @@ export default function SharedInvestmentWallet({ wallet }: { wallet: Wallet }) {
   function getHeaderFormData() {
     const token = getToken();
     return { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` };
+  }
+  function getHeaderFormData2() {
+    const token = getToken();
+    return { Authorization: `Bearer ${token}` };
   }
 
   const formik = useFormik({
@@ -150,21 +157,65 @@ export default function SharedInvestmentWallet({ wallet }: { wallet: Wallet }) {
 
   const { errors, values, touched, isSubmitting, handleSubmit, getFieldProps, setFieldValue } =
     formik;
-  console.log(formik);
+  //Rút tiền
+  const formikWithDraw = useFormik({
+    initialValues: {
+      fromWalletId: walletIDWithDraw,
+      bankName: '',
+      accountName: '',
+      bankAccount: '',
+      amount: 0
+    },
+    enableReinitialize: true,
+
+    onSubmit: async (values, { setSubmitting, resetForm }) => {
+      try {
+        const headers = getHeaderFormData2();
+        await axios
+          .post(REACT_APP_API_URL + `/WithdrawRequest`, values, {
+            headers: headers
+          })
+          .then(() => {
+            enqueueSnackbar('Gửi yêu cầu rút tiền thành công', {
+              variant: 'success'
+            });
+            resetForm();
+            setOpenModalWithDraw(false);
+          })
+          .catch(() => {
+            enqueueSnackbar('Gửi yêu cầu rút tiền thất bại vui lòng kiểm tra thông tin bạn nhập', {
+              variant: 'error'
+            });
+          })
+          .finally(() => {
+            setSubmitting(true);
+          });
+      } catch (error) {
+        setSubmitting(false);
+      }
+    }
+  });
+
+  const {
+    errors: errorsWithDraw,
+    values: valuesWithDraw,
+    touched: touchedWithDraw,
+    isSubmitting: isSubmittingWithDraw,
+    handleSubmit: handleSubmitWithDraw,
+    getFieldProps: getFieldPropsWithDraw,
+    setFieldValue: setFieldValueWithDraw
+  } = formikWithDraw;
   const handleClickRefeshBalance = async (v: Package) => {
     dispatch(getWalletByID(v.id));
     setOpenModalShareInvest(true);
   };
+
   return (
     <RootStyleContainer initial="initial" animate="animate" variants={varWrapEnter}>
       {listOfInvestorWallet &&
         listOfInvestorWallet.length > 0 &&
         listOfInvestorWallet.slice(1, 2).map((e, i) => (
           <RootStyle key={i}>
-            {/* <IconWrapperStyle>
-              <Icon icon={diagonalArrowRightUpFill} width={24} height={24} />
-            </IconWrapperStyle> */}
-
             <Stack spacing={1} sx={{ p: 3 }}>
               <Grid container display={'flex'}>
                 <Grid lg={8}>
@@ -395,13 +446,13 @@ export default function SharedInvestmentWallet({ wallet }: { wallet: Wallet }) {
                       <Typography>
                         Số dư ví: <strong>{fCurrency(e.balance)}</strong>
                       </Typography>
-                      <FormikProvider value={formik}>
-                        <Form noValidate autoComplete="off" onSubmit={handleSubmit}>
+                      <FormikProvider value={formikWithDraw}>
+                        <Form noValidate autoComplete="off" onSubmit={handleSubmitWithDraw}>
                           <TextField
                             required
                             fullWidth
                             label="Tài khoản ngân hàng"
-                            {...getFieldProps('bankName')}
+                            {...getFieldPropsWithDraw('bankName')}
                             sx={{ mt: 2 }}
                           />
 
@@ -409,7 +460,7 @@ export default function SharedInvestmentWallet({ wallet }: { wallet: Wallet }) {
                             required
                             fullWidth
                             label="Tài khoản ngân hàng"
-                            {...getFieldProps('bankAccount')}
+                            {...getFieldPropsWithDraw('bankAccount')}
                             sx={{ mt: 2 }}
                           />
 
@@ -417,7 +468,7 @@ export default function SharedInvestmentWallet({ wallet }: { wallet: Wallet }) {
                             required
                             fullWidth
                             label="Tên chủ tài khoản"
-                            {...getFieldProps('userName')}
+                            {...getFieldPropsWithDraw('accountName')}
                             sx={{ mt: 2 }}
                           />
 
@@ -425,7 +476,7 @@ export default function SharedInvestmentWallet({ wallet }: { wallet: Wallet }) {
                             <TextField
                               fullWidth
                               label="Số tiền VND"
-                              {...getFieldProps('amount')}
+                              {...getFieldPropsWithDraw('amount')}
                               sx={{ mt: 2 }}
                               InputProps={{
                                 endAdornment: <Icon color="#ff9b26e0" icon={question} />
@@ -436,7 +487,7 @@ export default function SharedInvestmentWallet({ wallet }: { wallet: Wallet }) {
                             <Checkbox onClick={handleCheckBox} />
                             <Typography>Sử dụng thông tin hiện có</Typography>
                           </Box>
-                          <RadioGroup row sx={{ my: 2 }} {...getFieldProps('amount')}>
+                          <RadioGroup row sx={{ my: 2 }} {...getFieldPropsWithDraw('amount')}>
                             <FormControlLabel
                               value="300000"
                               control={<Radio />}

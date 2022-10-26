@@ -86,6 +86,7 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
   );
   const { user } = useAuth();
   const { enqueueSnackbar } = useSnackbar();
+  const [walletIDWithDraw, setWalletIDWithDraw] = useState('');
 
   const [openModalShareInvest, setOpenModalShareInvest] = useState(false);
 
@@ -101,20 +102,22 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
   };
   const handleClickWithDraw = async (v: Package) => {
     setOpenModalWithDraw(true);
+    setWalletIDWithDraw(v.id);
+
     dispatch(getUserKrowdDetail(user?.id));
   };
   const handleCheckBox = async () => {
     dispatch(getUserKrowdDetail(user?.id));
     if (check === false) {
       setCheck(true);
-      setFieldValue('bankName', mainInvestor?.bankName);
-      setFieldValue('bankAccount', mainInvestor?.bankAccount);
-      setFieldValue('userName', `${mainInvestor?.lastName} ${mainInvestor?.firstName}`);
+      setFieldValueWithDraw('bankName', mainInvestor?.bankName);
+      setFieldValueWithDraw('bankAccount', mainInvestor?.bankAccount);
+      setFieldValueWithDraw('accountName', `${mainInvestor?.lastName} ${mainInvestor?.firstName}`);
     } else {
       setCheck(false);
-      setFieldValue('bankName', '');
-      setFieldValue('bankAccount', '');
-      setFieldValue('userName', '');
+      setFieldValueWithDraw('bankName', '');
+      setFieldValueWithDraw('bankAccount', '');
+      setFieldValueWithDraw('accountName', '');
     }
   };
 
@@ -125,43 +128,98 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
     const token = getToken();
     return { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` };
   }
+  function getHeaderFormData2() {
+    const token = getToken();
+    return { Authorization: `Bearer ${token}` };
+  }
+  // const formik = useFormik({
+  //   initialValues: {
+  //     bankName: mainInvestor?.bankName ?? '',
+  //     bankAccount: mainInvestor?.bankAccount ?? '',
+  //     userName: '',
+  //     amount: 0
+  //   },
+  //   onSubmit: async (values, { setSubmitting, resetForm }) => {
+  //     try {
+  //       const formData = new FormData();
+  //       const header = getHeaderFormData();
+  //       formData.append('amount', `${values.amount}`);
+  //       await axios({
+  //         method: 'post',
+  //         url: REACT_APP_API_URL + '/momo/request',
+  //         data: formData,
+  //         headers: header
+  //       })
+  //         .then((res) => {
+  //           window.location.replace(res.data.result.payUrl);
+  //         })
+  //         .catch(() => {
+  //           enqueueSnackbar('Cập nhật số dư thất bại', {
+  //             variant: 'error'
+  //           });
+  //         })
+  //         .finally(() => {});
+  //     } catch (error) {
+  //       setSubmitting(false);
+  //     }
+  //   }
+  // });
 
-  const formik = useFormik({
+  // const { errors, values, touched, isSubmitting, handleSubmit, getFieldProps, setFieldValue } =
+  //   formik;
+
+  //Rút tiền
+  const formikWithDraw = useFormik({
     initialValues: {
-      bankName: mainInvestor?.bankName ?? '',
-      bankAccount: mainInvestor?.bankAccount ?? '',
-      userName: '',
+      fromWalletId: walletIDWithDraw,
+      bankName: '',
+      accountName: '',
+      bankAccount: '',
       amount: 0
     },
+    enableReinitialize: true,
+
     onSubmit: async (values, { setSubmitting, resetForm }) => {
       try {
-        const formData = new FormData();
-        const header = getHeaderFormData();
-        formData.append('amount', `${values.amount}`);
-        await axios({
-          method: 'post',
-          url: REACT_APP_API_URL + '/momo/request',
-          data: formData,
-          headers: header
-        })
-          .then((res) => {
-            window.location.replace(res.data.result.payUrl);
+        const headers = getHeaderFormData2();
+        await axios
+          .post(REACT_APP_API_URL + `/WithdrawRequest`, values, {
+            headers: headers
+          })
+          .then(() => {
+            enqueueSnackbar('Gửi yêu cầu rút tiền thành công', {
+              variant: 'success'
+            });
+            dispatch(getWalletByID(walletIDWithDraw));
+            resetForm();
+            setOpenModalWithDraw(false);
           })
           .catch(() => {
-            enqueueSnackbar('Cập nhật số dư thất bại', {
+            enqueueSnackbar('Gửi yêu cầu rút tiền thất bại vui lòng kiểm tra thông tin bạn nhập', {
               variant: 'error'
             });
           })
-          .finally(() => {});
+          .finally(() => {
+            setSubmitting(true);
+          });
       } catch (error) {
         setSubmitting(false);
       }
     }
   });
 
-  const { errors, values, touched, isSubmitting, handleSubmit, getFieldProps, setFieldValue } =
-    formik;
-  console.log(formik);
+  const {
+    errors: errorsWithDraw,
+    values: valuesWithDraw,
+    touched: touchedWithDraw,
+    isSubmitting: isSubmittingWithDraw,
+    handleSubmit: handleSubmitWithDraw,
+    getFieldProps: getFieldPropsWithDraw,
+    setFieldValue: setFieldValueWithDraw
+  } = formikWithDraw;
+
+  console.log('walletIDWithDraw', walletIDWithDraw);
+  console.log(formikWithDraw);
   return (
     <RootStyleContainer initial="initial" animate="animate" variants={varWrapEnter}>
       {listOfInvestorWallet &&
@@ -377,13 +435,13 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                         <Typography>
                           Số dư ví: <strong>{fCurrency(e.balance)}</strong>
                         </Typography>
-                        <FormikProvider value={formik}>
-                          <Form noValidate autoComplete="off" onSubmit={handleSubmit}>
+                        <FormikProvider value={formikWithDraw}>
+                          <Form noValidate autoComplete="off" onSubmit={handleSubmitWithDraw}>
                             <TextField
                               required
                               fullWidth
                               label="Tài khoản ngân hàng"
-                              {...getFieldProps('bankName')}
+                              {...getFieldPropsWithDraw('bankName')}
                               sx={{ mt: 2 }}
                             />
 
@@ -391,7 +449,7 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                               required
                               fullWidth
                               label="Tài khoản ngân hàng"
-                              {...getFieldProps('bankAccount')}
+                              {...getFieldPropsWithDraw('bankAccount')}
                               sx={{ mt: 2 }}
                             />
 
@@ -399,7 +457,7 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                               required
                               fullWidth
                               label="Tên chủ tài khoản"
-                              {...getFieldProps('userName')}
+                              {...getFieldPropsWithDraw('accountName')}
                               sx={{ mt: 2 }}
                             />
 
@@ -407,7 +465,7 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                               <TextField
                                 fullWidth
                                 label="Số tiền VND"
-                                {...getFieldProps('amount')}
+                                {...getFieldPropsWithDraw('amount')}
                                 sx={{ mt: 2 }}
                                 InputProps={{
                                   endAdornment: <Icon color="#ff9b26e0" icon={question} />
@@ -418,7 +476,7 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                               <Checkbox onClick={handleCheckBox} />
                               <Typography>Sử dụng thông tin hiện có</Typography>
                             </Box>
-                            <RadioGroup row sx={{ my: 2 }} {...getFieldProps('amount')}>
+                            <RadioGroup row sx={{ my: 2 }} {...getFieldPropsWithDraw('amount')}>
                               <FormControlLabel
                                 value="300000"
                                 control={<Radio />}
@@ -469,7 +527,7 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                                 type="submit"
                                 variant="contained"
                                 size="large"
-                                loading={isSubmitting}
+                                loading={isSubmittingWithDraw}
                               >
                                 Rút tiền
                               </LoadingButton>
@@ -480,7 +538,7 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                                 type="submit"
                                 variant="contained"
                                 size="large"
-                                loading={isSubmitting}
+                                loading={isSubmittingWithDraw}
                               >
                                 Rút tiền
                               </LoadingButton>

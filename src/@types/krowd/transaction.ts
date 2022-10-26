@@ -100,3 +100,18 @@ export type ListOfDailyReport = {
   updateBy: string;
   status: string;
 };
+// ===================================BILL IN DAILY REPORT================================
+export type BillDailyReport = {
+  numOfBill: number;
+  listOfBill: Bill[];
+};
+
+export type Bill = {
+  id: string;
+  dailyReportId: string;
+  invoiceId: string;
+  amount: number;
+  description: string;
+  createBy: string;
+  createDate: string;
+};
