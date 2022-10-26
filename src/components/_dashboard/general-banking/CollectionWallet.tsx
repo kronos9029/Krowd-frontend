@@ -2,8 +2,10 @@ import { merge } from 'lodash';
 import ReactApexChart from 'react-apexcharts';
 import { Icon } from '@iconify/react';
 import trendingUpFill from '@iconify/icons-eva/trending-up-fill';
-import trendingDownFill from '@iconify/icons-eva/trending-down-fill';
-import diagonalArrowLeftDownFill from '@iconify/icons-eva/diagonal-arrow-left-down-fill';
+import calendar from '@iconify/icons-bi/calendar-date';
+import dolarMoney from '@iconify/icons-ant-design/dollar-circle-outlined';
+import InfoRecieve from '@iconify/icons-ant-design/solution-outline';
+import secureInfo from '@iconify/icons-ant-design/security-scan-outlined';
 import shieldCheck from '@iconify/icons-bi/shield-check';
 import question from '@iconify/icons-bi/question-circle';
 // material
@@ -112,7 +114,7 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
       setCheck(true);
       setFieldValueWithDraw('bankName', mainInvestor?.bankName);
       setFieldValueWithDraw('bankAccount', mainInvestor?.bankAccount);
-      setFieldValueWithDraw('accountName', `${mainInvestor?.lastName} ${mainInvestor?.firstName}`);
+      setFieldValueWithDraw('accountName', `${mainInvestor?.firstName} ${mainInvestor?.lastName}`);
     } else {
       setCheck(false);
       setFieldValueWithDraw('bankName', '');
@@ -418,8 +420,6 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                           </Box>
                         </Box>
                         <Icon color="#14b7cc" height={60} width={60} icon={walletDetails} />
-                      </DialogTitle>
-                      <DialogContent>
                         <Box mt={1}>
                           <DialogContentText
                             sx={{
@@ -432,6 +432,8 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                             Tạo lệnh rút tiền
                           </DialogContentText>
                         </Box>
+                      </DialogTitle>
+                      <DialogContent>
                         <Typography>
                           Số dư ví: <strong>{fCurrency(e.balance)}</strong>
                         </Typography>
@@ -514,12 +516,63 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                                 sx={{ px: 2.3 }}
                               />
                             </RadioGroup>
+                            <Box sx={{ color: '#d58311' }}>
+                              <Typography sx={{ my: 1, fontWeight: 500 }}>Lưu ý:</Typography>
+
+                              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                                <Box>
+                                  <Icon color="#d58311" width={20} height={20} icon={calendar} />
+                                </Box>
+                                <Box>
+                                  <Typography sx={{ textAlign: 'left', ml: 1 }}>
+                                    Số tiền bạn rút sẽ được chuyển vào tài khoản của bạn chậm nhất
+                                    là 24h sau khi tạo lệnh rút tiền.
+                                  </Typography>
+                                </Box>
+                              </Box>
+                              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                                <Box>
+                                  <Icon color="#d58311" width={20} height={20} icon={dolarMoney} />
+                                </Box>
+                                <Box>
+                                  <Typography sx={{ textAlign: 'left', ml: 1 }}>
+                                    Số tiền bạn rút không vượt quá số dư trong ví hiện tại.
+                                  </Typography>
+                                </Box>
+                              </Box>
+                              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                                <Box>
+                                  <Icon color="#d58311" width={20} height={20} icon={InfoRecieve} />
+                                </Box>
+                                <Box>
+                                  <Typography sx={{ textAlign: 'left', ml: 1 }}>
+                                    Thông tin rút tiền là thông tin tài khoản của bạn hoặc thông tin
+                                    người mà bạn quen biết (Mọi thông tin đều phải trùng khớp với
+                                    thông tin đã đăng ký bên ngân hàng đó).
+                                  </Typography>
+                                </Box>
+                              </Box>
+                              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                                <Box>
+                                  <Icon color="#d58311" width={20} height={20} icon={secureInfo} />
+                                </Box>
+                                <Box>
+                                  <Typography sx={{ textAlign: 'left', ml: 1 }}>
+                                    Vui lòng kiểm tra thông tin trước khi gửi lệnh rút tiền.
+                                  </Typography>
+                                </Box>
+                              </Box>
+                            </Box>
                             <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
-                              <Icon color="green" width={30} height={30} icon={shieldCheck} />
-                              <Typography sx={{ mt: 3, textAlign: 'left', ml: 1 }}>
-                                Mọi thông tin khách hàng đều được mã hóa để bảo mật thông tin khách
-                                hàng.
-                              </Typography>
+                              <Box>
+                                <Icon color="green" width={20} height={20} icon={shieldCheck} />
+                              </Box>
+                              <Box>
+                                <Typography sx={{ textAlign: 'left', ml: 1 }}>
+                                  Mọi thông tin khách hàng đều được mã hóa để bảo mật thông tin
+                                  khách hàng.
+                                </Typography>
+                              </Box>
                             </Box>
                             {e.balance > 0 ? (
                               <LoadingButton

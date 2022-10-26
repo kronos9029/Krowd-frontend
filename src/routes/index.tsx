@@ -97,7 +97,7 @@ export default function Router() {
         </AuthGuard>
       ),
       children: [
-        { element: <Navigate to="/dashboard/app" replace /> },
+        { element: <Navigate to="/dashboard/banking" replace /> },
         { path: 'app', element: <GeneralApp /> },
         { path: 'ecommerce', element: <GeneralEcommerce /> },
         { path: 'analytics', element: <GeneralAnalytics /> },
@@ -142,6 +142,7 @@ export default function Router() {
           children: [
             { element: <Navigate to="/dashboard/account-transaction/list" replace /> },
             { path: 'list', element: <UserAccountTransaction /> },
+            { path: 'withdraw-request', element: <UserWithDrawTransaction /> },
             { path: 'wallet-transaction', element: <UserWalletTransaction /> },
             { path: 'payments/list', element: <UserPaymentProject /> }
           ]
@@ -331,6 +332,9 @@ const UserList = Loadable(lazy(() => import('../pages/dashboard/UserList')));
 const UserAccount = Loadable(lazy(() => import('../pages/dashboard/AccountManager/UserAccount')));
 const UserAccountTransaction = Loadable(
   lazy(() => import('../pages/dashboard/AccountManager/UserAccountTransaction'))
+);
+const UserWithDrawTransaction = Loadable(
+  lazy(() => import('../pages/dashboard/AccountManager/UserWithDrawTransaction'))
 );
 const UserWalletTransaction = Loadable(
   lazy(() => import('../pages/dashboard/AccountManager/UserWalletTransaction'))

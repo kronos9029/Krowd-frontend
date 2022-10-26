@@ -29,7 +29,6 @@ import { getWalletByID, getWalletList } from 'redux/slices/krowd_slices/wallet';
 import { dispatch, RootState, useSelector } from 'redux/store';
 import { Wallet } from '../../../@types/krowd/wallet';
 import { PATH_PAGE } from 'routes/paths';
-import refresh from '@iconify/icons-eva/refresh-fill';
 import walletDetails from '@iconify/icons-ant-design/wallet-outlined';
 import { TextAnimate, varBounceInUp, varFadeInRight, varWrapEnter } from 'components/animate';
 import { motion } from 'framer-motion';
@@ -43,6 +42,10 @@ import { LoadingButton } from '@mui/lab';
 import shieldCheck from '@iconify/icons-bi/shield-check';
 import question from '@iconify/icons-bi/question-circle';
 import { useSnackbar } from 'notistack';
+import calendar from '@iconify/icons-bi/calendar-date';
+import dolarMoney from '@iconify/icons-ant-design/dollar-circle-outlined';
+import InfoRecieve from '@iconify/icons-ant-design/solution-outline';
+import secureInfo from '@iconify/icons-ant-design/security-scan-outlined';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Card)(({ theme }) => ({
@@ -487,50 +490,63 @@ export default function SharedInvestmentWallet({ wallet }: { wallet: Wallet }) {
                             <Checkbox onClick={handleCheckBox} />
                             <Typography>Sử dụng thông tin hiện có</Typography>
                           </Box>
-                          <RadioGroup row sx={{ my: 2 }} {...getFieldPropsWithDraw('amount')}>
-                            <FormControlLabel
-                              value="300000"
-                              control={<Radio />}
-                              label="300,000đ"
-                              sx={{ px: 2 }}
-                            />
-                            <FormControlLabel
-                              value="500000"
-                              control={<Radio />}
-                              label="500,000đ"
-                              sx={{ px: 2.7 }}
-                            />
-                            <FormControlLabel
-                              value="1000000"
-                              control={<Radio />}
-                              label="1,000,000đ"
-                              sx={{ px: 2 }}
-                            />
-                            <FormControlLabel
-                              value="3000000"
-                              control={<Radio />}
-                              label="3,000,000đ"
-                              sx={{ px: 2 }}
-                            />
-                            <FormControlLabel
-                              value="5000000"
-                              control={<Radio />}
-                              label="5,000,000đ"
-                              sx={{ px: 1 }}
-                            />
-                            <FormControlLabel
-                              value="10000000"
-                              control={<Radio />}
-                              label="10,000,000đ"
-                              sx={{ px: 2.3 }}
-                            />
-                          </RadioGroup>
+                          <Box sx={{ color: '#d58311' }}>
+                            <Typography sx={{ my: 1, fontWeight: 500 }}>Lưu ý:</Typography>
+
+                            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                              <Box>
+                                <Icon color="#d58311" width={20} height={20} icon={calendar} />
+                              </Box>
+                              <Box>
+                                <Typography sx={{ textAlign: 'left', ml: 1 }}>
+                                  Số tiền bạn rút sẽ được chuyển vào tài khoản của bạn chậm nhất là
+                                  24h sau khi tạo lệnh rút tiền.
+                                </Typography>
+                              </Box>
+                            </Box>
+                            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                              <Box>
+                                <Icon color="#d58311" width={20} height={20} icon={dolarMoney} />
+                              </Box>
+                              <Box>
+                                <Typography sx={{ textAlign: 'left', ml: 1 }}>
+                                  Số tiền bạn rút không vượt quá số dư trong ví hiện tại.
+                                </Typography>
+                              </Box>
+                            </Box>
+                            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                              <Box>
+                                <Icon color="#d58311" width={20} height={20} icon={InfoRecieve} />
+                              </Box>
+                              <Box>
+                                <Typography sx={{ textAlign: 'left', ml: 1 }}>
+                                  Thông tin rút tiền là thông tin tài khoản của bạn hoặc thông tin
+                                  người mà bạn quen biết (Mọi thông tin đều phải trùng khớp với
+                                  thông tin đã đăng ký bên ngân hàng đó).
+                                </Typography>
+                              </Box>
+                            </Box>
+                            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                              <Box>
+                                <Icon color="#d58311" width={20} height={20} icon={secureInfo} />
+                              </Box>
+                              <Box>
+                                <Typography sx={{ textAlign: 'left', ml: 1 }}>
+                                  Vui lòng kiểm tra thông tin trước khi gửi lệnh rút tiền.
+                                </Typography>
+                              </Box>
+                            </Box>
+                          </Box>
                           <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
-                            <Icon color="green" width={30} height={30} icon={shieldCheck} />
-                            <Typography sx={{ mt: 3, textAlign: 'left', ml: 1 }}>
-                              Mọi thông tin khách hàng đều được mã hóa để bảo mật thông tin khách
-                              hàng.
-                            </Typography>
+                            <Box>
+                              <Icon color="green" width={20} height={20} icon={shieldCheck} />
+                            </Box>
+                            <Box>
+                              <Typography sx={{ textAlign: 'left', ml: 1 }}>
+                                Mọi thông tin khách hàng đều được mã hóa để bảo mật thông tin khách
+                                hàng.
+                              </Typography>
+                            </Box>
                           </Box>
                           {e.balance > 0 ? (
                             <LoadingButton

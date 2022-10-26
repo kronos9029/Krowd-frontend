@@ -7,7 +7,8 @@ import {
   Payment,
   Transaction,
   WalletTransaction,
-  Bill
+  Bill,
+  WithDrawRequest
 } from '../../../@types/krowd/transaction';
 import { TransactionAPI } from '../../../_apis_/krowd_apis/transaction';
 // ----------------------------------------------------------------------
@@ -16,6 +17,12 @@ type TransactionState = {
   transactionState: {
     isLoading: boolean;
     TransactionList: Transaction[];
+
+    error: boolean;
+  };
+  transactionWithdrawState: {
+    isLoading: boolean;
+    TransactionWithdrawList: WithDrawRequest[];
 
     error: boolean;
   };
@@ -64,6 +71,11 @@ const initialState: TransactionState = {
   transactionState: {
     isLoading: false,
     TransactionList: [],
+    error: false
+  },
+  transactionWithdrawState: {
+    isLoading: false,
+    TransactionWithdrawList: [],
     error: false
   },
   investmentState: {
@@ -122,6 +134,18 @@ const slice = createSlice({
     getTransactionListSuccess(state, action) {
       state.transactionState.isLoading = false;
       state.transactionState.TransactionList = action.payload;
+    },
+    // ------ GET ALL WITHDRAW REQUEST TRANSACTION ------------ //
+    startLoadingWithdrawTransactionList(state) {
+      state.transactionWithdrawState.isLoading = true;
+    },
+    hasGetWithdrawTransactionError(state, action) {
+      state.transactionWithdrawState.isLoading = false;
+      state.transactionWithdrawState.error = action.payload;
+    },
+    getWithdrawTransactionListSuccess(state, action) {
+      state.transactionWithdrawState.isLoading = false;
+      state.transactionWithdrawState.TransactionWithdrawList = action.payload;
     },
     // ------ GET ALL TRANSACTION WALLET------------ //
     startLoadingWalletTransactionList(state) {
@@ -223,6 +247,19 @@ export function getTransactionList() {
       dispatch(slice.actions.getTransactionListSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasGetTransactionError(error));
+    }
+  };
+}
+//---------------------------- GET ALL WITHDRAW REQUEST TRANSACTION------------------------------
+
+export function getWithdrawRequestTransactionList(id: string) {
+  return async () => {
+    dispatch(slice.actions.startLoadingWithdrawTransactionList());
+    try {
+      const response = await TransactionAPI.getsWithdrawTransaction(id);
+      dispatch(slice.actions.getWithdrawTransactionListSuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasGetWithdrawTransactionError(error));
     }
   };
 }

@@ -115,3 +115,19 @@ export type Bill = {
   createBy: string;
   createDate: string;
 };
+// ===================================WITH DRAW REQUEST================================
+
+export type WithDrawRequest = {
+  id: string;
+  bankName: string;
+  accountName: string;
+  bankAccount: string;
+  description: string;
+  amount: number;
+  status: string;
+  refusalReason: string;
+  createDate: string;
+  createBy: string;
+  updateDate: string;
+  updateBy: string;
+};

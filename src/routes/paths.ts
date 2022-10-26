@@ -110,6 +110,7 @@ export const PATH_DASHBOARD = {
   transaction: {
     root: path(ROOTS_DASHBOARD, '/account-transaction'),
     list: path(ROOTS_DASHBOARD, '/account-transaction/list'),
+    listWithdraw: path(ROOTS_DASHBOARD, '/account-transaction/withdraw-request'),
     walletTransaction: path(ROOTS_DASHBOARD, '/account-transaction/wallet-transaction'),
     payments: path(ROOTS_DASHBOARD, '/account-transaction/payments/list')
   },

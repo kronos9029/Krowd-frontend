@@ -16,6 +16,7 @@ const ICONS = {
   project: getIcon('ic_project'),
   bankTransaction: getIcon('ic_bankTransaction'),
   transaction: getIcon('ic_transaction'),
+  withdraw: getIcon('ic_withdraw'),
   payment: getIcon('ic_payment'),
   walletTransaction: getIcon('ic_walletTransaction'),
   voucher: getIcon('ic_voucher')
@@ -25,14 +26,12 @@ const sidebarConfig = [
   {
     subheader: 'Thống kê của bạn',
     items: [
-      {
-        title: 'app',
-        path: PATH_DASHBOARD.general.app,
-        icon: ICONS.krowd
-      },
-      // { title: 'Chung', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics },
+      // {
+      //   title: 'app',
+      //   path: PATH_DASHBOARD.general.app,
+      //   icon: ICONS.krowd
+      // },
       { title: 'Ví của bạn', path: PATH_DASHBOARD.general.banking, icon: ICONS.wallet }
-      // { title: 'Tổng quan ngày', path: PATH_DASHBOARD.general.booking, icon: ICONS.booking }
     ]
   },
   {
@@ -50,9 +49,14 @@ const sidebarConfig = [
     subheader: 'Quản lý giao dịch',
     items: [
       {
-        title: 'Nạp tiền và rút tiền',
+        title: 'Nạp tiền',
         path: PATH_DASHBOARD.transaction.list,
         icon: ICONS.transaction
+      },
+      {
+        title: 'Rút tiền',
+        path: PATH_DASHBOARD.transaction.listWithdraw,
+        icon: ICONS.withdraw
       },
       {
         title: 'Giao dịch ví',
