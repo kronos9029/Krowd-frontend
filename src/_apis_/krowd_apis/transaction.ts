@@ -8,7 +8,8 @@ const API_PAYMENTS = '/payments/type/INVESTMENT';
 const PERIOD_REVENUE = '/payments/type/PERIOD_REVENUE';
 const API_BILL_DAILY_REPORT = '/bills/dailyReport';
 const API_DAILY_REPORT_BY_ID = '/daily_reports';
-const API_WITH_DRAW_REQUEST = '/WithdrawRequest';
+const API_WITH_DRAW_REQUEST = '/withdraw_requests';
+const API_PERIOD_REVENUE_HISTORY = '/period_revenue_histories';
 
 function getToken() {
   return window.localStorage.getItem('accessToken');
@@ -34,6 +35,20 @@ async function getsWithdrawTransaction(investorId: string) {
       headers: headers
     }
   );
+  return response;
+}
+async function getsWithdrawTransactionById(id: string) {
+  const headers = getHeader();
+  const response = await axios.get(REACT_APP_API_URL + `${API_WITH_DRAW_REQUEST}/${id}`, {
+    headers: headers
+  });
+  return response;
+}
+async function getsPeriodRevenueHistory() {
+  const headers = getHeader();
+  const response = await axios.get(REACT_APP_API_URL + `${API_PERIOD_REVENUE_HISTORY}`, {
+    headers: headers
+  });
   return response;
 }
 async function getsInvestment({ id }: { id: string }) {
@@ -107,5 +122,7 @@ export const TransactionAPI = {
   getsDailyReport: getsDailyReport,
   getsBillDailyReport: getsBillDailyReport,
   getsDailyReportByID: getsDailyReportByID,
-  getsWithdrawTransaction: getsWithdrawTransaction
+  getsWithdrawTransaction: getsWithdrawTransaction,
+  getsPeriodRevenueHistory: getsPeriodRevenueHistory,
+  getsWithdrawTransactionById: getsWithdrawTransactionById
 };

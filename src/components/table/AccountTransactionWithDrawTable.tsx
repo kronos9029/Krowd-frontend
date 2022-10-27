@@ -1,10 +1,27 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { dispatch, RootState, useSelector } from '../../redux/store';
 import { DATA_TYPE, KrowdTable, RowData } from './krowd-table/KrowdTable';
 import {
   getTransactionList,
   getWithdrawRequestTransactionList
 } from 'redux/slices/krowd_slices/transaction';
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  Typography,
+  TextField,
+  Autocomplete,
+  DialogActions,
+  Stack,
+  Button,
+  Box,
+  Tooltip,
+  Divider
+} from '@mui/material';
+import { Container } from '@mui/system';
+import { fCurrency } from 'utils/formatNumber';
 const TABLE_HEAD = [
   { id: 'idx', label: 'STT', align: 'center' },
   { id: 'bankName', label: 'TÊN NGÂN HÀNG', align: 'center' },
@@ -13,15 +30,27 @@ const TABLE_HEAD = [
   { id: 'amount', label: 'SỐ TIỀN', align: 'left' },
   { id: 'description', label: 'MÔ TẢ', align: 'left' },
   { id: 'status', label: 'TRẠNG THÁI', align: 'left' },
-  { id: 'createDate', label: 'NGÀY THỰC HIỆN', align: 'center' }
+  { id: 'createDate', label: 'NGÀY THỰC HIỆN', align: 'center' },
+  { id: '', label: 'CHI TIẾT', align: 'center' }
 ];
 
 export default function AccountTransactionWithDrawTable() {
-  const { transactionWithdrawState } = useSelector((state: RootState) => state.transactionKrowd);
+  const { transactionWithdrawState, transactionWithdrawDetail } = useSelector(
+    (state: RootState) => state.transactionKrowd
+  );
   const { isLoading, TransactionWithdrawList: list } = transactionWithdrawState;
+  const { TransactionWithdrawDetail } = transactionWithdrawDetail;
   useEffect(() => {
     dispatch(getWithdrawRequestTransactionList(localStorage.getItem('userId') ?? ''));
   }, [dispatch]);
+  const [open, setOpen] = useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const getData = (): RowData[] => {
     if (!list) return [];
@@ -58,7 +87,7 @@ export default function AccountTransactionWithDrawTable() {
           },
           {
             name: 'description',
-            value: _item.description === 'Withdraw Money' ? 'Rút tiền' : 'Thất bại',
+            value: _item.description === 'Withdraw Money' ? 'Rút tiền' : 'Bằng chứng',
             type: DATA_TYPE.TEXT,
             textColor: 'rgb(102, 187, 106)'
           },
@@ -85,11 +114,232 @@ export default function AccountTransactionWithDrawTable() {
     });
   };
   return (
-    <KrowdTable
-      headingTitle="GIAO DỊCH RÚT TIỀN"
-      header={TABLE_HEAD}
-      getData={getData}
-      isLoading={isLoading}
-    />
+    <>
+      <KrowdTable
+        headingTitle="GIAO DỊCH RÚT TIỀN"
+        header={TABLE_HEAD}
+        getData={getData}
+        isLoading={isLoading}
+        viewPeriodHistory={() => handleClickOpen()}
+      />
+      <Box>
+        <Dialog
+          open={open}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <DialogContent>
+            <Box mt={1}>
+              <DialogContentText
+                sx={{ textAlign: 'center', fontWeight: 900, fontSize: 20, color: 'black' }}
+              >
+                Thông tin người nhận
+              </DialogContentText>
+            </Box>
+            <Stack spacing={{ xs: 2, md: 1 }}>
+              <Container sx={{ p: 2 }}>
+                <Box>
+                  <Typography sx={{ textAlign: 'center' }}>Yêu cầu đã hoàn thành</Typography>
+                </Box>
+                {/* <Box>
+                <Typography sx={{ textAlign: 'center', color: '#14b7cc', fontSize: 35 }}>
+                  {fCurrency(`${dataInvestedSuccess}`)}
+                </Typography>
+              </Box> */}
+                <Divider sx={{ my: 2 }} />
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    mb: '0.5rem',
+                    p: 1
+                  }}
+                >
+                  <Typography
+                    paragraph
+                    sx={{
+                      color: '#251E18',
+                      marginBottom: '0.2rem'
+                    }}
+                  >
+                    <strong>Tổng số tiền</strong>
+                  </Typography>
+                  <Typography
+                    paragraph
+                    sx={{
+                      color: '#251E18',
+                      marginBottom: '0.2rem'
+                    }}
+                  >
+                    <strong> {fCurrency(TransactionWithdrawDetail?.amount ?? '')}</strong>
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    mb: '0.5rem',
+                    p: 1
+                  }}
+                >
+                  <Typography
+                    paragraph
+                    sx={{
+                      color: '#251E18',
+                      marginBottom: '0.2rem'
+                    }}
+                  >
+                    <strong>Số tiền thanh toán</strong>
+                  </Typography>
+                  <Typography
+                    paragraph
+                    sx={{
+                      color: '#251E18',
+                      marginBottom: '0.2rem'
+                    }}
+                  >
+                    <strong> {fCurrency(TransactionWithdrawDetail?.amount ?? '')}</strong>
+                  </Typography>
+                </Box>
+                <Divider sx={{ my: 2 }} />
+
+                <Box
+                  sx={{
+                    display: 'flex',
+                    p: 1,
+
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <Typography
+                    paragraph
+                    sx={{
+                      color: '#251E18',
+
+                      marginBottom: '0.2rem'
+                    }}
+                  >
+                    <strong>Giao dịch</strong>
+                  </Typography>
+                  <Typography
+                    paragraph
+                    sx={{
+                      color: '#251E18'
+                    }}
+                  >
+                    {/* {resDate} */}
+                    Rút tiền khỏi ví
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    p: 1,
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <Typography
+                    paragraph
+                    sx={{
+                      color: '#251E18',
+                      marginBottom: '0.2rem'
+                    }}
+                  >
+                    <strong>Tên người nhận</strong>
+                  </Typography>
+                  <Typography
+                    paragraph
+                    sx={{
+                      color: '#251E18'
+                    }}
+                  >
+                    {TransactionWithdrawDetail?.accountName}
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    p: 1,
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <Typography
+                    paragraph
+                    sx={{
+                      color: '#251E18',
+                      marginBottom: '0.2rem'
+                    }}
+                  >
+                    <strong>Ngân hàng thụ hưởng</strong>
+                  </Typography>
+                  <Typography
+                    paragraph
+                    sx={{
+                      color: '#251E18'
+                    }}
+                  >
+                    {TransactionWithdrawDetail?.bankName}
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    p: 1,
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <Typography
+                    paragraph
+                    sx={{
+                      color: '#251E18',
+                      marginBottom: '0.2rem'
+                    }}
+                  >
+                    <strong>Tài khoản người nhận</strong>
+                  </Typography>
+                  <Typography
+                    paragraph
+                    sx={{
+                      color: '#251E18'
+                    }}
+                  >
+                    {TransactionWithdrawDetail?.bankAccount}
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    p: 1,
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <Typography
+                    paragraph
+                    sx={{
+                      color: '#251E18'
+                    }}
+                  >
+                    {TransactionWithdrawDetail && (
+                      <img src={TransactionWithdrawDetail?.description} />
+                    )}
+                  </Typography>
+                </Box>
+              </Container>
+            </Stack>
+            <Box>
+              <Button fullWidth color="error" variant="contained" onClick={() => handleClose()}>
+                Đóng
+              </Button>
+            </Box>
+            <Box p={3}>
+              <Typography variant="body2">
+                Nếu có bất kỳ thắc mắc nào liên quan đến yêu cầu này, xin vui lòng liên lạc với bộ
+                phận hỗ trợ của Krowd tại <span style={{ color: '#14b7cc' }}>19007777</span>
+              </Typography>
+            </Box>
+          </DialogContent>
+        </Dialog>
+      </Box>
+    </>
   );
 }

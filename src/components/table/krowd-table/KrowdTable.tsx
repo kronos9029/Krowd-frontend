@@ -32,6 +32,8 @@ import trash2Outline from '@iconify/icons-eva/trash-2-outline';
 import { SeverErrorIllustration } from 'assets';
 import LoadingScreen from 'components/LoadingScreen';
 import Label from 'components/Label';
+import { dispatch } from 'redux/store';
+import { getWithdrawRequestTransactionById } from 'redux/slices/krowd_slices/transaction';
 export enum DATA_TYPE {
   TEXT = 'text',
   TEXT_FORMAT = 'text_format',
@@ -65,6 +67,7 @@ export type KrowdTableProps = {
   viewPath?: string;
   deleteRecord?: (id: string) => void;
   isLoading: boolean;
+  viewPeriodHistory?: (id: string) => void;
 };
 
 export function KrowdTable({
@@ -74,7 +77,8 @@ export function KrowdTable({
   getData,
   isLoading,
   viewPath,
-  deleteRecord
+  deleteRecord,
+  viewPeriodHistory
 }: KrowdTableProps) {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
@@ -83,7 +87,10 @@ export function KrowdTable({
     setRowsPerPage(parseInt(event.target.value, 5));
     setPage(0);
   };
-
+  const openPeriodRevenueHistoryForm = async (id: string) => {
+    await dispatch(getWithdrawRequestTransactionById(id));
+    if (viewPeriodHistory) viewPeriodHistory(id);
+  };
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
   const dataInPage: RowData[] =
@@ -371,8 +378,8 @@ export function KrowdTable({
                               );
                           }
                         })}
-                        {viewPath && (
-                          <TableCell align="center">
+                        <TableCell align="center">
+                          {viewPath && (
                             <Link to={viewPath + `/${data.id}`}>
                               <Icon
                                 icon={eyeFill}
@@ -382,10 +389,8 @@ export function KrowdTable({
                                 color={'rgb(255, 127, 80)'}
                               />
                             </Link>
-                          </TableCell>
-                        )}
-                        {deleteRecord && (
-                          <TableCell align="center">
+                          )}
+                          {deleteRecord && (
                             <Button onClick={() => deleteRecord(data.id)}>
                               <Icon
                                 icon={trash2Outline}
@@ -395,8 +400,20 @@ export function KrowdTable({
                                 color={'rgb(255, 127, 80)'}
                               />
                             </Button>
-                          </TableCell>
-                        )}
+                          )}
+                          {viewPeriodHistory && (
+                            <Button onClick={() => openPeriodRevenueHistoryForm(data.id)}>
+                              <Icon
+                                icon={eyeFill}
+                                width={24}
+                                height={24}
+                                style={{ margin: '0px auto' }}
+                                color={'rgb(255, 127, 80)'}
+                              />
+                            </Button>
+                          )}
+                        </TableCell>
+
                         <TableCell
                           key={'__borderRowRight'}
                           component="th"

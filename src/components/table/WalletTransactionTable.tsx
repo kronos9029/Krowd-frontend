@@ -95,6 +95,10 @@ export default function WalletTransactionTable() {
                 'Nhận tiền từ VÍ TẠM THỜI sang VÍ ĐẦU TƯ CHUNG') ||
               (_item.description === 'Transfer money from I2 to I1' &&
                 'Chuyển tiền từ VÍ TẠM THỜI sang VÍ ĐẦU TƯ CHUNG') ||
+              (_item.description === 'Withdraw money out of I1 wallet' &&
+                'Rút tiền từ VÍ TẠM THỜI') ||
+              (_item.description === 'Receive money from I3 to P3 to for stage payment' &&
+                'Nhận tiền từ VÍ TẠM ỨNG của bạn sang VÍ ĐẦU TƯ DỰ ÁN') ||
               (_item.description === 'Deposit money into I1 wallet' && 'Nạp tiền vào VÍ TẠM THỜI'),
             type: DATA_TYPE.TEXT
           },

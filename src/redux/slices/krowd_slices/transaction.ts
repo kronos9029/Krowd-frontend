@@ -8,7 +8,8 @@ import {
   Transaction,
   WalletTransaction,
   Bill,
-  WithDrawRequest
+  WithDrawRequest,
+  PeriodRevenue
 } from '../../../@types/krowd/transaction';
 import { TransactionAPI } from '../../../_apis_/krowd_apis/transaction';
 // ----------------------------------------------------------------------
@@ -24,6 +25,16 @@ type TransactionState = {
     isLoading: boolean;
     TransactionWithdrawList: WithDrawRequest[];
 
+    error: boolean;
+  };
+  transactionWithdrawDetail: {
+    isLoading: boolean;
+    TransactionWithdrawDetail: WithDrawRequest | null;
+    error: boolean;
+  };
+  periodRevenueState: {
+    isLoading: boolean;
+    PeriodRevenueList: PeriodRevenue[];
     error: boolean;
   };
   investmentState: {
@@ -76,6 +87,16 @@ const initialState: TransactionState = {
   transactionWithdrawState: {
     isLoading: false,
     TransactionWithdrawList: [],
+    error: false
+  },
+  transactionWithdrawDetail: {
+    isLoading: false,
+    TransactionWithdrawDetail: null,
+    error: false
+  },
+  periodRevenueState: {
+    isLoading: false,
+    PeriodRevenueList: [],
     error: false
   },
   investmentState: {
@@ -146,6 +167,30 @@ const slice = createSlice({
     getWithdrawTransactionListSuccess(state, action) {
       state.transactionWithdrawState.isLoading = false;
       state.transactionWithdrawState.TransactionWithdrawList = action.payload;
+    },
+    // ------ GET ALL WITHDRAW REQUEST TRANSACTION BY ID------------ //
+    startLoadingWithdrawTransactionById(state) {
+      state.transactionWithdrawDetail.isLoading = true;
+    },
+    hasGetWithdrawTransactionByIdError(state, action) {
+      state.transactionWithdrawDetail.isLoading = false;
+      state.transactionWithdrawDetail.error = action.payload;
+    },
+    getWithdrawTransactionByIdSuccess(state, action) {
+      state.transactionWithdrawDetail.isLoading = false;
+      state.transactionWithdrawDetail.TransactionWithdrawDetail = action.payload;
+    },
+    // ------ GET ALL PERIOD REVENUE REPORT LIST ------------ //
+    startLoadingPeriodRevenueReportList(state) {
+      state.periodRevenueState.isLoading = true;
+    },
+    hasGetPeriodRevenueReportError(state, action) {
+      state.periodRevenueState.isLoading = false;
+      state.periodRevenueState.error = action.payload;
+    },
+    getPeriodRevenueReportSuccess(state, action) {
+      state.periodRevenueState.isLoading = false;
+      state.periodRevenueState.PeriodRevenueList = action.payload;
     },
     // ------ GET ALL TRANSACTION WALLET------------ //
     startLoadingWalletTransactionList(state) {
@@ -260,6 +305,32 @@ export function getWithdrawRequestTransactionList(id: string) {
       dispatch(slice.actions.getWithdrawTransactionListSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasGetWithdrawTransactionError(error));
+    }
+  };
+}
+//---------------------------- GET ALL WITHDRAW REQUEST TRANSACTION BY ID------------------------------
+
+export function getWithdrawRequestTransactionById(id: string) {
+  return async () => {
+    dispatch(slice.actions.startLoadingWithdrawTransactionById());
+    try {
+      const response = await TransactionAPI.getsWithdrawTransactionById(id);
+      dispatch(slice.actions.getWithdrawTransactionByIdSuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasGetWithdrawTransactionByIdError(error));
+    }
+  };
+}
+// ------ GET ALL PERIOD REVENUE REPORT LIST ------------ //
+
+export function getPeriodRevenueReportList() {
+  return async () => {
+    dispatch(slice.actions.startLoadingPeriodRevenueReportList());
+    try {
+      const response = await TransactionAPI.getsPeriodRevenueHistory();
+      dispatch(slice.actions.getPeriodRevenueReportSuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasGetPeriodRevenueReportError(error));
     }
   };
 }

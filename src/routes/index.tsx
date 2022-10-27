@@ -144,7 +144,8 @@ export default function Router() {
             { path: 'list', element: <UserAccountTransaction /> },
             { path: 'withdraw-request', element: <UserWithDrawTransaction /> },
             { path: 'wallet-transaction', element: <UserWalletTransaction /> },
-            { path: 'payments/list', element: <UserPaymentProject /> }
+            { path: 'payments/list', element: <UserPaymentProject /> },
+            { path: 'revenue-history', element: <UserPeriodRevenueHistory /> }
           ]
         },
         {
@@ -342,6 +343,9 @@ const UserWalletTransaction = Loadable(
 const UserPaymentProject = Loadable(
   lazy(() => import('../pages/dashboard/AccountManager/UserPaymentProject'))
 );
+const UserPeriodRevenueHistory = Loadable(
+  lazy(() => import('../pages/dashboard/AccountManager/UserPeriodRevenueHistory'))
+);
 const UserInvestment = Loadable(
   lazy(() => import('../pages/dashboard/AccountManager/UserInvestment'))
 );
@@ -355,6 +359,7 @@ const ReportDailyProject = Loadable(
 const BillReportDailyProject = Loadable(
   lazy(() => import('../pages/dashboard/ProjectKrowdManager/BillReportDailyProject'))
 );
+
 //==============================================================================
 const UserCreate = Loadable(lazy(() => import('../pages/dashboard/UserCreate')));
 const Chat = Loadable(lazy(() => import('../pages/dashboard/Chat')));

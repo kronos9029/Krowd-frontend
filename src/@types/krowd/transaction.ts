@@ -131,3 +131,13 @@ export type WithDrawRequest = {
   updateDate: string;
   updateBy: string;
 };
+// ===================================WITH DRAW REQUEST================================
+export type PeriodRevenue = {
+  id: string;
+  name: string;
+  periodRevenueId: string;
+  amount: number;
+  description: string;
+  createDate: string;
+  createBy: string;
+};
