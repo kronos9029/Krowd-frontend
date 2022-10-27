@@ -189,7 +189,7 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
       try {
         const headers = getHeaderFormData2();
         await axios
-          .post(REACT_APP_API_URL + `/WithdrawRequest`, values, {
+          .post(REACT_APP_API_URL + `/withdraw_requestsRequest`, values, {
             headers: headers
           })
           .then((res) => {
