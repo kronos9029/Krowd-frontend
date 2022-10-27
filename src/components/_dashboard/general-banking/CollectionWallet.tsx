@@ -1,7 +1,4 @@
-import { merge } from 'lodash';
-import ReactApexChart from 'react-apexcharts';
 import { Icon } from '@iconify/react';
-import trendingUpFill from '@iconify/icons-eva/trending-up-fill';
 import calendar from '@iconify/icons-bi/calendar-date';
 import dolarMoney from '@iconify/icons-ant-design/dollar-circle-outlined';
 import InfoRecieve from '@iconify/icons-ant-design/solution-outline';
@@ -9,6 +6,11 @@ import secureInfo from '@iconify/icons-ant-design/security-scan-outlined';
 import shieldCheck from '@iconify/icons-bi/shield-check';
 import question from '@iconify/icons-bi/question-circle';
 // material
+import eyeFill from '@iconify/icons-eva/eye-fill';
+import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
+// ----------------------------------------------------------------------
+import check2Fill from '@iconify/icons-eva/checkmark-circle-2-fill';
+import { MIconButton } from 'components/@material-extend';
 import { styled } from '@mui/material/styles';
 import {
   Card,
@@ -31,23 +33,16 @@ import {
   Checkbox
 } from '@mui/material';
 // utils
-import { fCurrency, fPercent } from '../../../utils/formatNumber';
+import { fCurrency } from '../../../utils/formatNumber';
 //
-import BaseOptionChart from '../../charts/BaseOptionChart';
 import { dispatch, RootState, useSelector } from 'redux/store';
 import { Wallet } from '../../../@types/krowd/wallet';
-import { getWalletByID, getWalletList } from 'redux/slices/krowd_slices/wallet';
+import { getWalletByID } from 'redux/slices/krowd_slices/wallet';
 import { animate, motion } from 'framer-motion';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import walletDetails from '@iconify/icons-ant-design/wallet-outlined';
 
-import {
-  TextAnimate,
-  varBounceInUp,
-  varFadeInRight,
-  varFadeInUp,
-  varWrapEnter
-} from 'components/animate';
+import { TextAnimate, varBounceInUp, varWrapEnter } from 'components/animate';
 import { getUserKrowdDetail } from 'redux/slices/krowd_slices/investor';
 import useAuth from 'hooks/useAuth';
 import { Form, FormikProvider, useFormik } from 'formik';
@@ -95,7 +90,13 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
   const [openModalWithDraw, setOpenModalWithDraw] = useState(false);
 
   const [check, setCheck] = useState(false);
-  const [bankName, setBankName] = useState('');
+  const [accountNameResponse, setAccountNameResponse] = useState('');
+  const [bankNameResponse, setBankNameResponse] = useState('');
+  const [bankAccountResponse, setBankAccountResponse] = useState('');
+  const [IDResponse, setIDResponse] = useState('');
+  const [amountResponse, setAmoutResponse] = useState(0);
+  const [openModalWithdrawRequestSuccess, setOpenModalWithdrawRequestSuccess] = useState(false);
+  const [showIDPayment, setShowIDPayment] = useState(true);
 
   const handleClickRefeshBalance = async (v: Package) => {
     dispatch(getWalletByID(v.id));
@@ -107,6 +108,9 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
     setWalletIDWithDraw(v.id);
 
     dispatch(getUserKrowdDetail(user?.id));
+  };
+  const onToggleShowIDPayment = () => {
+    setShowIDPayment((prev) => !prev);
   };
   const handleCheckBox = async () => {
     dispatch(getUserKrowdDetail(user?.id));
@@ -188,10 +192,16 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
           .post(REACT_APP_API_URL + `/WithdrawRequest`, values, {
             headers: headers
           })
-          .then(() => {
+          .then((res) => {
             enqueueSnackbar('Gửi yêu cầu rút tiền thành công', {
               variant: 'success'
             });
+            setOpenModalWithdrawRequestSuccess(true);
+            setAccountNameResponse(res.data.accountName);
+            setBankAccountResponse(res.data.bankAccount);
+            setBankNameResponse(res.data.bankName);
+            setAmoutResponse(res.data.amount);
+            setIDResponse(res.data.id);
             dispatch(getWalletByID(walletIDWithDraw));
             resetForm();
             setOpenModalWithDraw(false);
@@ -611,6 +621,247 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
             </Stack>
           </RootStyle>
         ))}
+      <Dialog fullWidth maxWidth="sm" open={openModalWithdrawRequestSuccess}>
+        <DialogTitle sx={{ alignItems: 'center', textAlign: 'center' }}>
+          <Icon color="#14b7cc" height={60} width={60} icon={check2Fill} />
+        </DialogTitle>
+        <DialogContent>
+          <Box mt={1}>
+            <DialogContentText
+              sx={{ textAlign: 'center', fontWeight: 900, fontSize: 20, color: 'black' }}
+            >
+              Gửi yêu cầu thành công
+            </DialogContentText>
+          </Box>
+          <Stack spacing={{ xs: 2, md: 1 }}>
+            <Container sx={{ p: 2 }}>
+              <Box>
+                <Typography sx={{ textAlign: 'center' }}>Yêu cầu đã hoàn thành</Typography>
+              </Box>
+              {/* <Box>
+                <Typography sx={{ textAlign: 'center', color: '#14b7cc', fontSize: 35 }}>
+                  {fCurrency(`${dataInvestedSuccess}`)}
+                </Typography>
+              </Box> */}
+              <Divider sx={{ my: 2 }} />
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  mb: '0.5rem',
+                  p: 1
+                }}
+              >
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18',
+                    marginBottom: '0.2rem'
+                  }}
+                >
+                  <strong>Tổng số tiền</strong>
+                </Typography>
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18',
+                    marginBottom: '0.2rem'
+                  }}
+                >
+                  <strong> {fCurrency(amountResponse)}</strong>
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  mb: '0.5rem',
+                  p: 1
+                }}
+              >
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18',
+                    marginBottom: '0.2rem'
+                  }}
+                >
+                  <strong>Số tiền thanh toán</strong>
+                </Typography>
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18',
+                    marginBottom: '0.2rem'
+                  }}
+                >
+                  <strong> {fCurrency(amountResponse)}</strong>
+                </Typography>
+              </Box>
+              <Divider sx={{ my: 2 }} />
+
+              <Box
+                sx={{
+                  display: 'flex',
+                  p: 1,
+
+                  justifyContent: 'space-between'
+                }}
+              >
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18',
+
+                    marginBottom: '0.2rem'
+                  }}
+                >
+                  <strong>Giao dịch</strong>
+                </Typography>
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18'
+                  }}
+                >
+                  {/* {resDate} */}
+                  Rút tiền khỏi ví
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  p: 1,
+                  justifyContent: 'space-between'
+                }}
+              >
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18',
+                    marginBottom: '0.2rem'
+                  }}
+                >
+                  <strong>Tên người nhận</strong>
+                </Typography>
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18'
+                  }}
+                >
+                  {accountNameResponse}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  p: 1,
+                  justifyContent: 'space-between'
+                }}
+              >
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18',
+                    marginBottom: '0.2rem'
+                  }}
+                >
+                  <strong>Ngân hàng thụ hưởng</strong>
+                </Typography>
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18'
+                  }}
+                >
+                  {bankNameResponse}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  p: 1,
+                  justifyContent: 'space-between'
+                }}
+              >
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18',
+                    marginBottom: '0.2rem'
+                  }}
+                >
+                  <strong>Tài khoản người nhận</strong>
+                </Typography>
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18'
+                  }}
+                >
+                  {bankAccountResponse}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  p: 1,
+
+                  justifyContent: 'space-between'
+                }}
+              >
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18',
+
+                    marginBottom: '0.2rem'
+                  }}
+                >
+                  <strong>Mã yêu cầu</strong>
+                </Typography>
+
+                <Typography
+                  paragraph
+                  sx={{
+                    color: '#251E18'
+                  }}
+                >
+                  <Stack direction="row" alignItems="center">
+                    <MIconButton
+                      color="inherit"
+                      onClick={onToggleShowIDPayment}
+                      sx={{ opacity: 0.48 }}
+                    >
+                      <Icon icon={showIDPayment ? eyeFill : eyeOffFill} />
+                    </MIconButton>
+                    <Typography sx={{ typography: 'body2' }}>
+                      {showIDPayment ? '********' : IDResponse}
+                    </Typography>
+                  </Stack>
+                </Typography>
+              </Box>
+            </Container>
+          </Stack>
+          <Box>
+            <Button
+              fullWidth
+              color="error"
+              variant="contained"
+              onClick={() => setOpenModalWithdrawRequestSuccess(false)}
+            >
+              Đóng
+            </Button>
+          </Box>
+          <Box p={3}>
+            <Typography variant="body2">
+              Nếu có bất kỳ thắc mắc nào liên quan đến yêu cầu này, xin vui lòng liên lạc với bộ
+              phận hỗ trợ của Krowd tại <span style={{ color: '#14b7cc' }}>19007777</span>
+            </Typography>
+          </Box>
+        </DialogContent>
+      </Dialog>
     </RootStyleContainer>
   );
 }

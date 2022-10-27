@@ -54,11 +54,15 @@ async function getsDailyReport(id: string, pageIndex: number) {
   );
   return response;
 }
-async function getsWalletTransaction({ id }: { id: string }) {
+async function getsWalletTransaction(id: string, pageIndex: number) {
   const headers = getHeader();
-  const response = await axios.get(REACT_APP_API_URL + `${API_WALLET_TRANSACTION}?walletId=${id}`, {
-    headers: headers
-  });
+  const response = await axios.get(
+    REACT_APP_API_URL +
+      `${API_WALLET_TRANSACTION}?walletId=${id}&pageIndex=${pageIndex}&pageSize=5`,
+    {
+      headers: headers
+    }
+  );
   return response;
 }
 async function getsPayment() {

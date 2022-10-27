@@ -3,7 +3,7 @@ import { dispatch, RootState, useSelector } from '../../redux/store';
 import { DATA_TYPE, KrowdTable, RowData } from './krowd-table/KrowdTable';
 import { getWalletTransactionList } from 'redux/slices/krowd_slices/transaction';
 import { BlogPostsSearch } from 'components/_dashboard/project';
-import { Grid, List, ListItemButton, ListItemText } from '@mui/material';
+import { Box, Button, Grid, List, ListItemButton, ListItemText } from '@mui/material';
 import { getWalletList } from 'redux/slices/krowd_slices/wallet';
 const TABLE_HEAD = [
   { id: 'idx', label: 'STT', align: 'center' },
@@ -21,16 +21,31 @@ export default function WalletTransactionTable() {
   const { isLoading, walletTransactionList: list } = walletTransactionState;
   const [selectedFilter, setSelectFilter] = useState('');
   const [walletID, setWalletID] = useState('');
+  const [pageIndex, setPageIndex] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
+  const [pageSize1, setPageSize1] = useState(1);
 
   const { walletList } = useSelector((state: RootState) => state.walletKrowd);
   const { listOfInvestorWallet } = walletList;
   useEffect(() => {
-    dispatch(getWalletTransactionList(''));
+    dispatch(getWalletTransactionList('', pageIndex ?? '1'));
     dispatch(getWalletList());
   }, [dispatch]);
   const addToSelectedFilterList = async (newValue: string) => {
     setSelectFilter(newValue);
-    await dispatch(getWalletTransactionList(newValue));
+    await dispatch(getWalletTransactionList(newValue, pageIndex ?? '1'));
+  };
+  const handlePre = () => {
+    setPageIndex(pageIndex - 1);
+    setPageSize(pageSize - 5);
+    setPageSize1(pageSize1 - 5);
+    dispatch(getWalletTransactionList(selectedFilter ?? '', pageIndex ?? '1'));
+  };
+  const handleNext = () => {
+    setPageIndex(pageIndex + 1);
+    setPageSize1(pageSize1 + 5);
+    setPageSize(pageSize + 5);
+    dispatch(getWalletTransactionList(selectedFilter ?? '', pageIndex ?? '1'));
   };
   const getData = (): RowData[] => {
     if (!list) return [];
@@ -122,6 +137,24 @@ export default function WalletTransactionTable() {
         isLoading={isLoading}
         // viewPath={PATH_DASHBOARD.business.details}
       />
+      <Box sx={{ my: 5 }} display={'flex'} justifyContent={'flex-end'} alignItems={'center'}>
+        {pageSize1} {'-'}
+        {pageSize}
+        {pageIndex > 1 ? (
+          <Button onClick={handlePre}>Trước</Button>
+        ) : (
+          <Button disabled onClick={handlePre}>
+            Trước
+          </Button>
+        )}
+        {pageSize ? (
+          <Button onClick={handleNext}>Sau</Button>
+        ) : (
+          <Button disabled onClick={handleNext}>
+            Sau
+          </Button>
+        )}
+      </Box>
     </>
   );
 }

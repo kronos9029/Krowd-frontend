@@ -41,12 +41,12 @@ const SidebarProjectConfig = [
         title: 'Doanh thu hằng ngày',
         path: PATH_DASHBOARD_PROJECT.project.reportRevenue,
         icon: ICONS.daily
-      },
-      {
-        title: 'Tình hình thường kì',
-        path: PATH_DASHBOARD_PROJECT.project.reportUpdate,
-        icon: ICONS.term
       }
+      // {
+      //   title: 'Tình hình thường kì',
+      //   path: PATH_DASHBOARD_PROJECT.project.reportUpdate,
+      //   icon: ICONS.term
+      // }
     ]
   },
   {
@@ -56,12 +56,12 @@ const SidebarProjectConfig = [
         title: 'Ví đầu tư dự án',
         path: PATH_DASHBOARD_PROJECT.wallet_project.walletP3,
         icon: ICONS.wallet
-      },
-      {
-        title: 'Ví thanh toán dự án',
-        path: PATH_DASHBOARD_PROJECT.wallet_project.walletP4,
-        icon: ICONS.walletTransaction
       }
+      // {
+      //   title: 'Ví thanh toán dự án',
+      //   path: PATH_DASHBOARD_PROJECT.wallet_project.walletP4,
+      //   icon: ICONS.walletTransaction
+      // }
     ]
   }
 ];

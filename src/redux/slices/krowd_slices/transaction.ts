@@ -265,11 +265,11 @@ export function getWithdrawRequestTransactionList(id: string) {
 }
 //---------------------------- GET WALLET TRANSACTION------------------------------
 
-export function getWalletTransactionList(ID: string) {
+export function getWalletTransactionList(id: string, pageIndex: number) {
   return async () => {
     dispatch(slice.actions.startLoadingWalletTransactionList());
     try {
-      const response = await TransactionAPI.getsWalletTransaction({ id: ID });
+      const response = await TransactionAPI.getsWalletTransaction(id, pageIndex);
       dispatch(slice.actions.getWalletTransactionListSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasGetWalletTransactionError(error));
