@@ -9,6 +9,8 @@ import question from '@iconify/icons-bi/question-circle';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 // ----------------------------------------------------------------------
+import moneyBillTransfer from '@iconify/icons-fa6-solid/money-bill-transfer';
+
 import check2Fill from '@iconify/icons-eva/checkmark-circle-2-fill';
 import { MIconButton } from 'components/@material-extend';
 import { styled } from '@mui/material/styles';
@@ -37,7 +39,7 @@ import { fCurrency } from '../../../utils/formatNumber';
 //
 import { dispatch, RootState, useSelector } from 'redux/store';
 import { Wallet } from '../../../@types/krowd/wallet';
-import { getWalletByID } from 'redux/slices/krowd_slices/wallet';
+import { getWalletByID, getWalletList } from 'redux/slices/krowd_slices/wallet';
 import { animate, motion } from 'framer-motion';
 import React, { useState } from 'react';
 import walletDetails from '@iconify/icons-ant-design/wallet-outlined';
@@ -50,6 +52,7 @@ import { LoadingButton } from '@mui/lab';
 import axios from 'axios';
 import { REACT_APP_API_URL } from 'config';
 import { useSnackbar } from 'notistack';
+import { PATH_DASHBOARD } from 'routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -98,6 +101,13 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
   const [openModalWithdrawRequestSuccess, setOpenModalWithdrawRequestSuccess] = useState(false);
   const [showIDPayment, setShowIDPayment] = useState(true);
 
+  const [walletIDTranferFrom, setWalletIDTranferFrom] = useState('');
+  const [openModalTransfer, setOpenModalTransfer] = useState(false);
+
+  const ToWalletId = listOfInvestorWallet
+    .slice(1, 2)
+    .find((e: any) => e.walletType.name === 'Ví đầu tư chung');
+
   const handleClickRefeshBalance = async (v: Package) => {
     dispatch(getWalletByID(v.id));
     dispatch(getUserKrowdDetail(user?.id));
@@ -126,54 +136,69 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
       setFieldValueWithDraw('accountName', '');
     }
   };
-
+  const handleClickTranferMoney = async (v: Package) => {
+    dispatch(getWalletByID(v.id));
+    setWalletIDTranferFrom(v.id);
+    setOpenModalTransfer(true);
+  };
   function getToken() {
     return window.localStorage.getItem('accessToken');
   }
   function getHeaderFormData() {
     const token = getToken();
-    return { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` };
+    return { Authorization: `Bearer ${token}` };
   }
   function getHeaderFormData2() {
     const token = getToken();
     return { Authorization: `Bearer ${token}` };
   }
-  // const formik = useFormik({
-  //   initialValues: {
-  //     bankName: mainInvestor?.bankName ?? '',
-  //     bankAccount: mainInvestor?.bankAccount ?? '',
-  //     userName: '',
-  //     amount: 0
-  //   },
-  //   onSubmit: async (values, { setSubmitting, resetForm }) => {
-  //     try {
-  //       const formData = new FormData();
-  //       const header = getHeaderFormData();
-  //       formData.append('amount', `${values.amount}`);
-  //       await axios({
-  //         method: 'post',
-  //         url: REACT_APP_API_URL + '/momo/request',
-  //         data: formData,
-  //         headers: header
-  //       })
-  //         .then((res) => {
-  //           window.location.replace(res.data.result.payUrl);
-  //         })
-  //         .catch(() => {
-  //           enqueueSnackbar('Cập nhật số dư thất bại', {
-  //             variant: 'error'
-  //           });
-  //         })
-  //         .finally(() => {});
-  //     } catch (error) {
-  //       setSubmitting(false);
-  //     }
-  //   }
-  // });
+  // CHuyển tiền
+  const formikTranfer = useFormik({
+    initialValues: {
+      fromWalletId: walletIDTranferFrom,
+      toWalletId: ToWalletId?.id ?? '',
+      amount: 0
+    },
+    enableReinitialize: true,
 
-  // const { errors, values, touched, isSubmitting, handleSubmit, getFieldProps, setFieldValue } =
-  //   formik;
+    onSubmit: async (values, { setSubmitting, resetForm }) => {
+      try {
+        const headers = getHeaderFormData();
+        await axios
+          .put(REACT_APP_API_URL + `/wallets`, values, {
+            headers: headers
+          })
+          .then((res) => {
+            enqueueSnackbar('Chuyển tiền thành công', {
+              variant: 'success'
+            });
+            resetForm();
+            setOpenModalTransfer(false);
+            dispatch(getWalletList());
+          })
+          .catch(() => {
+            enqueueSnackbar('Chuyển tiền thất bại vui lòng kiểm tra lại số dư của bạn', {
+              variant: 'error'
+            });
+          })
+          .finally(() => {
+            setSubmitting(true);
+          });
+      } catch (error) {
+        setSubmitting(false);
+      }
+    }
+  });
 
+  const {
+    errors: errorsTranfer,
+    values: valuesTranfer,
+    touched: touchedTranfer,
+    isSubmitting: isSubmittingTranfer,
+    handleSubmit: handleSubmitTranfer,
+    getFieldProps: getFieldPropsTranfer,
+    setFieldValue: setFieldValueTranfer
+  } = formikTranfer;
   //Rút tiền
   const formikWithDraw = useFormik({
     initialValues: {
@@ -230,8 +255,6 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
     setFieldValue: setFieldValueWithDraw
   } = formikWithDraw;
 
-  console.log('walletIDWithDraw', walletIDWithDraw);
-  console.log(formikWithDraw);
   return (
     <RootStyleContainer initial="initial" animate="animate" variants={varWrapEnter}>
       {listOfInvestorWallet &&
@@ -257,7 +280,8 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                     sx={{
                       display: 'flex',
                       border: '1px solid white',
-                      color: 'white'
+                      color: 'white',
+                      mb: 1
                     }}
                     onClick={() => handleClickRefeshBalance(e)}
                   >
@@ -386,7 +410,10 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                             </Box>
                           </Card>
                           <Box my={2} p={2}>
-                            <Typography>Chưa cập nhật</Typography>
+                            <Typography></Typography>
+                            <Button href={PATH_DASHBOARD.transaction.walletTransaction}>
+                              Xem lịch sử giao dịch ví{' '}
+                            </Button>
                           </Box>
                         </Container>
                       </Stack>
@@ -407,9 +434,116 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                   <Grid sx={{ display: 'flex', gap: 1 }}>
                     <Button
                       sx={{ mt: 1, display: 'flex', border: '1px solid white', color: 'white' }}
+                      onClick={() => handleClickTranferMoney(e)}
                     >
                       + Chuyển tiền
                     </Button>
+                    <Dialog fullWidth maxWidth="sm" open={openModalTransfer}>
+                      <DialogTitle sx={{ alignItems: 'center', textAlign: 'center' }}>
+                        <Box mt={1} display={'flex'} justifyContent={'flex-end'}>
+                          <Box>
+                            <Button
+                              variant="contained"
+                              color="error"
+                              onClick={() => setOpenModalTransfer(false)}
+                            >
+                              X
+                            </Button>
+                          </Box>
+                        </Box>
+                        <Icon color="#14b7cc" height={60} width={60} icon={moneyBillTransfer} />
+                        <Box mt={1}>
+                          <DialogContentText
+                            sx={{
+                              textAlign: 'center',
+                              fontWeight: 900,
+                              fontSize: 20,
+                              color: 'black'
+                            }}
+                          >
+                            Tạo lệnh chuyển tiền
+                          </DialogContentText>
+                        </Box>
+                      </DialogTitle>
+                      <DialogContent>
+                        <Typography>
+                          Số dư ví: <strong>{fCurrency(e.balance)}</strong>
+                        </Typography>
+                        <FormikProvider value={formikTranfer}>
+                          <Form noValidate autoComplete="off" onSubmit={handleSubmitTranfer}>
+                            <Tooltip title="Giao dịch tối thiểu là 100,000đ" placement="bottom-end">
+                              <TextField
+                                fullWidth
+                                label="Số tiền VND"
+                                {...getFieldPropsTranfer('amount')}
+                                sx={{ my: 2 }}
+                                InputProps={{
+                                  endAdornment: <Icon color="#ff9b26e0" icon={question} />
+                                }}
+                              />
+                            </Tooltip>
+
+                            <Box sx={{ color: '#d58311' }}>
+                              <Typography sx={{ my: 1, fontWeight: 500 }}>Lưu ý:</Typography>
+
+                              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                                <Box>
+                                  <Icon color="#d58311" width={20} height={20} icon={InfoRecieve} />
+                                </Box>
+                                <Box>
+                                  <Typography sx={{ textAlign: 'left', ml: 1 }}>
+                                    Số tiền trong ví thu tiền của bạn sẽ được chuyển vào ví đầu tư
+                                    chung.
+                                  </Typography>
+                                </Box>
+                              </Box>
+                              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                                <Box>
+                                  <Icon color="#d58311" width={20} height={20} icon={dolarMoney} />
+                                </Box>
+                                <Box>
+                                  <Typography sx={{ textAlign: 'left', ml: 1 }}>
+                                    Số tiền bạn chuyển không vượt quá số dư trong ví hiện tại.
+                                  </Typography>
+                                </Box>
+                              </Box>
+                              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                                <Box>
+                                  <Icon color="#d58311" width={20} height={20} icon={secureInfo} />
+                                </Box>
+                                <Box>
+                                  <Typography sx={{ textAlign: 'left', ml: 1 }}>
+                                    Bạn cần giao dịch chuyển tiền tối thiểu là 100,000đ
+                                  </Typography>
+                                </Box>
+                              </Box>
+                            </Box>
+                            {e.balance > 0 ? (
+                              <LoadingButton
+                                fullWidth
+                                type="submit"
+                                variant="contained"
+                                size="large"
+                                loading={isSubmittingTranfer}
+                              >
+                                Chuyển tiền
+                              </LoadingButton>
+                            ) : (
+                              <LoadingButton
+                                disabled
+                                fullWidth
+                                type="submit"
+                                variant="contained"
+                                size="large"
+                                loading={isSubmittingTranfer}
+                              >
+                                Chuyển tiền
+                              </LoadingButton>
+                            )}
+                          </Form>
+                        </FormikProvider>
+                      </DialogContent>
+                    </Dialog>
                     <Button
                       sx={{ mt: 1, display: 'flex', border: '1px solid white', color: 'white' }}
                       onClick={() => handleClickWithDraw(e)}

@@ -63,7 +63,7 @@ export default function ProjectReportRevenue() {
           {
             name: 'updateBy',
             value:
-              (_item.updateBy === 'Client' && 'Client') ||
+              (_item.updateBy === 'Client' && 'Đã cập nhật') ||
               (_item.updateBy === null && 'Chưa cập nhật') ||
               (_item.updateBy === 'WAITING_TO_ACTIVATE' && 'Đang chờ hoạt động') ||
               (_item.updateBy === 'CALLING_TIME_IS_OVER' && 'Đã quá hạn đầu tư') ||

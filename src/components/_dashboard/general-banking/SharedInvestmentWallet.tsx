@@ -409,7 +409,7 @@ export default function SharedInvestmentWallet({ wallet }: { wallet: Wallet }) {
                   </Dialog>
                 </Grid>
               </Grid>
-              <Grid container>
+              <Grid container alignItems={'center'}>
                 <Grid lg={8}>
                   <Typography>
                     <TextAnimate

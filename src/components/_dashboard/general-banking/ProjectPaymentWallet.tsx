@@ -1,9 +1,6 @@
-import { merge } from 'lodash';
-import ReactApexChart from 'react-apexcharts';
 import { Icon } from '@iconify/react';
-import trendingUpFill from '@iconify/icons-eva/trending-up-fill';
-import trendingDownFill from '@iconify/icons-eva/trending-down-fill';
-import diagonalArrowLeftDownFill from '@iconify/icons-eva/diagonal-arrow-left-down-fill';
+import question from '@iconify/icons-bi/question-circle';
+
 // material
 import { styled } from '@mui/material/styles';
 import {
@@ -18,12 +15,13 @@ import {
   Container,
   Box,
   Button,
-  Grid
+  Grid,
+  Tooltip,
+  TextField
 } from '@mui/material';
 // utils
 import { fCurrency, fPercent } from '../../../utils/formatNumber';
 //
-import BaseOptionChart from '../../charts/BaseOptionChart';
 import { useEffect, useState } from 'react';
 import { dispatch, RootState, useSelector } from 'redux/store';
 import { Wallet } from '../../../@types/krowd/wallet';
@@ -31,7 +29,15 @@ import { getWalletByID, getWalletList } from 'redux/slices/krowd_slices/wallet';
 import { motion } from 'framer-motion';
 import { TextAnimate, varBounceInUp, varWrapEnter } from 'components/animate';
 import walletDetails from '@iconify/icons-ant-design/wallet-outlined';
-
+import moneyBillTransfer from '@iconify/icons-fa6-solid/money-bill-transfer';
+import { Form, FormikProvider, useFormik } from 'formik';
+import axios from 'axios';
+import { REACT_APP_API_URL } from 'config';
+import { useSnackbar } from 'notistack';
+import { LoadingButton } from '@mui/lab';
+import dolarMoney from '@iconify/icons-ant-design/dollar-circle-outlined';
+import InfoRecieve from '@iconify/icons-ant-design/solution-outline';
+import secureInfo from '@iconify/icons-ant-design/security-scan-outlined';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Card)(({ theme }) => ({
@@ -63,45 +69,87 @@ export default function ProjectPaymentWallet({ wallet }: { wallet: Wallet }) {
   const { investorKrowdDetail: mainInvestor } = useSelector(
     (state: RootState) => state.user_InvestorStateKrowd
   );
+  const { enqueueSnackbar } = useSnackbar();
+
   const [openModalShareInvest, setOpenModalShareInvest] = useState(false);
+  const [openModalTransfer, setOpenModalTransfer] = useState(false);
   const { isLoading, walletList } = useSelector((state: RootState) => state.walletKrowd);
   const { listOfInvestorWallet } = walletList;
+  const [walletIDTranferFrom, setWalletIDTranferFrom] = useState('');
+
+  const ToWalletId = listOfInvestorWallet
+    .slice(4, 5)
+    .find((e: any) => e.walletType.name === 'Ví thu tiền');
+
   const handleClickRefeshBalance = async (v: Package) => {
     dispatch(getWalletByID(v.id));
     setOpenModalShareInvest(true);
   };
-  const chartOptions = merge(BaseOptionChart(), {
-    chart: { sparkline: { enabled: true } },
-    xaxis: { labels: { show: false } },
-    yaxis: { labels: { show: false } },
-    stroke: { width: 4 },
-    legend: { show: false },
-    grid: { show: false },
-    tooltip: {
-      marker: { show: false },
-      y: {
-        formatter: (seriesName: string) => fCurrency(seriesName),
-        title: {
-          formatter: () => ''
-        }
-      }
+  const handleClickTranferMoney = async (v: Package) => {
+    dispatch(getWalletByID(v.id));
+    setWalletIDTranferFrom(v.id);
+    setOpenModalTransfer(true);
+  };
+  function getToken() {
+    return window.localStorage.getItem('accessToken');
+  }
+  function getHeaderFormData() {
+    const token = getToken();
+    return { Authorization: `Bearer ${token}` };
+  }
+
+  const formikTranfer = useFormik({
+    initialValues: {
+      fromWalletId: walletIDTranferFrom,
+      toWalletId: ToWalletId?.id ?? '',
+      amount: 0
     },
-    fill: { gradient: { opacityFrom: 0.56, opacityTo: 0.56 } }
+    enableReinitialize: true,
+
+    onSubmit: async (values, { setSubmitting, resetForm }) => {
+      try {
+        const headers = getHeaderFormData();
+        await axios
+          .put(REACT_APP_API_URL + `/wallets`, values, {
+            headers: headers
+          })
+          .then((res) => {
+            enqueueSnackbar('Chuyển tiền thành công', {
+              variant: 'success'
+            });
+            resetForm();
+            setOpenModalTransfer(false);
+            dispatch(getWalletList());
+          })
+          .catch(() => {
+            enqueueSnackbar('Chuyển tiền thất bại vui lòng kiểm tra lại số dư của bạn', {
+              variant: 'error'
+            });
+          })
+          .finally(() => {
+            setSubmitting(true);
+          });
+      } catch (error) {
+        setSubmitting(false);
+      }
+    }
   });
 
+  const {
+    errors: errorsTranfer,
+    values: valuesTranfer,
+    touched: touchedTranfer,
+    isSubmitting: isSubmittingTranfer,
+    handleSubmit: handleSubmitTranfer,
+    getFieldProps: getFieldPropsTranfer,
+    setFieldValue: setFieldValueTranfer
+  } = formikTranfer;
   return (
     <RootStyleContainer initial="initial" animate="animate" variants={varWrapEnter}>
-      {/* {walletList.listOfInvestorWallet
-        .filter((IS) => IS.type === 'I1')
-        .map((e, i) => { */}
       {listOfInvestorWallet &&
         listOfInvestorWallet.length > 0 &&
         listOfInvestorWallet.slice(3, 4).map((e, i) => (
           <RootStyle key={i}>
-            {/* <IconWrapperStyle>
-              <Icon icon={diagonalArrowLeftDownFill} width={24} height={24} />
-            </IconWrapperStyle> */}
-
             <Stack spacing={1} sx={{ p: 3 }}>
               <Grid container>
                 <Grid lg={6}>
@@ -272,11 +320,129 @@ export default function ProjectPaymentWallet({ wallet }: { wallet: Wallet }) {
                   </Dialog>
                 </Grid>
               </Grid>
-              <TextAnimate
-                text={fCurrency(e.balance)}
-                sx={{ typography: 'h3' }}
-                variants={varBounceInUp}
-              />
+              <Grid container alignItems={'flex-start'}>
+                <Grid lg={6}>
+                  <TextAnimate
+                    text={fCurrency(e.balance)}
+                    sx={{ typography: 'h3' }}
+                    variants={varBounceInUp}
+                  />
+                </Grid>
+                <Grid sx={{ display: 'flex', gap: 1 }}>
+                  <Button
+                    sx={{ mt: 1, display: 'flex', border: '1px solid white', color: 'white' }}
+                    onClick={() => handleClickTranferMoney(e)}
+                  >
+                    + Chuyển tiền
+                  </Button>
+                  <Dialog fullWidth maxWidth="sm" open={openModalTransfer}>
+                    <DialogTitle sx={{ alignItems: 'center', textAlign: 'center' }}>
+                      <Box mt={1} display={'flex'} justifyContent={'flex-end'}>
+                        <Box>
+                          <Button
+                            variant="contained"
+                            color="error"
+                            onClick={() => setOpenModalTransfer(false)}
+                          >
+                            X
+                          </Button>
+                        </Box>
+                      </Box>
+                      <Icon color="#14b7cc" height={60} width={60} icon={moneyBillTransfer} />
+                      <Box mt={1}>
+                        <DialogContentText
+                          sx={{
+                            textAlign: 'center',
+                            fontWeight: 900,
+                            fontSize: 20,
+                            color: 'black'
+                          }}
+                        >
+                          Tạo lệnh chuyển tiền
+                        </DialogContentText>
+                      </Box>
+                    </DialogTitle>
+                    <DialogContent>
+                      <Typography>
+                        Số dư ví: <strong>{fCurrency(e.balance)}</strong>
+                      </Typography>
+                      <FormikProvider value={formikTranfer}>
+                        <Form noValidate autoComplete="off" onSubmit={handleSubmitTranfer}>
+                          <Tooltip title="Giao dịch tối thiểu là 100,000đ" placement="bottom-end">
+                            <TextField
+                              fullWidth
+                              label="Số tiền VND"
+                              {...getFieldPropsTranfer('amount')}
+                              sx={{ my: 2 }}
+                              InputProps={{
+                                endAdornment: <Icon color="#ff9b26e0" icon={question} />
+                              }}
+                            />
+                          </Tooltip>
+
+                          <Box sx={{ color: '#d58311' }}>
+                            <Typography sx={{ my: 1, fontWeight: 500 }}>Lưu ý:</Typography>
+
+                            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                              <Box>
+                                <Icon color="#d58311" width={20} height={20} icon={InfoRecieve} />
+                              </Box>
+                              <Box>
+                                <Typography sx={{ textAlign: 'left', ml: 1 }}>
+                                  Số tiền trong ví dự án thanh toán của bạn sẽ được chuyển vào ví
+                                  thu tiền.
+                                </Typography>
+                              </Box>
+                            </Box>
+                            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                              <Box>
+                                <Icon color="#d58311" width={20} height={20} icon={dolarMoney} />
+                              </Box>
+                              <Box>
+                                <Typography sx={{ textAlign: 'left', ml: 1 }}>
+                                  Số tiền bạn chuyển không vượt quá số dư trong ví hiện tại.
+                                </Typography>
+                              </Box>
+                            </Box>
+                            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                              <Box>
+                                <Icon color="#d58311" width={20} height={20} icon={secureInfo} />
+                              </Box>
+                              <Box>
+                                <Typography sx={{ textAlign: 'left', ml: 1 }}>
+                                  Bạn cần giao dịch chuyển tiền tối thiểu là 100,000đ
+                                </Typography>
+                              </Box>
+                            </Box>
+                          </Box>
+                          {e.balance > 0 ? (
+                            <LoadingButton
+                              fullWidth
+                              type="submit"
+                              variant="contained"
+                              size="large"
+                              loading={isSubmittingTranfer}
+                            >
+                              Chuyển tiền
+                            </LoadingButton>
+                          ) : (
+                            <LoadingButton
+                              disabled
+                              fullWidth
+                              type="submit"
+                              variant="contained"
+                              size="large"
+                              loading={isSubmittingTranfer}
+                            >
+                              Chuyển tiền
+                            </LoadingButton>
+                          )}
+                        </Form>
+                      </FormikProvider>
+                    </DialogContent>
+                  </Dialog>
+                </Grid>
+              </Grid>
               <Stack direction="row" alignItems="center" flexWrap="wrap">
                 <Typography variant="body2" component="span" sx={{ opacity: 0.72 }}>
                   &nbsp;Chưa cập nhật

@@ -1,14 +1,11 @@
 import { useEffect } from 'react';
 import { dispatch, RootState, useSelector } from '../../redux/store';
-import { PATH_DASHBOARD, PATH_DASHBOARD_PROJECT, PATH_PAGE } from '../../routes/paths';
+import { PATH_DASHBOARD_PROJECT, PATH_PAGE } from '../../routes/paths';
 import { DATA_TYPE, KrowdTable, RowData } from './krowd-table/KrowdTable';
 import { getProjectListInvested } from '../../redux/slices/krowd_slices/project';
-import React from 'react';
-import { Box, Container, Typography } from '@mui/material';
-import { PROJECT_STATUS } from '../../@types/krowd/project';
 const TABLE_HEAD = [
   { id: 'idx', label: 'STT', align: 'center' },
-  { id: 'image', label: 'HÌNH ẢNH', align: '' },
+  { id: 'image', label: 'ẢNH', align: '' },
   { id: 'name', label: 'DỰ ÁN', align: 'left' },
   { id: 'investedAmount', label: 'BẠN ĐẦU TƯ', align: 'center' },
   { id: 'receivedAmount', label: 'SỐ TIỀN NHẬN ĐƯỢC', align: 'center' },
@@ -16,7 +13,7 @@ const TABLE_HEAD = [
   { id: 'multiplier', label: 'HỆ SỐ NHÂN', align: 'center' },
   { id: 'duration', label: 'SỐ KỲ', align: 'left' },
   { id: 'sharedRevenue', label: 'DOANH THU CHIA SẺ', align: 'left' },
-  { id: 'status', label: 'TRẠNG THÁI DỰ ÁN', align: 'left' },
+  { id: 'status', label: 'TRẠNG THÁI', align: 'left' },
   { id: '', label: 'Chi tiết', align: 'center' }
 ];
 

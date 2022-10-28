@@ -144,6 +144,7 @@
     "@babel/core": "^7.15.5",
     "@babel/eslint-parser": "^7.15.4",
     "@iconify/icons-bi": "^1.2.9",
+    "@iconify/icons-fa6-solid": "^1.2.7",
     "@iconify/react": "^4.0.0",
     "@types/autosuggest-highlight": "^3.1.1",
     "@types/d3-array": "^3.0.1",
