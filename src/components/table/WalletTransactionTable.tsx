@@ -66,16 +66,26 @@ export default function WalletTransactionTable() {
 
           {
             name: 'type',
-            value: _item.type === 'CASH_IN' ? 'Tiền vào' : 'Tiền ra',
+            value:
+              (_item.type === 'CASH_IN' && 'Tiền vào') ||
+              (_item.type === 'CASH_OUT' && 'Tiền ra') ||
+              (_item.type === 'DEPOSIT' && 'Nạp tiền') ||
+              (_item.type === 'WITHDRAW' && 'Rút tiền'),
             type: DATA_TYPE.TEXT,
-            textColor: _item.type === 'CASH_IN' ? 'green' : 'red'
+            textColor:
+              (_item.type === 'CASH_IN' && 'green') ||
+              (_item.type === 'CASH_OUT' && 'red') ||
+              (_item.type === 'DEPOSIT' && 'green') ||
+              (_item.type === 'WITHDRAW' ? 'red' : 'green')
           },
-
           {
             name: 'amount',
-            value: _item.type === 'CASH_IN' ? `+ ${_item.amount}` : `- ${_item.amount}`,
+            value:
+              _item.type === 'CASH_IN' || _item.type === 'DEPOSIT'
+                ? `+ ${_item.amount}`
+                : `- ${_item.amount}`,
             type: DATA_TYPE.NUMBER_FORMAT,
-            textColor: _item.type === 'CASH_IN' ? 'green' : 'red'
+            textColor: _item.type === 'CASH_IN' || _item.type === 'DEPOSIT' ? 'green' : 'red'
           },
           {
             name: 'fee',
@@ -85,21 +95,21 @@ export default function WalletTransactionTable() {
           {
             name: 'description',
             value:
-              (_item.description === 'Transfer money from I3 to P3 to prepare for activation' &&
-                'Chuyển tiền từ VÍ TẠM ỨNG của bạn sang VÍ ĐẦU TƯ DỰ ÁN của chủ dự án') ||
-              (_item.description === 'Transfer money from I2 to I3 to invest' &&
-                'Chuyển tiền từ VÍ ĐẦU TƯ CHUNG sang VÍ TẠM ỨNG') ||
-              (_item.description === 'Receive money from I2 to I3 to invest' &&
-                'Nhận tiền từ VÍ ĐẦU TƯ CHUNG sang VÍ TẠM ỨNG') ||
-              (_item.description === 'Receive money from I1 to I2' &&
-                'Nhận tiền từ VÍ TẠM THỜI sang VÍ ĐẦU TƯ CHUNG') ||
-              (_item.description === 'Transfer money from I2 to I1' &&
-                'Chuyển tiền từ VÍ TẠM THỜI sang VÍ ĐẦU TƯ CHUNG') ||
+              (_item.description === 'Deposit money into I1 wallet' &&
+                'Nạp tiền vào VÍ TẠM THỜI của bạn') ||
+              (_item.description === 'Transfer money from I1 wallet to I2 wallet' &&
+                'Chuyển tiền từ VÍ TẠM THỜI sang VÍ ĐẦU TƯ CHUNG của bạn') ||
+              (_item.description === 'Receive money from I1 wallet to I2 wallet' &&
+                'Nhận tiền từ VÍ TẠM THỜI sang VÍ ĐẦU TƯ CHUNG của bạn') ||
+              (_item.description === 'Transfer money from I4 wallet to I5 wallet' &&
+                'Chuyển tiền từ VÍ DỰ ÁN THANH TOÁN sang VÍ THU TIỀN của bạn') ||
+              (_item.description === 'Transfer money from I5 wallet to I2 wallet' &&
+                'Chuyển tiền từ VÍ THU TIỀN sang VÍ ĐẦU TƯ CHUNG của bạn') ||
               (_item.description === 'Withdraw money out of I1 wallet' &&
                 'Rút tiền từ VÍ TẠM THỜI') ||
-              (_item.description === 'Receive money from I3 to P3 to for stage payment' &&
-                'Nhận tiền từ VÍ TẠM ỨNG của bạn sang VÍ ĐẦU TƯ DỰ ÁN') ||
-              (_item.description === 'Deposit money into I1 wallet' && 'Nạp tiền vào VÍ TẠM THỜI'),
+              (_item.description ===
+                'Transfer money from I3 wallet to P3 wallet to for stage payment' &&
+                'Chuyển tiền từ VÍ TẠM ỨNG của bạn sang VÍ ĐẦU TƯ DỰ ÁN'),
             type: DATA_TYPE.TEXT
           },
           {

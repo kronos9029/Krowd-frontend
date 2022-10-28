@@ -135,7 +135,11 @@ function ProjectCard({ row }: { row: ALL_Project }) {
                   <Typography
                     sx={{
                       color: 'text.primary',
+                      textOverflow: 'ellipsis',
                       overflow: 'hidden',
+                      display: '-webkit-box',
+                      WebkitBoxOrient: 'vertical',
+                      WebkitLineClamp: 1,
                       paddingTop: '1.8rem'
                     }}
                     variant="subtitle1"
@@ -165,6 +169,11 @@ function ProjectCard({ row }: { row: ALL_Project }) {
                         variant="subtitle2"
                         sx={{
                           color: 'text.disabled',
+                          textOverflow: 'ellipsis',
+                          overflow: 'hidden',
+                          display: '-webkit-box',
+                          WebkitBoxOrient: 'vertical',
+                          WebkitLineClamp: 1,
                           marginBottom: '0.3rem'
                         }}
                       >

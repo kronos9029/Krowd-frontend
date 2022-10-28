@@ -673,7 +673,7 @@ export default function KrowdPackage() {
                                 </Box>
                               </Container>
                             </Stack>
-                            <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
+                            <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }} gap={1}>
                               <Box>
                                 <Button
                                   color="error"
@@ -967,7 +967,7 @@ export default function KrowdPackage() {
                                   {e.name}
                                 </Typography>
                               </Grid>
-                              <Grid>
+                              {/* <Grid>
                                 <Typography
                                   variant="body1"
                                   sx={{
@@ -977,6 +977,30 @@ export default function KrowdPackage() {
                                 >
                                   {e.remainingQuantity} / {e.quantity}
                                 </Typography>
+                              </Grid> */}
+                              <Grid>
+                                {e.remainingQuantity > 0 && e.status === 'IN_STOCK' ? (
+                                  <Typography
+                                    variant="body1"
+                                    sx={{
+                                      color: 'primary.main',
+                                      justifyContent: 'right'
+                                    }}
+                                  >
+                                    {e.remainingQuantity} / {e.quantity}
+                                  </Typography>
+                                ) : (
+                                  <Typography
+                                    variant="body1"
+                                    sx={{
+                                      color: 'red',
+                                      justifyContent: 'center',
+                                      display: 'flex'
+                                    }}
+                                  >
+                                    Gói đã được đầu tư hết
+                                  </Typography>
+                                )}
                               </Grid>
                             </Grid>
                             <Box sx={{ display: 'flex', justifyContent: 'left' }}>
@@ -1016,19 +1040,21 @@ export default function KrowdPackage() {
                               ))}
                             </Stack>
                             <Typography sx={{ textAlign: 'end' }}>
-                              <Button
-                                variant="contained"
-                                fullWidth
-                                onClick={() => handleClickOpenPackage2(e)}
-                                sx={{
-                                  backgroundColor: '#FF7F50',
-                                  textDecoration: 'none',
-                                  mb: 2,
-                                  '&:hover': { backgroundColor: '#FF7F50' }
-                                }}
-                              >
-                                Chọn gói
-                              </Button>
+                              {e.status === 'IN_STOCK' && e.remainingQuantity > 0 && (
+                                <Button
+                                  variant="contained"
+                                  fullWidth
+                                  onClick={() => handleClickOpenPackage2(e)}
+                                  sx={{
+                                    backgroundColor: '#FF7F50',
+                                    textDecoration: 'none',
+                                    mb: 2,
+                                    '&:hover': { backgroundColor: '#FF7F50' }
+                                  }}
+                                >
+                                  Chọn gói
+                                </Button>
+                              )}
                             </Typography>
 
                             <Divider variant="fullWidth" />

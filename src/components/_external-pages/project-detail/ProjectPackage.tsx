@@ -99,12 +99,11 @@ export default function ProjectPackage({ project }: { project: Project1 }) {
                     </Typography>
                   </Box>
 
-                  {e.remainingQuantity > 0 ? (
+                  {e.remainingQuantity > 0 && e.status === 'IN_STOCK' ? (
                     <Typography
                       variant="body1"
                       sx={{
                         color: 'primary.main',
-                        textTransform: 'capitalize',
                         justifyContent: 'center',
                         display: 'flex'
                       }}
@@ -116,12 +115,11 @@ export default function ProjectPackage({ project }: { project: Project1 }) {
                       variant="body1"
                       sx={{
                         color: 'red',
-                        textTransform: 'capitalize',
                         justifyContent: 'center',
                         display: 'flex'
                       }}
                     >
-                      Gói đã được đầu tư hết {e.remainingQuantity} / {e.quantity}
+                      Gói đã được đầu tư hết
                     </Typography>
                   )}
                   <Typography sx={{ my: 2, fontWeight: 600 }}>Bạn sẽ nhận được:</Typography>
@@ -151,14 +149,11 @@ export default function ProjectPackage({ project }: { project: Project1 }) {
 
                   <Link
                     style={{ textDecoration: 'none' }}
-                    // onClick={() => {
-                    //   dispatch(getPackageBYID(e.id));
-                    // }}
                     href={`${PATH_PAGE.checkout}/${project?.id}`}
                     onClick={() => handleGetPackageInvestByID(e)}
                   >
                     <Typography sx={{ textAlign: 'end' }}>
-                      {e.remainingQuantity > 0 && (
+                      {e.remainingQuantity > 0 && e?.status === 'IN_STOCK' && (
                         <Button
                           sx={{
                             backgroundColor: '#FF7F50',
