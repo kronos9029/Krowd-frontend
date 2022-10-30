@@ -18,7 +18,11 @@ const TABLE_HEAD = [
 export default function WalletTransactionTable() {
   const { investorKrowdDetail } = useSelector((state: RootState) => state.user_InvestorStateKrowd);
   const { walletTransactionState } = useSelector((state: RootState) => state.transactionKrowd);
-  const { isLoading, walletTransactionList: list } = walletTransactionState;
+  const {
+    isLoading,
+    listOfWalletTransaction: list,
+    numOfWalletTransaction
+  } = walletTransactionState;
   const [selectedFilter, setSelectFilter] = useState('');
   const [walletID, setWalletID] = useState('');
   const [pageIndex, setPageIndex] = useState(1);
@@ -108,6 +112,16 @@ export default function WalletTransactionTable() {
               (_item.description === 'Withdraw money out of I1 wallet' &&
                 'Rút tiền từ VÍ TẠM THỜI') ||
               (_item.description ===
+                'Transfer money from I3 wallet to P3 wallet to prepare for activation' &&
+                'Chuyển tiền từ VÍ TẠM ỨNG của bạn sang VÍ ĐẦU TƯ DỰ ÁN') ||
+              (_item.description === 'Receive money from I2 wallet to I3 wallet to invest' &&
+                'Nhận tiền đầu tư từ VÍ ĐẦU TƯ CHUNG của bạn sang VÍ TẠM ỨNG của bạn') ||
+              (_item.description === 'Transfer money from I2 wallet to I3 wallet to invest' &&
+                'Chuyển tiền đầu tư từ VÍ ĐẦU TƯ CHUNG của bạn sang VÍ TẠM ỨNG') ||
+              (_item.description ===
+                'Recieve money from I3 wallet to P3 wallet to prepare for activation' &&
+                'Nhận tiền từ VÍ TẠM ỨNG của bạn sang VÍ ĐẦU TƯ DỰ ÁN') ||
+              (_item.description ===
                 'Transfer money from I3 wallet to P3 wallet to for stage payment' &&
                 'Chuyển tiền từ VÍ TẠM ỨNG của bạn sang VÍ ĐẦU TƯ DỰ ÁN'),
             type: DATA_TYPE.TEXT
@@ -153,7 +167,7 @@ export default function WalletTransactionTable() {
       />
       <Box sx={{ my: 5 }} display={'flex'} justifyContent={'flex-end'} alignItems={'center'}>
         {pageSize1} {'-'}
-        {pageSize}
+        {pageSize} trên {numOfWalletTransaction}
         {pageIndex > 1 ? (
           <Button onClick={handlePre}>Trước</Button>
         ) : (
@@ -161,7 +175,7 @@ export default function WalletTransactionTable() {
             Trước
           </Button>
         )}
-        {pageSize ? (
+        {pageSize < numOfWalletTransaction ? (
           <Button onClick={handleNext}>Sau</Button>
         ) : (
           <Button disabled onClick={handleNext}>

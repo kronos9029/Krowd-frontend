@@ -14,7 +14,7 @@ const TABLE_HEAD = [
 
 export default function AccounTransactionTable() {
   const { transactionState } = useSelector((state: RootState) => state.transactionKrowd);
-  const { isLoading, TransactionList: list } = transactionState;
+  const { isLoading, listOfAccountTransaction: list, numOfAccountTransaction } = transactionState;
   useEffect(() => {
     dispatch(getTransactionList());
   }, [dispatch]);

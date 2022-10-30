@@ -17,8 +17,8 @@ import { TransactionAPI } from '../../../_apis_/krowd_apis/transaction';
 type TransactionState = {
   transactionState: {
     isLoading: boolean;
-    TransactionList: Transaction[];
-
+    listOfAccountTransaction: Transaction[];
+    numOfAccountTransaction: number;
     error: boolean;
   };
   transactionWithdrawState: {
@@ -56,7 +56,8 @@ type TransactionState = {
   };
   walletTransactionState: {
     isLoading: boolean;
-    walletTransactionList: WalletTransaction[];
+    listOfWalletTransaction: WalletTransaction[];
+    numOfWalletTransaction: number;
     error: boolean;
   };
   paymentListState: {
@@ -81,8 +82,9 @@ type TransactionState = {
 const initialState: TransactionState = {
   transactionState: {
     isLoading: false,
-    TransactionList: [],
-    error: false
+    listOfAccountTransaction: [],
+    error: false,
+    numOfAccountTransaction: 0
   },
   transactionWithdrawState: {
     isLoading: false,
@@ -119,7 +121,8 @@ const initialState: TransactionState = {
   },
   walletTransactionState: {
     isLoading: false,
-    walletTransactionList: [],
+    listOfWalletTransaction: [],
+    numOfWalletTransaction: 0,
     error: false
   },
   paymentListState: {
@@ -154,7 +157,7 @@ const slice = createSlice({
     },
     getTransactionListSuccess(state, action) {
       state.transactionState.isLoading = false;
-      state.transactionState.TransactionList = action.payload;
+      state.transactionState = action.payload;
     },
     // ------ GET ALL WITHDRAW REQUEST TRANSACTION ------------ //
     startLoadingWithdrawTransactionList(state) {
@@ -202,7 +205,7 @@ const slice = createSlice({
     },
     getWalletTransactionListSuccess(state, action) {
       state.walletTransactionState.isLoading = false;
-      state.walletTransactionState.walletTransactionList = action.payload;
+      state.walletTransactionState = action.payload;
     },
     // ------ GET ALL PAYMETS ------------ //
     startLoadingPaymentList(state) {
