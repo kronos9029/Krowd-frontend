@@ -211,7 +211,7 @@ function ProjectDetailCard({ project: p }: ProjectDetailCardProps) {
             }}
             href={`${PATH_PAGE.checkout}/${p.id}`}
           >
-            {p.status === 'CALLING_FOR_INVESTMENT' && p.remainAmount > 0 && (
+            {p.status === 'CALLING_FOR_INVESTMENT' && (
               <Button
                 sx={{
                   backgroundColor: '#FF7F50',
