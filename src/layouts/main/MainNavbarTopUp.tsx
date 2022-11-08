@@ -220,7 +220,7 @@ export default function MainNavbarTopUp() {
                   <MenuItem component={Link} href={PATH_DASHBOARD.user.account}>
                     {t(`mainNavbar_menu_item.mainNavbar_menu_item_profile`)}
                   </MenuItem>
-                  <MenuItem component={Link} href={PATH_DASHBOARD.general.app}>
+                  <MenuItem component={Link} href={PATH_DASHBOARD.general.banking}>
                     {t(`mainNavbar_menu_item.mainNavbar_menu_item_console`)}
                   </MenuItem>
                   <MenuItem component={Link} href={PATH_PAGE.pageTopUp}>

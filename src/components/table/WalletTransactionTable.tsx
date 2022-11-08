@@ -24,33 +24,20 @@ export default function WalletTransactionTable() {
     numOfWalletTransaction
   } = walletTransactionState;
   const [selectedFilter, setSelectFilter] = useState('');
-  const [walletID, setWalletID] = useState('');
   const [pageIndex, setPageIndex] = useState(1);
   const [pageSize, setPageSize] = useState(5);
-  const [pageSize1, setPageSize1] = useState(1);
 
   const { walletList } = useSelector((state: RootState) => state.walletKrowd);
   const { listOfInvestorWallet } = walletList;
   useEffect(() => {
-    dispatch(getWalletTransactionList('', pageIndex ?? '1'));
+    dispatch(getWalletTransactionList('', pageIndex ?? '1', pageSize));
     dispatch(getWalletList());
-  }, [dispatch]);
+  }, [dispatch, pageIndex]);
   const addToSelectedFilterList = async (newValue: string) => {
     setSelectFilter(newValue);
-    await dispatch(getWalletTransactionList(newValue, pageIndex ?? '1'));
+    await dispatch(getWalletTransactionList(newValue, pageIndex ?? '1', pageSize));
   };
-  const handlePre = () => {
-    setPageIndex(pageIndex - 1);
-    setPageSize(pageSize - 5);
-    setPageSize1(pageSize1 - 5);
-    dispatch(getWalletTransactionList(selectedFilter ?? '', pageIndex ?? '1'));
-  };
-  const handleNext = () => {
-    setPageIndex(pageIndex + 1);
-    setPageSize1(pageSize1 + 5);
-    setPageSize(pageSize + 5);
-    dispatch(getWalletTransactionList(selectedFilter ?? '', pageIndex ?? '1'));
-  };
+
   const getData = (): RowData[] => {
     if (!list) return [];
     return list.map<RowData>((_item, _idx) => {
@@ -122,6 +109,9 @@ export default function WalletTransactionTable() {
                 'Recieve money from I3 wallet to P3 wallet to prepare for activation' &&
                 'Nhận tiền từ VÍ TẠM ỨNG của bạn sang VÍ ĐẦU TƯ DỰ ÁN') ||
               (_item.description ===
+                'Receive money from I3 wallet to P3 wallet for stage payment' &&
+                'Nhận tiền từ VÍ TẠM ỨNG của bạn sang VÍ ĐẦU TƯ DỰ ÁN cho giai đoạn') ||
+              (_item.description ===
                 'Transfer money from I3 wallet to P3 wallet to for stage payment' &&
                 'Chuyển tiền từ VÍ TẠM ỨNG của bạn sang VÍ ĐẦU TƯ DỰ ÁN'),
             type: DATA_TYPE.TEXT
@@ -164,25 +154,21 @@ export default function WalletTransactionTable() {
         getData={getData}
         isLoading={isLoading}
         // viewPath={PATH_DASHBOARD.business.details}
+        paging={{
+          pageIndex,
+          pageSize: pageSize,
+          numberSize: numOfWalletTransaction,
+
+          handleNext() {
+            setPageIndex(pageIndex + 1);
+            setPageSize(pageSize + 5);
+          },
+          handlePrevious() {
+            setPageIndex(pageIndex - 1);
+            setPageSize(pageSize - 5);
+          }
+        }}
       />
-      <Box sx={{ my: 5 }} display={'flex'} justifyContent={'flex-end'} alignItems={'center'}>
-        {pageSize1} {'-'}
-        {pageSize} trên {numOfWalletTransaction}
-        {pageIndex > 1 ? (
-          <Button onClick={handlePre}>Trước</Button>
-        ) : (
-          <Button disabled onClick={handlePre}>
-            Trước
-          </Button>
-        )}
-        {pageSize < numOfWalletTransaction ? (
-          <Button onClick={handleNext}>Sau</Button>
-        ) : (
-          <Button disabled onClick={handleNext}>
-            Sau
-          </Button>
-        )}
-      </Box>
     </>
   );
 }

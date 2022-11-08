@@ -1,15 +1,8 @@
-import { useEffect, useState } from 'react';
-import { dispatch, RootState, useSelector } from '../../redux/store';
-import { DATA_TYPE, KrowdTable, RowData } from './krowd-table/KrowdTable';
-import {
-  getAllPaymentList,
-  getAllPaymentListRevenue,
-  getPeriodRevenueReportList,
-  getWalletTransactionList
-} from 'redux/slices/krowd_slices/transaction';
-import { useParams } from 'react-router';
-import { Button, Grid } from '@mui/material';
-import { fCurrency } from 'utils/formatNumber';
+import React, { useEffect, useState } from 'react';
+import { dispatch, RootState, useSelector } from '../../../redux/store';
+import { DATA_TYPE, KrowdTable, RowData } from '../krowd-table/KrowdTable';
+import { fCurrency } from '../../../utils/formatNumber';
+import { getPeriodRevenueReportList } from '../../../redux/slices/krowd_slices/transaction';
 const TABLE_HEAD = [
   { id: 'idx', label: 'STT', align: 'center' },
   { id: 'periodRevenueId', label: 'MÃ DOANH THU', align: 'left' },
@@ -22,10 +15,11 @@ const TABLE_HEAD = [
 export default function PeriodRevenueHistoryTable() {
   const { periodRevenueState } = useSelector((state: RootState) => state.transactionKrowd);
   const { isLoading, PeriodRevenueList: list } = periodRevenueState;
-
+  const [pageIndex, setPageIndex] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
   useEffect(() => {
-    dispatch(getPeriodRevenueReportList());
-  }, [dispatch]);
+    dispatch(getPeriodRevenueReportList(pageIndex, pageSize));
+  }, [dispatch, pageIndex]);
 
   const getData = (): RowData[] => {
     if (!list) return [];
@@ -78,14 +72,26 @@ export default function PeriodRevenueHistoryTable() {
   };
 
   return (
-    <>
-      <KrowdTable
-        headingTitle="Lịch sử doanh thu giai đoạn"
-        header={TABLE_HEAD}
-        getData={getData}
-        isLoading={isLoading}
-        // viewPath={PATH_DASHBOARD.business.details}
-      />
-    </>
+    <KrowdTable
+      headingTitle="Lịch sử doanh thu giai đoạn"
+      header={TABLE_HEAD}
+      getData={getData}
+      isLoading={isLoading}
+      paging={{
+        pageIndex,
+        pageSize: pageSize,
+        numberSize: 10,
+
+        handleNext() {
+          setPageIndex(pageIndex + 1);
+          setPageSize(pageSize + 5);
+        },
+        handlePrevious() {
+          setPageIndex(pageIndex - 1);
+          setPageSize(pageSize - 5);
+        }
+      }}
+      // viewPath={PATH_DASHBOARD.business.details}
+    />
   );
 }

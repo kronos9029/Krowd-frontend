@@ -287,11 +287,14 @@ export default slice.reducer;
 
 //---------------------------- GET ALL TRANSACTION------------------------------
 
-export function getTransactionList() {
+export function getTransactionList(pageIndex: number, pageSize: number) {
   return async () => {
     dispatch(slice.actions.startLoadingTransactionList());
     try {
-      const response = await TransactionAPI.getsTransaction();
+      const response = await TransactionAPI.getsTransaction({
+        pageIndex: pageIndex,
+        pageSize: pageSize
+      });
       dispatch(slice.actions.getTransactionListSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasGetTransactionError(error));
@@ -300,11 +303,19 @@ export function getTransactionList() {
 }
 //---------------------------- GET ALL WITHDRAW REQUEST TRANSACTION------------------------------
 
-export function getWithdrawRequestTransactionList(id: string) {
+export function getWithdrawRequestTransactionList(
+  userId: string,
+  pageIndex: number,
+  pageSize: number
+) {
   return async () => {
     dispatch(slice.actions.startLoadingWithdrawTransactionList());
     try {
-      const response = await TransactionAPI.getsWithdrawTransaction(id);
+      const response = await TransactionAPI.getsWithdrawTransaction({
+        userId: userId,
+        pageIndex: pageIndex,
+        pageSize: pageSize
+      });
       dispatch(slice.actions.getWithdrawTransactionListSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasGetWithdrawTransactionError(error));
@@ -326,11 +337,14 @@ export function getWithdrawRequestTransactionById(id: string) {
 }
 // ------ GET ALL PERIOD REVENUE REPORT LIST ------------ //
 
-export function getPeriodRevenueReportList() {
+export function getPeriodRevenueReportList(pageIndex: number, pageSize: number) {
   return async () => {
     dispatch(slice.actions.startLoadingPeriodRevenueReportList());
     try {
-      const response = await TransactionAPI.getsPeriodRevenueHistory();
+      const response = await TransactionAPI.getsPeriodRevenueHistory({
+        pageIndex: pageIndex,
+        pageSize: pageSize
+      });
       dispatch(slice.actions.getPeriodRevenueReportSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasGetPeriodRevenueReportError(error));
@@ -339,11 +353,15 @@ export function getPeriodRevenueReportList() {
 }
 //---------------------------- GET WALLET TRANSACTION------------------------------
 
-export function getWalletTransactionList(id: string, pageIndex: number) {
+export function getWalletTransactionList(walletId: string, pageIndex: number, pageSize: number) {
   return async () => {
     dispatch(slice.actions.startLoadingWalletTransactionList());
     try {
-      const response = await TransactionAPI.getsWalletTransaction(id, pageIndex);
+      const response = await TransactionAPI.getsWalletTransaction({
+        walletId: walletId,
+        pageIndex: pageIndex,
+        pageSize: pageSize
+      });
       dispatch(slice.actions.getWalletTransactionListSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasGetWalletTransactionError(error));
@@ -352,11 +370,14 @@ export function getWalletTransactionList(id: string, pageIndex: number) {
 }
 //---------------------------- GET ALL PAYMENTS------------------------------
 
-export function getAllPaymentList() {
+export function getAllPaymentList(pageIndex: number, pageSize: number) {
   return async () => {
     dispatch(slice.actions.startLoadingPaymentList());
     try {
-      const response = await TransactionAPI.getsPayment();
+      const response = await TransactionAPI.getsPayment({
+        pageIndex: pageIndex,
+        pageSize: pageSize
+      });
       dispatch(slice.actions.getPaymentListSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasGetPaymentError(error));
@@ -365,11 +386,14 @@ export function getAllPaymentList() {
 }
 //---------------------------- GET ALL PAYMENTS------------------------------
 
-export function getAllPaymentListRevenue() {
+export function getAllPaymentListRevenue(pageIndex2: number, pageSize2: number) {
   return async () => {
     dispatch(slice.actions.startLoadingPeriodRevenueList());
     try {
-      const response = await TransactionAPI.getsPaymentRevenue();
+      const response = await TransactionAPI.getsPaymentRevenue({
+        pageIndex: pageIndex2,
+        pageSize: pageSize2
+      });
       dispatch(slice.actions.getPeriodRevenueListSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasGetPeriodRevenueError(error));
@@ -391,11 +415,11 @@ export function getInvestmentProjectID(projectId: string) {
 }
 //---------------------------- GET ALL DAILY REPORT------------------------------
 
-export function getDailyReportProjectID(projectId: string, pageIndex: number) {
+export function getDailyReportProjectID(projectId: string, pageIndex: number, pageSize: number) {
   return async () => {
     dispatch(slice.actions.startLoadingDailyReportList());
     try {
-      const response = await TransactionAPI.getsDailyReport(projectId, pageIndex);
+      const response = await TransactionAPI.getsDailyReport(projectId, pageIndex, pageSize);
       dispatch(slice.actions.getDailyReportSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasGetDailyReportError(error));

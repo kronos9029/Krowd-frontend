@@ -1,8 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { dispatch, RootState, useSelector } from '../../redux/store';
 import { PATH_DASHBOARD_PROJECT, PATH_PAGE } from '../../routes/paths';
-import { DATA_TYPE, KrowdTable, RowData } from './krowd-table/KrowdTable';
+import { ACTION_TYPE, DATA_TYPE, KrowdTable, RowData } from './krowd-table/KrowdTable';
 import { getProjectListInvested } from '../../redux/slices/krowd_slices/project';
+import eyeFill from '@iconify/icons-eva/eye-fill';
+
 const TABLE_HEAD = [
   { id: 'idx', label: 'STT', align: 'center' },
   { id: 'image', label: 'ẢNH', align: '' },
@@ -16,15 +18,25 @@ const TABLE_HEAD = [
   { id: 'status', label: 'TRẠNG THÁI', align: 'left' },
   { id: '', label: 'Chi tiết', align: 'center' }
 ];
-
+const action = [
+  {
+    nameAction: 'view',
+    action: PATH_DASHBOARD_PROJECT.project.root,
+    icon: eyeFill,
+    color: '#14b7cc',
+    type: ACTION_TYPE.LINK
+  }
+];
 export default function ProjectTable() {
   const { projectListInvested } = useSelector((state: RootState) => state.project);
-  const { isLoadingProjectListInvested, listOfProject: list } = projectListInvested;
-  useEffect(() => {
-    dispatch(getProjectListInvested());
-  }, [dispatch]);
+  const { isLoadingProjectListInvested, listOfProject: list, numOfProject } = projectListInvested;
 
-  console.log(list);
+  const [pageIndex, setPageIndex] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
+
+  useEffect(() => {
+    dispatch(getProjectListInvested(pageIndex, pageSize));
+  }, [dispatch, pageIndex]);
   const getData = (): RowData[] => {
     if (!list) return [];
     return list.map<RowData>((_item, _idx) => {
@@ -120,7 +132,21 @@ export default function ProjectTable() {
       getData={getData}
       isLoading={isLoadingProjectListInvested}
       // viewPath={PATH_PAGE.details}
-      viewPath={PATH_DASHBOARD_PROJECT.project.root}
+      actionsButton={action}
+      paging={{
+        pageIndex,
+        pageSize: pageSize,
+        numberSize: numOfProject,
+
+        handleNext() {
+          setPageIndex(pageIndex + 1);
+          setPageSize(pageSize + 5);
+        },
+        handlePrevious() {
+          setPageIndex(pageIndex - 1);
+          setPageSize(pageSize - 5);
+        }
+      }}
     />
   );
 }

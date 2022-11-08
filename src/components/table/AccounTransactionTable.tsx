@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { dispatch, RootState, useSelector } from '../../redux/store';
 import { DATA_TYPE, KrowdTable, RowData } from './krowd-table/KrowdTable';
 import { getTransactionList } from 'redux/slices/krowd_slices/transaction';
@@ -15,9 +15,12 @@ const TABLE_HEAD = [
 export default function AccounTransactionTable() {
   const { transactionState } = useSelector((state: RootState) => state.transactionKrowd);
   const { isLoading, listOfAccountTransaction: list, numOfAccountTransaction } = transactionState;
+
+  const [pageIndex, setPageIndex] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
   useEffect(() => {
-    dispatch(getTransactionList());
-  }, [dispatch]);
+    dispatch(getTransactionList(pageIndex, pageSize));
+  }, [dispatch, pageIndex]);
 
   const getData = (): RowData[] => {
     if (!list) return [];
@@ -77,6 +80,20 @@ export default function AccounTransactionTable() {
       header={TABLE_HEAD}
       getData={getData}
       isLoading={isLoading}
+      paging={{
+        pageIndex,
+        pageSize: pageSize,
+        numberSize: numOfAccountTransaction,
+
+        handleNext() {
+          setPageIndex(pageIndex + 1);
+          setPageSize(pageSize + 5);
+        },
+        handlePrevious() {
+          setPageIndex(pageIndex - 1);
+          setPageSize(pageSize - 5);
+        }
+      }}
     />
   );
 }

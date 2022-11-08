@@ -139,7 +139,7 @@ export default function DashboardProjectSidebar({
         }}
       >
         <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <Box component={RouterLink} to="/dashboard/app" sx={{ display: 'inline-flex' }}>
+          <Box component={RouterLink} to="/dashboard/banking" sx={{ display: 'inline-flex' }}>
             <Logo />
           </Box>
 

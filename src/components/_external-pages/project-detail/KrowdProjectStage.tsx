@@ -5,11 +5,10 @@ import ReactApexChart from 'react-apexcharts';
 import { Card, CardHeader, Box, TextField, Typography, Divider, Grid } from '@mui/material';
 //
 import { BaseOptionChart } from '../../charts';
-import { dispatch, RootState } from 'redux/store';
+import { RootState } from 'redux/store';
 import { useSelector } from 'react-redux';
 import { Project1 } from '../../../@types/krowd/project';
-import HeaderBreadcrumbs from 'components/HeaderBreadcrumbs';
-import { PATH_DASHBOARD } from 'routes/paths';
+
 import { styled } from '@mui/system';
 import { fCurrencyChart } from 'utils/formatNumber';
 

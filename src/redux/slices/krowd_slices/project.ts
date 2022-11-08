@@ -351,11 +351,14 @@ export function getProjectListWithFilter(
 }
 
 //------- GET ALL PROJECT INVESTED WITH PARAMS
-export function getProjectListInvested() {
+export function getProjectListInvested(pageIndex: number, pageSize: number) {
   return async () => {
     dispatch(slice.actions.startLoadingProjectInvestedList());
     try {
-      const response = await ProjectAPI.getProjectInvested();
+      const response = await ProjectAPI.getProjectInvested({
+        pageIndex: pageIndex,
+        pageSize: pageSize
+      });
       dispatch(slice.actions.getProjectListInvestedSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));

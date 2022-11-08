@@ -40,9 +40,13 @@ export default function AccountTransactionWithDrawTable() {
   );
   const { isLoading, TransactionWithdrawList: list } = transactionWithdrawState;
   const { TransactionWithdrawDetail } = transactionWithdrawDetail;
+  const [pageIndex, setPageIndex] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
   useEffect(() => {
-    dispatch(getWithdrawRequestTransactionList(localStorage.getItem('userId') ?? ''));
-  }, [dispatch]);
+    dispatch(
+      getWithdrawRequestTransactionList(localStorage.getItem('userId') ?? '', pageIndex, pageSize)
+    );
+  }, [dispatch, pageIndex]);
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -121,6 +125,20 @@ export default function AccountTransactionWithDrawTable() {
         getData={getData}
         isLoading={isLoading}
         viewPeriodHistory={() => handleClickOpen()}
+        paging={{
+          pageIndex,
+          pageSize: pageSize,
+          numberSize: 10,
+
+          handleNext() {
+            setPageIndex(pageIndex + 1);
+            setPageSize(pageSize + 5);
+          },
+          handlePrevious() {
+            setPageIndex(pageIndex - 1);
+            setPageSize(pageSize - 5);
+          }
+        }}
       />
       <Box>
         <Dialog

@@ -2,7 +2,7 @@
 import { Box, CircularProgress, Container, Typography } from '@mui/material';
 
 import Page from 'components/Page';
-import ProjectReportRevenue from 'components/table/ProjectReportRevenue';
+import ProjectReportRevenue from 'components/table/sidebarProject/ProjectReportRevenue';
 
 // ----------------------------------------------------------------------
 

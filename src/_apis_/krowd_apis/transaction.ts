@@ -20,21 +20,24 @@ function getHeader() {
   return { Authorization: `Bearer ${token}` };
 }
 
-async function getsTransaction() {
+async function getsTransaction(params?: { pageIndex: number; pageSize: number }) {
   const headers = getHeader();
   const response = await axios.get(REACT_APP_API_URL + `${API_ACCOUNT_TRANSACTION}`, {
-    headers: headers
+    headers: headers,
+    params: params
   });
   return response;
 }
-async function getsWithdrawTransaction(investorId: string) {
+async function getsWithdrawTransaction(params: {
+  userId: string;
+  pageIndex: number;
+  pageSize: number;
+}) {
   const headers = getHeader();
-  const response = await axios.get(
-    REACT_APP_API_URL + `${API_WITH_DRAW_REQUEST}?investorId=${investorId}`,
-    {
-      headers: headers
-    }
-  );
+  const response = await axios.get(REACT_APP_API_URL + `${API_WITH_DRAW_REQUEST}`, {
+    headers: headers,
+    params: params
+  });
   return response;
 }
 async function getsWithdrawTransactionById(id: string) {
@@ -44,10 +47,11 @@ async function getsWithdrawTransactionById(id: string) {
   });
   return response;
 }
-async function getsPeriodRevenueHistory() {
+async function getsPeriodRevenueHistory(params: { pageIndex: number; pageSize: number }) {
   const headers = getHeader();
   const response = await axios.get(REACT_APP_API_URL + `${API_PERIOD_REVENUE_HISTORY}`, {
-    headers: headers
+    headers: headers,
+    params: params
   });
   return response;
 }
@@ -58,39 +62,42 @@ async function getsInvestment({ id }: { id: string }) {
   });
   return response;
 }
-async function getsDailyReport(id: string, pageIndex: number) {
+async function getsDailyReport(id: string, pageIndex: number, pageSize: number) {
   const headers = getHeader();
 
   const response = await axios.get(
-    REACT_APP_API_URL + `${API_DAILY_REPORT}/${id}?pageIndex=${pageIndex}&pageSize=8`,
+    REACT_APP_API_URL + `${API_DAILY_REPORT}/${id}?pageIndex=${pageIndex}&pageSize=${pageSize}`,
     {
       headers: headers
     }
   );
   return response;
 }
-async function getsWalletTransaction(id: string, pageIndex: number) {
+async function getsWalletTransaction(params: {
+  walletId: string;
+  pageIndex: number;
+  pageSize: number;
+}) {
   const headers = getHeader();
-  const response = await axios.get(
-    REACT_APP_API_URL +
-      `${API_WALLET_TRANSACTION}?walletId=${id}&pageIndex=${pageIndex}&pageSize=5`,
-    {
-      headers: headers
-    }
-  );
-  return response;
-}
-async function getsPayment() {
-  const headers = getHeader();
-  const response = await axios.get(REACT_APP_API_URL + `${API_PAYMENTS}`, {
-    headers: headers
+  const response = await axios.get(REACT_APP_API_URL + `${API_WALLET_TRANSACTION}`, {
+    headers: headers,
+    params: params
   });
   return response;
 }
-async function getsPaymentRevenue() {
+async function getsPayment(params: { pageIndex: number; pageSize: number }) {
+  const headers = getHeader();
+  const response = await axios.get(REACT_APP_API_URL + `${API_PAYMENTS}`, {
+    headers: headers,
+    params: params
+  });
+  return response;
+}
+async function getsPaymentRevenue(params: { pageIndex: number; pageSize: number }) {
   const headers = getHeader();
   const response = await axios.get(REACT_APP_API_URL + `${PERIOD_REVENUE}`, {
-    headers: headers
+    headers: headers,
+    params: params
   });
   return response;
 }

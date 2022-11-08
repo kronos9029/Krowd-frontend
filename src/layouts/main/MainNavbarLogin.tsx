@@ -147,7 +147,7 @@ export default function MainNavbarLogin() {
                 color: '#FFF',
                 marginRight: '1rem'
               }}
-              href="/dashboard/app"
+              href="/dashboard/banking"
             >
               {t('Back_to_dashboard')}
             </Button>

@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react';
-import { dispatch, RootState, useSelector } from '../../redux/store';
-import { DATA_TYPE, KrowdTable, RowData } from './krowd-table/KrowdTable';
-import {
-  getAllPaymentList,
-  getAllPaymentListRevenue,
-  getWalletTransactionList
-} from 'redux/slices/krowd_slices/transaction';
+import React, { useEffect, useState } from 'react';
+import { dispatch, RootState, useSelector } from '../../../redux/store';
+import { DATA_TYPE, KrowdTable, RowData } from '../krowd-table/KrowdTable';
+
 import { useParams } from 'react-router';
 import { Button, Grid } from '@mui/material';
+import {
+  getAllPaymentList,
+  getAllPaymentListRevenue
+} from '../../../redux/slices/krowd_slices/transaction';
 const TABLE_HEAD = [
   { id: 'idx', label: 'STT', align: 'center' },
   { id: 'projectName', label: 'TÊN DỰ ÁN', align: 'left' },
@@ -27,11 +27,14 @@ export default function PaymentProjectTable() {
   const { isLoadingPeriodRevenue, paymentListPeriodRevenue: listPeriodRevenue } =
     paymentListRevenueState;
   const [openStage, setOpenStage] = useState('INVESTMENT');
-
+  const [pageIndex2, setPageIndex2] = useState(1);
+  const [pageSize2, setPageSize2] = useState(5);
+  const [pageIndex, setPageIndex] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
   useEffect(() => {
-    dispatch(getAllPaymentList());
-    dispatch(getAllPaymentListRevenue());
-  }, [dispatch]);
+    dispatch(getAllPaymentList(pageIndex, pageSize));
+    dispatch(getAllPaymentListRevenue(pageIndex2, pageSize2));
+  }, [dispatch, pageIndex, pageIndex2]);
 
   const handleClickOpenStage = () => {
     setOpenStage('INVESTMENT');
@@ -177,6 +180,20 @@ export default function PaymentProjectTable() {
           getData={getData}
           isLoading={isLoading}
           // viewPath={PATH_DASHBOARD.business.details}
+          paging={{
+            pageIndex,
+            pageSize: pageSize,
+            numberSize: 10,
+
+            handleNext() {
+              setPageIndex(pageIndex + 1);
+              setPageSize(pageSize + 5);
+            },
+            handlePrevious() {
+              setPageIndex(pageIndex - 1);
+              setPageSize(pageSize - 5);
+            }
+          }}
         />
       ) : (
         <KrowdTable
@@ -184,6 +201,20 @@ export default function PaymentProjectTable() {
           header={TABLE_HEAD}
           getData={getData2}
           isLoading={isLoadingPeriodRevenue}
+          paging={{
+            pageIndex,
+            pageSize: pageSize2,
+            numberSize: 10,
+
+            handleNext() {
+              setPageIndex(pageIndex2 + 1);
+              setPageSize(pageSize2 + 5);
+            },
+            handlePrevious() {
+              setPageIndex(pageIndex2 - 1);
+              setPageSize(pageSize2 - 5);
+            }
+          }}
           // viewPath={PATH_DASHBOARD.business.details}
         />
       )}

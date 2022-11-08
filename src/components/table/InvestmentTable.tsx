@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
 import { dispatch, RootState, useSelector } from '../../redux/store';
-import { DATA_TYPE, KrowdReport, RowData } from './krowd-table/KrowdReport';
+import { DATA_TYPE, KrowdTable, RowData } from './krowd-table/KrowdTable';
 import {
   getInvestmentProjectID,
   getWalletTransactionList
 } from 'redux/slices/krowd_slices/transaction';
-import { BlogPostsSearch } from 'components/_dashboard/project';
-import { Grid, List, ListItemButton, ListItemText } from '@mui/material';
-import { getWalletList } from 'redux/slices/krowd_slices/wallet';
+
 const TABLE_HEAD = [
   { id: 'idx', label: 'STT', align: 'center' },
   { id: 'id', label: 'MÃ GIAO DỊCH', align: 'left' },
@@ -63,7 +61,7 @@ export default function InvestmentTable() {
   };
   return (
     <>
-      <KrowdReport
+      <KrowdTable
         headingTitle={`DANH SÁCH GIAO DỊCH ĐẦU TƯ`}
         header={TABLE_HEAD}
         getData={getData}

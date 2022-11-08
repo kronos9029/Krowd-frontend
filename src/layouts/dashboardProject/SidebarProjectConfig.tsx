@@ -41,12 +41,12 @@ const SidebarProjectConfig = [
         title: 'Doanh thu hằng ngày',
         path: PATH_DASHBOARD_PROJECT.project.reportRevenue,
         icon: ICONS.daily
+      },
+      {
+        title: 'Tình hình thường kì',
+        path: PATH_DASHBOARD_PROJECT.project.reportUpdate,
+        icon: ICONS.term
       }
-      // {
-      //   title: 'Tình hình thường kì',
-      //   path: PATH_DASHBOARD_PROJECT.project.reportUpdate,
-      //   icon: ICONS.term
-      // }
     ]
   },
   {

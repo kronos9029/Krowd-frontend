@@ -24,7 +24,7 @@ async function gets(params?: { businessId: string }) {
   });
   return response;
 }
-async function getProjectInvested(params?: { businessId: string }) {
+async function getProjectInvested(params?: { pageIndex: number; pageSize: number }) {
   const headers = getHeader();
   const response = await axios.get(REACT_APP_API_URL + `${API_PROJECT_INVESTED}`, {
     params: params,

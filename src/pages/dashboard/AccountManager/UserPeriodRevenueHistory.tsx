@@ -1,7 +1,7 @@
 // material
 import { Container } from '@mui/material';
 
-import PeriodRevenueHistoryTable from 'components/table/PeriodRevenueHistoryTable';
+import PeriodRevenueHistoryTable from 'components/table/sidebarProject/PeriodRevenueHistoryTable';
 import Page from 'components/Page';
 
 // ----------------------------------------------------------------------

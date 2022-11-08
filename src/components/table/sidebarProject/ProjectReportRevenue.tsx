@@ -1,10 +1,13 @@
-import { useEffect, useState } from 'react';
-import { dispatch, RootState, useSelector } from '../../redux/store';
-import { PATH_DASHBOARD, PATH_DASHBOARD_PROJECT, PATH_PAGE } from '../../routes/paths';
-import { DATA_TYPE, KrowdReport, RowData } from './krowd-table/KrowdReport';
-import { Box, Button, Container, Typography } from '@mui/material';
-import { getDailyReportProjectID } from 'redux/slices/krowd_slices/transaction';
+import React, { useEffect, useState } from 'react';
+import { dispatch, RootState, useSelector } from '../../../redux/store';
+import { PATH_DASHBOARD_PROJECT, PATH_PAGE } from '../../../routes/paths';
+import { ACTION_TYPE, DATA_TYPE, KrowdTable, RowData } from '../krowd-table/KrowdTable';
 import { useNavigate } from 'react-router';
+import eyeFill from '@iconify/icons-eva/eye-fill';
+import ProjectBillDailyReport from './ProjectBillDailyReport';
+import { Box, Button, Card } from '@mui/material';
+import { getDailyReportProjectID } from '../../../redux/slices/krowd_slices/transaction';
+
 const TABLE_HEAD = [
   { id: 'idx', label: 'STT', align: 'center' },
   { id: 'amount', label: 'SỐ TIỀN', align: 'center' },
@@ -17,27 +20,17 @@ export default function ProjectReportRevenue() {
   const { dailyReportState } = useSelector((state: RootState) => state.transactionKrowd);
   const { isLoading, listOfDailyReport: list, numOfDailyReport } = dailyReportState;
   const [pageIndex, setPageIndex] = useState(1);
-  const [pageSize1, setPageSize1] = useState(1);
-  const [pageSize, setPageSize] = useState(8);
+  const [pageSize, setPageSize] = useState(5);
+  const [openBill, setOpenBill] = useState(false);
   const navigate = useNavigate();
 
-  const handleClickView = async () => {
-    navigate(PATH_DASHBOARD_PROJECT.project.billDailyReport);
+  const handleClickView = () => {
+    setOpenBill(true);
   };
   useEffect(() => {
-    dispatch(getDailyReportProjectID(localStorage.getItem('projectId') ?? '', pageIndex ?? 1));
+    dispatch(getDailyReportProjectID(localStorage.getItem('projectId') ?? '', pageIndex ?? 1, 5));
   }, [dispatch, pageIndex]);
 
-  const handlePre = () => {
-    setPageIndex(pageIndex - 1);
-    setPageSize(pageSize - 8);
-    setPageSize1(pageSize1 - 8);
-  };
-  const handleNext = () => {
-    setPageIndex(pageIndex + 1);
-    setPageSize1(pageSize1 + 8);
-    setPageSize(pageSize + 8);
-  };
   const getData = (): RowData[] => {
     if (!list) return [];
     return list.map<RowData>((_item, _idx) => {
@@ -80,32 +73,37 @@ export default function ProjectReportRevenue() {
   };
   return (
     <>
-      <KrowdReport
+      <KrowdTable
         headingTitle="BÁO CÁO DOANH THU HẰNG NGÀY"
         header={TABLE_HEAD}
         getData={getData}
         isLoading={isLoading}
-        // viewPath={PATH_PAGE.details}
-        viewPath={() => handleClickView()}
+        viewReportRevenue={() => handleClickView()}
+        paging={{
+          pageIndex,
+          pageSize: pageSize,
+          numberSize: numOfDailyReport,
+
+          handleNext() {
+            setPageIndex(pageIndex + 1);
+            setPageSize(pageSize + 5);
+          },
+          handlePrevious() {
+            setPageIndex(pageIndex - 1);
+            setPageSize(pageSize - 5);
+          }
+        }}
       />
-      <Box sx={{ my: 5 }} display={'flex'} justifyContent={'flex-end'} alignItems={'center'}>
-        {pageSize1} {'-'}
-        {pageSize} trên {numOfDailyReport}
-        {pageIndex > 1 ? (
-          <Button onClick={handlePre}>Trước</Button>
-        ) : (
-          <Button disabled onClick={handlePre}>
-            Trước
-          </Button>
-        )}
-        {pageSize < numOfDailyReport ? (
-          <Button onClick={handleNext}>Sau</Button>
-        ) : (
-          <Button disabled onClick={handleNext}>
-            Sau
-          </Button>
-        )}
-      </Box>
+      {openBill && (
+        <Card sx={{ p: 3 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Button variant="contained" color={'error'} onClick={() => setOpenBill(false)}>
+              Đóng lại
+            </Button>
+          </Box>
+          <ProjectBillDailyReport />
+        </Card>
+      )}
     </>
   );
 }

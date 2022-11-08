@@ -71,8 +71,11 @@ export default function BankingRecentTransitions() {
   const isLight = theme.palette.mode === 'light';
   const { transactionState } = useSelector((state: RootState) => state.transactionKrowd);
   const { isLoading, listOfAccountTransaction: list, numOfAccountTransaction } = transactionState;
+
+  const [pageIndex, setPageIndex] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
   useEffect(() => {
-    dispatch(getTransactionList());
+    dispatch(getTransactionList(pageIndex, pageSize));
   }, [dispatch]);
 
   return (

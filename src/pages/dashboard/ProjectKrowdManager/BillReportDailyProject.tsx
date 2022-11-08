@@ -2,7 +2,7 @@
 import { Box, CircularProgress, Container, Typography } from '@mui/material';
 
 import React from 'react';
-import ProjectBillDailyReport from '../../../components/table/ProjectBillDailyReport';
+import ProjectBillDailyReport from '../../../components/table/sidebarProject/ProjectBillDailyReport';
 // ----------------------------------------------------------------------
 import Page from 'components/Page';
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import { useState } from 'react';
 import {
   Table,
   Stack,
@@ -10,30 +9,30 @@ import {
   TableCell,
   Typography,
   TableContainer,
-  TablePagination,
   Box,
-  CircularProgress,
-  MenuItem,
-  ListItemIcon,
-  ListItemText,
   Chip,
-  Container
+  Tooltip
 } from '@mui/material';
-import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
-import Scrollbar from '../../../components/Scrollbar';
-import { PATH_DASHBOARD } from '../../../routes/paths';
-import { Link, Link as RouterLink } from 'react-router-dom';
-import plusFill from '@iconify/icons-eva/plus-fill';
+import HeaderBreadcrumbs from 'components/HeaderBreadcrumbs';
+import Scrollbar from 'components/Scrollbar';
+import { PATH_DASHBOARD, PATH_DASHBOARD_PROJECT } from 'routes/paths';
+import { Link, Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import KrowdTableListHead from '../components/KrowdTableListHead';
-import { fCurrency } from '../../../utils/formatNumber';
-import eyeFill from '@iconify/icons-eva/eye-fill';
-import trash2Outline from '@iconify/icons-eva/trash-2-outline';
-import { SeverErrorIllustration } from 'assets';
+import { fCurrency } from 'utils/formatNumber';
+import editTwotone from '@iconify/icons-ant-design/edit-twotone';
+import upload from '@iconify/icons-ant-design/upload-outline';
+import Payment from '@iconify/icons-ic/twotone-payments';
+import eyeFill from '@iconify/icons-ant-design/container-fill';
+import reportScreen from '@iconify/icons-ant-design/fund-projection-screen';
+
 import LoadingScreen from 'components/LoadingScreen';
 import Label from 'components/Label';
 import { dispatch } from 'redux/store';
-import { getWithdrawRequestTransactionById } from 'redux/slices/krowd_slices/transaction';
+import {
+  getBillDailyReport,
+  getWithdrawRequestTransactionById
+} from 'redux/slices/krowd_slices/transaction';
 export enum DATA_TYPE {
   TEXT = 'text',
   TEXT_FORMAT = 'text_format',
@@ -48,7 +47,10 @@ export enum DATA_TYPE {
   CURRENCY = 'currency',
   LABLE = 'lable'
 }
-
+export enum ACTION_TYPE {
+  BUTTON = 'button',
+  LINK = 'link'
+}
 export type RowData = {
   id: string;
   items: {
@@ -56,353 +58,416 @@ export type RowData = {
     value: any;
     type: DATA_TYPE;
     textColor?: string;
+    textColorAny?: any;
     textMapColor?: { status: string; color: string }[];
   }[];
+  status?: string;
 };
 export type KrowdTableProps = {
   headingTitle: string;
-  createNewRecordButton?: { pathTo: string; label: string };
+  action?: React.ReactNode;
+  viewReportRevenue?: () => void;
+
+  viewPeriodHistory?: (id: string) => void;
+  noteTable?: {
+    name: string;
+  }[];
   header: { id: string; label: string; align: string }[];
   getData: () => Array<RowData>;
-  viewPath?: string;
-  deleteRecord?: (id: string) => void;
   isLoading: boolean;
-  viewPeriodHistory?: (id: string) => void;
+  actionsButton?: {
+    nameAction: string;
+    action: (() => void) | string;
+    icon: any;
+    color?: string;
+    type: ACTION_TYPE;
+  }[];
+  filterStatus?: {
+    action: (() => Promise<void>) | string;
+    nameAction: string;
+    icon: any;
+    color?: string;
+  }[];
+  paging?: {
+    pageSize: number;
+    pageIndex: number;
+    numberSize: number;
+    handlePrevious: () => void;
+    handleNext: () => void;
+  };
+  viewPath?: string;
 };
 
 export function KrowdTable({
   headingTitle,
-  createNewRecordButton,
+  action,
   header,
   getData,
   isLoading,
-  viewPath,
-  deleteRecord,
-  viewPeriodHistory
+  actionsButton,
+  paging,
+  filterStatus,
+  noteTable,
+  viewPeriodHistory,
+  viewReportRevenue,
+  viewPath
 }: KrowdTableProps) {
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [page, setPage] = useState(0);
   const data = getData();
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 5));
-    setPage(0);
-  };
+  const navigate = useNavigate();
+
   const openPeriodRevenueHistoryForm = async (id: string) => {
     await dispatch(getWithdrawRequestTransactionById(id));
     if (viewPeriodHistory) viewPeriodHistory(id);
   };
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
-  const dataInPage: RowData[] =
-    data && data.length > 0 ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : [];
-
+  const handleView = async (id: string) => {
+    localStorage.setItem('DailyId', id);
+    window.scrollTo(0, 12500);
+    if (viewReportRevenue) {
+      viewReportRevenue();
+    }
+    await dispatch(getBillDailyReport(localStorage?.getItem('DailyId') ?? '', 1));
+  };
   return (
     <>
       <HeaderBreadcrumbs
-        heading={`${headingTitle.toUpperCase()} (${data.length})`}
-        links={[{ name: '', href: PATH_DASHBOARD.root }]}
-        action={
-          createNewRecordButton && (
-            <Button
-              variant="contained"
-              component={RouterLink}
-              to={createNewRecordButton.pathTo}
-              startIcon={<Icon icon={plusFill} />}
-            >
-              {createNewRecordButton.label}
-            </Button>
-          )
-        }
-      />
-      {dataInPage.length > 0 ? (
-        <Scrollbar>
-          <TableContainer sx={{ minWidth: 800 }}>
-            <Table>
-              <KrowdTableListHead
-                headLabel={[
-                  { id: '__borderHeaderLeft', label: '', align: 'center' },
-                  ...header,
-                  { id: '__borderHeaderRight', label: '', align: 'center' }
-                ]}
-              />
-              <TableBody>
-                {!isLoading &&
-                  dataInPage.length > 0 &&
-                  dataInPage.map((data, index) => {
-                    return (
-                      <TableRow hover key={`__${data.id}`} tabIndex={-1} role="checkbox">
-                        <TableCell
-                          key={'__borderRowLeft'}
-                          component="th"
-                          scope="row"
-                          padding="normal"
-                          align="justify"
-                          sx={{ bgcolor: '#ffffff' }}
-                        ></TableCell>
-                        {data.items.map((_item) => {
-                          switch (_item.type) {
-                            case DATA_TYPE.TEXT:
-                              return (
-                                <TableCell
-                                  key={`__${_item.name}__${data.id}`}
-                                  component="th"
-                                  scope="row"
-                                  padding="normal"
+        heading={`${headingTitle.toUpperCase()} `}
+        links={[{ name: 'Bảng điều khiển', href: PATH_DASHBOARD.root }]}
+        action={action}
+      />{' '}
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          minWidth: '200px',
+          my: 2
+        }}
+      >
+        {filterStatus &&
+          filterStatus.map((e) => {
+            return (
+              <Box
+                key={`__$`}
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: '100%',
+                  minWidth: '200px',
+                  my: 2
+                }}
+              >
+                <Button onClick={e.action as () => Promise<void>}>
+                  <Box>
+                    <Icon icon={e.icon} width={24} height={24} color={e.color} />
+                  </Box>
+                  <Box>
+                    <Typography color={e.color}>{e.nameAction}</Typography>
+                  </Box>
+                </Button>
+              </Box>
+            );
+          })}
+      </Box>
+      {/* <BlogPostsSearch /> */}
+      <Scrollbar>
+        <TableContainer sx={{ minWidth: 800 }}>
+          <Table>
+            <KrowdTableListHead
+              headLabel={[
+                { id: '__borderHeaderLeft', label: '', align: 'center' },
+                ...header,
+                { id: '__borderHeaderRight', label: '', align: 'center' }
+              ]}
+            />
+            <TableBody>
+              {!isLoading &&
+                data.length > 0 &&
+                data.map((data, index) => {
+                  return (
+                    <TableRow hover key={`__${data.id}`} tabIndex={-1} role="checkbox">
+                      <TableCell
+                        key={'__borderRowLeft'}
+                        component="th"
+                        scope="row"
+                        padding="normal"
+                        align="justify"
+                        sx={{ bgcolor: '#ffffff' }}
+                      ></TableCell>
+                      {data.items.map((_item) => {
+                        switch (_item.type) {
+                          case DATA_TYPE.TEXT:
+                            return (
+                              <TableCell
+                                key={`__${_item.name}__${data.id}`}
+                                component="th"
+                                scope="row"
+                                padding="normal"
+                              >
+                                <Stack direction="row" alignItems="center" spacing={2}>
+                                  <Typography
+                                    variant="subtitle2"
+                                    noWrap
+                                    color={_item.textColor ?? 'text.primary'}
+                                  >
+                                    {_item.value}
+                                  </Typography>
+                                </Stack>
+                              </TableCell>
+                            );
+                          case DATA_TYPE.TEXT_FORMAT:
+                            return (
+                              <TableCell
+                                key={`__${_item.name}__${data.id}`}
+                                component="th"
+                                scope="row"
+                                padding="normal"
+                              >
+                                <Stack
+                                  display={'flex'}
+                                  direction="row"
+                                  justifyContent={'center'}
+                                  spacing={2}
                                 >
-                                  <Stack direction="row" alignItems="center" spacing={2}>
-                                    <Typography
-                                      variant="subtitle2"
-                                      noWrap
-                                      color={_item.textColor ?? 'text.primary'}
+                                  <Typography
+                                    variant="subtitle2"
+                                    noWrap
+                                    color={_item.textColor ?? 'text.primary'}
+                                  >
+                                    {_item.value}
+                                  </Typography>
+                                </Stack>
+                              </TableCell>
+                            );
+                          case DATA_TYPE.CURRENCY:
+                            return (
+                              <TableCell
+                                key={`__${_item.name}__${data.id}`}
+                                component="th"
+                                scope="row"
+                                padding="normal"
+                              >
+                                <Stack direction="row" alignItems="center" spacing={2}>
+                                  <Typography
+                                    variant="subtitle2"
+                                    noWrap
+                                    sx={{ color: _item.textColor ?? 'text.primary' }}
+                                  >
+                                    {fCurrency(_item.value)}
+                                  </Typography>
+                                </Stack>
+                              </TableCell>
+                            );
+                          case DATA_TYPE.WRAP_TEXT:
+                            return (
+                              <TableCell
+                                key={`__${_item.name}__${data.id}`}
+                                component="th"
+                                scope="row"
+                                padding="normal"
+                              >
+                                <Stack direction="row" alignItems="center" spacing={2}>
+                                  <Typography variant="subtitle2">{_item.value}</Typography>
+                                </Stack>
+                              </TableCell>
+                            );
+                          case DATA_TYPE.NUMBER_FORMAT:
+                            return (
+                              <TableCell
+                                key={`__${_item.name}__${data.id}`}
+                                component="th"
+                                scope="row"
+                                padding="normal"
+                              >
+                                <Stack
+                                  display={'block'}
+                                  direction="row"
+                                  alignItems="right"
+                                  spacing={2}
+                                >
+                                  <Typography
+                                    sx={{ textAlign: 'right' }}
+                                    variant="subtitle2"
+                                    noWrap
+                                    mx="auto"
+                                    color={_item.textColor ?? 'text.primary'}
+                                  >
+                                    {fCurrency(_item.value)}
+                                  </Typography>
+                                </Stack>
+                              </TableCell>
+                            );
+                          case DATA_TYPE.NUMBER:
+                            return (
+                              <TableCell
+                                key={`__${_item.name}__${data.id}`}
+                                component="th"
+                                scope="row"
+                                padding="normal"
+                              >
+                                <Stack direction="row" alignItems="center" spacing={2}>
+                                  <Typography
+                                    variant="subtitle2"
+                                    noWrap
+                                    mx="auto"
+                                    color={_item.textColor ?? 'text.primary'}
+                                  >
+                                    {_item.value}
+                                  </Typography>
+                                </Stack>
+                              </TableCell>
+                            );
+                          case DATA_TYPE.DATE:
+                            const date = String(_item.value);
+                            return (
+                              <TableCell
+                                key={`__${_item.name}__${data.id}`}
+                                component="th"
+                                scope="row"
+                                padding="normal"
+                              >
+                                <Stack
+                                  direction="row"
+                                  sx={{ justifyContent: 'center' }}
+                                  spacing={2}
+                                >
+                                  <Typography variant="subtitle2" noWrap>
+                                    {date}
+                                  </Typography>
+                                </Stack>
+                              </TableCell>
+                            );
+                          case DATA_TYPE.IMAGE:
+                            return (
+                              <TableCell
+                                key={`__${_item.name}__${data.id}`}
+                                component="th"
+                                scope="row"
+                                padding="normal"
+                              >
+                                <Stack direction="row" alignItems="center" spacing={2}>
+                                  <Avatar alt={`__${_item.name}__${data.id}`} src={_item.value} />
+                                </Stack>
+                              </TableCell>
+                            );
+                          case DATA_TYPE.ICONS:
+                            return (
+                              <TableCell
+                                key={`__${_item.name}__${data.id}`}
+                                component="th"
+                                scope="row"
+                                padding="normal"
+                              >
+                                <Stack direction="row" alignItems="center" spacing={2}>
+                                  <img
+                                    style={{ width: 40 }}
+                                    src={`/static/icons/navbar/ic_momo.png`}
+                                  />
+                                  <Typography variant="body1"> Ví momo</Typography>
+                                </Stack>
+                              </TableCell>
+                            );
+                          case DATA_TYPE.LIST_TEXT:
+                            return (
+                              <TableCell
+                                key={`__${_item.name}__${data.id}`}
+                                component="th"
+                                scope="row"
+                                padding="normal"
+                              >
+                                <Stack direction="row" alignItems="center" spacing={2}>
+                                  <Typography variant="subtitle2" noWrap>
+                                    {[..._item.value].map((_o) => _o)}
+                                  </Typography>
+                                </Stack>
+                              </TableCell>
+                            );
+
+                          case DATA_TYPE.LABLE:
+                            return (
+                              <TableCell
+                                key={`__${_item.name}__${data.id}`}
+                                component="th"
+                                scope="row"
+                                padding="normal"
+                              >
+                                <Stack direction="row" alignItems="center" spacing={2}>
+                                  <Typography variant="subtitle2" noWrap>
+                                    <Label
+                                      variant={'ghost'}
+                                      color={
+                                        (_item.value === 'Giao dịch thành công.' && 'success') ||
+                                        'error'
+                                      }
                                     >
                                       {_item.value}
-                                    </Typography>
-                                  </Stack>
-                                </TableCell>
-                              );
-                            case DATA_TYPE.TEXT_FORMAT:
-                              return (
-                                <TableCell
-                                  key={`__${_item.name}__${data.id}`}
-                                  component="th"
-                                  scope="row"
-                                  padding="normal"
-                                >
-                                  <Stack
-                                    display={'flex'}
-                                    direction="row"
-                                    justifyContent={'center'}
-                                    spacing={2}
-                                  >
-                                    <Typography
-                                      variant="subtitle2"
-                                      noWrap
-                                      color={_item.textColor ?? 'text.primary'}
-                                    >
-                                      {_item.value}
-                                    </Typography>
-                                  </Stack>
-                                </TableCell>
-                              );
-                            case DATA_TYPE.CURRENCY:
-                              return (
-                                <TableCell
-                                  key={`__${_item.name}__${data.id}`}
-                                  component="th"
-                                  scope="row"
-                                  padding="normal"
-                                >
-                                  <Stack direction="row" alignItems="center" spacing={2}>
-                                    <Typography
-                                      variant="subtitle2"
-                                      noWrap
-                                      sx={{ color: _item.textColor ?? 'text.primary' }}
-                                    >
-                                      {fCurrency(_item.value)}
-                                    </Typography>
-                                  </Stack>
-                                </TableCell>
-                              );
-                            case DATA_TYPE.WRAP_TEXT:
-                              return (
-                                <TableCell
-                                  key={`__${_item.name}__${data.id}`}
-                                  component="th"
-                                  scope="row"
-                                  padding="normal"
-                                >
-                                  <Stack direction="row" alignItems="center" spacing={2}>
-                                    <Typography variant="subtitle2">{_item.value}</Typography>
-                                  </Stack>
-                                </TableCell>
-                              );
-                            case DATA_TYPE.NUMBER_FORMAT:
-                              return (
-                                <TableCell
-                                  key={`__${_item.name}__${data.id}`}
-                                  component="th"
-                                  scope="row"
-                                  padding="normal"
-                                >
-                                  <Stack
-                                    display={'block'}
-                                    direction="row"
-                                    alignItems="right"
-                                    spacing={2}
-                                  >
-                                    <Typography
-                                      sx={{ textAlign: 'right' }}
-                                      variant="subtitle2"
-                                      noWrap
-                                      mx="auto"
-                                      color={_item.textColor ?? 'text.primary'}
-                                    >
-                                      {fCurrency(_item.value)}
-                                    </Typography>
-                                  </Stack>
-                                </TableCell>
-                              );
-                            case DATA_TYPE.NUMBER:
-                              return (
-                                <TableCell
-                                  key={`__${_item.name}__${data.id}`}
-                                  component="th"
-                                  scope="row"
-                                  padding="normal"
-                                >
-                                  <Stack direction="row" alignItems="center" spacing={2}>
-                                    <Typography
-                                      variant="subtitle2"
-                                      noWrap
-                                      mx="auto"
-                                      color={_item.textColor ?? 'text.primary'}
-                                    >
-                                      {_item.value}
-                                    </Typography>
-                                  </Stack>
-                                </TableCell>
-                              );
-                            case DATA_TYPE.DATE:
-                              const date = String(_item.value);
-                              return (
-                                <TableCell
-                                  key={`__${_item.name}__${data.id}`}
-                                  component="th"
-                                  scope="row"
-                                  padding="normal"
-                                >
-                                  <Stack
-                                    direction="row"
-                                    sx={{ justifyContent: 'center' }}
-                                    spacing={2}
-                                  >
-                                    <Typography variant="subtitle2" noWrap>
-                                      {date}
-                                    </Typography>
-                                  </Stack>
-                                </TableCell>
-                              );
-                            case DATA_TYPE.IMAGE:
-                              return (
-                                <TableCell
-                                  key={`__${_item.name}__${data.id}`}
-                                  component="th"
-                                  scope="row"
-                                  padding="normal"
-                                >
-                                  <Stack direction="row" alignItems="center" spacing={2}>
-                                    <Avatar alt={`__${_item.name}__${data.id}`} src={_item.value} />
-                                  </Stack>
-                                </TableCell>
-                              );
-                            case DATA_TYPE.ICONS:
-                              return (
-                                <TableCell
-                                  key={`__${_item.name}__${data.id}`}
-                                  component="th"
-                                  scope="row"
-                                  padding="normal"
-                                >
-                                  <Stack direction="row" alignItems="center" spacing={2}>
-                                    <img
-                                      style={{ width: 40 }}
-                                      src={`/static/icons/navbar/ic_momo.png`}
+                                    </Label>
+                                  </Typography>
+                                </Stack>
+                              </TableCell>
+                            );
+
+                          case DATA_TYPE.CHIP_TEXT:
+                            return (
+                              <TableCell
+                                key={`__${_item.name}__${data.id}`}
+                                component="th"
+                                scope="row"
+                                padding="normal"
+                              >
+                                <Stack direction="row" alignItems="center" spacing={2}>
+                                  <Typography variant="subtitle2" noWrap>
+                                    <Chip
+                                      label={_item.value}
+                                      sx={{
+                                        bgcolor:
+                                          _item.textMapColor?.find((v) => v.status === _item.value)
+                                            ?.color || 'text.primary',
+                                        color: '#ffffff'
+                                      }}
                                     />
-                                    <Typography variant="body1"> Ví momo</Typography>
-                                  </Stack>
-                                </TableCell>
-                              );
-                            case DATA_TYPE.LIST_TEXT:
-                              return (
-                                <TableCell
-                                  key={`__${_item.name}__${data.id}`}
-                                  component="th"
-                                  scope="row"
-                                  padding="normal"
-                                >
-                                  <Stack direction="row" alignItems="center" spacing={2}>
-                                    <Typography variant="subtitle2" noWrap>
-                                      {[..._item.value].map((_o) => _o)}
-                                    </Typography>
-                                  </Stack>
-                                </TableCell>
-                              );
-
-                            case DATA_TYPE.LABLE:
-                              return (
-                                <TableCell
-                                  key={`__${_item.name}__${data.id}`}
-                                  component="th"
-                                  scope="row"
-                                  padding="normal"
-                                >
-                                  <Stack direction="row" alignItems="center" spacing={2}>
-                                    <Typography variant="subtitle2" noWrap>
-                                      <Label
-                                        variant={'ghost'}
-                                        color={
-                                          (_item.value === 'Giao dịch thành công.' && 'success') ||
-                                          'error'
-                                        }
-                                      >
-                                        {_item.value}
-                                      </Label>
-                                    </Typography>
-                                  </Stack>
-                                </TableCell>
-                              );
-
-                            case DATA_TYPE.CHIP_TEXT:
-                              return (
-                                <TableCell
-                                  key={`__${_item.name}__${data.id}`}
-                                  component="th"
-                                  scope="row"
-                                  padding="normal"
-                                >
-                                  <Stack direction="row" alignItems="center" spacing={2}>
-                                    <Typography variant="subtitle2" noWrap>
-                                      <Chip
-                                        label={_item.value}
-                                        sx={{
-                                          bgcolor:
-                                            _item.textMapColor?.find(
-                                              (v) => v.status === _item.value
-                                            )?.color || 'text.primary',
-                                          color: '#ffffff'
-                                        }}
-                                      />
-                                    </Typography>
-                                  </Stack>
-                                </TableCell>
-                              );
-                          }
-                        })}
-                        <TableCell align="center">
-                          {viewPath && (
-                            <Link to={viewPath + `/${data.id}`}>
-                              <Icon
-                                icon={eyeFill}
-                                width={24}
-                                height={24}
-                                style={{ margin: '0px auto' }}
-                                color={'rgb(255, 127, 80)'}
-                              />
-                            </Link>
-                          )}
-                          {deleteRecord && (
-                            <Button onClick={() => deleteRecord(data.id)}>
-                              <Icon
-                                icon={trash2Outline}
-                                width={24}
-                                height={24}
-                                style={{ margin: '0px auto' }}
-                                color={'rgb(255, 127, 80)'}
-                              />
-                            </Button>
-                          )}
-                          {viewPeriodHistory && (
-                            <Button onClick={() => openPeriodRevenueHistoryForm(data.id)}>
+                                  </Typography>
+                                </Stack>
+                              </TableCell>
+                            );
+                        }
+                      })}
+                      <TableCell align="center" key={`__${data.id}`}>
+                        {actionsButton &&
+                          actionsButton.map((e) => {
+                            switch (e.type) {
+                              case ACTION_TYPE.BUTTON:
+                                return (
+                                  <Button onClick={e.action as () => void}>
+                                    <Icon icon={e.icon} width={24} height={24} color={e.color} />
+                                  </Button>
+                                );
+                              case ACTION_TYPE.LINK:
+                                return (
+                                  <Link to={(e.action as string) + `/${data.id}`}>
+                                    <Icon icon={e.icon} width={24} height={24} color={e.color} />
+                                  </Link>
+                                );
+                            }
+                          })}{' '}
+                        {viewPeriodHistory && (
+                          <Button onClick={() => openPeriodRevenueHistoryForm(data.id)}>
+                            <Icon
+                              icon={eyeFill}
+                              width={24}
+                              height={24}
+                              style={{ margin: '0px auto' }}
+                              color={'rgb(255, 127, 80)'}
+                            />
+                          </Button>
+                        )}{' '}
+                        {viewReportRevenue && (
+                          <Tooltip title="Chi tiết đơn hàng">
+                            <Button onClick={() => handleView(data.id)}>
                               <Icon
                                 icon={eyeFill}
                                 width={24}
@@ -411,114 +476,72 @@ export function KrowdTable({
                                 color={'rgb(255, 127, 80)'}
                               />
                             </Button>
-                          )}
-                        </TableCell>
-
-                        <TableCell
-                          key={'__borderRowRight'}
-                          component="th"
-                          scope="row"
-                          padding="normal"
-                          align="justify"
-                          sx={{ bgcolor: '#ffffff' }}
-                        ></TableCell>
-                      </TableRow>
-                    );
-                  })}
-                {emptyRows > 0 && (
-                  <TableRow style={{ height: 53 * emptyRows }}>
-                    <TableCell
-                      key={'__borderRowLeft'}
-                      component="th"
-                      scope="row"
-                      padding="normal"
-                      align="justify"
-                      sx={{ bgcolor: '#ffffff' }}
-                    ></TableCell>
-                    <TableCell colSpan={6} />
-                    <TableCell
-                      key={'__borderRowRight'}
-                      component="th"
-                      scope="row"
-                      padding="normal"
-                      align="justify"
-                      sx={{ bgcolor: '#ffffff' }}
-                    ></TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          {isLoading && (
-            <Box sx={{ pt: 7 }}>
-              <LoadingScreen />
-              <Typography variant="h5" sx={{ textAlign: 'center', padding: '1rem', pt: 7 }}>
-                KROWD đang tải dữ liệu, vui lòng đợi giây lát...
-              </Typography>
-            </Box>
+                          </Tooltip>
+                        )}
+                      </TableCell>
+                      <TableCell
+                        key={'__borderRowRight'}
+                        component="th"
+                        scope="row"
+                        padding="normal"
+                        align="justify"
+                        sx={{ bgcolor: '#ffffff' }}
+                      ></TableCell>
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>{' '}
+        </TableContainer>{' '}
+        <Box p={2}>
+          {noteTable &&
+            noteTable.map((_item) => {
+              return (
+                <Typography key={'_itme'} color="#f06f00">
+                  {_item.name}
+                </Typography>
+              );
+            })}
+        </Box>
+        {isLoading && (
+          <Box>
+            <LoadingScreen />
+            <Typography variant="h5" sx={{ textAlign: 'center', padding: '1rem', pt: 7 }}>
+              KROWD đang tải dữ liệu, vui lòng đợi giây lát...
+            </Typography>
+          </Box>
+        )}
+        {!isLoading && data.length === 0 && (
+          <Box>
+            <img
+              src="https://minimals.cc/assets/illustrations/illustration_empty_content.svg"
+              style={{ margin: '0px auto', padding: '1rem' }}
+            />
+            <Typography variant="h5" sx={{ textAlign: 'center', padding: '1rem' }}>
+              Không có bất kỳ tiêu đề nào có sẵn để hiển thị
+            </Typography>
+          </Box>
+        )}
+      </Scrollbar>
+      {paging && (
+        <Box sx={{ my: 1 }} display={'flex'} justifyContent={'flex-end'} alignItems={'center'}>
+          {paging.pageIndex} - {paging.pageSize} trên {paging.numberSize}
+          {paging.pageIndex > 1 ? (
+            <Button onClick={paging.handlePrevious}>Trước</Button>
+          ) : (
+            <Button disabled onClick={paging.handlePrevious}>
+              Trước
+            </Button>
           )}
-          {!isLoading && dataInPage.length === 0 && (
-            <Box>
-              <img
-                src="https://minimals.cc/assets/illustrations/illustration_empty_content.svg"
-                style={{ margin: '0px auto', padding: '1rem' }}
-              />
-              <Typography variant="h5" sx={{ textAlign: 'center', padding: '1rem' }}>
-                Không có bất kỳ tiêu đề nào có sẵn để hiển thị
-              </Typography>
-            </Box>
+          {paging.pageSize < paging.numberSize ? (
+            <Button onClick={paging.handleNext}>Sau</Button>
+          ) : (
+            <Button disabled onClick={paging.handleNext}>
+              Sau
+            </Button>
           )}
-        </Scrollbar>
-      ) : (
-        <Box>
-          <img
-            src="https://minimals.cc/assets/illustrations/illustration_empty_content.svg"
-            style={{ margin: '0px auto', padding: '1rem' }}
-          />
-          <Typography variant="h5" sx={{ textAlign: 'center', padding: '1rem' }}>
-            Chưa có dữ liệu để hiển thị
-          </Typography>
         </Box>
       )}
-
-      <TablePagination
-        rowsPerPageOptions={[]}
-        component="div"
-        count={data.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={(e, page) => setPage(page)}
-        onRowsPerPageChange={(e) => handleChangeRowsPerPage}
-      />
     </>
-  );
-}
-export function ErrorProject({ type }: { type: 'EMPTY' | 'UNKNOWN ERROR' }) {
-  const content =
-    type === 'EMPTY'
-      ? {
-          title: 'BẠN CHƯA CÓ DỰ ÁN NÀO ĐANG ĐẦU TƯ',
-          advise: 'Trở lại trang chủ đầu tư cùng Krowd',
-          button: true
-        }
-      : {
-          title: 'Lỗi bất ngờ',
-          advise: 'Hãy thử lại sau!!!',
-          button: false
-        };
-
-  return (
-    <Container>
-      <Box sx={{ maxWidth: 480, margin: 'auto', textAlign: 'center', py: 10 }}>
-        <Typography variant="h6" paragraph>
-          {content.title}
-        </Typography>
-        <Typography sx={{ color: 'text.secondary' }}>{content.advise}</Typography>
-
-        <SeverErrorIllustration sx={{ height: 260, my: { xs: 5, sm: 10 } }} />
-
-        {content.button && <Button href="/">Trở về trang chủ</Button>}
-      </Box>
-    </Container>
   );
 }
