@@ -138,6 +138,13 @@ export default function Router() {
           ]
         },
         {
+          path: 'project-investment',
+          children: [
+            { element: <Navigate to="/dashboard/project-investment/list" replace /> },
+            { path: 'list', element: <UserInvestmentAll /> }
+          ]
+        },
+        {
           path: 'account-transaction',
           children: [
             { element: <Navigate to="/dashboard/account-transaction/list" replace /> },
@@ -348,6 +355,9 @@ const UserPeriodRevenueHistory = Loadable(
 );
 const UserInvestment = Loadable(
   lazy(() => import('../pages/dashboard/AccountManager/UserInvestment'))
+);
+const UserInvestmentAll = Loadable(
+  lazy(() => import('../pages/dashboard/AccountManager/UserInvestmentAll'))
 );
 //===========================SIDEBAR PROJECT===================================
 const ProjectListInvested = Loadable(

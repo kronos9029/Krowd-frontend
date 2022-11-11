@@ -106,6 +106,10 @@ export const PATH_DASHBOARD = {
     root: path(ROOTS_DASHBOARD, '/project-invested'),
     list: path(ROOTS_DASHBOARD, '/project-invested/list')
   },
+  projectInvestment: {
+    root: path(ROOTS_DASHBOARD, '/project-investment'),
+    list: path(ROOTS_DASHBOARD, '/project-investment/list')
+  },
   // giao dịch
   transaction: {
     root: path(ROOTS_DASHBOARD, '/account-transaction'),

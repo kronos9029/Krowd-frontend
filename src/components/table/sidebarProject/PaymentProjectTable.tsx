@@ -45,7 +45,7 @@ export default function PaymentProjectTable() {
   const [pageSize, setPageSize] = useState(5);
   useEffect(() => {
     dispatch(getAllPaymentList(pageIndex, 5));
-    dispatch(getAllPaymentListRevenue(pageIndex2, 8));
+    dispatch(getAllPaymentListRevenue(pageIndex2, 5));
   }, [dispatch, pageIndex, pageIndex2]);
 
   const handleClickOpenStage = () => {
@@ -174,7 +174,7 @@ export default function PaymentProjectTable() {
           <Grid container display={'flex'} alignItems={'center'} justifyContent={'space-evenly'}>
             <Grid>
               <Button variant="outlined" onClick={handleClickOpenStage}>
-                DANH SÁCH THANH TOÁN
+                THANH TOÁN DỰ ÁN
               </Button>
             </Grid>
             <Grid>
@@ -187,7 +187,7 @@ export default function PaymentProjectTable() {
       </Grid>
       {openStage === 'INVESTMENT' ? (
         <KrowdTable
-          headingTitle="DANH SÁCH THANH TOÁN"
+          headingTitle="THANH TOÁN DỰ ÁN"
           header={TABLE_HEAD}
           getData={getData}
           isLoading={isLoading}

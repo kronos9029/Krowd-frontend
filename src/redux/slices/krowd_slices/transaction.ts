@@ -13,7 +13,9 @@ import {
   ListOfInvestmentPayment,
   ListOfPeriodRevenuePayment,
   ListOfWalletTransaction,
-  FilterCount
+  FilterCount,
+  ListOfInvestment,
+  FilterCountInvestment
 } from '../../../@types/krowd/transaction';
 import { TransactionAPI } from '../../../_apis_/krowd_apis/transaction';
 // ----------------------------------------------------------------------
@@ -44,7 +46,10 @@ type TransactionState = {
   };
   investmentState: {
     isLoading: boolean;
-    investmentList: Investment[];
+    numOfInvestment: number;
+    filterCount: FilterCountInvestment | null;
+
+    listOfInvestment: ListOfInvestment[];
     error: boolean;
   };
   dailyReportState: {
@@ -62,7 +67,7 @@ type TransactionState = {
   walletTransactionState: {
     isLoading: boolean;
     listOfWalletTransaction: ListOfWalletTransaction[];
-    FilterCount: FilterCount | null;
+    filterCount: FilterCount | null;
     numOfWalletTransaction: number;
     error: boolean;
   };
@@ -112,7 +117,9 @@ const initialState: TransactionState = {
   },
   investmentState: {
     isLoading: false,
-    investmentList: [],
+    numOfInvestment: 9,
+    listOfInvestment: [],
+    filterCount: null,
     error: false
   },
   dailyReportState: {
@@ -131,7 +138,7 @@ const initialState: TransactionState = {
   walletTransactionState: {
     isLoading: false,
     listOfWalletTransaction: [],
-    FilterCount: null,
+    filterCount: null,
     numOfWalletTransaction: 0,
     error: false
   },
@@ -253,7 +260,7 @@ const slice = createSlice({
     },
     getInvestmentListSuccess(state, action) {
       state.investmentState.isLoading = false;
-      state.investmentState.investmentList = action.payload;
+      state.investmentState = action.payload;
     },
     // ------ GET ALL DAILY REPORT ------------ //
     startLoadingDailyReportList(state) {
@@ -414,11 +421,15 @@ export function getAllPaymentListRevenue(pageIndex2: number, pageSize2: number) 
 }
 //---------------------------- GET ALL INVESTMENT------------------------------
 
-export function getInvestmentProjectID(projectId: string) {
+export function getInvestmentProjectID(projectId: string, pageIndex: number, pageSize: number) {
   return async () => {
     dispatch(slice.actions.startLoadingInvestmentList());
     try {
-      const response = await TransactionAPI.getsInvestment({ id: projectId });
+      const response = await TransactionAPI.getsInvestment({
+        projectId: projectId,
+        pageIndex: pageIndex,
+        pageSize: pageSize
+      });
       dispatch(slice.actions.getInvestmentListSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasGetInvestmentError(error));

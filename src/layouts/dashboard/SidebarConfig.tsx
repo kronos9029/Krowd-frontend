@@ -41,6 +41,11 @@ const sidebarConfig = [
         title: 'Đang đầu tư',
         path: PATH_DASHBOARD.projectInvested.list,
         icon: ICONS.project
+      },
+      {
+        title: 'Lịch sử đầu tư',
+        path: PATH_DASHBOARD.projectInvestment.list,
+        icon: ICONS.krowd
       }
     ]
   },

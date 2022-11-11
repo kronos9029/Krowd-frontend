@@ -10,7 +10,8 @@ import {
   Drawer,
   Tooltip,
   Typography,
-  CardActionArea
+  CardActionArea,
+  Avatar
 } from '@mui/material';
 // hooks
 import React from 'react';
@@ -28,6 +29,8 @@ import { MHidden } from '../../components/@material-extend';
 //
 import SidebarProjectConfig from './SidebarProjectConfig';
 import { DocIllustration } from '../../assets';
+import { getProjectListById } from 'redux/slices/krowd_slices/project';
+import { dispatch, RootState, useSelector } from 'redux/store';
 // ----------------------------------------------------------------------
 
 const DRAWER_WIDTH = 280;
@@ -106,7 +109,8 @@ export default function DashboardProjectSidebar({
 }: DashboardProjectSidebarProps) {
   const { pathname } = useLocation();
   const { user } = useAuth();
-
+  const { detailOfProject } = useSelector((state: RootState) => state.project);
+  const { detailOfProjectID: projectID, isLoadingDetailOfProjectID } = detailOfProject;
   const { isCollapse, collapseClick, collapseHover, onToggleCollapse, onHoverEnter, onHoverLeave } =
     useCollapseDrawer();
 
@@ -114,6 +118,7 @@ export default function DashboardProjectSidebar({
     if (isOpenSidebar) {
       onCloseSidebar();
     }
+    dispatch(getProjectListById(`${localStorage.getItem('projectId')}`));
   }, [pathname]);
 
   const renderContent = (
@@ -153,12 +158,12 @@ export default function DashboardProjectSidebar({
         {isCollapse ? (
           <MyAvatar sx={{ mx: 'auto', mb: 2 }} />
         ) : (
-          <Link underline="none" component={RouterLink} to={PATH_DASHBOARD.user.account}>
+          <Link underline="none" component={RouterLink} to={PATH_DASHBOARD_PROJECT.project.root}>
             <AccountStyle>
-              <MyAvatar />
+              <Avatar src={projectID?.image ?? ''} alt={''}></Avatar>
               <Box sx={{ ml: 2 }}>
                 <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                  {user?.fullName}
+                  {projectID?.name ?? ''}
                 </Typography>
               </Box>
             </AccountStyle>

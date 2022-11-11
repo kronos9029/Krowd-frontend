@@ -3,8 +3,25 @@ import { dispatch, RootState, useSelector } from '../../redux/store';
 import { DATA_TYPE, KrowdTable, RowData } from './krowd-table/KrowdTable';
 import { getWalletTransactionList } from 'redux/slices/krowd_slices/transaction';
 import { BlogPostsSearch } from 'components/_dashboard/project';
-import { Box, Button, Grid, List, ListItemButton, ListItemText } from '@mui/material';
+import {
+  Box,
+  Button,
+  Typography,
+  Card,
+  Grid,
+  Divider,
+  List,
+  ListItemButton,
+  ListItemText
+} from '@mui/material';
 import { getWalletList } from 'redux/slices/krowd_slices/wallet';
+import total from '@iconify/icons-eva/text-outline';
+import time from '@iconify/icons-bi/wallet-fill';
+import done from '@iconify/icons-bi/wallet-fill';
+import paytime from '@iconify/icons-bi/wallet-fill';
+import warning from '@iconify/icons-bi/wallet-fill';
+import Scrollbar from 'components/Scrollbar';
+import { Icon } from '@iconify/react';
 const TABLE_HEAD = [
   { id: 'idx', label: 'STT', align: 'center' },
   { id: 'id', label: 'MÃ GIAO DỊCH VÍ', align: 'left' },
@@ -21,23 +38,26 @@ export default function WalletTransactionTable() {
   const {
     isLoading,
     listOfWalletTransaction: list,
+    filterCount,
     numOfWalletTransaction
   } = walletTransactionState;
   const [selectedFilter, setSelectFilter] = useState('');
+  const [filter, setValueFilter] = useState('');
   const [pageIndex, setPageIndex] = useState(1);
   const [pageSize, setPageSize] = useState(5);
 
   const { walletList } = useSelector((state: RootState) => state.walletKrowd);
   const { listOfInvestorWallet } = walletList;
+
   useEffect(() => {
-    dispatch(getWalletTransactionList('', pageIndex ?? '1', pageSize));
+    dispatch(getWalletTransactionList(filter, pageIndex ?? '1', 5));
     dispatch(getWalletList());
-  }, [dispatch, pageIndex]);
+  }, [dispatch, pageIndex, filter]);
   const addToSelectedFilterList = async (newValue: string) => {
     setSelectFilter(newValue);
-    await dispatch(getWalletTransactionList(newValue, pageIndex ?? '1', pageSize));
+    setValueFilter(newValue);
+    await dispatch(getWalletTransactionList(newValue, pageIndex ?? '1', 5));
   };
-
   const getData = (): RowData[] => {
     if (!list) return [];
     return list.map<RowData>((_item, _idx) => {
@@ -132,6 +152,194 @@ export default function WalletTransactionTable() {
   };
   return (
     <>
+      <Scrollbar sx={{ mb: 4 }}>
+        <Card
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            mb: 5,
+            width: '1540px',
+            minWidth: 1000
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '220px'
+            }}
+            gap={2}
+          >
+            <Box>
+              <Icon icon={total} height={40} width={40} color={'#14b7cc'} />
+            </Box>
+            <Box>
+              <Typography sx={{ py: 0.5, fontSize: '700', color: '#14b7cc' }}>TẤT CẢ</Typography>
+              <Typography sx={{ fontSize: '20px', fontWeight: 700 }}>
+                {numOfWalletTransaction} giao dịch{' '}
+              </Typography>
+            </Box>
+          </Box>
+          <Divider
+            variant="fullWidth"
+            sx={{
+              borderWidth: '120px medium 1px 0px',
+              borderColor: '#14b7cc',
+              height: 'auto',
+              alignSelf: 'stretch',
+              borderStyle: 'dashed'
+            }}
+          />{' '}
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '280px'
+            }}
+            gap={2}
+          >
+            <Box>
+              <Icon icon={time} height={40} width={40} color={'#fc980b'} />
+            </Box>
+            <Box>
+              <Typography sx={{ py: 0.5, fontSize: '700', color: '#fc980b' }}>
+                VÍ TẠM THỜI
+              </Typography>
+              <Typography sx={{ fontSize: '20px', fontWeight: 700 }}>
+                {filterCount?.i1} giao dịch
+              </Typography>
+            </Box>
+          </Box>
+          <Divider
+            sx={{
+              borderWidth: '120px medium 1px 0px',
+              borderColor: '#14b7cc',
+              height: 'auto',
+              alignSelf: 'stretch',
+              borderStyle: 'dashed'
+            }}
+          />
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '280px'
+            }}
+            gap={2}
+          >
+            <Box>
+              <Icon icon={warning} height={40} width={40} color={'#14b7cc'} />
+            </Box>
+            <Box>
+              <Typography sx={{ py: 0.5, fontSize: '700', color: '#14b7cc' }}>
+                VÍ ĐẦU TƯ CHUNG
+              </Typography>
+              <Typography sx={{ fontSize: '20px', fontWeight: 700 }}>
+                {filterCount?.i2} giao dịch
+              </Typography>
+            </Box>
+          </Box>
+          <Divider
+            sx={{
+              borderWidth: '120px medium 1px 0px',
+              borderColor: '#14b7cc',
+              height: 'auto',
+              alignSelf: 'stretch',
+              borderStyle: 'dashed'
+            }}
+          />
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '280px'
+            }}
+            gap={2}
+          >
+            <Box>
+              <Icon icon={paytime} height={40} width={40} color={'#14b7cc'} />
+            </Box>
+            <Box>
+              <Typography sx={{ py: 0.5, fontSize: '700', color: '#14b7cc' }}>
+                VÍ ĐẦU TƯ DỰ ÁN
+              </Typography>
+              <Typography sx={{ fontSize: '20px', fontWeight: 700 }}>
+                {filterCount?.i3} giao dịch
+              </Typography>
+            </Box>
+          </Box>
+          <Divider
+            sx={{
+              borderWidth: '120px medium 1px 0px',
+              borderColor: '#14b7cc',
+              height: 'auto',
+              alignSelf: 'stretch',
+              borderStyle: 'dashed'
+            }}
+          />
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '320px'
+            }}
+            gap={2}
+          >
+            <Box>
+              <Icon icon={done} height={40} width={40} color={'green'} />
+            </Box>
+            <Box>
+              <Typography sx={{ py: 0.5, fontSize: '700', color: 'green' }}>
+                VÍ DỰ ÁN THANH TOÁN
+              </Typography>
+              <Typography sx={{ fontSize: '20px', fontWeight: 700 }}>
+                {filterCount?.i4} giao dịch{' '}
+              </Typography>
+            </Box>
+          </Box>
+          <Divider
+            sx={{
+              borderWidth: '120px medium 1px 0px',
+              borderColor: '#14b7cc',
+              height: 'auto',
+              alignSelf: 'stretch',
+              borderStyle: 'dashed'
+            }}
+          />
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '280px'
+            }}
+            gap={2}
+          >
+            <Box>
+              <Icon icon={done} height={40} width={40} color={'green'} />
+            </Box>
+            <Box>
+              <Typography sx={{ py: 0.5, fontSize: '700', color: 'green' }}>VÍ THU TIỀN</Typography>
+              <Typography sx={{ fontSize: '20px', fontWeight: 700 }}>
+                {filterCount?.i5} giao dịch{' '}
+              </Typography>
+            </Box>
+          </Box>
+        </Card>
+      </Scrollbar>
       <Grid container sx={{ backgroundColor: '#f7f7f7' }} mb={5}>
         <Grid container sx={{ py: 3, ml: 3, justifyContent: 'space-around' }}>
           {listOfInvestorWallet &&
@@ -153,7 +361,7 @@ export default function WalletTransactionTable() {
         </Grid>
       </Grid>
       <KrowdTable
-        headingTitle={`DANH SÁCH GIAO DỊCH Ví`}
+        headingTitle={`GIAO DỊCH Ví`}
         header={TABLE_HEAD}
         getData={getData}
         isLoading={isLoading}

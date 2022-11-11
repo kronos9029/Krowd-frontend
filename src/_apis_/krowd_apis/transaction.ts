@@ -55,10 +55,11 @@ async function getsPeriodRevenueHistory(params: { pageIndex: number; pageSize: n
   });
   return response;
 }
-async function getsInvestment({ id }: { id: string }) {
+async function getsInvestment(params: { projectId: string; pageIndex: number; pageSize: number }) {
   const headers = getHeader();
-  const response = await axios.get(REACT_APP_API_URL + `${API_INVESTMENT}?projectId=${id}`, {
-    headers: headers
+  const response = await axios.get(REACT_APP_API_URL + `${API_INVESTMENT}`, {
+    headers: headers,
+    params: params
   });
   return response;
 }

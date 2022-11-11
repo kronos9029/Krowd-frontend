@@ -50,10 +50,10 @@ const SidebarProjectConfig = [
     ]
   },
   {
-    subheader: 'Ví dự án',
+    subheader: 'Giao dịch',
     items: [
       {
-        title: 'Ví đầu tư dự án',
+        title: 'Đầu tư',
         path: PATH_DASHBOARD_PROJECT.wallet_project.walletP3,
         icon: ICONS.wallet
       }

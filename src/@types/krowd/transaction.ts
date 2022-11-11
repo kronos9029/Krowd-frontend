@@ -123,8 +123,22 @@ export type ListOfPeriodRevenuePayment = {
   createBy: string;
   status: string;
 };
+// ===================================INVESTMENT================================
 
 export type Investment = {
+  numOfInvestment: number;
+  listOfInvestment: ListOfInvestment[];
+  filterCount: FilterCountInvestment;
+};
+
+export type FilterCountInvestment = {
+  waiting: number;
+  success: number;
+  failed: number;
+  canceled: number;
+};
+
+export type ListOfInvestment = {
   id: string;
   investorId: string;
   totalPrice: number;
@@ -133,6 +147,12 @@ export type Investment = {
   createBy: string;
   updateDate: string;
   updateBy: string;
+  investorName: string;
+  investorImage: string;
+  investorEmail: string;
+  packageName: string;
+  packagePrice: number;
+  projectName: string;
   projectId: string;
   packageId: string;
   quantity: number;
