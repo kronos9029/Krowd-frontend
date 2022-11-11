@@ -30,27 +30,54 @@ export type Transaction = {
   createDate: string;
   type: string;
 };
+
+//GET ALL WALEET TRANSACTION
 export type WalletTransaction = {
+  numOfWalletTransaction: number;
+  listOfWalletTransaction: ListOfWalletTransaction[];
+  filterCount: FilterCount;
+};
+
+export type FilterCount = {
+  i1: number;
+  i2: number;
+  i3: number;
+  i4: number;
+  i5: number;
+  p1: null;
+  p2: null;
+  p3: null;
+  p4: null;
+  p5: null;
+  cashIn: number;
+  cashOut: number;
+  deposit: number;
+  withdraw: number;
+};
+
+export type ListOfWalletTransaction = {
   id: string;
-  userId: string;
-  paymentId: string;
-  systemWalletId: string;
-  projectWalletId: string;
-  investorWalletId: string;
+  paymentId: null | string;
+  systemWalletId: null;
+  projectWalletId: null | string;
+  investorWalletId: null | string;
   amount: number;
   description: string;
   type: string;
-  fromWalletId: string;
+  fromWalletId: null | string;
   toWalletId: string;
   fee: number;
-  createDate: Date | string;
+  createDate: string;
   createBy: string;
-  updateDate: Date | string;
-  updateBy: string;
-  isDeleted: boolean;
+};
+//GET ALL PAYMENT
+export type Payment = {
+  numOfPayment: number;
+  listOfInvestmentPayment: ListOfInvestmentPayment[];
+  listOfPeriodRevenuePayment: null;
 };
 
-export type Payment = {
+export type ListOfInvestmentPayment = {
   projectId: string;
   projectName: string;
   packageId: string;
@@ -70,6 +97,33 @@ export type Payment = {
   createBy: string;
   status: string;
 };
+//GET ALL REVENUE
+export type PaymentTypeRevenue = {
+  numOfPayment: number;
+  listOfInvestmentPayment: null;
+  listOfPeriodRevenuePayment: ListOfPeriodRevenuePayment[];
+};
+
+export type ListOfPeriodRevenuePayment = {
+  projectId: string;
+  projectName: string;
+  stageId: string;
+  stageName: string;
+  fromWalletName: string;
+  fee: null;
+  id: string;
+  periodRevenueId: string;
+  investmentId: null;
+  amount: number;
+  description: string;
+  type: string;
+  fromId: string;
+  toId: string;
+  createDate: string;
+  createBy: string;
+  status: string;
+};
+
 export type Investment = {
   id: string;
   investorId: string;
@@ -117,7 +171,12 @@ export type Bill = {
 };
 // ===================================WITH DRAW REQUEST================================
 
-export type WithDrawRequest = {
+export interface WithDrawRequest {
+  numOfWithdrawRequest: number;
+  listOfWithdrawRequest: ListOfWithdrawRequest[];
+}
+
+export interface ListOfWithdrawRequest {
   id: string;
   bankName: string;
   accountName: string;
@@ -125,12 +184,13 @@ export type WithDrawRequest = {
   description: string;
   amount: number;
   status: string;
-  refusalReason: string;
+  refusalReason: null;
   createDate: string;
   createBy: string;
   updateDate: string;
   updateBy: string;
-};
+}
+
 // ===================================WITH DRAW REQUEST================================
 export type PeriodRevenue = {
   id: string;

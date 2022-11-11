@@ -113,7 +113,11 @@ export default function WalletTransactionTable() {
                 'Nhận tiền từ VÍ TẠM ỨNG của bạn sang VÍ ĐẦU TƯ DỰ ÁN cho giai đoạn') ||
               (_item.description ===
                 'Transfer money from I3 wallet to P3 wallet to for stage payment' &&
-                'Chuyển tiền từ VÍ TẠM ỨNG của bạn sang VÍ ĐẦU TƯ DỰ ÁN'),
+                'Chuyển tiền từ VÍ TẠM ỨNG của bạn sang VÍ ĐẦU TƯ DỰ ÁN') ||
+              (_item.description ===
+              'Transfer money from I3 wallet to P3 wallet to for stage payment'
+                ? 'Chuyển tiền từ VÍ TẠM ỨNG của bạn sang VÍ ĐẦU TƯ DỰ ÁN'
+                : 'Đang cập nhật nội dung'),
             type: DATA_TYPE.TEXT
           },
           {

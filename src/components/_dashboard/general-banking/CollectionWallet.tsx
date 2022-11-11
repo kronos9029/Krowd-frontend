@@ -32,7 +32,8 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
-  Checkbox
+  Checkbox,
+  FormHelperText
 } from '@mui/material';
 // utils
 import { fCurrency } from '../../../utils/formatNumber';
@@ -53,6 +54,7 @@ import axios from 'axios';
 import { REACT_APP_API_URL } from 'config';
 import { useSnackbar } from 'notistack';
 import { PATH_DASHBOARD } from 'routes/paths';
+import * as Yup from 'yup';
 
 // ----------------------------------------------------------------------
 
@@ -104,9 +106,9 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
   const [walletIDTranferFrom, setWalletIDTranferFrom] = useState('');
   const [openModalTransfer, setOpenModalTransfer] = useState(false);
 
-  const ToWalletId = listOfInvestorWallet
-    .slice(1, 2)
-    .find((e: any) => e.walletType.name === 'Ví đầu tư chung');
+  const ToWalletId =
+    listOfInvestorWallet &&
+    listOfInvestorWallet.slice(1, 2).find((e: any) => e.walletType.name === 'Ví đầu tư chung');
 
   const handleClickRefeshBalance = async (v: Package) => {
     dispatch(getWalletByID(v.id));
@@ -153,6 +155,11 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
     return { Authorization: `Bearer ${token}` };
   }
   // CHuyển tiền
+  const TransferSchema = Yup.object().shape({
+    amount: Yup.number()
+      .required('Vui lòng nhập số tiền bạn cần chuyển')
+      .min(100000, 'Yêu cầu tối thiểu mỗi lần chuyển là 100,000đ')
+  });
   const formikTranfer = useFormik({
     initialValues: {
       fromWalletId: walletIDTranferFrom,
@@ -160,6 +167,7 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
       amount: 0
     },
     enableReinitialize: true,
+    validationSchema: TransferSchema,
 
     onSubmit: async (values, { setSubmitting, resetForm }) => {
       try {
@@ -199,7 +207,16 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
     getFieldProps: getFieldPropsTranfer,
     setFieldValue: setFieldValueTranfer
   } = formikTranfer;
+
   //Rút tiền
+  const WithDrawSchema = Yup.object().shape({
+    bankName: Yup.string().required('Yêu cầu nhập tên ngân hàng'),
+    bankAccount: Yup.string().required('Yêu cầu nhập tài khoản ngân hàng'),
+    accountName: Yup.string().required('Yêu cầu nhập tên chủ khoản'),
+    amount: Yup.number()
+      .required('Vui lòng nhập số tiền bạn cần rút')
+      .min(100000, 'Yêu cầu tối thiểu mỗi lần rút là 100,000đ')
+  });
   const formikWithDraw = useFormik({
     initialValues: {
       fromWalletId: walletIDWithDraw,
@@ -209,12 +226,13 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
       amount: 0
     },
     enableReinitialize: true,
+    validationSchema: WithDrawSchema,
 
     onSubmit: async (values, { setSubmitting, resetForm }) => {
       try {
         const headers = getHeaderFormData2();
         await axios
-          .post(REACT_APP_API_URL + `/withdraw_requestsRequest`, values, {
+          .post(REACT_APP_API_URL + `/withdraw_requests`, values, {
             headers: headers
           })
           .then((res) => {
@@ -473,7 +491,9 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                           <Form noValidate autoComplete="off" onSubmit={handleSubmitTranfer}>
                             <Tooltip title="Giao dịch tối thiểu là 100,000đ" placement="bottom-end">
                               <TextField
+                                required
                                 fullWidth
+                                type={'number'}
                                 label="Số tiền VND"
                                 {...getFieldPropsTranfer('amount')}
                                 sx={{ my: 2 }}
@@ -482,6 +502,11 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                                 }}
                               />
                             </Tooltip>
+                            {touchedTranfer.amount && errorsTranfer.amount && (
+                              <FormHelperText error sx={{ px: 2 }}>
+                                {touchedTranfer.amount && errorsTranfer.amount}
+                              </FormHelperText>
+                            )}
 
                             <Box sx={{ color: '#d58311' }}>
                               <Typography sx={{ my: 1, fontWeight: 500 }}>Lưu ý:</Typography>
@@ -590,7 +615,11 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                               {...getFieldPropsWithDraw('bankName')}
                               sx={{ mt: 2 }}
                             />
-
+                            {touchedWithDraw.bankName && errorsWithDraw.bankName && (
+                              <FormHelperText error sx={{ px: 2 }}>
+                                {touchedWithDraw.bankName && errorsWithDraw.bankName}
+                              </FormHelperText>
+                            )}
                             <TextField
                               required
                               fullWidth
@@ -598,7 +627,11 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                               {...getFieldPropsWithDraw('bankAccount')}
                               sx={{ mt: 2 }}
                             />
-
+                            {touchedWithDraw.bankAccount && errorsWithDraw.bankAccount && (
+                              <FormHelperText error sx={{ px: 2 }}>
+                                {touchedWithDraw.bankAccount && errorsWithDraw.bankAccount}
+                              </FormHelperText>
+                            )}
                             <TextField
                               required
                               fullWidth
@@ -606,10 +639,16 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                               {...getFieldPropsWithDraw('accountName')}
                               sx={{ mt: 2 }}
                             />
-
-                            <Tooltip title="Giao dịch tối thiểu là 10,000đ" placement="bottom-end">
+                            {touchedWithDraw.accountName && errorsWithDraw.accountName && (
+                              <FormHelperText error sx={{ px: 2 }}>
+                                {touchedWithDraw.accountName && errorsWithDraw.accountName}
+                              </FormHelperText>
+                            )}
+                            <Tooltip title="Giao dịch tối thiểu là 100,000đ" placement="bottom-end">
                               <TextField
+                                required
                                 fullWidth
+                                type={'number'}
                                 label="Số tiền VND"
                                 {...getFieldPropsWithDraw('amount')}
                                 sx={{ mt: 2 }}
@@ -618,6 +657,12 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                                 }}
                               />
                             </Tooltip>
+                            {touchedWithDraw.amount && errorsWithDraw.amount && (
+                              <FormHelperText error sx={{ px: 2 }}>
+                                {touchedWithDraw.amount && errorsWithDraw.amount}
+                              </FormHelperText>
+                            )}
+
                             <Box display={'flex'} alignItems={'center'}>
                               <Checkbox onClick={handleCheckBox} />
                               <Typography>Sử dụng thông tin hiện có</Typography>

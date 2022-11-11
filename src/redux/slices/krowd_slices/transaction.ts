@@ -8,8 +8,12 @@ import {
   Transaction,
   WalletTransaction,
   Bill,
-  WithDrawRequest,
-  PeriodRevenue
+  ListOfWithdrawRequest,
+  PeriodRevenue,
+  ListOfInvestmentPayment,
+  ListOfPeriodRevenuePayment,
+  ListOfWalletTransaction,
+  FilterCount
 } from '../../../@types/krowd/transaction';
 import { TransactionAPI } from '../../../_apis_/krowd_apis/transaction';
 // ----------------------------------------------------------------------
@@ -23,13 +27,14 @@ type TransactionState = {
   };
   transactionWithdrawState: {
     isLoading: boolean;
-    TransactionWithdrawList: WithDrawRequest[];
+    listOfWithdrawRequest: ListOfWithdrawRequest[];
+    numOfWithdrawRequest: number;
 
     error: boolean;
   };
   transactionWithdrawDetail: {
     isLoading: boolean;
-    TransactionWithdrawDetail: WithDrawRequest | null;
+    TransactionWithdrawDetail: ListOfWithdrawRequest | null;
     error: boolean;
   };
   periodRevenueState: {
@@ -56,13 +61,15 @@ type TransactionState = {
   };
   walletTransactionState: {
     isLoading: boolean;
-    listOfWalletTransaction: WalletTransaction[];
+    listOfWalletTransaction: ListOfWalletTransaction[];
+    FilterCount: FilterCount | null;
     numOfWalletTransaction: number;
     error: boolean;
   };
   paymentListState: {
     isLoading: boolean;
-    paymentList: Payment[];
+    numOfPayment: number;
+    listOfInvestmentPayment: ListOfInvestmentPayment[];
     error: boolean;
   };
   //====================BILLS IN DAILY REPORT=========================
@@ -74,7 +81,8 @@ type TransactionState = {
   };
   paymentListRevenueState: {
     isLoadingPeriodRevenue: boolean;
-    paymentListPeriodRevenue: Payment[];
+    numOfPayment: number;
+    listOfPeriodRevenuePayment: ListOfPeriodRevenuePayment[];
     errorPeriodRevenue: boolean;
   };
 };
@@ -88,7 +96,8 @@ const initialState: TransactionState = {
   },
   transactionWithdrawState: {
     isLoading: false,
-    TransactionWithdrawList: [],
+    numOfWithdrawRequest: 0,
+    listOfWithdrawRequest: [],
     error: false
   },
   transactionWithdrawDetail: {
@@ -122,12 +131,14 @@ const initialState: TransactionState = {
   walletTransactionState: {
     isLoading: false,
     listOfWalletTransaction: [],
+    FilterCount: null,
     numOfWalletTransaction: 0,
     error: false
   },
   paymentListState: {
     isLoading: false,
-    paymentList: [],
+    numOfPayment: 0,
+    listOfInvestmentPayment: [],
     error: false
   },
   dailyReportDetails: {
@@ -138,7 +149,8 @@ const initialState: TransactionState = {
   },
   paymentListRevenueState: {
     isLoadingPeriodRevenue: false,
-    paymentListPeriodRevenue: [],
+    numOfPayment: 0,
+    listOfPeriodRevenuePayment: [],
     errorPeriodRevenue: false
   }
 };
@@ -169,7 +181,7 @@ const slice = createSlice({
     },
     getWithdrawTransactionListSuccess(state, action) {
       state.transactionWithdrawState.isLoading = false;
-      state.transactionWithdrawState.TransactionWithdrawList = action.payload;
+      state.transactionWithdrawState = action.payload;
     },
     // ------ GET ALL WITHDRAW REQUEST TRANSACTION BY ID------------ //
     startLoadingWithdrawTransactionById(state) {
@@ -217,7 +229,7 @@ const slice = createSlice({
     },
     getPaymentListSuccess(state, action) {
       state.paymentListState.isLoading = false;
-      state.paymentListState.paymentList = action.payload;
+      state.paymentListState = action.payload;
     },
     // ------ GET ALL REVENUE ------------ //
     startLoadingPeriodRevenueList(state) {
@@ -229,7 +241,7 @@ const slice = createSlice({
     },
     getPeriodRevenueListSuccess(state, action) {
       state.paymentListRevenueState.isLoadingPeriodRevenue = false;
-      state.paymentListRevenueState.paymentListPeriodRevenue = action.payload;
+      state.paymentListRevenueState = action.payload;
     },
     // ------ GET ALL INVESTMENT ------------ //
     startLoadingInvestmentList(state) {

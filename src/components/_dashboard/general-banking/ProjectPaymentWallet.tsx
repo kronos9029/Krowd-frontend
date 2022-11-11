@@ -17,7 +17,8 @@ import {
   Button,
   Grid,
   Tooltip,
-  TextField
+  TextField,
+  FormHelperText
 } from '@mui/material';
 // utils
 import { fCurrency, fPercent } from '../../../utils/formatNumber';
@@ -38,6 +39,8 @@ import { LoadingButton } from '@mui/lab';
 import dolarMoney from '@iconify/icons-ant-design/dollar-circle-outlined';
 import InfoRecieve from '@iconify/icons-ant-design/solution-outline';
 import secureInfo from '@iconify/icons-ant-design/security-scan-outlined';
+import * as Yup from 'yup';
+
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Card)(({ theme }) => ({
@@ -97,7 +100,11 @@ export default function ProjectPaymentWallet({ wallet }: { wallet: Wallet }) {
     const token = getToken();
     return { Authorization: `Bearer ${token}` };
   }
-
+  const TransferSchema = Yup.object().shape({
+    amount: Yup.number()
+      .required('Vui lòng nhập số tiền bạn cần chuyển')
+      .min(100000, 'Yêu cầu tối thiểu mỗi lần chuyển là 100,000đ')
+  });
   const formikTranfer = useFormik({
     initialValues: {
       fromWalletId: walletIDTranferFrom,
@@ -105,6 +112,7 @@ export default function ProjectPaymentWallet({ wallet }: { wallet: Wallet }) {
       amount: 0
     },
     enableReinitialize: true,
+    validationSchema: TransferSchema,
 
     onSubmit: async (values, { setSubmitting, resetForm }) => {
       try {
@@ -370,7 +378,9 @@ export default function ProjectPaymentWallet({ wallet }: { wallet: Wallet }) {
                         <Form noValidate autoComplete="off" onSubmit={handleSubmitTranfer}>
                           <Tooltip title="Giao dịch tối thiểu là 100,000đ" placement="bottom-end">
                             <TextField
+                              required
                               fullWidth
+                              type={'number'}
                               label="Số tiền VND"
                               {...getFieldPropsTranfer('amount')}
                               sx={{ my: 2 }}
@@ -379,7 +389,11 @@ export default function ProjectPaymentWallet({ wallet }: { wallet: Wallet }) {
                               }}
                             />
                           </Tooltip>
-
+                          {touchedTranfer.amount && errorsTranfer.amount && (
+                            <FormHelperText error sx={{ px: 2 }}>
+                              {touchedTranfer.amount && errorsTranfer.amount}
+                            </FormHelperText>
+                          )}
                           <Box sx={{ color: '#d58311' }}>
                             <Typography sx={{ my: 1, fontWeight: 500 }}>Lưu ý:</Typography>
 

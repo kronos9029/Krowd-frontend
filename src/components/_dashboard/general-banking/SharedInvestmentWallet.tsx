@@ -19,7 +19,8 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
-  Checkbox
+  Checkbox,
+  FormHelperText
 } from '@mui/material';
 // utils
 import { fCurrency, fPercent } from '../../../utils/formatNumber';
@@ -51,6 +52,7 @@ import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 // ----------------------------------------------------------------------
 import check2Fill from '@iconify/icons-eva/checkmark-circle-2-fill';
 import { MIconButton } from 'components/@material-extend';
+import * as Yup from 'yup';
 
 const RootStyle = styled(Card)(({ theme }) => ({
   width: '100%',
@@ -175,6 +177,14 @@ export default function SharedInvestmentWallet({ wallet }: { wallet: Wallet }) {
   const { errors, values, touched, isSubmitting, handleSubmit, getFieldProps, setFieldValue } =
     formik;
   //Rút tiền
+  const WithDrawSchema = Yup.object().shape({
+    bankName: Yup.string().required('Yêu cầu nhập tên ngân hàng'),
+    bankAccount: Yup.string().required('Yêu cầu nhập tài khoản ngân hàng'),
+    accountName: Yup.string().required('Yêu cầu nhập tên chủ khoản'),
+    amount: Yup.number()
+      .required('Vui lòng nhập số tiền bạn cần rút')
+      .min(100000, 'Yêu cầu tối thiểu mỗi lần rút là 100,000đ')
+  });
   const formikWithDraw = useFormik({
     initialValues: {
       fromWalletId: walletIDWithDraw,
@@ -184,12 +194,12 @@ export default function SharedInvestmentWallet({ wallet }: { wallet: Wallet }) {
       amount: 0
     },
     enableReinitialize: true,
-
+    validationSchema: WithDrawSchema,
     onSubmit: async (values, { setSubmitting, resetForm }) => {
       try {
         const headers = getHeaderFormData2();
         await axios
-          .post(REACT_APP_API_URL + `/WithdrawRequest`, values, {
+          .post(REACT_APP_API_URL + `/withdraw_requests`, values, {
             headers: headers
           })
           .then((res) => {
@@ -478,7 +488,11 @@ export default function SharedInvestmentWallet({ wallet }: { wallet: Wallet }) {
                             {...getFieldPropsWithDraw('bankName')}
                             sx={{ mt: 2 }}
                           />
-
+                          {touchedWithDraw.bankName && errorsWithDraw.bankName && (
+                            <FormHelperText error sx={{ px: 2 }}>
+                              {touchedWithDraw.bankName && errorsWithDraw.bankName}
+                            </FormHelperText>
+                          )}
                           <TextField
                             required
                             fullWidth
@@ -486,7 +500,11 @@ export default function SharedInvestmentWallet({ wallet }: { wallet: Wallet }) {
                             {...getFieldPropsWithDraw('bankAccount')}
                             sx={{ mt: 2 }}
                           />
-
+                          {touchedWithDraw.bankAccount && errorsWithDraw.bankAccount && (
+                            <FormHelperText error sx={{ px: 2 }}>
+                              {touchedWithDraw.bankAccount && errorsWithDraw.bankAccount}
+                            </FormHelperText>
+                          )}
                           <TextField
                             required
                             fullWidth
@@ -494,10 +512,15 @@ export default function SharedInvestmentWallet({ wallet }: { wallet: Wallet }) {
                             {...getFieldPropsWithDraw('accountName')}
                             sx={{ mt: 2 }}
                           />
-
-                          <Tooltip title="Giao dịch tối thiểu là 10,000đ" placement="bottom-end">
+                          {touchedWithDraw.accountName && errorsWithDraw.accountName && (
+                            <FormHelperText error sx={{ px: 2 }}>
+                              {touchedWithDraw.accountName && errorsWithDraw.accountName}
+                            </FormHelperText>
+                          )}
+                          <Tooltip title="Giao dịch tối thiểu là 100,000đ" placement="bottom-end">
                             <TextField
                               fullWidth
+                              required
                               label="Số tiền VND"
                               {...getFieldPropsWithDraw('amount')}
                               sx={{ mt: 2 }}
@@ -506,6 +529,11 @@ export default function SharedInvestmentWallet({ wallet }: { wallet: Wallet }) {
                               }}
                             />
                           </Tooltip>
+                          {touchedWithDraw.amount && errorsWithDraw.amount && (
+                            <FormHelperText error sx={{ px: 2 }}>
+                              {touchedWithDraw.amount && errorsWithDraw.amount}
+                            </FormHelperText>
+                          )}
                           <Box display={'flex'} alignItems={'center'}>
                             <Checkbox onClick={handleCheckBox} />
                             <Typography>Sử dụng thông tin hiện có</Typography>

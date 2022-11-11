@@ -13,7 +13,9 @@ import {
   FormControlLabel,
   Radio,
   Modal,
-  Dialog
+  Dialog,
+  FormHelperText,
+  Divider
 } from '@mui/material';
 // components
 import Page from '../components/Page';
@@ -33,6 +35,8 @@ import { useSnackbar } from 'notistack';
 import { REACT_APP_API_URL } from 'config';
 import axios from 'axios';
 import { LoadingButton } from '@mui/lab';
+import MainFooter from 'layouts/main/MainFooter';
+import * as Yup from 'yup';
 
 // ----------------------------------------------------------------------
 
@@ -58,11 +62,17 @@ export default function PageTopUp() {
     const token = getToken();
     return { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` };
   }
-
+  const TransferSchema = Yup.object().shape({
+    amount: Yup.number()
+      .required('Vui lòng nhập số tiền')
+      .min(100000, 'Yêu cầu tối thiểu mỗi lần nạp là 100,000đ')
+  });
   const formik = useFormik({
     initialValues: {
       amount: 0
     },
+    validationSchema: TransferSchema,
+
     onSubmit: async (values, { setSubmitting, resetForm }) => {
       try {
         const formData = new FormData();
@@ -97,7 +107,6 @@ export default function PageTopUp() {
 
   const { errors, values, touched, isSubmitting, handleSubmit, getFieldProps, setFieldValue } =
     formik;
-  console.log(formik);
 
   const { isLoading, walletList } = useSelector((state: RootState) => state.walletKrowd);
   const { listOfInvestorWallet } = walletList;
@@ -121,59 +130,44 @@ export default function PageTopUp() {
               Krowd - Nạp tiền
             </Box>
           </Container>
-          <Container>
-            <Grid container sx={{ flexWrap: 'wrap-reverse' }}>
-              <Grid sx={{ display: 'flex' }}>
-                <Box display={'flex'} height={230}>
-                  <Button sx={{ width: '40%', height: '50%' }}>
-                    <img
-                      style={{ width: '140px', height: '87px' }}
-                      src="/static/icons/navbar/VNPay.svg"
-                    />
-                  </Button>
-                  <Button sx={{ width: '40%', height: '50%' }}>
-                    <img
-                      style={{ width: '140px', height: '87px' }}
-                      src="/static/icons/navbar/momo.jpg"
-                    />
-                  </Button>
-                  <Button sx={{ width: '40%', height: '50%' }}>
-                    <img
-                      style={{ width: '140px', height: '87px' }}
-                      src="/static/icons/navbar/VNPay.svg"
-                    />
-                  </Button>
-                  <Button sx={{ width: '40%', height: '50%' }}>
-                    <img
-                      style={{ width: '140px', height: '87px' }}
-                      src="/static/icons/navbar/momo.jpg"
-                    />
-                  </Button>
-                  <Button sx={{ width: '40%', height: '50%' }}>
-                    <img
-                      style={{ width: '140px', height: '87px' }}
-                      src="/static/icons/navbar/VNPay.svg"
-                    />
-                  </Button>
-                  <Button sx={{ width: '40%', height: '50%' }}>
-                    <img
-                      style={{ width: '140px', height: '87px' }}
-                      src="/static/icons/navbar/momo.jpg"
-                    />
-                  </Button>
-                </Box>
-              </Grid>
-            </Grid>
-          </Container>
         </Grid>
       </Grid>
-
       <Container>
-        <Box sx={{ maxWidth: 480, margin: 'auto', textAlign: 'center' }}>
-          <Typography variant="h6" sx={{ mb: 2 }}>
+        <Box sx={{ margin: 'auto', textAlign: 'center' }}>
+          <Typography variant="h3" sx={{ mb: 2 }}>
             Thanh toán tiện dụng với Momo
           </Typography>
-
+        </Box>
+        <Box sx={{ width: 280, margin: 'auto', textAlign: 'center', mb: 2 }}>
+          <img style={{ width: '100%', height: '100%' }} src="/static/icons/navbar/momo.jpg" />
+        </Box>
+        {/* <Button sx={{ width: '40%', height: '50%' }}>
+                    <img
+                      style={{ width: '140px', height: '87px' }}
+                      src="/static/icons/navbar/VNPay.svg"
+                    />
+                  </Button> */}
+        {/* <Button sx={{ width: '40%', height: '50%' }}>
+                    <img
+                      style={{ width: '140px', height: '87px' }}
+                      src="/static/icons/navbar/momo.jpg"
+                    />
+                  </Button> */}
+        {/* <Button sx={{ width: '40%', height: '50%' }}>
+                    <img
+                      style={{ width: '140px', height: '87px' }}
+                      src="/static/icons/navbar/VNPay.svg"
+                    />
+                  </Button> */}
+        {/* <Button sx={{ width: '40%', height: '50%' }}>
+                    <img
+                      style={{ width: '140px', height: '87px' }}
+                      src="/static/icons/navbar/momo.jpg"
+                    />
+                  </Button> */}
+      </Container>
+      <Container>
+        <Box sx={{ maxWidth: 480, margin: 'auto', textAlign: 'center' }} pb={7}>
           <Card>
             <Box sx={{ p: 2 }}>
               <Box
@@ -197,11 +191,18 @@ export default function PageTopUp() {
               <FormikProvider value={formik}>
                 <Form noValidate autoComplete="off" onSubmit={handleSubmit}>
                   <TextField
+                    required
                     fullWidth
+                    type={'number'}
                     label="Số tiền cần nạp"
                     {...getFieldProps('amount')}
                     sx={{ mt: 5 }}
                   />
+                  {touched.amount && errors.amount && (
+                    <FormHelperText error sx={{ px: 2 }}>
+                      {touched.amount && errors.amount}
+                    </FormHelperText>
+                  )}
                   <RadioGroup row sx={{ my: 2 }} {...getFieldProps('amount')}>
                     <FormControlLabel
                       value="500000"
@@ -243,6 +244,8 @@ export default function PageTopUp() {
           </Card>
         </Box>
       </Container>
+      <Divider />
+      <MainFooter />
     </RootStyle>
   );
 }

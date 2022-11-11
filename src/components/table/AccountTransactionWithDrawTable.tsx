@@ -38,7 +38,7 @@ export default function AccountTransactionWithDrawTable() {
   const { transactionWithdrawState, transactionWithdrawDetail } = useSelector(
     (state: RootState) => state.transactionKrowd
   );
-  const { isLoading, TransactionWithdrawList: list } = transactionWithdrawState;
+  const { isLoading, listOfWithdrawRequest: list, numOfWithdrawRequest } = transactionWithdrawState;
   const { TransactionWithdrawDetail } = transactionWithdrawDetail;
   const [pageIndex, setPageIndex] = useState(1);
   const [pageSize, setPageSize] = useState(5);
@@ -128,7 +128,7 @@ export default function AccountTransactionWithDrawTable() {
         paging={{
           pageIndex,
           pageSize: pageSize,
-          numberSize: 10,
+          numberSize: numOfWithdrawRequest,
 
           handleNext() {
             setPageIndex(pageIndex + 1);

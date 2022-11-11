@@ -18,22 +18,34 @@ const TABLE_HEAD = [
   { id: 'createDate', label: 'NGÀY THỰC HIỆN', align: 'center' },
   { id: 'status', label: 'TRẠNG THÁI', align: 'left' }
 ];
+const TABLE_HEAD_REVENUE = [
+  { id: 'idx', label: 'STT', align: 'center' },
+  { id: 'projectName', label: 'TÊN DỰ ÁN', align: 'left' },
+  { id: 'packageName', label: 'KỲ', align: 'left' },
+  { id: 'fromWalletName', label: 'NGUỒN TIỀN', align: 'left' },
+  { id: 'amount', label: 'SỐ TIỀN', align: 'center' },
+  { id: 'description', label: 'MÔ TẢ GIAO DỊCH', align: 'center' },
+  { id: '', label: '', align: 'left' }
+];
 
 export default function PaymentProjectTable() {
   const { paymentListState, paymentListRevenueState } = useSelector(
     (state: RootState) => state.transactionKrowd
   );
-  const { isLoading, paymentList: list } = paymentListState;
-  const { isLoadingPeriodRevenue, paymentListPeriodRevenue: listPeriodRevenue } =
-    paymentListRevenueState;
+  const { isLoading, listOfInvestmentPayment: list, numOfPayment } = paymentListState;
+  const {
+    isLoadingPeriodRevenue,
+    listOfPeriodRevenuePayment: listPeriodRevenue,
+    numOfPayment: numberOfRevenue
+  } = paymentListRevenueState;
   const [openStage, setOpenStage] = useState('INVESTMENT');
   const [pageIndex2, setPageIndex2] = useState(1);
   const [pageSize2, setPageSize2] = useState(5);
   const [pageIndex, setPageIndex] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   useEffect(() => {
-    dispatch(getAllPaymentList(pageIndex, pageSize));
-    dispatch(getAllPaymentListRevenue(pageIndex2, pageSize2));
+    dispatch(getAllPaymentList(pageIndex, 5));
+    dispatch(getAllPaymentListRevenue(pageIndex2, 8));
   }, [dispatch, pageIndex, pageIndex2]);
 
   const handleClickOpenStage = () => {
@@ -118,29 +130,29 @@ export default function PaymentProjectTable() {
               (_item.projectName === 'Dự án không còn tồn tại' ? 'red' : 'black')
           },
           {
-            name: 'packageName',
-            value: _item.packageName,
+            name: 'stageName',
+            value: _item.stageName,
+            type: DATA_TYPE.TEXT
+          },
+          {
+            name: 'fromWalletName',
+            value: _item.fromWalletName,
             type: DATA_TYPE.TEXT
           },
 
-          {
-            name: 'investedQuantity',
-            value: `${_item.investedQuantity} Gói`,
-            type: DATA_TYPE.TEXT
-          },
           {
             name: 'amount',
             value: _item.amount,
             type: DATA_TYPE.NUMBER_FORMAT
           },
           {
-            name: 'createDate',
-            value: _item.createDate,
-            type: DATA_TYPE.DATE
+            name: 'description',
+            value: _item.description,
+            type: DATA_TYPE.TEXT
           },
           {
             name: 'status',
-            value: _item.status === 'SUCCESS' ? 'Mua thành công' : 'Mua thất bại',
+            value: _item.status === 'SUCCESS' ? 'Thành công' : 'Thất bại',
             type: DATA_TYPE.TEXT,
             textColor: _item.status === 'SUCCESS' ? 'rgb(102, 187, 106)' : 'red'
           }
@@ -183,7 +195,7 @@ export default function PaymentProjectTable() {
           paging={{
             pageIndex,
             pageSize: pageSize,
-            numberSize: 10,
+            numberSize: numOfPayment,
 
             handleNext() {
               setPageIndex(pageIndex + 1);
@@ -198,21 +210,21 @@ export default function PaymentProjectTable() {
       ) : (
         <KrowdTable
           headingTitle="DANH SÁCH DOANH THU THEO KỲ"
-          header={TABLE_HEAD}
+          header={TABLE_HEAD_REVENUE}
           getData={getData2}
           isLoading={isLoadingPeriodRevenue}
           paging={{
             pageIndex,
             pageSize: pageSize2,
-            numberSize: 10,
+            numberSize: numberOfRevenue,
 
             handleNext() {
-              setPageIndex(pageIndex2 + 1);
-              setPageSize(pageSize2 + 5);
+              setPageIndex2(pageIndex2 + 1);
+              setPageSize2(pageSize2 + 5);
             },
             handlePrevious() {
-              setPageIndex(pageIndex2 - 1);
-              setPageSize(pageSize2 - 5);
+              setPageIndex2(pageIndex2 - 1);
+              setPageSize2(pageSize2 - 5);
             }
           }}
           // viewPath={PATH_DASHBOARD.business.details}
