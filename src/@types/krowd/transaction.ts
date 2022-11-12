@@ -39,6 +39,7 @@ export type WalletTransaction = {
 };
 
 export type FilterCount = {
+  all: number;
   i1: number;
   i2: number;
   i3: number;
@@ -136,6 +137,7 @@ export type FilterCountInvestment = {
   success: number;
   failed: number;
   canceled: number;
+  all: number;
 };
 
 export type ListOfInvestment = {

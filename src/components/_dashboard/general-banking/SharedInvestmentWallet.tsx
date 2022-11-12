@@ -484,7 +484,7 @@ export default function SharedInvestmentWallet({ wallet }: { wallet: Wallet }) {
                           <TextField
                             required
                             fullWidth
-                            label="Tài khoản ngân hàng"
+                            label="Tên ngân hàng"
                             {...getFieldPropsWithDraw('bankName')}
                             sx={{ mt: 2 }}
                           />

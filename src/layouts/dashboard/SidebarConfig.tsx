@@ -72,12 +72,12 @@ const sidebarConfig = [
         title: 'Thanh toán',
         path: PATH_DASHBOARD.transaction.payments,
         icon: ICONS.payment
-      },
-      {
-        title: 'Lịch sử doanh thu',
-        path: PATH_DASHBOARD.transaction.periodRevenue,
-        icon: ICONS.payment
       }
+      // {
+      //   title: 'Lịch sử doanh thu',
+      //   path: PATH_DASHBOARD.transaction.periodRevenue,
+      //   icon: ICONS.payment
+      // }
     ]
   },
   {

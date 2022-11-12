@@ -65,7 +65,11 @@ export default function ProjectReportRevenue() {
               (_item.updateBy === 'DENIED' && 'Đã bị từ chối') ||
               (_item.updateBy === 'WAITING_FOR_APPROVAL' && 'Đang chờ duyệt') ||
               (_item.updateBy === 'DRAFT' && 'Bản nháp'),
-            type: DATA_TYPE.TEXT_FORMAT
+            type: DATA_TYPE.TEXT_FORMAT,
+            textColor:
+              (_item.updateBy === 'Client' && 'green') ||
+              (_item.updateBy === 'null' && 'red') ||
+              (_item.updateBy === 'null' ? 'red' : 'red')
           }
         ]
       };

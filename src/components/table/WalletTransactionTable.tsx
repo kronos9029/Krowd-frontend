@@ -180,7 +180,7 @@ export default function WalletTransactionTable() {
             <Box>
               <Typography sx={{ py: 0.5, fontSize: '700', color: '#14b7cc' }}>TẤT CẢ</Typography>
               <Typography sx={{ fontSize: '20px', fontWeight: 700 }}>
-                {numOfWalletTransaction} giao dịch{' '}
+                {filterCount?.all} giao dịch{' '}
               </Typography>
             </Box>
           </Box>

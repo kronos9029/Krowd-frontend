@@ -29,7 +29,7 @@ export default function InvestmentTableAll() {
   const [pageIndex, setPageIndex] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   useEffect(() => {
-    dispatch(getInvestmentProjectID(projectId ?? '', pageIndex, 5));
+    dispatch(getInvestmentProjectID('', pageIndex, 5));
   }, [dispatch, pageIndex]);
 
   const getData = (): RowData[] => {
@@ -123,7 +123,7 @@ export default function InvestmentTableAll() {
             <Box>
               <Typography sx={{ py: 0.5, fontSize: '700', color: '#14b7cc' }}>TẤT CẢ</Typography>
               <Typography sx={{ fontSize: '20px', fontWeight: 700 }}>
-                {numOfInvestment} lần đầu tư{' '}
+                {filterCount?.all} lần đầu tư{' '}
               </Typography>
             </Box>
           </Box>
