@@ -9,5 +9,5 @@ const breakpoints = {
     xl: 1536
   }
 };
-//aaaaaaa
+
 export default breakpoints;
