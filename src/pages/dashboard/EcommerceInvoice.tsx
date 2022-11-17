@@ -28,7 +28,6 @@ import Page from '../../components/Page';
 import Label from '../../components/Label';
 import Scrollbar from '../../components/Scrollbar';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
-import { InvoiceToolbar } from '../../components/_dashboard/e-commerce/invoice';
 
 // ----------------------------------------------------------------------
 
@@ -89,8 +88,6 @@ export default function EcommerceInvoice() {
             { name: 'Invoice' }
           ]}
         />
-
-        <InvoiceToolbar invoice={INVOICE} />
 
         <Card sx={{ pt: 5, px: 5 }}>
           <Grid container>
