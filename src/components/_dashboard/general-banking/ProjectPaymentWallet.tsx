@@ -297,9 +297,9 @@ export default function ProjectPaymentWallet({ wallet }: { wallet: Wallet }) {
                               </Typography>
                             </Box>
                           </Card>
-                          <Box my={2} p={2}>
+                          {/* <Box my={2} p={2}>
                             <Typography>Chưa cập nhật</Typography>
-                          </Box>
+                          </Box> */}
                         </Container>
                       </Stack>
                       <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>

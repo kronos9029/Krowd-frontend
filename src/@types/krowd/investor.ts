@@ -35,3 +35,18 @@ export type Role = {
   updateBy: Date | string | number;
   isDeleted: boolean;
 };
+
+//================================NOTIFICATION=============================
+export type Notification = {
+  total: number;
+  new: number;
+  details: NotificationDetail[];
+};
+
+export type NotificationDetail = {
+  title: string;
+  entityId: string;
+  image: string;
+  createDate: string;
+  seen: boolean;
+};

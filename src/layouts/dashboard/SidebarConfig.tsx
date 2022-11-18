@@ -81,11 +81,11 @@ const sidebarConfig = [
     ]
   },
   {
-    subheader: 'Khuyến mãi',
+    subheader: 'Khuyến mãi (Đang phát triển)',
     items: [
       {
         title: 'Phiếu ưu đãi',
-        path: PATH_DASHBOARD.projectInvested.list,
+        path: PATH_DASHBOARD.general.banking,
         icon: ICONS.voucher
       }
     ]

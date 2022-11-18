@@ -94,8 +94,17 @@ async function get({ id }: { id: string }) {
   });
   return response;
 }
+async function getNotification(params: { userId: string; seen: boolean }) {
+  const headers = getHeader();
+  const response = await axios.get(REACT_APP_API_URL + `/notifications`, {
+    headers: headers,
+    params: params
+  });
+  return response;
+}
 export const InvestorAPI = {
   put: put,
   postImage: postImage,
+  getNotification: getNotification,
   get: get
 };

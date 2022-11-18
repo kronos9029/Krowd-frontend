@@ -3,7 +3,7 @@ import { dispatch } from '../../store';
 // utils
 import axios from 'axios';
 import { ListOfUser } from '../../../@types/krowd/user';
-import { User_Investor } from '../../../@types/krowd/investor';
+import { NotificationDetail, User_Investor } from '../../../@types/krowd/investor';
 import { InvestorAPI } from '_apis_/krowd_apis/investor';
 
 // ----------------------------------------------------------------------
@@ -20,6 +20,13 @@ type UserState = {
     UserDetail: User_Investor | null;
     error: boolean;
   };
+  NotificationDetailState: {
+    isLoading: boolean;
+    new: number;
+    total: number;
+    details: NotificationDetail[];
+    error: boolean;
+  };
   users: ListOfUser[];
   user: ListOfUser | null;
 };
@@ -33,6 +40,13 @@ const initialState: UserState = {
   UserDetailState: {
     isLoading: false,
     UserDetail: null,
+    error: false
+  },
+  NotificationDetailState: {
+    isLoading: false,
+    new: 0,
+    total: 0,
+    details: [],
     error: false
   }
 };
@@ -58,13 +72,13 @@ const slice = createSlice({
       state.UserKrowd = action.payload;
     },
 
-    //-------------------DETAIL OF BUSINESS------------------
+    //-------------------DETAIL OF USER------------------
     // START LOADING
     startUserKrowdDetailLoading(state) {
       state.UserDetailState.isLoading = true;
     },
 
-    // GET MANAGE BUSINESS DETAIL
+    // GET MANAGE USER DETAIL
     getUserKrowdByIdSuccess(state, action) {
       state.UserDetailState.isLoading = false;
       state.UserDetailState.UserDetail = action.payload;
@@ -73,6 +87,22 @@ const slice = createSlice({
     hasUserKrowdDetailError(state, action) {
       state.UserDetailState.isLoading = false;
       state.UserDetailState.error = action.payload;
+    },
+    //-------------------DETAIL OF NOTIFICATION------------------
+    // START LOADING
+    startNotificationLoading(state) {
+      state.NotificationDetailState.isLoading = true;
+    },
+
+    // GET MANAGE USER DETAIL
+    gettNotificationListSuccess(state, action) {
+      state.NotificationDetailState.isLoading = false;
+      state.NotificationDetailState = action.payload;
+    },
+    // HAS ERROR
+    hasUsertNotificationError(state, action) {
+      state.NotificationDetailState.isLoading = false;
+      state.NotificationDetailState.error = action.payload;
     }
   }
 });
@@ -108,6 +138,17 @@ export function getUserKrowdDetail(userID: string) {
       dispatch(slice.actions.getUserKrowdByIdSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+export function getNotification(userId: string, seen: boolean) {
+  return async () => {
+    dispatch(slice.actions.startNotificationLoading());
+    try {
+      const response = await InvestorAPI.getNotification({ userId: userId, seen: seen });
+      dispatch(slice.actions.gettNotificationListSuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasUsertNotificationError(error));
     }
   };
 }

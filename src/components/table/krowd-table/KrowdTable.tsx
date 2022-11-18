@@ -22,7 +22,7 @@ import KrowdTableListHead from '../components/KrowdTableListHead';
 import { fCurrency } from 'utils/formatNumber';
 import editTwotone from '@iconify/icons-ant-design/edit-twotone';
 import upload from '@iconify/icons-ant-design/upload-outline';
-import Payment from '@iconify/icons-ic/twotone-payments';
+import dollarCircleOutlined from '@iconify/icons-ant-design/dollar-circle-outlined';
 import eyeFill from '@iconify/icons-ant-design/container-fill';
 import reportScreen from '@iconify/icons-ant-design/fund-projection-screen';
 
@@ -31,6 +31,7 @@ import Label from 'components/Label';
 import { dispatch } from 'redux/store';
 import {
   getBillDailyReport,
+  getInvestmentByID,
   getWithdrawRequestTransactionById
 } from 'redux/slices/krowd_slices/transaction';
 export enum DATA_TYPE {
@@ -67,6 +68,7 @@ export type KrowdTableProps = {
   headingTitle: string;
   action?: React.ReactNode;
   viewReportRevenue?: () => void;
+  cancelInvest?: (id: string) => void;
 
   viewPeriodHistory?: (id: string) => void;
   noteTable?: {
@@ -107,6 +109,7 @@ export function KrowdTable({
   actionsButton,
   paging,
   filterStatus,
+  cancelInvest,
   noteTable,
   viewPeriodHistory,
   viewReportRevenue,
@@ -127,6 +130,10 @@ export function KrowdTable({
       viewReportRevenue();
     }
     await dispatch(getBillDailyReport(localStorage?.getItem('DailyId') ?? '', 1));
+  };
+  const handleViewInvest = async (id: string) => {
+    dispatch(getInvestmentByID(id));
+    if (cancelInvest) cancelInvest(id);
   };
   return (
     <>
@@ -478,6 +485,17 @@ export function KrowdTable({
                             </Button>
                           </Tooltip>
                         )}
+                        {cancelInvest && (
+                          <Button onClick={() => handleViewInvest(data.id)}>
+                            <Icon
+                              icon={dollarCircleOutlined}
+                              width={24}
+                              height={24}
+                              style={{ margin: '0px auto' }}
+                              color={'red'}
+                            />
+                          </Button>
+                        )}
                       </TableCell>
                       <TableCell
                         key={'__borderRowRight'}
@@ -525,7 +543,19 @@ export function KrowdTable({
       </Scrollbar>
       {paging && (
         <Box sx={{ my: 1 }} display={'flex'} justifyContent={'flex-end'} alignItems={'center'}>
-          {paging.pageIndex} - {paging.pageSize} trên {paging.numberSize}
+          {paging.pageSize * (paging.pageIndex - 1) + paging.pageSize >= paging.numberSize ? (
+            <Typography>
+              {(paging.pageIndex - 1) * paging.pageSize + 1} - {paging.numberSize} trên{' '}
+              {paging.numberSize}
+            </Typography>
+          ) : (
+            <Typography>
+              {(paging.pageIndex - 1) * paging.pageSize + 1} -{' '}
+              {paging.pageSize * (paging.pageIndex - 1) + paging.pageSize} trên {paging.numberSize}
+            </Typography>
+          )}
+
+          {/* {paging.pageIndex} - {paging.pageSize} trên {paging.numberSize} */}
           {paging.pageIndex > 1 ? (
             <Button onClick={paging.handlePrevious}>Trước</Button>
           ) : (
@@ -533,7 +563,11 @@ export function KrowdTable({
               Trước
             </Button>
           )}
-          {paging.pageSize < paging.numberSize ? (
+          <Typography sx={{ mx: 2, fontSize: '14px', fontWeight: 900 }}>
+            Trang {paging.pageIndex}
+          </Typography>
+
+          {paging.pageSize * (paging.pageIndex - 1) + paging.pageSize < paging.numberSize ? (
             <Button onClick={paging.handleNext}>Sau</Button>
           ) : (
             <Button disabled onClick={paging.handleNext}>

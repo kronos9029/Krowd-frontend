@@ -193,17 +193,15 @@ export default function PaymentProjectTable() {
           isLoading={isLoading}
           // viewPath={PATH_DASHBOARD.business.details}
           paging={{
-            pageIndex,
+            pageIndex: pageIndex,
             pageSize: pageSize,
             numberSize: numOfPayment,
 
             handleNext() {
               setPageIndex(pageIndex + 1);
-              setPageSize(pageSize + 5);
             },
             handlePrevious() {
               setPageIndex(pageIndex - 1);
-              setPageSize(pageSize - 5);
             }
           }}
         />
@@ -214,17 +212,15 @@ export default function PaymentProjectTable() {
           getData={getData2}
           isLoading={isLoadingPeriodRevenue}
           paging={{
-            pageIndex,
+            pageIndex: pageIndex2,
             pageSize: pageSize2,
             numberSize: numberOfRevenue,
 
             handleNext() {
               setPageIndex2(pageIndex2 + 1);
-              setPageSize2(pageSize2 + 5);
             },
             handlePrevious() {
               setPageIndex2(pageIndex2 - 1);
-              setPageSize2(pageSize2 - 5);
             }
           }}
           // viewPath={PATH_DASHBOARD.business.details}

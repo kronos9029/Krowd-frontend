@@ -52,6 +52,11 @@ type TransactionState = {
     listOfInvestment: ListOfInvestment[];
     error: boolean;
   };
+  investmentDetailState: {
+    isLoading: boolean;
+    InvestmentDetail: ListOfInvestment | null;
+    error: boolean;
+  };
   dailyReportState: {
     isLoading: boolean;
     listOfDailyReport: ListOfDailyReport[];
@@ -120,6 +125,11 @@ const initialState: TransactionState = {
     numOfInvestment: 9,
     listOfInvestment: [],
     filterCount: null,
+    error: false
+  },
+  investmentDetailState: {
+    isLoading: false,
+    InvestmentDetail: null,
     error: false
   },
   dailyReportState: {
@@ -261,6 +271,18 @@ const slice = createSlice({
     getInvestmentListSuccess(state, action) {
       state.investmentState.isLoading = false;
       state.investmentState = action.payload;
+    },
+    // ------ GET INVESTMENT BY ID ------------ //
+    startLoadingInvestmentById(state) {
+      state.investmentDetailState.isLoading = true;
+    },
+    hasGetInvestmentByIdError(state, action) {
+      state.investmentDetailState.isLoading = false;
+      state.investmentDetailState.error = action.payload;
+    },
+    getInvestmentByIdSuccess(state, action) {
+      state.investmentDetailState.isLoading = false;
+      state.investmentDetailState.InvestmentDetail = action.payload;
     },
     // ------ GET ALL DAILY REPORT ------------ //
     startLoadingDailyReportList(state) {
@@ -433,6 +455,19 @@ export function getInvestmentProjectID(projectId: string, pageIndex: number, pag
       dispatch(slice.actions.getInvestmentListSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasGetInvestmentError(error));
+    }
+  };
+}
+//---------------------------- GET INVESTMENT BY ID------------------------------
+
+export function getInvestmentByID(Id: string) {
+  return async () => {
+    dispatch(slice.actions.startLoadingInvestmentById());
+    try {
+      const response = await TransactionAPI.getsInvestmentByID(Id);
+      dispatch(slice.actions.getInvestmentByIdSuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasGetInvestmentByIdError(error));
     }
   };
 }

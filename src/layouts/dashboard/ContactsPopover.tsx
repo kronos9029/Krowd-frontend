@@ -14,6 +14,8 @@ import Scrollbar from '../../components/Scrollbar';
 import MenuPopover from '../../components/MenuPopover';
 import BadgeStatus from '../../components/BadgeStatus';
 import { MIconButton } from '../../components/@material-extend';
+import { dispatch, RootState, useSelector } from 'redux/store';
+import { getNotification } from 'redux/slices/krowd_slices/user';
 
 // ----------------------------------------------------------------------
 
@@ -24,22 +26,13 @@ export default function ContactsPopover() {
   const anchorRef = useRef(null);
   const isMountedRef = useIsMountedRef();
   const [open, setOpen] = useState(false);
-  const [contacts, setContacts] = useState([]);
-
-  const getContacts = useCallback(async () => {
-    try {
-      const response = await axios.get('/api/chat/contacts');
-      if (isMountedRef.current) {
-        setContacts(response.data.contacts);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }, [isMountedRef]);
+  const [seen, setSeen] = useState(false);
+  const { NotificationDetailState } = useSelector((state: RootState) => state.userKrowd);
+  const { isLoading, details, total, new: newNotification } = NotificationDetailState;
 
   useEffect(() => {
-    getContacts();
-  }, [getContacts]);
+    dispatch(getNotification(localStorage.getItem('userId') ?? '', seen));
+  }, [dispatch, seen]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -63,39 +56,44 @@ export default function ContactsPopover() {
         }}
       >
         <Icon icon={nofication} width={20} height={20} />
+        {newNotification && <Icon icon={nofication} width={20} height={20} />}
       </MIconButton>
 
-      {/* <MenuPopover
+      <MenuPopover
         open={open}
         onClose={handleClose}
         anchorEl={anchorRef.current}
-        sx={{ width: 360 }}
+        sx={{ width: 420 }}
       >
         <Typography variant="h6" sx={{ p: PADDING_ITEM }}>
-          Contacts <Typography component="span">({contacts.length})</Typography>
+          Thông báo gần đây <Typography component="span">({newNotification})</Typography>
         </Typography>
 
         <Scrollbar sx={{ height: ITEM_HEIGHT * 8 }}>
-          {contacts.map((contact) => {
-            const { id, name, avatar, status, lastActivity } = contact;
+          {details.map((contact) => {
+            const { entityId, createDate, image, seen, title } = contact;
 
             return (
-              <ListItemButton key={id} sx={{ px: PADDING_ITEM, height: ITEM_HEIGHT }}>
+              <ListItemButton key={entityId} sx={{ px: PADDING_ITEM, height: ITEM_HEIGHT }}>
                 <ListItemAvatar sx={{ position: 'relative' }}>
-                  <Avatar src={avatar} />
-                  <BadgeStatus status={status} sx={{ position: 'absolute', right: 1, bottom: 1 }} />
+                  <Avatar src={image} />
+                  <BadgeStatus
+                    status={seen === true ? 'Đã xem' : 'Mới'}
+                    sx={{ position: 'absolute', right: 1, bottom: 1 }}
+                  />
                 </ListItemAvatar>
                 <ListItemText
+                  sx={{ py: 1, my: 1 }}
                   primaryTypographyProps={{ typography: 'subtitle2', mb: 0.25 }}
                   secondaryTypographyProps={{ typography: 'caption' }}
-                  primary={name}
-                  secondary={status === 'offline' && fToNow(lastActivity)}
+                  primary={title}
+                  secondary={seen === true && fToNow(createDate)}
                 />
               </ListItemButton>
             );
           })}
         </Scrollbar>
-      </MenuPopover> */}
+      </MenuPopover>
     </>
   );
 }

@@ -63,6 +63,13 @@ async function getsInvestment(params: { projectId: string; pageIndex: number; pa
   });
   return response;
 }
+async function getsInvestmentByID(Id: string) {
+  const headers = getHeader();
+  const response = await axios.get(REACT_APP_API_URL + `${API_INVESTMENT}/${Id}`, {
+    headers: headers
+  });
+  return response;
+}
 async function getsDailyReport(id: string, pageIndex: number, pageSize: number) {
   const headers = getHeader();
 
@@ -127,6 +134,7 @@ export const TransactionAPI = {
   getsPayment: getsPayment,
   getsPaymentRevenue: getsPaymentRevenue,
   getsInvestment: getsInvestment,
+  getsInvestmentByID: getsInvestmentByID,
   getsDailyReport: getsDailyReport,
   getsBillDailyReport: getsBillDailyReport,
   getsDailyReportByID: getsDailyReportByID,

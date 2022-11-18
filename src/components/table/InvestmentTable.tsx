@@ -97,11 +97,9 @@ export default function InvestmentTable() {
 
           handleNext() {
             setPageIndex(pageIndex + 1);
-            setPageSize(pageSize + 5);
           },
           handlePrevious() {
             setPageIndex(pageIndex - 1);
-            setPageSize(pageSize - 5);
           }
         }}
         // viewPath={PATH_DASHBOARD.business.details}
