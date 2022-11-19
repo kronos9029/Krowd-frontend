@@ -7,6 +7,7 @@ export { default as ProjectDetailAlbumCarousel } from './ProjectDetailAlbumCarou
 export { default as ProjectDetailDocument } from './ProjectDetailDocument';
 export { default as ProjectDetailAfterPitch } from './ProjectDetailAfterPitch';
 export { default as ProjectDetailHighLight } from './ProjectDetailHighLight';
+export { default as ProjectDetailUpdateNews } from './ProjectDetailUpdateNews';
 export { default as ProjectPackage } from './ProjectPackage';
 export { default as ProjectDetailsPress } from './ProjectDetailsPress';
 export { default as KrowdProjectStage } from './KrowdProjectStage';

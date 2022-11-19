@@ -9,6 +9,7 @@ type PitchProps = {
   content: string;
   description: string;
   priority: number;
+  updateDate: string;
 };
 
 type NavbarProps = {

@@ -33,7 +33,17 @@ const TABLE_HEAD = [
   { id: 'createDate', label: 'NGÀY THỰC HIỆN', align: 'center' },
   { id: '', label: 'CHI TIẾT', align: 'center' }
 ];
-
+const note = [
+  {
+    name: 'Lưu ý:'
+  },
+  {
+    name: 'Yêu cầu của bạn sẽ được bên KROWD xử lý sớm nhất trong vòng 24 tiếng'
+  },
+  {
+    name: 'Bảng biểu thị thông tin giao dịch rút tiền của bạn (Nếu có bất kỳ thắc mắc xin vui lòng liên lạc với bộ phận hỗ trợ của KROWD tại 19007777)'
+  }
+];
 export default function AccountTransactionWithDrawTable() {
   const { transactionWithdrawState, transactionWithdrawDetail } = useSelector(
     (state: RootState) => state.transactionKrowd
@@ -90,7 +100,7 @@ export default function AccountTransactionWithDrawTable() {
           },
           {
             name: 'description',
-            value: _item.description === 'Withdraw Money' ? 'Rút tiền' : 'Bằng chứng',
+            value: _item.description === 'Withdraw Money' ? 'Rút tiền' : 'Rút tiền',
             type: DATA_TYPE.TEXT,
             textColor: 'rgb(102, 187, 106)'
           },
@@ -99,8 +109,8 @@ export default function AccountTransactionWithDrawTable() {
             value:
               (_item.status === 'PENDING' && 'Gửi yêu cầu rút tiền') ||
               (_item.status === 'REJECTED' && 'Yêu cầu bị từ chối') ||
-              (_item.status === 'APPROVED' && 'Yêu cầu được chấp nhận') ||
-              (_item.status === 'PARTIAL' && 'PARTIAL') ||
+              (_item.status === 'PARTIAL' && 'Yêu cầu được chấp nhận') ||
+              // (_item.status === 'PARTIAL' && 'PARTIAL') ||
               (_item.status === 'Transfer from I2 to I3' &&
                 'Chuyển tiền từ VÍ ĐẦU TƯ CHUNG sang VÍ TẠM ỨNG') ||
               (_item.status === 'Receive from I2 to I3 ' &&
@@ -111,7 +121,7 @@ export default function AccountTransactionWithDrawTable() {
               (_item.status === 'PENDING' && 'black') ||
               (_item.status === 'APPROVED' && 'green') ||
               (_item.status === 'REJECTED' && 'red') ||
-              (_item.status === 'PARTIAL' && 'black') ||
+              (_item.status === 'PARTIAL' && 'green') ||
               (_item.status === 'WAITING' && '#eacb00') ||
               (_item.status === 'FAILED' ? 'red' : 'black')
           },
@@ -145,6 +155,7 @@ export default function AccountTransactionWithDrawTable() {
             setPageIndex(pageIndex - 1);
           }
         }}
+        noteTable={note}
       />
       <Box>
         {TransactionWithdrawDetail &&

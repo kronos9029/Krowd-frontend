@@ -103,7 +103,7 @@ export default function AdvanceWallet({ wallet }: { wallet: Wallet }) {
                   {fPercent(PERCENT)}
                 </Typography> */}
                 <Typography variant="body2" component="span" sx={{ opacity: 0.72 }}>
-                  &nbsp;Chưa cập nhật
+                  {/* &nbsp;Chưa cập nhật */}
                 </Typography>
               </Stack>
             </Stack>

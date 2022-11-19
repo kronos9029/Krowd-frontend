@@ -793,9 +793,7 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                 </Grid>
               </Grid>
               <Stack direction="row" alignItems="center" flexWrap="wrap">
-                <Typography variant="body2" component="span" sx={{ opacity: 0.72 }}>
-                  &nbsp;Chưa cập nhật
-                </Typography>
+                <Typography variant="body2" component="span" sx={{ opacity: 0.72 }}></Typography>
               </Stack>
             </Stack>
           </RootStyle>

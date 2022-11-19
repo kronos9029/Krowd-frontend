@@ -511,16 +511,6 @@ export function KrowdTable({
             </TableBody>
           </Table>{' '}
         </TableContainer>{' '}
-        <Box p={2}>
-          {noteTable &&
-            noteTable.map((_item) => {
-              return (
-                <Typography key={'_itme'} color="#f06f00">
-                  {_item.name}
-                </Typography>
-              );
-            })}
-        </Box>
         {isLoading && (
           <Box>
             <LoadingScreen />
@@ -576,6 +566,16 @@ export function KrowdTable({
           )}
         </Box>
       )}
+      <Box p={2}>
+        {noteTable &&
+          noteTable.map((_item) => {
+            return (
+              <Typography key={'_itme'} color="#f06f00">
+                {_item.name}
+              </Typography>
+            );
+          })}
+      </Box>
     </>
   );
 }

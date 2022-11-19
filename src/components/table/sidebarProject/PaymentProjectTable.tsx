@@ -162,24 +162,18 @@ export default function PaymentProjectTable() {
   };
   return (
     <>
-      <Grid
-        container
-        display={'flex'}
-        alignItems={'center'}
-        justifyContent={'space-between'}
-        mb={5}
-      >
-        <Grid lg={8}></Grid>
-        <Grid lg={4}>
+      <Grid container display={'flex'} alignItems={'center'} justifyContent={'space-between'}>
+        <Grid md={7} lg={7}></Grid>
+        <Grid md={5} lg={5}>
           <Grid container display={'flex'} alignItems={'center'} justifyContent={'space-evenly'}>
             <Grid>
               <Button variant="outlined" onClick={handleClickOpenStage}>
-                THANH TOÁN DỰ ÁN
+                DANH SÁCH THANH TOÁN DỰ ÁN
               </Button>
             </Grid>
             <Grid>
               <Button variant="outlined" onClick={handleCloseOpenStage}>
-                DOANH THU THEO KỲ
+                DANH SÁCH DOANH THU THEO KỲ
               </Button>
             </Grid>
           </Grid>
@@ -207,7 +201,7 @@ export default function PaymentProjectTable() {
         />
       ) : (
         <KrowdTable
-          headingTitle="DANH SÁCH DOANH THU THEO KỲ"
+          headingTitle="DOANH THU THEO KỲ"
           header={TABLE_HEAD_REVENUE}
           getData={getData2}
           isLoading={isLoadingPeriodRevenue}

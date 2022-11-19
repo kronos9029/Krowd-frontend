@@ -8,6 +8,7 @@ import useCollapseDrawer from '../../hooks/useCollapseDrawer';
 // components
 import { MHidden } from '../../components/@material-extend';
 import AccountPopover from './AccountPopover';
+import NotificationsPopover from 'layouts/dashboard/NotificationsPopover';
 
 // ----------------------------------------------------------------------
 
@@ -62,6 +63,8 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
         <Box sx={{ flexGrow: 1 }} />
 
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
+          <NotificationsPopover />
+
           <AccountPopover />
         </Stack>
       </ToolbarStyle>

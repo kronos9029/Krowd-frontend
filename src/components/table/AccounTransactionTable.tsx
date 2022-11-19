@@ -11,7 +11,17 @@ const TABLE_HEAD = [
   { id: 'amount', label: 'SỐ TIỀN', align: 'right' },
   { id: 'createDate', label: 'NGÀY THỰC HIỆN', align: 'center' }
 ];
-
+const note = [
+  {
+    name: 'Lưu ý:'
+  },
+  {
+    name: 'Khi giao dịch thành công số tiền của bạn sẽ được chuyển vào VÍ ĐẦU TƯ CHUNG'
+  },
+  {
+    name: 'Nếu có bất kỳ thắc mắc xin vui lòng liên lạc với bộ phận hỗ trợ của KROWD tại 19007777'
+  }
+];
 export default function AccounTransactionTable() {
   const { transactionState } = useSelector((state: RootState) => state.transactionKrowd);
   const { isLoading, listOfAccountTransaction: list, numOfAccountTransaction } = transactionState;
@@ -80,6 +90,7 @@ export default function AccounTransactionTable() {
       header={TABLE_HEAD}
       getData={getData}
       isLoading={isLoading}
+      noteTable={note}
       paging={{
         pageIndex,
         pageSize: pageSize,

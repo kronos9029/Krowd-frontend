@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { dispatch, RootState, useSelector } from '../../redux/store';
 import { DATA_TYPE, KrowdTable, RowData } from './krowd-table/KrowdTable';
 import { getWalletTransactionList } from 'redux/slices/krowd_slices/transaction';
-import { BlogPostsSearch } from 'components/_dashboard/project';
 import {
   Box,
   Button,
@@ -44,19 +43,19 @@ export default function WalletTransactionTable() {
   const [selectedFilter, setSelectFilter] = useState('');
   const [filter, setValueFilter] = useState('');
   const [pageIndex, setPageIndex] = useState(1);
-  const [pageSize, setPageSize] = useState(5);
+  const [pageSize, setPageSize] = useState(8);
 
   const { walletList } = useSelector((state: RootState) => state.walletKrowd);
   const { listOfInvestorWallet } = walletList;
 
   useEffect(() => {
-    dispatch(getWalletTransactionList(filter, pageIndex ?? '1', 5));
+    dispatch(getWalletTransactionList(filter, pageIndex ?? 1, 8));
     dispatch(getWalletList());
   }, [dispatch, pageIndex, filter]);
   const addToSelectedFilterList = async (newValue: string) => {
     setSelectFilter(newValue);
     setValueFilter(newValue);
-    await dispatch(getWalletTransactionList(newValue, pageIndex ?? '1', 5));
+    await dispatch(getWalletTransactionList(newValue, pageIndex ?? 1, 8));
   };
   const getData = (): RowData[] => {
     if (!list) return [];
@@ -112,6 +111,10 @@ export default function WalletTransactionTable() {
                 'Chuyển tiền từ VÍ TẠM THỜI sang VÍ ĐẦU TƯ CHUNG của bạn') ||
               (_item.description === 'Receive money from I1 wallet to I2 wallet' &&
                 'Nhận tiền từ VÍ TẠM THỜI sang VÍ ĐẦU TƯ CHUNG của bạn') ||
+              (_item.description === 'Receive money from I2 wallet to I1 wallet' &&
+                'VÍ TẠM THỜI nhận tiền từ VÍ ĐẦU TƯ CHUNG') ||
+              (_item.description === 'Transfer money from I2 wallet to I1 wallet' &&
+                'Chuyển tiền từ VÍ ĐẦU TƯ CHUNG sang VÍ TẠM THỜI') ||
               (_item.description === 'Transfer money from I4 wallet to I5 wallet' &&
                 'Chuyển tiền từ VÍ DỰ ÁN THANH TOÁN sang VÍ THU TIỀN của bạn') ||
               (_item.description === 'Transfer money from I5 wallet to I2 wallet' &&
@@ -134,6 +137,32 @@ export default function WalletTransactionTable() {
               (_item.description ===
                 'Transfer money from I3 wallet to P3 wallet to for stage payment' &&
                 'Chuyển tiền từ VÍ TẠM ỨNG của bạn sang VÍ ĐẦU TƯ DỰ ÁN') ||
+              (_item.description ===
+                'Receive money from I3 wallet to I2 wallet due to investment cancellation' &&
+                'VÍ ĐẦU TƯ CHUNG nhận tiền từ VÍ ĐẦU TƯ DỰ ÁN') ||
+              (_item.description === 'Receive money from I5 wallet to I1 wallet' &&
+                'VÍ TẠM THỜI nhận tiền từ VÍ THU TIỀN') ||
+              (_item.description === 'Receive money from I4 wallet to I5 wallet' &&
+                'VÍ THU TIỀN nhận tiền từ VÍ DỰ ÁN THANH TOÁN') ||
+              (_item.description === 'Transfer money from I4 wallet to I5 wallet' &&
+                'Chuyển tiền từ VÍ DỰ ÁN THANH TOÁN sang VÍ THU TIỀN') ||
+              (_item.description === 'Transfer money from I5 wallet to I1 wallet' &&
+                'VÍ THU TIỀN chuyển tiền sang VÍ TẠM THỜI') ||
+              (_item.description ===
+                'Transfer money from I3 wallet to I2 wallet due to investment cancellation' &&
+                'Bạn hủy đầu tư VÍ ĐẦU TƯ DỰ ÁN chuyển tiền sang VÍ ĐẦU TƯ CHUNG') ||
+              (_item.description ===
+                'Transfer money from I3 wallet to I2 wallet due to unsuccessful project calling for investment' &&
+                'Dự án kêu gọi đầu tư không thành công chuyển tiền từ VÍ ĐẦU TƯ DỰ ÁN sang VÍ ĐẦU TƯ CHUNG') ||
+              (_item.description ===
+                'Receive money from I3 wallet to I2 wallet due to unsuccessful project calling for investment' &&
+                'Dự án kêu gọi đầu tư không thành công VÍ ĐẦU TƯ CHUNG nhận tiền từ VÍ ĐẦU TƯ DỰ ÁN') ||
+              (_item.description ===
+                'Receive money from P4 wallet to I4 wallet for stage payment' &&
+                'VÍ DỰ ÁN THANH TOÁN nhận tiền từ dự án') ||
+              (_item.description ===
+                'Tranfer money from P4 wallet to I4 wallet for stage payment' &&
+                'Chuyển tiền từ VÍ THANH TOÁN DỰ ÁN sang VÍ DỰ ÁN THANH TOÁN cho nhà đầu tư') ||
               (_item.description ===
               'Transfer money from I3 wallet to P3 wallet to for stage payment'
                 ? 'Chuyển tiền từ VÍ TẠM ỨNG của bạn sang VÍ ĐẦU TƯ DỰ ÁN'
@@ -360,25 +389,27 @@ export default function WalletTransactionTable() {
             })}
         </Grid>
       </Grid>
-      <KrowdTable
-        headingTitle={`GIAO DỊCH Ví`}
-        header={TABLE_HEAD}
-        getData={getData}
-        isLoading={isLoading}
-        // viewPath={PATH_DASHBOARD.business.details}
-        paging={{
-          pageIndex,
-          pageSize: pageSize,
-          numberSize: numOfWalletTransaction,
+      <Box sx={{ mb: 7 }}>
+        <KrowdTable
+          headingTitle={`GIAO DỊCH Ví`}
+          header={TABLE_HEAD}
+          getData={getData}
+          isLoading={isLoading}
+          // viewPath={PATH_DASHBOARD.business.details}
+          paging={{
+            pageIndex,
+            pageSize: pageSize,
+            numberSize: numOfWalletTransaction,
 
-          handleNext() {
-            setPageIndex(pageIndex + 1);
-          },
-          handlePrevious() {
-            setPageIndex(pageIndex - 1);
-          }
-        }}
-      />
+            handleNext() {
+              setPageIndex(pageIndex + 1);
+            },
+            handlePrevious() {
+              setPageIndex(pageIndex - 1);
+            }
+          }}
+        />
+      </Box>
     </>
   );
 }

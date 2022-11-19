@@ -21,10 +21,10 @@ import {
   ProjectDetailsPress,
   KrowdProjectStage,
   StageListKrowdTable,
-  ProjectDetailFAQsBusiness
+  ProjectDetailFAQsBusiness,
+  ProjectDetailUpdateNews
 } from 'components/_external-pages/project-detail/index';
 import MHidden from 'components/@material-extend/MHidden';
-import MainNavbar from 'layouts/main/MainNavbar';
 import { PATH_DASHBOARD_LEARN, PATH_PAGE } from 'routes/paths';
 import { useEffect, useState } from 'react';
 
@@ -32,10 +32,10 @@ import { getProjectListById, getProjectPackage } from 'redux/slices/krowd_slices
 import { getAllProjectStage, getProjectStageList } from 'redux/slices/krowd_slices/stage';
 import { Icon } from '@iconify/react';
 import starFilled from '@iconify/icons-ant-design/star-filled';
+import hotFilled from '@iconify/icons-ant-design/fire-filled';
 import useAuth from 'hooks/useAuth';
 import LoadingScreen from 'components/LoadingScreen';
 import useLocales from 'hooks/useLocales';
-import { getDailyReportProjectID } from 'redux/slices/krowd_slices/transaction';
 // ----------------------------------------------------------------------
 
 const APP_BAR_MOBILE = 64;
@@ -96,14 +96,24 @@ export default function ComponentsDetails() {
     setOpenStage('chart');
   };
   const getEntityList = (
-    type: 'PITCH' | 'EXTENSION' | 'DOCUMENT' | 'ALBUM' | 'ABOUT' | 'HIGHLIGHT' | 'PRESS' | 'FAQ'
+    type:
+      | 'PITCH'
+      | 'EXTENSION'
+      | 'DOCUMENT'
+      | 'ALBUM'
+      | 'ABOUT'
+      | 'HIGHLIGHT'
+      | 'PRESS'
+      | 'FAQ'
+      | 'UPDATE'
   ) => {
     return projectID?.projectEntity.find((pe) => pe.type === type)?.typeItemList;
   };
-  const { pitchs, extensions, documents, abouts, highlights, press, faqs } = {
+  const { pitchs, extensions, documents, abouts, highlights, press, faqs, updates } = {
     pitchs: getEntityList('PITCH'),
     extensions: getEntityList('EXTENSION'),
     documents: getEntityList('DOCUMENT'),
+    updates: getEntityList('UPDATE'),
     abouts: getEntityList('ABOUT'),
     press: getEntityList('PRESS'),
     faqs: getEntityList('FAQ'),
@@ -211,7 +221,29 @@ export default function ComponentsDetails() {
                   {highlights && highlights.length > 0 && (
                     <ProjectDetailHighLight highlights={highlights} />
                   )}
-
+                  <Grid xs={12} sm={9} md={9} lg={9}>
+                    <Typography variant="h4" sx={{ mr: 3, my: 3 }} color={'#666'} height={50}>
+                      <Icon
+                        icon={hotFilled}
+                        style={{
+                          marginRight: 10,
+                          marginBottom: 5,
+                          color: '#ff6125cf'
+                        }}
+                      />
+                      Bản tin cập nhật
+                      <Box width={'13%'}>
+                        <Divider variant="fullWidth" sx={{ my: 1, opacity: 0.1 }} />
+                      </Box>
+                    </Typography>
+                  </Grid>
+                  <Box sx={{ border: 'solid 1px red' }}>
+                    <Box mx={2}>
+                      {updates && updates.length > 0 && (
+                        <ProjectDetailUpdateNews updates={updates} />
+                      )}
+                    </Box>
+                  </Box>
                   {pitchs && pitchs.length > 0 && <ProjectDetailPitch pitchs={pitchs} />}
                 </Grid>
                 <Grid xs={12} sm={4} md={5} lg={3}>
@@ -246,6 +278,7 @@ export default function ComponentsDetails() {
           <Box sx={{ mb: 7 }}>
             <Divider variant="fullWidth" />
           </Box>
+
           {projectID.status === 'CALLING_FOR_INVESTMENT' && (
             <Container maxWidth={'lg'} sx={{ mb: 6 }}>
               <Grid container>

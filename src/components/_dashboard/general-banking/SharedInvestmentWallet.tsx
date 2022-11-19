@@ -538,6 +538,44 @@ export default function SharedInvestmentWallet({ wallet }: { wallet: Wallet }) {
                             <Checkbox onClick={handleCheckBox} />
                             <Typography>Sử dụng thông tin hiện có</Typography>
                           </Box>
+                          <RadioGroup row sx={{ my: 2 }} {...getFieldPropsWithDraw('amount')}>
+                            <FormControlLabel
+                              value="300000"
+                              control={<Radio />}
+                              label="300,000đ"
+                              sx={{ px: 2 }}
+                            />
+                            <FormControlLabel
+                              value="500000"
+                              control={<Radio />}
+                              label="500,000đ"
+                              sx={{ px: 2.7 }}
+                            />
+                            <FormControlLabel
+                              value="1000000"
+                              control={<Radio />}
+                              label="1,000,000đ"
+                              sx={{ px: 2 }}
+                            />
+                            <FormControlLabel
+                              value="3000000"
+                              control={<Radio />}
+                              label="3,000,000đ"
+                              sx={{ px: 2 }}
+                            />
+                            <FormControlLabel
+                              value="5000000"
+                              control={<Radio />}
+                              label="5,000,000đ"
+                              sx={{ px: 1 }}
+                            />
+                            <FormControlLabel
+                              value="10000000"
+                              control={<Radio />}
+                              label="10,000,000đ"
+                              sx={{ px: 2.3 }}
+                            />
+                          </RadioGroup>
                           <Box sx={{ color: '#d58311' }}>
                             <Typography sx={{ my: 1, fontWeight: 500 }}>Lưu ý:</Typography>
 

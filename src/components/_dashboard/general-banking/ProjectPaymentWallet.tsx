@@ -459,7 +459,7 @@ export default function ProjectPaymentWallet({ wallet }: { wallet: Wallet }) {
               </Grid>
               <Stack direction="row" alignItems="center" flexWrap="wrap">
                 <Typography variant="body2" component="span" sx={{ opacity: 0.72 }}>
-                  &nbsp;Chưa cập nhật
+                  {/* &nbsp;Chưa cập nhật */}
                 </Typography>
               </Stack>
             </Stack>
