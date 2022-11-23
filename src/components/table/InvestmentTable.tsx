@@ -4,8 +4,8 @@ import { DATA_TYPE, KrowdTable, RowData } from './krowd-table/KrowdTable';
 import { getInvestmentProjectID } from 'redux/slices/krowd_slices/transaction';
 const TABLE_HEAD = [
   { id: 'idx', label: 'STT', align: 'center' },
-  { id: 'projectId', label: 'DỰ ÁN', align: 'left' },
-  { id: 'investor', label: 'NHÀ ĐẦU TƯ', align: 'left' },
+  { id: 'projectId', label: 'DỰ ÁN', align: 'center' },
+  { id: 'investor', label: 'NHÀ ĐẦU TƯ', align: 'center' },
   { id: 'totalPrice', label: 'SỐ TIỀN', align: 'center' },
   { id: 'packageId', label: 'GÓI ĐẦU TƯ', align: 'center' },
   { id: 'packageId', label: 'GIÁ GÓI', align: 'center' },
@@ -58,7 +58,7 @@ export default function InvestmentTable() {
           {
             name: 'packagePrice',
             value: `${_item.packagePrice} đ`,
-            type: DATA_TYPE.NUMBER
+            type: DATA_TYPE.NUMBER_FORMAT
           },
           {
             name: 'quantity',

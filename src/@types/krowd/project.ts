@@ -273,3 +273,25 @@ export type ListOfProjectInvested = {
   startDate: string;
   endDate: string;
 };
+export type InvestedProjectDetail = {
+  mustPaidDept: number;
+  profitableDebt: number;
+  latestPayment: string;
+  investmentRecords: InvestmentRecord[];
+  projectImage: string;
+  projectName: string;
+  projectStatus: string;
+  expectedReturn: number;
+  returnedAmount: number;
+  deptRemain: number;
+  investedAmount: number;
+  numOfStage: number;
+  numOfPayedStage: number;
+};
+
+export type InvestmentRecord = {
+  packageName: string;
+  quantity: number;
+  totalPrice: number;
+  createDate: string;
+};

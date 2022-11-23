@@ -65,6 +65,7 @@ export const PATH_DASHBOARD_LEARN = {
 export const PATH_DASHBOARD_PROJECT = {
   root: ROOTS_DASHBOARD_PROJECT,
   project: {
+    general: path(ROOTS_DASHBOARD_PROJECT, `/project/general`),
     root: path(ROOTS_DASHBOARD_PROJECT, `/project/projectDetail`),
     reportRevenue: path(ROOTS_DASHBOARD_PROJECT, '/project/daily-revenue'),
     reportUpdate: path(ROOTS_DASHBOARD_PROJECT, '/project/report_update'),

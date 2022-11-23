@@ -59,6 +59,9 @@ export default function ComponentsDetails() {
   const { id = '' } = useParams();
   useEffect(() => {
     //PROJECT BY ID
+    if (id && (!localStorage.getItem('projectId') || localStorage.getItem('projectId') !== id)) {
+      localStorage.setItem('projectId', id);
+    }
     if (id) {
       dispatch(getProjectListById(id));
       //PACKAGE
@@ -78,7 +81,7 @@ export default function ComponentsDetails() {
     return () => {
       window.removeEventListener('scroll', listenScrollEvent);
     };
-  }, [dispatch]);
+  }, [dispatch, id]);
   const { detailOfProject, packageLists } = useSelector((state: RootState) => state.project);
   const { detailOfProjectID: projectID, isLoadingDetailOfProjectID } = detailOfProject;
   const [openStage, setOpenStage] = useState('chart');
@@ -175,7 +178,7 @@ export default function ComponentsDetails() {
                         >
                           {t(`Project_detail_card.Pitch`)}
                         </Button>
-                        <Box
+                        {/* <Box
                           sx={{
                             my: 1.5,
                             display: 'flex',
@@ -207,7 +210,7 @@ export default function ComponentsDetails() {
                               )}
                             </Typography>
                           </Link>
-                        </Box>
+                        </Box> */}
                       </Container>
                     </ToolbarStyle>
                   </AppBar>
@@ -221,29 +224,33 @@ export default function ComponentsDetails() {
                   {highlights && highlights.length > 0 && (
                     <ProjectDetailHighLight highlights={highlights} />
                   )}
-                  <Grid xs={12} sm={9} md={9} lg={9}>
-                    <Typography variant="h4" sx={{ mr: 3, my: 3 }} color={'#666'} height={50}>
-                      <Icon
-                        icon={hotFilled}
-                        style={{
-                          marginRight: 10,
-                          marginBottom: 5,
-                          color: '#ff6125cf'
-                        }}
-                      />
-                      Bản tin cập nhật
-                      <Box width={'13%'}>
-                        <Divider variant="fullWidth" sx={{ my: 1, opacity: 0.1 }} />
+                  {projectID.status === 'ACTIVE' && (
+                    <>
+                      <Grid xs={12} sm={9} md={9} lg={9}>
+                        <Typography variant="h4" sx={{ mr: 3, my: 3 }} color={'#666'} height={50}>
+                          <Icon
+                            icon={hotFilled}
+                            style={{
+                              marginRight: 10,
+                              marginBottom: 5,
+                              color: '#ff6125cf'
+                            }}
+                          />
+                          Bản tin cập nhật
+                          <Box width={'13%'}>
+                            <Divider variant="fullWidth" sx={{ my: 1, opacity: 0.1 }} />
+                          </Box>
+                        </Typography>
+                      </Grid>
+                      <Box sx={{ border: 'solid 1px red' }}>
+                        <Box mx={2}>
+                          {updates && updates.length > 0 && (
+                            <ProjectDetailUpdateNews updates={updates} />
+                          )}
+                        </Box>
                       </Box>
-                    </Typography>
-                  </Grid>
-                  <Box sx={{ border: 'solid 1px red' }}>
-                    <Box mx={2}>
-                      {updates && updates.length > 0 && (
-                        <ProjectDetailUpdateNews updates={updates} />
-                      )}
-                    </Box>
-                  </Box>
+                    </>
+                  )}
                   {pitchs && pitchs.length > 0 && <ProjectDetailPitch pitchs={pitchs} />}
                 </Grid>
                 <Grid xs={12} sm={4} md={5} lg={3}>
@@ -279,7 +286,7 @@ export default function ComponentsDetails() {
             <Divider variant="fullWidth" />
           </Box>
 
-          {projectID.status === 'CALLING_FOR_INVESTMENT' && (
+          {/* {projectID.status === 'CALLING_FOR_INVESTMENT' && (
             <Container maxWidth={'lg'} sx={{ mb: 6 }}>
               <Grid container>
                 <Grid xs={12} sm={4} md={5} lg={3}>
@@ -348,12 +355,12 @@ export default function ComponentsDetails() {
                 </Grid>
               </Grid>
             </Container>
-          )}
-          {projectID.status === 'CALLING_FOR_INVESTMENT' && (
+          )} */}
+          {/* {projectID.status === 'CALLING_FOR_INVESTMENT' && (
             <Box sx={{ mb: 7 }}>
               <Divider variant="fullWidth" />
             </Box>
-          )}
+          )} */}
           <Container maxWidth={'lg'}>
             <Grid
               container

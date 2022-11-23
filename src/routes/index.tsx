@@ -79,6 +79,7 @@ export default function Router() {
       ),
       children: [
         { element: <Navigate to="/projectBoard/project" replace /> },
+        { path: 'project/general', element: <GeneralApp /> },
         { path: 'project/projectDetail', element: <Details /> },
         { path: 'project/projectDetail/:id', element: <Details /> },
         { path: 'project/daily-revenue', element: <ReportDailyProject /> },

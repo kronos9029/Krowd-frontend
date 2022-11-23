@@ -9,7 +9,7 @@ import {
   styled,
   Typography
 } from '@mui/material';
-import { Project1 } from '../../../@types/krowd/project';
+import { Package, Project1 } from '../../../@types/krowd/project';
 import { fCurrency } from 'utils/formatNumber';
 import { ProjectDetailAlbumCarousel } from 'components/_external-pages/project-detail/index';
 import { PATH_PAGE } from 'routes/paths';
@@ -17,6 +17,7 @@ import { PATH_PAGE } from 'routes/paths';
 import { getProjectPackage } from 'redux/slices/krowd_slices/project';
 import { dispatch } from 'redux/store';
 import useLocales from 'hooks/useLocales';
+import { useNavigate } from 'react-router';
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
   borderRadius: 5,
@@ -40,6 +41,7 @@ function ProjectDetailCard({ project: p }: ProjectDetailCardProps) {
     return p.projectEntity.find((pe) => pe.type === type)?.typeItemList;
   };
   //Language
+  const navigate = useNavigate();
 
   const { translate: t } = useLocales();
   const album = [
@@ -48,7 +50,10 @@ function ProjectDetailCard({ project: p }: ProjectDetailCardProps) {
       .map((_image) => _image.link)
       .filter(notEmpty)
   ];
-
+  const handleGetPackageInvest = async () => {
+    dispatch(getProjectPackage(p.id));
+    navigate(`${PATH_PAGE.checkout}/${p.id}`);
+  };
   function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {
     return value !== null && value !== undefined;
   }
@@ -197,20 +202,14 @@ function ProjectDetailCard({ project: p }: ProjectDetailCardProps) {
             </Typography>
           </Typography>
         </Box>
-        <Box
+        {/* <Box
           sx={{
             my: 1.5,
             display: 'flex',
             justifyContent: 'space-between'
           }}
         >
-          <Link
-            style={{ textDecoration: 'none' }}
-            onClick={() => {
-              dispatch(getProjectPackage(p.id));
-            }}
-            href={`${PATH_PAGE.checkout}/${p.id}`}
-          >
+          <Link style={{ textDecoration: 'none' }} onClick={handleGetPackageInvest}>
             {p.status === 'CALLING_FOR_INVESTMENT' && (
               <Button
                 sx={{
@@ -227,7 +226,7 @@ function ProjectDetailCard({ project: p }: ProjectDetailCardProps) {
               </Button>
             )}
           </Link>
-        </Box>
+        </Box> */}
       </Grid>
     </Grid>
   );

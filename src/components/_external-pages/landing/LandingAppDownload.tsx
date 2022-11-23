@@ -65,32 +65,32 @@ export default function LandingAppDownload() {
                 </Typography>
               </MotionInView>
 
-              <MotionInView variants={varFadeInUp}>
+              {/* <MotionInView variants={varFadeInUp}>
                 <Typography
                   component="p"
                   sx={{ mb: 3, color: 'common.white', display: 'block', fontSize: '18px' }}
                 >
                   {t('app_title_description_1')}
                 </Typography>
+              </MotionInView> */}
+              <MotionInView variants={varFadeInUp}>
+                <Typography
+                  component="p"
+                  sx={{ mb: 3, color: 'common.white', display: 'block', fontSize: '18px' }}
+                >
+                  {t('app_title_description_2')}
+                </Typography>
               </MotionInView>
 
-              <Grid container spacing={3} justifyContent={'space-between'}>
-                <Grid xs={6} sm={7} md={5} spacing={3}>
+              <Grid container spacing={3} sx={{ my: 1 }} justifyContent={'space-between'}>
+                <Grid></Grid>
+
+                <Grid xs={11} sm={12} md={6} spacing={3}>
                   <iframe
-                    src="https://embed.lottiefiles.com/animation/27173"
+                    src="/static/icons/navbar/QRcode.png"
                     style={{
                       width: '200px',
                       height: '239px'
-                    }}
-                  />
-                </Grid>
-
-                <Grid xs={5} sm={5} md={7}>
-                  <iframe
-                    src="https://embed.lottiefiles.com/animation/27169"
-                    style={{
-                      width: '167px',
-                      height: '240px'
                     }}
                   />
                 </Grid>

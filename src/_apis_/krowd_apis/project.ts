@@ -32,6 +32,13 @@ async function getProjectInvested(params?: { pageIndex: number; pageSize: number
   });
   return response;
 }
+async function getProjectInvestedByID(Id: string) {
+  const headers = getHeader();
+  const response = await axios.get(REACT_APP_API_URL + `${API_PROJECT_INVESTED}/${Id}`, {
+    headers: headers
+  });
+  return response;
+}
 async function getAllProject() {
   const headers = getHeader();
   const response = await axios.get(REACT_APP_API_URL + `${API_PROJECT}`, {
@@ -83,6 +90,7 @@ async function getPackageID({ id }: { id: string }) {
   });
   return response;
 }
+
 async function getPackageBYID({ id }: { id: string }) {
   const headers = getHeader();
   const response = await axios.get(REACT_APP_API_URL + `${API_PACKAGE_BY_ID}/${id}`, {
@@ -113,6 +121,7 @@ export const ProjectAPI = {
   getStageId: getStageId,
   getPackageBYID: getPackageBYID,
   getProjectInvested: getProjectInvested,
+  getProjectInvestedByID: getProjectInvestedByID,
   getsTransaction: getsTransaction,
   getProjectByFilter: getProjectByFilter
 };

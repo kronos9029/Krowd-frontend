@@ -1,85 +1,107 @@
-import { Icon } from '@iconify/react';
-import { ApexOptions } from 'apexcharts';
+import { TextAnimate, varBounceInUp, varWrapEnter } from 'components/animate';
 
-import ReactApexChart from 'react-apexcharts';
-import trendingUpFill from '@iconify/icons-eva/trending-up-fill';
-import trendingDownFill from '@iconify/icons-eva/trending-down-fill';
-// material
-import { alpha, useTheme, styled } from '@mui/material/styles';
-import { Box, Card, Typography, Stack } from '@mui/material';
+import { Box, Card, Typography, Stack, Grid } from '@mui/material';
 // utils
-import { fNumber, fPercent } from '../../../utils/formatNumber';
+import { fCurrency, fNumber, fPercent } from '../../../utils/formatNumber';
+import { RootState, useSelector } from 'redux/store';
 
 // ----------------------------------------------------------------------
-
-const IconWrapperStyle = styled('div')(({ theme }) => ({
-  width: 24,
-  height: 24,
-  display: 'flex',
-  borderRadius: '50%',
-  alignItems: 'center',
-  justifyContent: 'center',
-  color: theme.palette.success.main,
-  backgroundColor: alpha(theme.palette.success.main, 0.16)
-}));
-
-// ----------------------------------------------------------------------
-
-const PERCENT = 2.6;
-const TOTAL_USER = 1876500000;
-const CHART_DATA = [{ data: [20, 41, 63, 33, 28, 35, 50, 46, 11, 26] }];
 
 export default function AppTotalActiveUsers() {
-  const theme = useTheme();
-
-  const chartOptions: ApexOptions = {
-    colors: [theme.palette.primary.main],
-    chart: { sparkline: { enabled: true } },
-    plotOptions: { bar: { columnWidth: '68%', borderRadius: 2 } },
-    labels: ['1', '2', '3', '4', '5', '6', '7', '8'],
-    tooltip: {
-      x: { show: false },
-      y: {
-        formatter: (seriesName: number | string) => fNumber(seriesName),
-        title: {
-          formatter: (seriesName: number | string) => ''
-        }
-      },
-      marker: { show: false }
-    }
-  };
-
+  const { InvestedProjectDetails } = useSelector((state: RootState) => state.project);
+  const { listOfProject } = InvestedProjectDetails;
   return (
-    <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
-      <Box sx={{ flexGrow: 1 }}>
-        <Typography variant="subtitle2">Tổng doanh thu</Typography>
-        <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2, mb: 1 }}>
-          <IconWrapperStyle
-            sx={{
-              ...(PERCENT < 0 && {
-                color: 'error.main',
-                bgcolor: alpha(theme.palette.error.main, 0.16)
-              })
-            }}
-          >
-            <Icon width={16} height={16} icon={PERCENT >= 0 ? trendingUpFill : trendingDownFill} />
-          </IconWrapperStyle>
-          <Typography component="span" variant="subtitle2">
-            {PERCENT > 0 && '+'}
-            {fPercent(PERCENT)}
-          </Typography>
-        </Stack>
-
-        <Typography variant="h3">{fNumber(TOTAL_USER)}đ</Typography>
-      </Box>
-
-      <ReactApexChart
-        type="bar"
-        series={CHART_DATA}
-        options={chartOptions}
-        width={60}
-        height={36}
-      />
-    </Card>
+    <Grid container spacing={3}>
+      <Grid item xs={12} md={4}>
+        <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
+          <Box sx={{ flexGrow: 1, color: 'green' }}>
+            <Typography sx={{ fontWeight: 700 }} variant="body1">
+              Lợi nhuận dự kiến
+            </Typography>
+            <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2, mb: 1 }}></Stack>
+            <TextAnimate
+              text={fCurrency(listOfProject?.expectedReturn ?? 0)}
+              sx={{ typography: 'h3' }}
+              variants={varBounceInUp}
+            />
+          </Box>
+        </Card>
+      </Grid>
+      <Grid item xs={12} md={4}>
+        <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
+          <Box sx={{ flexGrow: 1, color: 'green' }}>
+            <Typography sx={{ fontWeight: 700 }} variant="body1">
+              Số tiền đã nhận
+            </Typography>
+            <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2, mb: 1 }}></Stack>
+            <TextAnimate
+              text={fCurrency(listOfProject?.returnedAmount ?? 0)}
+              sx={{ typography: 'h3' }}
+              variants={varBounceInUp}
+            />
+          </Box>
+        </Card>
+      </Grid>
+      <Grid item xs={12} md={4}>
+        <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
+          <Box sx={{ flexGrow: 1, color: 'red' }}>
+            <Typography sx={{ fontWeight: 700 }} variant="body1">
+              Dự án còn nợ
+            </Typography>
+            <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2, mb: 1 }}></Stack>{' '}
+            <TextAnimate
+              text={fCurrency(listOfProject?.deptRemain ?? 0)}
+              sx={{ typography: 'h3' }}
+              variants={varBounceInUp}
+            />
+          </Box>
+        </Card>
+      </Grid>
+      <Grid item xs={12} md={4}>
+        <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
+          <Box sx={{ flexGrow: 1 }}>
+            <Typography sx={{ fontWeight: 700 }} variant="body1">
+              Lợi nhuận bao gồm lãi
+            </Typography>
+            <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2, mb: 1 }}></Stack>
+            <TextAnimate
+              text={fCurrency(listOfProject?.profitableDebt ?? 0)}
+              sx={{ typography: 'h3' }}
+              variants={varBounceInUp}
+            />
+          </Box>
+        </Card>
+      </Grid>
+      <Grid item xs={12} md={4}>
+        <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
+          <Box sx={{ flexGrow: 1 }}>
+            <Typography sx={{ fontWeight: 700 }} variant="body1">
+              Tổng số kỳ dự án
+            </Typography>
+            <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2, mb: 1 }}></Stack>
+            <TextAnimate
+              text={`${listOfProject?.numOfStage}   Kỳ` ?? 0}
+              sx={{ typography: 'h3' }}
+              variants={varBounceInUp}
+            />
+          </Box>
+        </Card>
+      </Grid>
+      <Grid item xs={12} md={4}>
+        <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
+          <Box sx={{ flexGrow: 1 }}>
+            <Typography sx={{ fontWeight: 700 }} variant="body1">
+              Tổng số kỳ dự án đã thanh toán
+            </Typography>
+            <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2, mb: 1 }}></Stack>
+            <TextAnimate
+              text={`${listOfProject?.numOfPayedStage}   Kỳ` ?? 0}
+              sx={{ typography: 'h3' }}
+              variants={varBounceInUp}
+            />
+          </Box>
+        </Card>
+      </Grid>
+    </Grid>
   );
 }

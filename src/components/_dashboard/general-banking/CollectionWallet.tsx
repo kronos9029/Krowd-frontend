@@ -157,8 +157,9 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
   // CHuyển tiền
   const TransferSchema = Yup.object().shape({
     amount: Yup.number()
-      .required('Vui lòng nhập số tiền bạn cần chuyển')
-      .min(100000, 'Yêu cầu tối thiểu mỗi lần chuyển là 100,000đ')
+      .required('Vui lòng nhập số tiền bạn cần rút')
+      .min(100000, 'Yêu cầu tối thiểu mỗi lần rút là 100,000đ')
+      .max(500000000, 'Yêu cầu tối đa mỗi lần rút là 500,000,000đ')
   });
   const formikTranfer = useFormik({
     initialValues: {
@@ -216,6 +217,7 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
     amount: Yup.number()
       .required('Vui lòng nhập số tiền bạn cần rút')
       .min(100000, 'Yêu cầu tối thiểu mỗi lần rút là 100,000đ')
+      .max(500000000, 'Yêu cầu tối đa mỗi lần rút là 500,000,000đ')
   });
   const formikWithDraw = useFormik({
     initialValues: {
@@ -489,7 +491,10 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                         </Typography>
                         <FormikProvider value={formikTranfer}>
                           <Form noValidate autoComplete="off" onSubmit={handleSubmitTranfer}>
-                            <Tooltip title="Giao dịch tối thiểu là 100,000đ" placement="bottom-end">
+                            <Tooltip
+                              title="Giao dịch từ 100,000đ - 500,000,000đ"
+                              placement="bottom-end"
+                            >
                               <TextField
                                 required
                                 fullWidth
@@ -644,7 +649,10 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                                 {touchedWithDraw.accountName && errorsWithDraw.accountName}
                               </FormHelperText>
                             )}
-                            <Tooltip title="Giao dịch tối thiểu là 100,000đ" placement="bottom-end">
+                            <Tooltip
+                              title="Giao dịch từ 100,000đ - 500,000,000đ"
+                              placement="bottom-end"
+                            >
                               <TextField
                                 required
                                 fullWidth

@@ -109,6 +109,10 @@ export default function KrowdPackage() {
   const [resWalletName, setDataInvestedfromWalletName] = useState('');
   const [resFee, setDataInvestedfee] = useState('');
   const [resDate, setDataInvestedDate] = useState('');
+  const [PackageName, setPackageName] = useState('');
+  const [PackagePrice, setPackagePrice] = useState(0);
+  const [PackageQuan, setPackageQuan] = useState(1);
+  const [PackageRemainQuan, setPackageRemainQuan] = useState(0);
   const [dataInvestedSuccess, setDataInvestedSuccess] = useState();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -129,9 +133,23 @@ export default function KrowdPackage() {
   //--------------------GET DATA----------------------------
   useEffect(() => {
     dispatch(getUserKrowdDetail(user?.id));
-    dispatch(getProjectListById(id));
     dispatch(getWalletList());
-    dispatch(getProjectPackage(id));
+
+    if (id) {
+      dispatch(getProjectPackage(id));
+      dispatch(getProjectListById(id));
+      // setPackageName('');
+      // setPackagePrice(0);
+      // setPackageQuan(1);
+      // setPackageRemainQuan(0);
+    } else {
+      dispatch(getProjectPackage(`${localStorage.getItem('projectId')}`));
+      dispatch(getProjectListById(`${localStorage.getItem('projectId')}`));
+      // setPackageName('');
+      // setPackagePrice(0);
+      // setPackageQuan(1);
+      // setPackageRemainQuan(0);
+    }
   }, [dispatch]);
 
   //--------------------ROOT STATE-------------------------
@@ -156,9 +174,12 @@ export default function KrowdPackage() {
   const { t } = useTranslation();
 
   const handleClickOpenPackage2 = async (v: Package) => {
-    dispatch(getPackageBYID({ package_param: v }));
+    // setPackageName(PackageDetails?.name ?? '');
+    // setPackagePrice(PackageDetails?.price ?? 0);
+    // setPackageQuan(PackageDetails?.quantity ?? 0);
+    // setPackageRemainQuan(PackageDetails?.remainingQuantity ?? 0);
+    await dispatch(getPackageBYID(v.id));
   };
-
   // const handleClickRefeshBalance = async (v: Package) => {
   //   dispatch(getWalletTypeByID(v.id));
   // };

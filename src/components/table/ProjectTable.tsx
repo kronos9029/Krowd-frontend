@@ -10,7 +10,6 @@ const TABLE_HEAD = [
   { id: 'image', label: 'ẢNH', align: '' },
   { id: 'name', label: 'DỰ ÁN', align: 'left' },
   { id: 'investedAmount', label: 'BẠN ĐẦU TƯ', align: 'center' },
-  { id: 'receivedAmount', label: 'SỐ TIỀN NHẬN ĐƯỢC', align: 'center' },
   { id: 'lastestInvestmentDate', label: 'NGÀY ĐẦU TƯ', align: 'center' },
   { id: 'multiplier', label: 'HỆ SỐ NHÂN', align: 'center' },
   { id: 'duration', label: 'SỐ KỲ', align: 'left' },
@@ -69,12 +68,7 @@ export default function ProjectTable() {
             type: DATA_TYPE.NUMBER_FORMAT,
             textColor: 'rgb(20, 183, 204)'
           },
-          {
-            name: 'receivedAmount',
-            value: _item.receivedAmount,
-            type: DATA_TYPE.NUMBER_FORMAT,
-            textColor: 'green'
-          },
+
           {
             name: 'lastestInvestmentDate',
             value: _item.lastestInvestmentDate,

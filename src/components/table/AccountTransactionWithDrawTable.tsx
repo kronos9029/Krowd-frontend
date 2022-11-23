@@ -107,7 +107,7 @@ export default function AccountTransactionWithDrawTable() {
           {
             name: 'status',
             value:
-              (_item.status === 'PENDING' && 'Gửi yêu cầu rút tiền') ||
+              (_item.status === 'PENDING' && 'Đang chờ Krowd duyệt yêu cầu rút tiền') ||
               (_item.status === 'REJECTED' && 'Yêu cầu bị từ chối') ||
               (_item.status === 'PARTIAL' && 'Yêu cầu được chấp nhận') ||
               // (_item.status === 'PARTIAL' && 'PARTIAL') ||

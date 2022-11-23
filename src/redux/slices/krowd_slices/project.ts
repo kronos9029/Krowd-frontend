@@ -5,6 +5,7 @@ import axios from 'axios';
 import {
   ALL_Project,
   business,
+  InvestedProjectDetail,
   ListOfProjectInvested,
   NewProjectEntityFormValues,
   Package,
@@ -41,6 +42,11 @@ type ProjectState = {
     isLoadingProjectListInvested: boolean;
     numOfProject: number;
     listOfProject: ListOfProjectInvested[];
+    errorProjectListInvested: boolean;
+  };
+  InvestedProjectDetails: {
+    isLoadingProjectListInvested: boolean;
+    listOfProject: InvestedProjectDetail | null;
     errorProjectListInvested: boolean;
   };
 
@@ -114,6 +120,11 @@ const initialState: ProjectState = {
     isLoadingProjectListInvested: false,
     numOfProject: 0,
     listOfProject: [],
+    errorProjectListInvested: false
+  },
+  InvestedProjectDetails: {
+    isLoadingProjectListInvested: false,
+    listOfProject: null,
     errorProjectListInvested: false
   },
   projects: [],
@@ -200,6 +211,18 @@ const slice = createSlice({
       state.projectListInvested.isLoadingProjectListInvested = false;
       state.projectListInvested = action.payload;
     },
+    // ------ GET PROJECT INVESTED BY ID------------ //
+    startLoadingProjectInvestedById(state) {
+      state.InvestedProjectDetails.isLoadingProjectListInvested = true;
+    },
+    hasGetProjectInvestedByIdError(state, action) {
+      state.InvestedProjectDetails.isLoadingProjectListInvested = false;
+      state.InvestedProjectDetails.errorProjectListInvested = action.payload;
+    },
+    getProjectListInvestedByIdSuccess(state, action) {
+      state.InvestedProjectDetails.isLoadingProjectListInvested = false;
+      state.InvestedProjectDetails.listOfProject = action.payload;
+    },
 
     // ------ GET ALL PROJECT BY ID------------ //
 
@@ -263,6 +286,19 @@ export function getProjectPackage(projectId: string) {
     try {
       const response = await ProjectAPI.getPackageID({ id: projectId });
       dispatch(slice.actions.getProjectPackageSuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+// PACKAGE PROJECT BY ID
+
+export function getPackageBYID(Id: string) {
+  return async () => {
+    dispatch(slice.actions.startPackageIDLoading());
+    try {
+      const response = await ProjectAPI.getPackageBYID({ id: Id });
+      dispatch(slice.actions.getPackageIDSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
@@ -365,16 +401,15 @@ export function getProjectListInvested(pageIndex: number, pageSize: number) {
     }
   };
 }
-//------- GET PACKAGE WITH ID
-
-export function getPackageBYID({ package_param }: { package_param: Package }) {
+//------- GET PROJECT INVESTED WITH ID
+export function getProjectListInvestedById(Id: string) {
   return async () => {
-    dispatch(slice.actions.startPackageIDLoading());
+    dispatch(slice.actions.startLoadingProjectInvestedById());
     try {
-      const response = await BusinessAPI.gets();
-      dispatch(slice.actions.getPackageIDSuccess(package_param));
+      const response = await ProjectAPI.getProjectInvestedByID(Id);
+      dispatch(slice.actions.getProjectListInvestedByIdSuccess(response.data));
     } catch (error) {
-      dispatch(slice.actions.hasError(error));
+      dispatch(slice.actions.hasGetProjectInvestedByIdError(error));
     }
   };
 }

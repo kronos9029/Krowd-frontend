@@ -51,7 +51,7 @@ export default function ProjectPackage({ project }: { project: Project1 }) {
   const navigate = useNavigate();
 
   const handleGetPackageInvestByID = async (v: Package) => {
-    await dispatch(getPackageBYID({ package_param: v }));
+    await dispatch(getPackageBYID(v.id));
     navigate(`${PATH_PAGE.checkout}/${project.id}`);
   };
 
@@ -149,7 +149,6 @@ export default function ProjectPackage({ project }: { project: Project1 }) {
 
                   <Link
                     style={{ textDecoration: 'none' }}
-                    href={`${PATH_PAGE.checkout}/${project?.id}`}
                     onClick={() => handleGetPackageInvestByID(e)}
                   >
                     <Typography sx={{ textAlign: 'end' }}>

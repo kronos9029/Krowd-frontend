@@ -15,6 +15,7 @@ const ICONS = {
   project: getIcon('ic_project'),
   wallet: getIcon('ic_wallet'),
   dashboard: getIcon('ic_dashboard'),
+  krowd: getIcon('ic_krowd'),
   daily: getIcon('ic_dailyRevenue'),
   term: getIcon('ic_termRevenue'),
   booking: getIcon('ic_booking'),
@@ -28,9 +29,14 @@ const SidebarProjectConfig = [
     subheader: 'Dự án',
     items: [
       {
-        title: 'Chi tiết dự án',
+        title: 'Thông tin',
         path: PATH_DASHBOARD_PROJECT.project.root,
         icon: ICONS.project
+      },
+      {
+        title: 'Cập nhật',
+        path: PATH_DASHBOARD_PROJECT.project.general,
+        icon: ICONS.krowd
       }
     ]
   },
