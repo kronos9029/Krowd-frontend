@@ -202,7 +202,7 @@ function ProjectDetailCard({ project: p }: ProjectDetailCardProps) {
             </Typography>
           </Typography>
         </Box>
-        {/* <Box
+        <Box
           sx={{
             my: 1.5,
             display: 'flex',
@@ -226,7 +226,7 @@ function ProjectDetailCard({ project: p }: ProjectDetailCardProps) {
               </Button>
             )}
           </Link>
-        </Box> */}
+        </Box>
       </Grid>
     </Grid>
   );

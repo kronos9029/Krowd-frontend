@@ -54,7 +54,7 @@ const sidebarConfig = [
     subheader: 'Quản lý giao dịch',
     items: [
       {
-        title: 'Nạp tiền',
+        title: 'Nạp tiền momo',
         path: PATH_DASHBOARD.transaction.list,
         icon: ICONS.transaction
       },
@@ -79,17 +79,17 @@ const sidebarConfig = [
       //   icon: ICONS.payment
       // }
     ]
-  },
-  {
-    subheader: 'Khuyến mãi (Đang phát triển)',
-    items: [
-      {
-        title: 'Phiếu ưu đãi',
-        path: PATH_DASHBOARD.general.banking,
-        icon: ICONS.voucher
-      }
-    ]
   }
+  // {
+  //   subheader: 'Khuyến mãi (Đang phát triển)',
+  //   items: [
+  //     {
+  //       title: 'Phiếu ưu đãi',
+  //       path: PATH_DASHBOARD.general.banking,
+  //       icon: ICONS.voucher
+  //     }
+  //   ]
+  // }
 ];
 
 //----------------------------------------------------------------------------------

@@ -6,6 +6,7 @@ import { MotionInView, varFadeInUp } from '../../animate';
 import { OverlayBackground } from 'assets';
 import { motion } from 'framer-motion';
 import useLocales from 'hooks/useLocales';
+import { margin } from '@mui/system';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
@@ -51,53 +52,50 @@ export default function LandingAppDownload() {
             display: { xs: 'none', md: 'block' }
           }}
         />
+        <MotionInView variants={varFadeInUp}>
+          <Typography
+            component="p"
+            variant="h4"
+            sx={{ color: 'common.white', textAlign: 'center' }}
+          >
+            {t('app_title_description')}
+          </Typography>
+        </MotionInView>
 
-        <Grid container spacing={5} direction="row-reverse" justifyContent="space-evenly">
-          <Grid item xs={6} sm={3} md={4} sx={{ position: 'relative' }}>
-            <img alt="dark mode" src="/static/home/AppDownload.svg" />
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <ContentStyle>
-              <MotionInView variants={varFadeInUp}>
-                <Typography component="p" variant="h4" sx={{ mb: 3, color: 'common.white' }}>
-                  {t('app_title_description')}
-                </Typography>
-              </MotionInView>
-
-              {/* <MotionInView variants={varFadeInUp}>
-                <Typography
-                  component="p"
-                  sx={{ mb: 3, color: 'common.white', display: 'block', fontSize: '18px' }}
-                >
-                  {t('app_title_description_1')}
-                </Typography>
-              </MotionInView> */}
-              <MotionInView variants={varFadeInUp}>
-                <Typography
-                  component="p"
-                  sx={{ mb: 3, color: 'common.white', display: 'block', fontSize: '18px' }}
-                >
-                  {t('app_title_description_2')}
-                </Typography>
-              </MotionInView>
-
-              <Grid container spacing={3} sx={{ my: 1 }} justifyContent={'space-between'}>
-                <Grid></Grid>
-
-                <Grid xs={11} sm={12} md={6} spacing={3}>
-                  <iframe
-                    src="/static/icons/navbar/QRcode.png"
-                    style={{
-                      width: '200px',
-                      height: '239px'
-                    }}
-                  />
-                </Grid>
-              </Grid>
-            </ContentStyle>
-          </Grid>
-        </Grid>
+        <MotionInView variants={varFadeInUp}>
+          <img style={{ objectFit: 'cover' }} alt="dark mode" src="/static/home/KrowdApp.png" />{' '}
+        </MotionInView>
+        <MotionInView variants={varFadeInUp}>
+          <Typography
+            component="p"
+            sx={{
+              mb: 3,
+              color: 'common.white',
+              display: 'block',
+              fontSize: '18px',
+              textAlign: 'center'
+            }}
+          >
+            {t('app_title_description_2')}
+          </Typography>
+        </MotionInView>
+        <MotionInView variants={varFadeInUp}>
+          <Typography
+            sx={{
+              mb: 3,
+              textAlign: 'center'
+            }}
+          >
+            <iframe
+              src="/static/icons/navbar/QRcode.png"
+              style={{
+                width: '200px',
+                height: '239px',
+                margin: 'auto'
+              }}
+            />
+          </Typography>{' '}
+        </MotionInView>
       </Container>
     </RootStyle>
   );

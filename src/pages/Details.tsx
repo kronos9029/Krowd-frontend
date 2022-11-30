@@ -178,7 +178,7 @@ export default function ComponentsDetails() {
                         >
                           {t(`Project_detail_card.Pitch`)}
                         </Button>
-                        {/* <Box
+                        <Box
                           sx={{
                             my: 1.5,
                             display: 'flex',
@@ -210,7 +210,7 @@ export default function ComponentsDetails() {
                               )}
                             </Typography>
                           </Link>
-                        </Box> */}
+                        </Box>
                       </Container>
                     </ToolbarStyle>
                   </AppBar>
@@ -286,7 +286,7 @@ export default function ComponentsDetails() {
             <Divider variant="fullWidth" />
           </Box>
 
-          {/* {projectID.status === 'CALLING_FOR_INVESTMENT' && (
+          {projectID.status === 'CALLING_FOR_INVESTMENT' && (
             <Container maxWidth={'lg'} sx={{ mb: 6 }}>
               <Grid container>
                 <Grid xs={12} sm={4} md={5} lg={3}>
@@ -355,12 +355,12 @@ export default function ComponentsDetails() {
                 </Grid>
               </Grid>
             </Container>
-          )} */}
-          {/* {projectID.status === 'CALLING_FOR_INVESTMENT' && (
+          )}
+          {projectID.status === 'CALLING_FOR_INVESTMENT' && (
             <Box sx={{ mb: 7 }}>
               <Divider variant="fullWidth" />
             </Box>
-          )} */}
+          )}
           <Container maxWidth={'lg'}>
             <Grid
               container

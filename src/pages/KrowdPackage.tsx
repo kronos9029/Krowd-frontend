@@ -54,7 +54,7 @@ import * as Yup from 'yup';
 import { fCurrency, fCurrencyPackage } from 'utils/formatNumber';
 import { LoadingButton } from '@mui/lab';
 import eyeFill from '@iconify/icons-eva/eye-fill';
-import sield from '@iconify/icons-eva/shield-outline';
+import sield from '@iconify/icons-eva/shield-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 // import eyeOffFill from '@iconify/icons-eva/eye-off-2-fill';
 import checkFill from '@iconify/icons-eva/checkmark-fill';
@@ -444,14 +444,14 @@ export default function KrowdPackage() {
                       {t(`Project_package_invest.PrivatePersonalInfomation`)}
                     </Box>
 
-                    <Box sx={{ pt: 3, pb: 7 }}>
+                    {/* <Box sx={{ pt: 3, pb: 7 }}>
                       <Button variant="contained" onClick={handleClickOpen}>
                         {t(`Project_package_invest.ConfirmInformation`)}
                         {mainInvestor && (
                           <UserAccountForm user={mainInvestor} open={open} onClose={handleClose} />
                         )}
                       </Button>
-                    </Box>
+                    </Box> */}
                     <Divider sx={{ mt: 7, maxWidth: 600 }} />
                   </Container>
 
@@ -663,28 +663,28 @@ export default function KrowdPackage() {
 
                                 <Box>
                                   <Typography
-                                    sx={{ paddingLeft: 2, pt: 2, color: '#e8c163' }}
+                                    sx={{ paddingLeft: 2, pt: 2, color: '#e65500' }}
                                     variant="h6"
                                   >
                                     Lưu ý:
                                   </Typography>
 
                                   <Typography
-                                    sx={{ paddingLeft: 0.4, pt: 2, color: '#e8c163' }}
+                                    sx={{ paddingLeft: 0.4, pt: 2, color: '#e65500' }}
                                     variant="body2"
                                   >
                                     (*) Nhà đầu tư vui lòng kiểm tra những thông tin của mình trước
                                     khi đầu tư (Họ và tên, SĐT, địa chỉ gmail).
                                   </Typography>
                                   <Typography
-                                    sx={{ paddingLeft: 0.4, pt: 2, color: '#e8c163' }}
+                                    sx={{ paddingLeft: 0.4, pt: 2, color: '#e65500' }}
                                     variant="body2"
                                   >
                                     (*) Nhà đầu tư vui lòng kiểm tra gói đầu tư bao gồm (tên gói, số
                                     gói đã mua, số tiền đầu tư) để tránh nhầm lẫn khi thanh toán.
                                   </Typography>
                                   <Typography
-                                    sx={{ paddingLeft: 0.4, pt: 2, color: '#e8c163' }}
+                                    sx={{ paddingLeft: 0.4, pt: 2, color: '#e65500' }}
                                     variant="body2"
                                   >
                                     (*) Khi nhà đầu tư bấm xác nhận KROWD sẽ gửi tới hòm thư điện tử

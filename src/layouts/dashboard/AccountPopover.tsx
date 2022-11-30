@@ -32,7 +32,7 @@ const MENU_OPTIONS = [
   {
     label: 'Dự án của bạn',
     icon: projectIcon,
-    linkTo: PATH_DASHBOARD.userKrowd.list,
+    linkTo: PATH_DASHBOARD.projectInvested.list,
     target: ''
   },
   {
