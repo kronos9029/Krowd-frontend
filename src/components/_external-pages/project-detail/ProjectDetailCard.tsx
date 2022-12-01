@@ -222,7 +222,7 @@ function ProjectDetailCard({ project: p }: ProjectDetailCardProps) {
                 variant="contained"
                 size="large"
               >
-                {t(`Project_detail_card.investNow`)} {p.name}
+                {t(`Project_detail_card.investNow`)}
               </Button>
             )}
           </Link>

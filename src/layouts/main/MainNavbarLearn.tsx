@@ -225,6 +225,9 @@ export default function MainNavbarLearn({ onOpenSidebar }: DashboardNavbarProps)
                     'aria-labelledby': 'basic-button'
                   }}
                 >
+                  <MenuItem component={Link} href={'/'}>
+                    {t(`mainNavbar_menu_item.mainNavbar_landing`)}
+                  </MenuItem>
                   <MenuItem component={Link} href={PATH_DASHBOARD.user.account}>
                     {t(`mainNavbar_menu_item.mainNavbar_menu_item_profile`)}
                   </MenuItem>

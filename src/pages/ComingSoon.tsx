@@ -60,7 +60,7 @@ const SeparatorStyle = styled(Typography)(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function ComingSoon() {
-  const countdown = useCountdown(new Date('10/08/2022 22:22'));
+  const countdown = useCountdown(new Date('10/02/2023 22:22'));
   const { translate: t } = useLocales();
   return (
     <RootStyle title="Coming Soon | Krowd">

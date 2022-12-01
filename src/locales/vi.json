@@ -105,6 +105,7 @@
     "Try_checking": "Thử tìm kiếm lại hoặc nhập đúng từ khóa",
 
     "mainNavbar_menu_item":{
+        "mainNavbar_landing":"Trang chủ",
         "mainNavbar_menu_item_profile":"Thông tin cá nhân",
         "mainNavbar_menu_item_console":"Bảng điều khiển",
         "mainNavbar_menu_item_logout":"Đăng xuất",

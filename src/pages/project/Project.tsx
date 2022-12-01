@@ -1,6 +1,16 @@
 // material
 import { styled } from '@mui/material/styles';
-import { Grid, Card, Container, Typography, useMediaQuery, Tab, Tabs, Box } from '@mui/material';
+import {
+  Grid,
+  Card,
+  Container,
+  Typography,
+  useMediaQuery,
+  Tab,
+  Tabs,
+  Box,
+  Link
+} from '@mui/material';
 
 // components
 import Page from '../../components/Page';
@@ -22,10 +32,10 @@ import { BlogPostsSearch } from 'components/_dashboard/project';
 import { filterProjects, getProjectList } from 'redux/slices/krowd_slices/project';
 import { ProjectFilter, ProjectState, PROJECT_STATUS } from '../../@types/krowd/project';
 import { getFieldList } from 'redux/slices/krowd_slices/field';
-import { Link } from 'react-router-dom';
 import { ProjectCard } from 'components/_external-pages/project';
 import LandingStartUp from 'components/_external-pages/landing/LandingStartup';
 import { LandingInvest } from 'components/_external-pages/landing';
+import { PATH_DASHBOARD_LEARN } from 'routes/paths';
 // import ProjectCard from '../../../components/ProjectCard';
 // ----------------------------------------------------------------------
 
@@ -74,7 +84,7 @@ export default function Projects() {
           </Typography>
           <Typography color={'text.disabled'} fontWeight={400} variant="subtitle2" sx={{ mb: 3 }}>
             {t(`landing_project_invest.landing_project_invest_business`)}{' '}
-            <Link to="#" style={{ textDecoration: 'none' }}>
+            <Link href={PATH_DASHBOARD_LEARN.learn.how_to_invest}>
               {t(`landing_project_invest.landing_project_invest_appraisal`)}
             </Link>
           </Typography>

@@ -108,8 +108,8 @@ export default function AccountTransactionWithDrawTable() {
             name: 'status',
             value:
               (_item.status === 'PENDING' && 'Đang chờ Krowd duyệt yêu cầu rút tiền') ||
-              (_item.status === 'REJECTED' && 'Yêu cầu bị từ chối') ||
-              (_item.status === 'PARTIAL' && 'Yêu cầu được chấp nhận') ||
+              (_item.status === 'REJECTED' && 'Yêu cầu bị Krowd Admin từ chối') ||
+              (_item.status === 'PARTIAL' && 'Krowd Admin đã chấp nhận') ||
               // (_item.status === 'PARTIAL' && 'PARTIAL') ||
               (_item.status === 'Transfer from I2 to I3' &&
                 'Chuyển tiền từ VÍ ĐẦU TƯ CHUNG sang VÍ TẠM ỨNG') ||

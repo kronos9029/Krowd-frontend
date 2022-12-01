@@ -37,7 +37,7 @@ export default function InvestmentTable() {
           {
             name: 'projectName',
             value: _item.projectName,
-            type: DATA_TYPE.TEXT_FORMAT
+            type: DATA_TYPE.TEXT
           },
           {
             name: 'investorName',

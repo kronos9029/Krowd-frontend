@@ -57,7 +57,7 @@ export default function AccounTransactionTable() {
           },
           {
             name: 'type',
-            value: _item.type === 'Top-up' ? 'Nạp tiền vào ví' : 'Thất bại',
+            value: _item.type === 'Top-up' ? 'Nạp tiền vào ví' : 'Nạp tiền vào ví',
             type: DATA_TYPE.TEXT,
             textColor: _item.message === 'Giao dịch thành công.' ? 'rgb(102, 187, 106)' : 'red'
           },

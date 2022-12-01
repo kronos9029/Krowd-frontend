@@ -106,6 +106,7 @@
     "No_results_found": "No results found for",
     "Try_checking": "Try checking for typos or using complete words.",
     "mainNavbar_menu_item":{
+        "mainNavbar_landing":"Landing page",
         "mainNavbar_menu_item_profile":"Personal information",
         "mainNavbar_menu_item_console":"Console",
         "mainNavbar_menu_item_logout":"Log out",

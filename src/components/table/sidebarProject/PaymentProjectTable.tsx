@@ -38,7 +38,7 @@ export default function PaymentProjectTable() {
     listOfPeriodRevenuePayment: listPeriodRevenue,
     numOfPayment: numberOfRevenue
   } = paymentListRevenueState;
-  const [openStage, setOpenStage] = useState('INVESTMENT');
+  const [openStage, setOpenStage] = useState('PERIOD_REVENUE');
   const [pageIndex2, setPageIndex2] = useState(1);
   const [pageSize2, setPageSize2] = useState(5);
   const [pageIndex, setPageIndex] = useState(1);

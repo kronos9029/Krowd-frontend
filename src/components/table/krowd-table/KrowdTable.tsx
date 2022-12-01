@@ -20,11 +20,8 @@ import { Link, Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import KrowdTableListHead from '../components/KrowdTableListHead';
 import { fCurrency } from 'utils/formatNumber';
-import editTwotone from '@iconify/icons-ant-design/edit-twotone';
-import upload from '@iconify/icons-ant-design/upload-outline';
 import dollarCircleOutlined from '@iconify/icons-ant-design/dollar-circle-outlined';
 import eyeFill from '@iconify/icons-ant-design/container-fill';
-import reportScreen from '@iconify/icons-ant-design/fund-projection-screen';
 
 import LoadingScreen from 'components/LoadingScreen';
 import Label from 'components/Label';

@@ -47,7 +47,7 @@ export default function DealTerm() {
                 </Box>
                 <Box sx={{ pb: 5 }}>
                   <Box sx={{ px: 4.5 }}>
-                    <Typography sx={{ fontSize: '22px', lineHeight: 0.2 }}>
+                    <Typography sx={{ fontSize: '22px', lineHeight: 1.3 }}>
                       {t('Learn_Investor_Deal_Term.Stages_1')}
                     </Typography>
                     <br /> {t('Learn_Investor_Deal_Term.Stages_1_Description')}
@@ -61,7 +61,7 @@ export default function DealTerm() {
                 </Box>
                 <Box sx={{ pb: 5 }}>
                   <Box sx={{ px: 3 }}>
-                    <Typography sx={{ fontSize: '22px', lineHeight: 0.2 }}>
+                    <Typography sx={{ fontSize: '22px', lineHeight: 1.3 }}>
                       {t('Learn_Investor_Deal_Term.Stages_2')}
                     </Typography>
                     <br /> {t('Learn_Investor_Deal_Term.Stages_2_Description')}
@@ -74,7 +74,7 @@ export default function DealTerm() {
                 </Box>
                 <Box sx={{ pb: 5 }}>
                   <Box sx={{ px: 3 }}>
-                    <Typography sx={{ fontSize: '22px', lineHeight: 0.2 }}>
+                    <Typography sx={{ fontSize: '22px', lineHeight: 1.3 }}>
                       {t('Learn_Investor_Deal_Term.Stages_3')}
                     </Typography>
                     <br /> {t('Learn_Investor_Deal_Term.Stages_3_Description')}
@@ -89,7 +89,7 @@ export default function DealTerm() {
                 </Box>
                 <Box sx={{ pb: 5 }}>
                   <Box sx={{ px: 3 }}>
-                    <Typography sx={{ fontSize: '22px', lineHeight: 0.2 }}>
+                    <Typography sx={{ fontSize: '22px', lineHeight: 1.3 }}>
                       {t('Learn_Investor_Deal_Term.Stages_4')}
                     </Typography>
                     <br /> {t('Learn_Investor_Deal_Term.Stages_4_Description')}
@@ -102,7 +102,7 @@ export default function DealTerm() {
                 </Box>
                 <Box sx={{ pb: 5 }}>
                   <Box sx={{ px: 3 }}>
-                    <Typography sx={{ fontSize: '22px', lineHeight: 0.2 }}>
+                    <Typography sx={{ fontSize: '22px', lineHeight: 1.3 }}>
                       {t('Learn_Investor_Deal_Term.Stages_5')}
                     </Typography>
                     <br /> {t('Learn_Investor_Deal_Term.Stages_5_Description')}

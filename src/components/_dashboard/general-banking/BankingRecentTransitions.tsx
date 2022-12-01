@@ -88,7 +88,10 @@ export default function BankingRecentTransitions() {
               <TableRow>
                 <TableCell>Mô tả giao dịch</TableCell>
                 <TableCell>Ngày gửi</TableCell>
-                <TableCell>Số tiền</TableCell>
+                <TableCell sx={{ textAlign: 'right' }}>Số tiền</TableCell>
+                <TableCell></TableCell>
+                <TableCell></TableCell>
+
                 <TableCell>Trạng thái</TableCell>
               </TableRow>
             </TableHead>
@@ -114,9 +117,15 @@ export default function BankingRecentTransitions() {
                       {row.createDate.toString().substring(10, 20)}
                     </Typography>
                   </TableCell>
-
-                  <TableCell>{fCurrency(row.amount)}</TableCell>
-
+                  <TableCell
+                    sx={{
+                      textAlign: 'right'
+                    }}
+                  >
+                    {fCurrency(row.amount)}
+                  </TableCell>
+                  <TableCell sx={{ textAlign: 'right' }}></TableCell>
+                  <TableCell sx={{ textAlign: 'right' }}></TableCell>
                   <TableCell>
                     <Label
                       variant={isLight ? 'ghost' : 'filled'}
