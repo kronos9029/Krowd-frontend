@@ -4,6 +4,8 @@ import { REACT_APP_API_URL } from '../../config';
 const API_PACKAGE_ID = '/packages/project';
 const API_PACKAGE_BY_ID = '/packages';
 const API_PROJECT = '/projects';
+const API_PROJECT_MOST = '/projects/outstandingProject';
+
 const API_PROJECT_INVESTED = '/projects/investedProject';
 const API_STAGE_ID = '/stages';
 const API_TRANSACTION = '/account_transactions';
@@ -42,6 +44,13 @@ async function getProjectInvestedByID(Id: string) {
 async function getAllProject() {
   const headers = getHeader();
   const response = await axios.get(REACT_APP_API_URL + `${API_PROJECT}`, {
+    headers: headers
+  });
+  return response;
+}
+async function getAllProjectMostTransaction() {
+  const headers = getHeader();
+  const response = await axios.get(REACT_APP_API_URL + `${API_PROJECT_MOST}`, {
     headers: headers
   });
   return response;
@@ -118,6 +127,7 @@ export const ProjectAPI = {
   get: get,
   getPackageID: getPackageID,
   getAllProject: getAllProject,
+  getAllProjectMostTransaction: getAllProjectMostTransaction,
   getStageId: getStageId,
   getPackageBYID: getPackageBYID,
   getProjectInvested: getProjectInvested,

@@ -193,12 +193,12 @@ export type Bill = {
 };
 // ===================================WITH DRAW REQUEST================================
 
-export interface WithDrawRequest {
+export type WithDrawRequest = {
   numOfWithdrawRequest: number;
   listOfWithdrawRequest: ListOfWithdrawRequest[];
-}
+};
 
-export interface ListOfWithdrawRequest {
+export type ListOfWithdrawRequest = {
   id: string;
   bankName: string;
   accountName: string;
@@ -211,7 +211,7 @@ export interface ListOfWithdrawRequest {
   createBy: string;
   updateDate: string;
   updateBy: string;
-}
+};
 
 // ===================================WITH DRAW REQUEST================================
 export type PeriodRevenue = {

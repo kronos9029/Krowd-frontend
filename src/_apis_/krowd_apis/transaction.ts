@@ -128,14 +128,58 @@ async function getsDailyReportByID(id: string) {
   });
   return response;
 }
+
+async function approveWithdrawRequest({
+  requestId,
+  receipt
+}: {
+  requestId: string;
+  receipt: File;
+}) {
+  const headers = getHeader();
+  const formData = new FormData();
+  formData.append('requestId', requestId);
+  formData.append('receipt', receipt);
+  const response = await axios({
+    method: 'put',
+    url: REACT_APP_API_URL + API_WITH_DRAW_REQUEST,
+    params: { action: 'APPROVE' },
+    data: formData,
+    headers: headers
+  });
+  return response;
+}
+
+async function reportedWithdrawRequest({
+  requestId,
+  refusalReason
+}: {
+  requestId: string;
+  refusalReason: string;
+}) {
+  const headers = getHeader();
+  const formData = new FormData();
+  formData.append('requestId', requestId);
+  formData.append('refusalReason', refusalReason);
+  const response = await axios({
+    method: 'put',
+    url: REACT_APP_API_URL + API_WITH_DRAW_REQUEST,
+    params: { action: 'REPORT' },
+    data: formData,
+    headers: headers
+  });
+  return response;
+}
 export const TransactionAPI = {
   getsTransaction: getsTransaction,
   getsWalletTransaction: getsWalletTransaction,
+  approveWithdrawRequest: approveWithdrawRequest,
   getsPayment: getsPayment,
   getsPaymentRevenue: getsPaymentRevenue,
   getsInvestment: getsInvestment,
   getsInvestmentByID: getsInvestmentByID,
   getsDailyReport: getsDailyReport,
+  reportedWithdrawRequest: reportedWithdrawRequest,
   getsBillDailyReport: getsBillDailyReport,
   getsDailyReportByID: getsDailyReportByID,
   getsWithdrawTransaction: getsWithdrawTransaction,

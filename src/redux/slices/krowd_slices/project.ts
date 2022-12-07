@@ -32,6 +32,12 @@ type ProjectState = {
     listOfProject: ALL_Project[];
     errorProjectlistAllProjectLanding: boolean;
   };
+  listAllProjectLandingMostTransaction: {
+    isLoadinglistAllProjectLanding: boolean;
+    numOfProject: number;
+    listOfProject: ALL_Project[];
+    errorProjectlistAllProjectLanding: boolean;
+  };
   projectList: {
     isLoadingProjectList: boolean;
     numOfProject: number;
@@ -115,6 +121,12 @@ const initialState: ProjectState = {
     listOfProject: [],
     errorProjectlistAllProjectLanding: false
   },
+  listAllProjectLandingMostTransaction: {
+    isLoadinglistAllProjectLanding: false,
+    numOfProject: 0,
+    listOfProject: [],
+    errorProjectlistAllProjectLanding: false
+  },
 
   projectListInvested: {
     isLoadingProjectListInvested: false,
@@ -187,7 +199,7 @@ const slice = createSlice({
       state.isLoading = false;
       state.projectListLanding = action.payload;
     },
-    // ------ GET ALL PROJECT IN LANDING 1/10/2022 ------------ //
+    // ------ GET ALL PROJECT IN LANDING ------------ //
     startLoadingListAllProjectLanding(state) {
       state.listAllProjectLanding.isLoadinglistAllProjectLanding = true;
     },
@@ -198,6 +210,18 @@ const slice = createSlice({
     getListAllProjectLandingSuccess(state, action) {
       state.listAllProjectLanding.isLoadinglistAllProjectLanding = false;
       state.listAllProjectLanding = action.payload;
+    },
+    // ------ GET ALL PROJECT IN LANDING MOST TRANSACTION ------------ //
+    startLoadingListAllProjectMostTransactionLanding(state) {
+      state.listAllProjectLandingMostTransaction.isLoadinglistAllProjectLanding = true;
+    },
+    hasGetListAllProjectLandingMostTransactionError(state, action) {
+      state.listAllProjectLandingMostTransaction.isLoadinglistAllProjectLanding = false;
+      state.listAllProjectLandingMostTransaction.errorProjectlistAllProjectLanding = action.payload;
+    },
+    getListAllProjectLandingMostTransactionSuccess(state, action) {
+      state.listAllProjectLandingMostTransaction.isLoadinglistAllProjectLanding = false;
+      state.listAllProjectLandingMostTransaction = action.payload;
     },
     // ------ GET ALL PROJECT INVESTED ------------ //
     startLoadingProjectInvestedList(state) {
@@ -337,6 +361,18 @@ export function getListAllProjectLanding() {
       dispatch(slice.actions.getListAllProjectLandingSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasGetListAllProjectLandingError(error));
+    }
+  };
+}
+// ALL PROJECT HIGHLIGHT 1/10/2022
+export function getListAllProjectMostTransactionLanding() {
+  return async () => {
+    dispatch(slice.actions.startLoadingListAllProjectMostTransactionLanding());
+    try {
+      const response = await ProjectAPI.getAllProjectMostTransaction();
+      dispatch(slice.actions.getListAllProjectLandingMostTransactionSuccess(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasGetListAllProjectLandingMostTransactionError(error));
     }
   };
 }

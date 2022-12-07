@@ -156,14 +156,9 @@ export default function NotificationsPopover() {
     setOpen(false);
   };
 
-  // const handleMarkAllAsRead = () => {
-  //   setNotifications(
-  //     notifications.map((notification) => ({
-  //       ...notification,
-  //       isUnRead: false
-  //     }))
-  //   );
-  // };
+  const handleMarkAllAsRead = () => {
+    dispatch(getNotification(localStorage.getItem('userId') ?? '', true));
+  };
 
   return (
     <>
@@ -200,7 +195,7 @@ export default function NotificationsPopover() {
 
           {newNotification > 0 && (
             <Tooltip title="Đánh dấu đã đọc">
-              <MIconButton color="primary">
+              <MIconButton onClick={handleMarkAllAsRead} color="primary">
                 <Icon icon={doneAllFill} width={20} height={20} />
               </MIconButton>
             </Tooltip>

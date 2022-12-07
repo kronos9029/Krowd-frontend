@@ -34,7 +34,8 @@ import { PROJECT_STATUS } from '../../../@types/krowd/project';
 import {
   getProjectList,
   getProjectListWithFilter,
-  getListAllProjectLanding
+  getListAllProjectLanding,
+  getListAllProjectMostTransactionLanding
 } from 'redux/slices/krowd_slices/project';
 import { getFieldList, getFieldListByBusinessId } from 'redux/slices/krowd_slices/field';
 //Icon
@@ -145,9 +146,10 @@ export default function LandingStartUp() {
   const currentLanguageCode = cookies.get('i18next') || 'en';
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
   const { t } = useTranslation();
-  const { projectListLanding, listAllProjectLanding } = useSelector(
-    (state: RootState) => state.project
-  );
+
+  const { projectListLanding, listAllProjectLanding, listAllProjectLandingMostTransaction } =
+    useSelector((state: RootState) => state.project);
+
   const { isLoadingProjectListLanding } = projectListLanding;
   const { fieldList } = useSelector((state: RootState) => state.fieldKrowd);
   const { businessLists } = useSelector((state: RootState) => state.business);
@@ -182,6 +184,7 @@ export default function LandingStartUp() {
   useEffect(() => {
     dispatch(getProjectListWithFilter([], '', '0', ''));
     dispatch(getListAllProjectLanding());
+    dispatch(getListAllProjectMostTransactionLanding());
   }, [dispatch]);
   const getHighLight = () => {
     dispatch(getBusinessList());
@@ -284,7 +287,7 @@ export default function LandingStartUp() {
           </Box>
         </Box>
         <Grid container alignItems="center" justifyContent="center" spacing={5}>
-          {listAllProjectLanding.listOfProject.slice(0, 9).map((p) => (
+          {listAllProjectLandingMostTransaction.listOfProject.map((p) => (
             <ProjectCard key={p.id} row={p} />
           ))}
         </Grid>

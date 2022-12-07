@@ -67,7 +67,7 @@ export default function Login() {
       <MHidden width="mdDown">
         <SectionStyle>
           <Typography variant="h3" sx={{ p: 5, mt: 10, mb: 5 }}>
-            For Investor <br />
+            Dành cho nhà đầu tư <br />
             KROWD System
           </Typography>
           <Typography variant="h3" sx={{ p: 25 }}>
