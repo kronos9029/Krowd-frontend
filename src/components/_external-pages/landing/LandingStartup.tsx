@@ -5,7 +5,6 @@ import searchFill from '@iconify/icons-eva/search-fill';
 
 import { useEffect, useState } from 'react';
 import { dispatch, RootState, useSelector } from 'redux/store';
-import useAuth from 'hooks/useAuth';
 import { Link } from 'react-router-dom';
 import {
   Box,
@@ -20,8 +19,6 @@ import {
   Divider,
   Stack,
   Chip,
-  Autocomplete,
-  InputAdornment,
   OutlinedInput,
   ListItemIcon
 } from '@mui/material';
@@ -30,14 +27,12 @@ import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
 //Project
 import { ProjectCard } from '../project';
-import { PROJECT_STATUS } from '../../../@types/krowd/project';
 import {
-  getProjectList,
   getProjectListWithFilter,
   getListAllProjectLanding,
   getListAllProjectMostTransactionLanding
 } from 'redux/slices/krowd_slices/project';
-import { getFieldList, getFieldListByBusinessId } from 'redux/slices/krowd_slices/field';
+import { getFieldList } from 'redux/slices/krowd_slices/field';
 //Icon
 import { Icon } from '@iconify/react';
 import barChartOutlined from '@iconify/icons-ant-design/bar-chart-outlined';
@@ -46,9 +41,7 @@ import caretUpFilled from '@iconify/icons-ant-design/caret-up-filled';
 import fileProtectOutlined from '@iconify/icons-ant-design/file-protect-outlined';
 //Temp
 import { BlogPostsSearch, BlogPostsSort } from 'components/_dashboard/project';
-import { Field } from '../../../@types/krowd/fields';
 import { getBusinessList } from 'redux/slices/krowd_slices/business';
-import { valueScaleCorrection } from 'framer-motion/types/render/dom/projection/scale-correction';
 import LoadingScreen from 'components/LoadingScreen';
 // ----------------------------------------------------------------------
 
@@ -92,18 +85,6 @@ const SORT_OPTIONS_CONFIG = {
     {
       value: 'CALLING_FOR_INVESTMENT',
       label: 'Đang kêu gọi đầu tư'
-    },
-    {
-      value: 'ACTIVE',
-      label: 'Kêu gọi thành công'
-    },
-    {
-      value: 'NEW',
-      label: 'Dự án mới nhất'
-    },
-    {
-      value: 'Closingsoon',
-      label: 'Kết thúc'
     }
   ],
 
@@ -111,44 +92,21 @@ const SORT_OPTIONS_CONFIG = {
     {
       value: 'CALLING_FOR_INVESTMENT',
       label: 'Calling for investment'
-    },
-    {
-      value: 'ACTIVE',
-      label: 'Calling successfully'
-    },
-    {
-      value: 'NEW',
-      label: 'Neweast first'
-    },
-    {
-      value: 'Closingsoon',
-      label: 'Closing soon'
     }
   ]
 };
 
 // ----------------------------------------------------------------------
 
-const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
-  width: 240,
-  transition: theme.transitions.create(['box-shadow', 'width'], {
-    easing: theme.transitions.easing.easeInOut,
-    duration: theme.transitions.duration.shorter
-  }),
-  '&.Mui-focused': { width: 320, boxShadow: theme.customShadows.z8 },
-  '& fieldset': {
-    borderWidth: `1px !important`,
-    borderColor: `${theme.palette.grey[500_32]} !important`
-  }
-}));
 export default function LandingStartUp() {
   const [filters, setFilters] = useState('CALLING_FOR_INVESTMENT');
   const currentLanguageCode = cookies.get('i18next') || 'en';
   const currentLanguage = Language.find((l) => l.code === currentLanguageCode);
   const { t } = useTranslation();
 
-  const { projectListLanding, listAllProjectLanding, listAllProjectLandingMostTransaction } =
-    useSelector((state: RootState) => state.project);
+  const { projectListLanding, listAllProjectLandingMostTransaction } = useSelector(
+    (state: RootState) => state.project
+  );
 
   const { isLoadingProjectListLanding } = projectListLanding;
   const { fieldList } = useSelector((state: RootState) => state.fieldKrowd);
@@ -199,13 +157,6 @@ export default function LandingStartUp() {
     setOpenHighLight(false);
     setOpenCategory(false);
     setOpenMore(false);
-  };
-
-  const getMore = () => {
-    setOpenMore(!openMore);
-    setOpenHighLight(false);
-    setOpenCategory(false);
-    setOpenRevenue(false);
   };
 
   const getCategory = () => {
@@ -374,26 +325,7 @@ export default function LandingStartUp() {
                     )}
                   </Button>
                 </Grid>
-                {/* <Grid item xs={12} md={2}>
-                  <Button
-                    sx={{ color: openMore ? 'primary.main' : 'text.secondary' }}
-                    onClick={() => handleClick(getMore)}
-                  >
-                    <Typography
-                      sx={{
-                        color: openMore ? 'primary.main' : 'text.secondary'
-                      }}
-                      mr={0.5}
-                    >
-                      {t(`landing_project_highlight.landing_highligh_by_more`)}
-                    </Typography>
-                    {openMore ? (
-                      <Icon icon={caretUpFilled} width={15} height={15} />
-                    ) : (
-                      <Icon icon={caretDownFilled} width={15} height={15} />
-                    )}
-                  </Button>
-                </Grid> */}
+
                 <Grid item xs={12} md={4}>
                   <BlogPostsSort
                     query={filters}
@@ -438,7 +370,7 @@ export default function LandingStartUp() {
           </Collapse>
         </Box>
         {/* Business */}
-        <Box sx={{ backgroundColor: '#f7f7f7' }}>
+        <Box sx={{ backgroundColor: '#f7f7f7' }} width={1200}>
           <Collapse in={openHighLight} timeout="auto" unmountOnExit>
             <Grid container sx={{ backgroundColor: '#f7f7f7' }}>
               <Grid container sx={{ py: 3, ml: 3 }}>
@@ -456,13 +388,15 @@ export default function LandingStartUp() {
                             })
                           }
                         >
-                          <ListItemIcon>
-                            <img style={{ width: 50, height: 50 }} src={b.image} />
-                          </ListItemIcon>{' '}
-                          <ListItemText
-                            primary={b.name}
-                            sx={{ color: isSelected !== -1 ? 'primary.main' : 'text.secondary' }}
-                          />
+                          <Box width={200} display={'flex'} alignItems={'center'}>
+                            <ListItemIcon>
+                              <img style={{ width: 50, height: 50 }} src={b.image} />
+                            </ListItemIcon>{' '}
+                            <ListItemText
+                              primary={b.name}
+                              sx={{ color: isSelected !== -1 ? 'primary.main' : 'text.secondary' }}
+                            />
+                          </Box>
                         </ListItemButton>
                       </List>
                     );

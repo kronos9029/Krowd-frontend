@@ -143,7 +143,8 @@ export default function PaymentProjectTable() {
           {
             name: 'amount',
             value: _item.amount,
-            type: DATA_TYPE.NUMBER_FORMAT
+            type: DATA_TYPE.NUMBER_FORMAT,
+            textColor: 'rgb(102, 187, 106)'
           },
           {
             name: 'description',

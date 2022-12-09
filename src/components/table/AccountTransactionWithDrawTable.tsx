@@ -65,7 +65,7 @@ export default function AccountTransactionWithDrawTable() {
   const [pageSize, setPageSize] = useState(5);
   const [isLoadingButton, setIsLoadingButton] = useState(false);
   const [currentWithdrawRequest, setCurrentWithdrawRequest] = useState<ListOfWithdrawRequest>();
-  const [refusalReason, setRefusalReason] = useState<string | null>(null);
+  const [refusalReason, setRefusalReason] = useState<string | null>('Không nhận được tiền');
   const [transferStatus, setTransferStatus] = useState<string>('success');
 
   const [file, setFile] = useState<File | null>(null);
@@ -85,7 +85,7 @@ export default function AccountTransactionWithDrawTable() {
   const handleChangeTranferStatus = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTransferStatus((event.target as HTMLInputElement).value);
     setFile(null);
-    setRefusalReason(null);
+    setRefusalReason('Không nhận được tiền');
   };
   const handleChangeRefusalReason = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRefusalReason((event.target as HTMLInputElement).value);
@@ -117,10 +117,10 @@ export default function AccountTransactionWithDrawTable() {
     setIsLoadingButton(true);
     await TransactionAPI.reportedWithdrawRequest({
       requestId: TransactionWithdrawDetail?.id!,
-      refusalReason: refusalReason!
+      reportMessage: refusalReason!
     })
       .then(async () => {
-        enqueueSnackbar('Từ chối thành công', {
+        enqueueSnackbar('Báo cáo lỗi thành công', {
           variant: 'success'
         });
         setIsLoadingButton(false);
@@ -128,7 +128,7 @@ export default function AccountTransactionWithDrawTable() {
         getWithdrawRequestTransactionList(localStorage.getItem('userId') ?? '', pageIndex, 5);
       })
       .catch(() => {
-        enqueueSnackbar('Từ chối thất bại vui lòng kiểm tra lại', {
+        enqueueSnackbar('Báo cáo lỗi thất bại vui lòng kiểm tra lại', {
           variant: 'error'
         });
       });
@@ -1206,7 +1206,7 @@ export default function AccountTransactionWithDrawTable() {
                           marginBottom: '0.2rem'
                         }}
                       >
-                        <strong> {TransactionWithdrawDetail?.refusalReason}</strong>
+                        <strong> {TransactionWithdrawDetail?.reportMessage}</strong>
                       </Typography>
                     </Box>
                     <Box

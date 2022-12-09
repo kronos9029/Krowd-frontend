@@ -1,12 +1,11 @@
 // material
-import { alpha, useTheme, styled } from '@mui/material/styles';
+import { alpha, styled } from '@mui/material/styles';
 //React
 import searchFill from '@iconify/icons-eva/search-fill';
 
 import { useEffect, useState } from 'react';
 import { dispatch, RootState, useSelector } from 'redux/store';
-import useAuth from 'hooks/useAuth';
-import { Link } from 'react-router-dom';
+
 import {
   Box,
   Container,
@@ -20,9 +19,6 @@ import {
   Divider,
   Stack,
   Chip,
-  Autocomplete,
-  InputAdornment,
-  OutlinedInput,
   ListItemIcon
 } from '@mui/material';
 //Languages
@@ -30,24 +26,16 @@ import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
 //Project
 import { ProjectCard } from '../project';
-import { PROJECT_STATUS } from '../../../@types/krowd/project';
-import {
-  getProjectList,
-  getProjectListWithFilter,
-  getListAllProjectLanding
-} from 'redux/slices/krowd_slices/project';
-import { getFieldList, getFieldListByBusinessId } from 'redux/slices/krowd_slices/field';
+
+import { getProjectListWithFilter } from 'redux/slices/krowd_slices/project';
+import { getFieldList } from 'redux/slices/krowd_slices/field';
 //Icon
 import { Icon } from '@iconify/react';
-import barChartOutlined from '@iconify/icons-ant-design/bar-chart-outlined';
 import caretDownFilled from '@iconify/icons-ant-design/caret-down-filled';
 import caretUpFilled from '@iconify/icons-ant-design/caret-up-filled';
-import fileProtectOutlined from '@iconify/icons-ant-design/file-protect-outlined';
 //Temp
 import { BlogPostsSearch, BlogPostsSort } from 'components/_dashboard/project';
-import { Field } from '../../../@types/krowd/fields';
 import { getBusinessList } from 'redux/slices/krowd_slices/business';
-import { valueScaleCorrection } from 'framer-motion/types/render/dom/projection/scale-correction';
 import LoadingScreen from 'components/LoadingScreen';
 // ----------------------------------------------------------------------
 
@@ -90,18 +78,6 @@ const SORT_OPTIONS_CONFIG = {
     {
       value: 'CALLING_FOR_INVESTMENT',
       label: 'Đang kêu gọi đầu tư'
-    },
-    {
-      value: 'ACTIVE',
-      label: 'Kêu gọi thành công'
-    },
-    {
-      value: 'NEW',
-      label: 'Dự án mới nhất'
-    },
-    {
-      value: 'Closingsoon',
-      label: 'Kết thúc'
     }
   ],
 
@@ -109,18 +85,6 @@ const SORT_OPTIONS_CONFIG = {
     {
       value: 'CALLING_FOR_INVESTMENT',
       label: 'Calling for investment'
-    },
-    {
-      value: 'ACTIVE',
-      label: 'Calling successfully'
-    },
-    {
-      value: 'NEW',
-      label: 'Neweast first'
-    },
-    {
-      value: 'Closingsoon',
-      label: 'Closing soon'
     }
   ]
 };

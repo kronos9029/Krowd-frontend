@@ -10,16 +10,9 @@ import {
   AdvanceWallet,
   ProjectPaymentWallet,
   CollectionWallet,
-  BankingContacts,
-  BankingInviteFriends,
-  BankingQuickTransfer,
-  BankingCurrentBalance,
-  BankingBalanceStatistics,
-  BankingRecentTransitions,
-  BankingExpensesCategories
+  BankingRecentTransitions
 } from '../../components/_dashboard/general-banking';
 import { Wallet } from '../../@types/krowd/wallet';
-import { AppWelcome, WalletWelcome } from 'components/_dashboard/general-app';
 import { RootState, useSelector } from 'redux/store';
 import useAuth from 'hooks/useAuth';
 
@@ -40,8 +33,7 @@ export default function WalletBanking({ wallet }: { wallet: Wallet }) {
               <TempWallet wallet={wallet} />
               <SharedInvestmentWallet wallet={wallet} />
             </Stack>
-            <Stack direction={{ xs: 'row', sm: 'row' }} spacing={3}>
-              {/* <WalletWelcome user={user} investor={UserDetail} /> */}
+            <Stack direction={{ xs: 'row', sm: 'row' }} spacing={1}>
               <CollectionWallet wallet={wallet} />
               <AdvanceWallet wallet={wallet} />
               <ProjectPaymentWallet wallet={wallet} />
@@ -52,14 +44,6 @@ export default function WalletBanking({ wallet }: { wallet: Wallet }) {
               <BankingRecentTransitions />
             </Stack>
           </Grid>
-
-          {/* <Grid item xs={12} md={4}>
-            <Stack spacing={3}>
-              <BankingQuickTransfer />
-              <BankingContacts />
-              <BankingInviteFriends />
-            </Stack>
-          </Grid> */}
         </Grid>
       </Container>
     </Page>

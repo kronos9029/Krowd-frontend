@@ -1,39 +1,17 @@
 // material
 import { styled } from '@mui/material/styles';
-import {
-  Grid,
-  Card,
-  Container,
-  Typography,
-  useMediaQuery,
-  Tab,
-  Tabs,
-  Box,
-  Link
-} from '@mui/material';
+import { Container, Typography, Box, Link } from '@mui/material';
 
 // components
 import Page from '../../components/Page';
 import cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
-import { ShopProductSort } from 'components/_dashboard/e-commerce/shop';
-import { useFormik } from 'formik';
-import { useEffect, useState } from 'react';
+
 // redux
-import { RootState, useDispatch, useSelector } from 'redux/store';
+import { RootState, useSelector } from 'redux/store';
 // routes
 // utils
-import fakeRequest from 'utils/fakeRequest';
-import useSettings from 'hooks/useSettings';
-import { Product, ProductFilter, ProductState } from '../../@types/products';
-import { filterProducts, getProducts } from 'redux/slices/product';
-import { BlogPostsSearch } from 'components/_dashboard/project';
-// icon
-import { filterProjects, getProjectList } from 'redux/slices/krowd_slices/project';
-import { ProjectFilter, ProjectState, PROJECT_STATUS } from '../../@types/krowd/project';
-import { getFieldList } from 'redux/slices/krowd_slices/field';
-import { ProjectCard } from 'components/_external-pages/project';
-import LandingStartUp from 'components/_external-pages/landing/LandingStartup';
+
 import { LandingInvest } from 'components/_external-pages/landing';
 import { PATH_DASHBOARD_LEARN } from 'routes/paths';
 // import ProjectCard from '../../../components/ProjectCard';
@@ -65,11 +43,6 @@ export default function Projects() {
   const { t } = useTranslation();
   // Redux
   const { projectListLanding } = useSelector((state: RootState) => state.project);
-
-  // useEffect(() => {
-  //   dispatch(getProjectList());
-  //   dispatch(getFieldList());
-  // }, [dispatch]);
 
   return (
     <RootStyle title="Danh sách | Krowd">

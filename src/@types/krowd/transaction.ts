@@ -208,6 +208,7 @@ export type ListOfWithdrawRequest = {
   status: string;
   refusalReason: null;
   createDate: string;
+  reportMessage: null;
   createBy: string;
   updateDate: string;
   updateBy: string;

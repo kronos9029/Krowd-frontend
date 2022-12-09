@@ -82,7 +82,7 @@ export default function ProjectTable() {
           },
           {
             name: 'duration',
-            value: `${_item.duration} kỳ`,
+            value: `${_item.numOfStage} kỳ`,
             type: DATA_TYPE.NUMBER
           },
           {

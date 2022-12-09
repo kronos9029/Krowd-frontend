@@ -152,15 +152,15 @@ async function approveWithdrawRequest({
 
 async function reportedWithdrawRequest({
   requestId,
-  refusalReason
+  reportMessage
 }: {
   requestId: string;
-  refusalReason: string;
+  reportMessage: string;
 }) {
   const headers = getHeader();
   const formData = new FormData();
   formData.append('requestId', requestId);
-  formData.append('refusalReason', refusalReason);
+  formData.append('reportMessage', reportMessage);
   const response = await axios({
     method: 'put',
     url: REACT_APP_API_URL + API_WITH_DRAW_REQUEST,

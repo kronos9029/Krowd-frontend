@@ -295,7 +295,7 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                   </Typography>
                 </Grid>
 
-                <Grid>
+                <Grid sx={{ mx: 1 }}>
                   <Button
                     sx={{
                       display: 'flex',
