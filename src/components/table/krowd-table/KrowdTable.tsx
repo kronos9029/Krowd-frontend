@@ -43,6 +43,8 @@ export enum DATA_TYPE {
   WRAP_TEXT = 'wrap_text',
   DATE = 'date',
   CURRENCY = 'currency',
+  ICONSKROWD = 'icons_krowd',
+
   LABLE = 'lable'
 }
 export enum ACTION_TYPE {
@@ -345,6 +347,25 @@ export function KrowdTable({
                                 </Stack>
                               </TableCell>
                             );
+                          case DATA_TYPE.ICONSKROWD:
+                            return (
+                              <TableCell
+                                key={`__${_item.name}__${data.id}`}
+                                component="th"
+                                scope="row"
+                                padding="normal"
+                              >
+                                <Stack direction="row" alignItems="center" spacing={2}>
+                                  <img style={{ width: 40 }} src={`/static/home/logo.png`} />
+                                  <Typography
+                                    sx={{ color: '#14b7cc', fontWeight: 700 }}
+                                    variant="body1"
+                                  >
+                                    Ví Krowd
+                                  </Typography>
+                                </Stack>
+                              </TableCell>
+                            );
                           case DATA_TYPE.IMAGE:
                             return (
                               <TableCell
@@ -371,7 +392,12 @@ export function KrowdTable({
                                     style={{ width: 40 }}
                                     src={`/static/icons/navbar/ic_momo.png`}
                                   />
-                                  <Typography variant="body1"> Ví momo</Typography>
+                                  <Typography
+                                    sx={{ color: '#c30ac3', fontWeight: 700 }}
+                                    variant="body1"
+                                  >
+                                    Ví Momo
+                                  </Typography>
                                 </Stack>
                               </TableCell>
                             );

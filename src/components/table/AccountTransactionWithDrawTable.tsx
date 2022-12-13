@@ -51,7 +51,7 @@ const note = [
     name: 'Yêu cầu của bạn sẽ được bên KROWD xử lý sớm nhất trong vòng 24 tiếng'
   },
   {
-    name: 'Bảng biểu thị thông tin giao dịch rút tiền của bạn (Nếu có bất kỳ thắc mắc xin vui lòng liên lạc với bộ phận hỗ trợ của KROWD tại 19007777)'
+    name: 'Bảng biểu thị thông tin lệnh rút tiền của bạn (Nếu có bất kỳ thắc mắc xin vui lòng liên lạc với bộ phận hỗ trợ của KROWD tại 19007777)'
   }
 ];
 export default function AccountTransactionWithDrawTable() {
@@ -237,7 +237,7 @@ export default function AccountTransactionWithDrawTable() {
   return (
     <>
       <KrowdTable
-        headingTitle="GIAO DỊCH RÚT TIỀN"
+        headingTitle="lệnh rút tiền"
         header={TABLE_HEAD}
         getData={getData}
         isLoading={isLoading}

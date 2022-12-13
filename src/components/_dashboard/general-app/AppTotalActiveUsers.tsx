@@ -16,7 +16,7 @@ export default function AppTotalActiveUsers() {
         <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
           <Box sx={{ flexGrow: 1, color: 'green' }}>
             <Typography sx={{ fontWeight: 700 }} variant="body1">
-              Lợi nhuận dự kiến
+              Tiền nhận được dự kiến
             </Typography>
             <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2, mb: 1 }}></Stack>
             <TextAnimate
@@ -31,7 +31,7 @@ export default function AppTotalActiveUsers() {
         <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
           <Box sx={{ flexGrow: 1, color: 'green' }}>
             <Typography sx={{ fontWeight: 700 }} variant="body1">
-              Số tiền đã nhận
+              Đã thanh toán
             </Typography>
             <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2, mb: 1 }}></Stack>
             <TextAnimate
@@ -46,7 +46,7 @@ export default function AppTotalActiveUsers() {
         <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
           <Box sx={{ flexGrow: 1, color: 'red' }}>
             <Typography sx={{ fontWeight: 700 }} variant="body1">
-              Dự án còn nợ
+              Nợ tối thiểu
             </Typography>
             <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2, mb: 1 }}></Stack>{' '}
             <TextAnimate
@@ -61,7 +61,7 @@ export default function AppTotalActiveUsers() {
         <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
           <Box sx={{ flexGrow: 1 }}>
             <Typography sx={{ fontWeight: 700 }} variant="body1">
-              Lợi nhuận bao gồm lãi
+              Nợ cộng lãi
             </Typography>
             <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2, mb: 1 }}></Stack>
             <TextAnimate
@@ -76,7 +76,7 @@ export default function AppTotalActiveUsers() {
         <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
           <Box sx={{ flexGrow: 1 }}>
             <Typography sx={{ fontWeight: 700 }} variant="body1">
-              Tổng số kỳ dự án
+              Số kỳ thanh toán
             </Typography>
             <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2, mb: 1 }}></Stack>
             <TextAnimate
@@ -91,11 +91,11 @@ export default function AppTotalActiveUsers() {
         <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
           <Box sx={{ flexGrow: 1 }}>
             <Typography sx={{ fontWeight: 700 }} variant="body1">
-              Tổng số kỳ dự án đã thanh toán
+              Số kỳ đã thanh toán
             </Typography>
             <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2, mb: 1 }}></Stack>
             <TextAnimate
-              text={`${listOfProject?.numOfPayedStage}   Kỳ` ?? 0}
+              text={`${listOfProject?.numOfPayedStage} Kỳ` ?? 0}
               sx={{ typography: 'h3' }}
               variants={varBounceInUp}
             />

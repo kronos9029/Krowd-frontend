@@ -14,7 +14,7 @@ const TABLE_HEAD = [
   { id: 'packageName', label: 'GÓI DỰ ÁN', align: 'left' },
   { id: 'investedQuantity', label: 'SỐ LƯỢNG', align: 'left' },
   { id: 'fromWalletName', label: 'NGUỒN TIỀN', align: 'left' },
-  { id: 'amount', label: 'SỐ TIỀN', align: 'center' },
+  { id: 'amount', label: 'SỐ TIỀN ĐẦU TƯ', align: 'center' },
   { id: 'createDate', label: 'NGÀY THỰC HIỆN', align: 'center' },
   { id: 'status', label: 'TRẠNG THÁI', align: 'left' }
 ];
@@ -79,7 +79,7 @@ export default function PaymentProjectTable() {
           {
             name: 'investedQuantity',
             value: `${_item.investedQuantity} Gói`,
-            type: DATA_TYPE.TEXT
+            type: DATA_TYPE.NUMBER
           },
           {
             name: 'fromWalletName',

@@ -77,7 +77,7 @@ function ProjectDetailAfterPitch({ abouts, nav }: AboutListProps) {
             <Typography
               variant="h3"
               textAlign={'center'}
-            >{`${manager.lastName} ${manager.firstName}`}</Typography>
+            >{`${manager.firstName} ${manager.lastName}`}</Typography>
             <Typography textAlign={'center'} py={1} color={'text.disabled'} variant="body1">
               Quản lý dự án
             </Typography>

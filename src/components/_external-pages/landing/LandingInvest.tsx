@@ -312,7 +312,7 @@ export default function LandingInvest() {
           </Collapse>
         </Box>
         {/* Business */}
-        <Box sx={{ backgroundColor: '#eaeaeacf' }} mb={5}>
+        {/* <Box sx={{ backgroundColor: '#eaeaeacf' }} mb={5}>
           <Collapse in={openHighLight} timeout="auto" unmountOnExit>
             <Grid container sx={{ backgroundColor: '#eaeaeacf' }}>
               <Grid container sx={{ py: 3, ml: 3 }}>
@@ -344,8 +344,42 @@ export default function LandingInvest() {
               </Grid>
             </Grid>
           </Collapse>
+        </Box> */}
+        <Box sx={{ backgroundColor: '#eaeaeacf' }} width={1200}>
+          <Collapse in={openHighLight} timeout="auto" unmountOnExit>
+            <Grid container sx={{ backgroundColor: '#eaeaeacf' }}>
+              <Grid container sx={{ py: 3, ml: 3 }}>
+                {businessLists &&
+                  businessLists.listOfBusiness.map((b) => {
+                    const isSelected = selectedFilter.findIndex((value) => value.filterId === b.id);
+                    return (
+                      <List key={b.id} component="div" disablePadding>
+                        <ListItemButton
+                          onClick={() =>
+                            handleInputChange({
+                              filterId: b.id,
+                              filterName: b.name,
+                              filterType: 'BUSINESS'
+                            })
+                          }
+                        >
+                          <Box width={200} display={'flex'} alignItems={'center'}>
+                            <ListItemIcon>
+                              <img style={{ width: 50, height: 50 }} src={b.image} />
+                            </ListItemIcon>{' '}
+                            <ListItemText
+                              primary={b.name}
+                              sx={{ color: isSelected !== -1 ? 'primary.main' : 'text.secondary' }}
+                            />
+                          </Box>
+                        </ListItemButton>
+                      </List>
+                    );
+                  })}
+              </Grid>
+            </Grid>
+          </Collapse>
         </Box>
-
         <Box sx={{ backgroundColor: '#eaeaeacf' }} mb={5}>
           <Grid container>
             <Collapse in={openRevenue} timeout="auto" unmountOnExit>

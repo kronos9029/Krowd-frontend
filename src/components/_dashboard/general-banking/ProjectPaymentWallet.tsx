@@ -333,7 +333,7 @@ export default function ProjectPaymentWallet({ wallet }: { wallet: Wallet }) {
                 <Grid lg={6}>
                   <TextAnimate
                     text={fCurrency(e.balance)}
-                    sx={{ typography: 'h3' }}
+                    sx={{ typography: 'h4' }}
                     variants={varBounceInUp}
                   />
                 </Grid>

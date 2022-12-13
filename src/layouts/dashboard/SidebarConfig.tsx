@@ -54,7 +54,7 @@ const sidebarConfig = [
     subheader: 'Quản lý giao dịch',
     items: [
       {
-        title: 'Nạp tiền momo',
+        title: 'Giao dịch hệ thống',
         path: PATH_DASHBOARD.transaction.list,
         icon: ICONS.transaction
       },
@@ -69,7 +69,7 @@ const sidebarConfig = [
         icon: ICONS.walletTransaction
       },
       {
-        title: 'Thanh toán',
+        title: 'Đầu tư và nhận lãi',
         path: PATH_DASHBOARD.transaction.payments,
         icon: ICONS.payment
       }

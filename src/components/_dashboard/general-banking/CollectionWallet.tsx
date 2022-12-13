@@ -287,7 +287,7 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                   <Typography sx={{ typography: 'h6' }}>{e.walletType.name}</Typography>
                   <Typography>
                     <TextAnimate
-                      sx={{ typography: 'h3' }}
+                      sx={{ typography: 'h4' }}
                       text={fCurrency(e.balance)}
                       variants={varBounceInUp}
                     />
@@ -295,7 +295,7 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                   </Typography>
                 </Grid>
 
-                <Grid sx={{ mx: 1 }}>
+                <Grid lg={7}>
                   <Button
                     sx={{
                       display: 'flex',

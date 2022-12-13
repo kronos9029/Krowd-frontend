@@ -88,7 +88,7 @@ export default function AdvanceWallet({ wallet }: { wallet: Wallet }) {
             <Stack spacing={1} sx={{ p: 3 }}>
               <Typography sx={{ typography: 'h6' }}>{e.walletType.name}</Typography>
               <TextAnimate
-                sx={{ typography: 'h3' }}
+                sx={{ typography: 'h4' }}
                 text={fCurrency(e.balance)}
                 variants={varBounceInUp}
               />{' '}
