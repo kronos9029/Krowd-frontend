@@ -11,6 +11,7 @@ const TABLE_HEAD = [
   { id: 'packageId', label: 'GIÁ GÓI', align: 'center' },
   { id: 'packageId', label: 'SỐ LƯỢNG', align: 'center' },
   { id: 'status', label: 'TRẠNG THÁI', align: 'center' },
+  { id: 'status', label: 'NGÀY ĐẦU TƯ', align: 'center' },
   { id: '', label: '', align: 'left' }
 ];
 export default function InvestmentTable() {
@@ -78,6 +79,11 @@ export default function InvestmentTable() {
               (_item.status === 'CANCELLED' && 'red') ||
               (_item.status === 'WAITING' && '#eacb00') ||
               (_item.status === 'FAILED' ? 'red' : 'black')
+          },
+          {
+            name: 'createDate',
+            value: _item.createDate,
+            type: DATA_TYPE.TEXT_FORMAT
           }
         ]
       };

@@ -10,7 +10,8 @@ import { getDailyReportProjectID } from '../../../redux/slices/krowd_slices/tran
 
 const TABLE_HEAD = [
   { id: 'idx', label: 'STT', align: 'center' },
-  { id: 'amount', label: 'SỐ TIỀN', align: 'right' },
+  { id: 'amount', label: 'TÊN ', align: 'center' },
+  { id: 'amount', label: 'SỐ TIỀN', align: 'center' },
   { id: 'reportDate', label: 'NGÀY BÁO CÁO', align: 'center' },
   { id: 'updateBy', label: 'CẬP NHẬT', align: 'center' },
   { id: '', label: 'CHI TIẾT', align: 'center' }
@@ -40,6 +41,11 @@ export default function ProjectReportRevenue() {
           {
             name: 'idx',
             value: _idx + 1,
+            type: DATA_TYPE.NUMBER
+          },
+          {
+            name: 'stageName',
+            value: _item.stageName,
             type: DATA_TYPE.NUMBER
           },
           {

@@ -34,9 +34,9 @@ export default function WalletBanking({ wallet }: { wallet: Wallet }) {
               <SharedInvestmentWallet wallet={wallet} />
             </Stack>
             <Stack direction={{ xs: 'row', sm: 'row' }} spacing={1}>
-              <CollectionWallet wallet={wallet} />
               <AdvanceWallet wallet={wallet} />
               <ProjectPaymentWallet wallet={wallet} />
+              <CollectionWallet wallet={wallet} />
             </Stack>
           </Grid>
           <Grid item xs={12} md={12}>

@@ -169,7 +169,7 @@ export default function PaymentProjectTable() {
           <Grid container display={'flex'} alignItems={'center'} justifyContent={'space-evenly'}>
             <Grid>
               <Button variant="outlined" onClick={handleClickOpenStage}>
-                DANH SÁCH THANH TOÁN DỰ ÁN
+                DANH SÁCH DỰ ÁN ĐẦU TƯ
               </Button>
             </Grid>
             <Grid>
@@ -182,7 +182,7 @@ export default function PaymentProjectTable() {
       </Grid>
       {openStage === 'INVESTMENT' ? (
         <KrowdTable
-          headingTitle="THANH TOÁN DỰ ÁN"
+          headingTitle="DỰ ÁN ĐẦU TƯ"
           header={TABLE_HEAD}
           getData={getData}
           isLoading={isLoading}

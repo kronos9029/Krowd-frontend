@@ -7,13 +7,13 @@ import eyeFill from '@iconify/icons-eva/eye-fill';
 
 const TABLE_HEAD = [
   { id: 'idx', label: 'STT', align: 'center' },
-  { id: 'image', label: 'ẢNH', align: '' },
+  { id: 'image', label: '', align: '' },
   { id: 'name', label: 'DỰ ÁN', align: 'left' },
-  { id: 'investedAmount', label: 'BẠN ĐẦU TƯ', align: 'center' },
-  { id: 'lastestInvestmentDate', label: 'NGÀY ĐẦU TƯ', align: 'center' },
+  { id: 'investedAmount', label: 'ĐÃ ĐẦU TƯ', align: 'center' },
   { id: 'multiplier', label: 'HỆ SỐ NHÂN', align: 'center' },
   { id: 'duration', label: 'SỐ KỲ', align: 'left' },
   { id: 'sharedRevenue', label: 'DOANH THU CHIA SẺ', align: 'left' },
+  { id: 'lastestInvestmentDate', label: 'NGÀY ĐẦU TƯ', align: 'center' },
   { id: 'status', label: 'TRẠNG THÁI', align: 'left' },
   { id: '', label: 'Chi tiết', align: 'center' }
 ];
@@ -34,7 +34,7 @@ export default function ProjectTable() {
   const [pageSize, setPageSize] = useState(5);
 
   useEffect(() => {
-    dispatch(getProjectListInvested(pageIndex, pageSize));
+    dispatch(getProjectListInvested(pageIndex, 5));
   }, [dispatch, pageIndex]);
   const getData = (): RowData[] => {
     if (!list) return [];
@@ -55,8 +55,19 @@ export default function ProjectTable() {
           {
             name: 'name',
             value: _item.name,
-            type: DATA_TYPE.TEXT
+            type: DATA_TYPE.TEXT,
+            textColor:
+              (_item.status === 'CALLING_FOR_INVESTMENT' && '#14b7cc') ||
+              (_item.status === 'DRAFT' && 'black') ||
+              (_item.status === 'WAITING_FOR_APPROVAL' && '#eacb00') ||
+              (_item.status === 'WAITING_TO_ACTIVATE' && '#4dc0b5') ||
+              (_item.status === 'ACTIVE' && 'green') ||
+              (_item.status === 'WAITING_TO_PUBLISH' && '#f66d9b') ||
+              (_item.status === 'CLOSED' && '#6574cd') ||
+              (_item.status === 'DENIED' && 'red') ||
+              (_item.status === 'CALLING_TIME_IS_OVER' ? 'red' : 'black')
           },
+
           // {
           //   name: 'business',
           //   value: _item.business.name,
@@ -67,12 +78,6 @@ export default function ProjectTable() {
             value: _item.investedAmount,
             type: DATA_TYPE.NUMBER_FORMAT,
             textColor: 'rgb(20, 183, 204)'
-          },
-
-          {
-            name: 'lastestInvestmentDate',
-            value: _item.lastestInvestmentDate,
-            type: DATA_TYPE.TEXT
           },
 
           {
@@ -90,7 +95,11 @@ export default function ProjectTable() {
             value: `${_item.sharedRevenue} %`,
             type: DATA_TYPE.NUMBER
           },
-
+          {
+            name: 'lastestInvestmentDate',
+            value: _item.lastestInvestmentDate,
+            type: DATA_TYPE.TEXT
+          },
           {
             name: 'status',
             value:
@@ -134,11 +143,9 @@ export default function ProjectTable() {
 
         handleNext() {
           setPageIndex(pageIndex + 1);
-          setPageSize(pageSize + 5);
         },
         handlePrevious() {
           setPageIndex(pageIndex - 1);
-          setPageSize(pageSize - 5);
         }
       }}
     />

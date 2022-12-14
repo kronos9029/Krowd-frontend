@@ -37,9 +37,9 @@ const TABLE_HEAD = [
   { id: 'bankName', label: 'TÊN NGÂN HÀNG', align: 'center' },
   { id: 'bankAccount', label: 'TÀI KHOẢN', align: 'center' },
   { id: 'accountName', label: 'CHỦ TÀI KHOẢN', align: 'center' },
-  { id: 'amount', label: 'SỐ TIỀN', align: 'left' },
-  { id: 'description', label: 'MÔ TẢ', align: 'left' },
-  { id: 'status', label: 'TRẠNG THÁI', align: 'left' },
+  { id: 'amount', label: 'SỐ TIỀN', align: 'center' },
+  { id: 'description', label: 'MÔ TẢ', align: 'center' },
+  { id: 'status', label: 'TRẠNG THÁI', align: 'center' },
   { id: 'createDate', label: 'NGÀY THỰC HIỆN', align: 'center' },
   { id: '', label: 'CHI TIẾT', align: 'center' }
 ];
@@ -198,7 +198,7 @@ export default function AccountTransactionWithDrawTable() {
           {
             name: 'description',
             value: _item.description === 'Withdraw Money' ? 'Rút tiền' : 'Rút tiền',
-            type: DATA_TYPE.TEXT,
+            type: DATA_TYPE.NUMBER,
             textColor: 'rgb(102, 187, 106)'
           },
           {
@@ -214,7 +214,7 @@ export default function AccountTransactionWithDrawTable() {
               (_item.status === 'Receive from I2 to I3 ' &&
                 'Nhận tiền từ VÍ ĐẦU TƯ CHUNG sang VÍ TẠM ỨNG') ||
               _item.status === 'Receive money from I1 to I2',
-            type: DATA_TYPE.TEXT,
+            type: DATA_TYPE.NUMBER,
             textColor:
               (_item.status === 'PENDING' && 'black') ||
               (_item.status === 'APPROVED' && 'green') ||
@@ -227,7 +227,7 @@ export default function AccountTransactionWithDrawTable() {
           {
             name: 'createDate',
             value: _item.createDate.toString().substring(0, 11),
-            type: DATA_TYPE.DATE,
+            type: DATA_TYPE.NUMBER,
             textColor: 'rgb(102, 187, 106)'
           }
         ]

@@ -60,7 +60,7 @@ export default function TempWallet({ wallet }: { wallet: Wallet }) {
                   {/* &nbsp;Chưa cập nhật */}
                 </Typography>
                 <Typography variant="body2" component="span" sx={{ opacity: 0.72 }}>
-                  &nbsp; Ví dùng để đầu tư vào các dự án của KROWD
+                  &nbsp; Ví dùng để lưu số dư nạp và rút tiền của bạn trong Krowd
                 </Typography>
               </Stack>
             </Stack>

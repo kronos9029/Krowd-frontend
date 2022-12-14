@@ -461,11 +461,9 @@ export default function ProjectPaymentWallet({ wallet }: { wallet: Wallet }) {
                   </Dialog>
                 </Grid>
               </Grid>
-              <Stack direction="row" alignItems="center" flexWrap="wrap">
-                <Typography variant="body2" component="span" sx={{ opacity: 0.72 }}>
-                  {/* &nbsp;Chưa cập nhật */}
-                </Typography>
-              </Stack>
+              <Typography variant="body2" component="span" sx={{ opacity: 0.72, pt: 2 }}>
+                Ví dùng để chứa số dư từ các khoản thanh toán bạn đã đầu tư trên Krowd
+              </Typography>
             </Stack>
           </RootStyle>
         ))}

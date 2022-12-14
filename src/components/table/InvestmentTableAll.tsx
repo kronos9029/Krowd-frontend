@@ -33,12 +33,13 @@ import { LoadingButton } from '@mui/lab';
 const TABLE_HEAD = [
   { id: 'idx', label: 'STT', align: 'center' },
   { id: 'projectId', label: 'DỰ ÁN', align: 'center' },
+  { id: 'totalPrice', label: 'TRẠNG THÁI DỰ ÁN', align: 'center' },
+  { id: 'packageId', label: 'GÓI', align: 'center' },
+  { id: 'packagePrice', label: 'GIÁ GÓI', align: 'center' },
+  { id: 'quantity', label: 'SỐ LƯỢNG', align: 'center' },
   { id: 'totalPrice', label: 'TỔNG TIỀN', align: 'center' },
-  { id: 'packageId', label: 'GÓI ĐẦU TƯ', align: 'center' },
-  { id: 'packageId', label: 'GIÁ GÓI', align: 'center' },
-  { id: 'packageId', label: 'SỐ LƯỢNG', align: 'center' },
   { id: 'createDate', label: 'NGÀY ĐẦU TƯ', align: 'center' },
-  { id: 'status', label: 'TRẠNG THÁI', align: 'center' },
+  { id: 'status', label: 'TRẠNG THÁI ĐẦU TƯ', align: 'center' },
   { id: '', label: 'HỦY ĐẦU TƯ', align: 'center' }
 ];
 const note = [
@@ -46,7 +47,7 @@ const note = [
     name: 'Lưu ý:'
   },
   {
-    name: 'Thao tác HỦY ĐẦU tư cho bạn hủy đầu tư trong vòng 24 tiếng (Tính từ lúc bạn đầu tư dự án)'
+    name: 'Thao tác HỦY ĐẦU TƯ cho bạn hủy đầu tư trong vòng 24 tiếng (Tính từ lúc bạn đầu tư dự án)'
   },
   {
     name: 'Bảng biểu thị thông tin giao dịch đầu tư của bạn (Nếu có bất kỳ thắc mắc xin vui lòng liên lạc với bộ phận hỗ trợ của Krowd tại 19007777)'
@@ -144,14 +145,28 @@ export default function InvestmentTableAll() {
           },
 
           {
-            name: 'totalPrice',
-            value: `${_item.totalPrice} đ`,
-            type: DATA_TYPE.NUMBER_FORMAT,
+            name: 'projectStatus',
+            value:
+              (_item.projectStatus === 'CLOSED' && 'Đã đóng') ||
+              (_item.projectStatus === 'ACTIVE' && 'Đang hoạt động') ||
+              (_item.projectStatus === 'WAITING_TO_ACTIVATE' && 'Đang chờ hoạt động') ||
+              (_item.projectStatus === 'CALLING_TIME_IS_OVER' && 'Đã quá hạn đầu tư') ||
+              (_item.projectStatus === 'CALLING_FOR_INVESTMENT' && 'Đang kêu gọi đầu tư') ||
+              (_item.projectStatus === 'WAITING_TO_PUBLISH' && 'Đang chờ công khai') ||
+              (_item.projectStatus === 'DENIED' && 'Đã bị từ chối') ||
+              (_item.projectStatus === 'WAITING_FOR_APPROVAL' && 'Đang chờ duyệt') ||
+              (_item.projectStatus === 'DRAFT' && 'Bản nháp'),
+            type: DATA_TYPE.NUMBER,
             textColor:
-              (_item.status === 'SUCCESS' && 'green') ||
-              (_item.status === 'CANCELED' && 'red') ||
-              (_item.status === 'WAITING' && '#eacb00') ||
-              (_item.status === 'FAILED' ? 'red' : 'black')
+              (_item.projectStatus === 'CALLING_FOR_INVESTMENT' && '#14b7cc') ||
+              (_item.projectStatus === 'DRAFT' && 'black') ||
+              (_item.projectStatus === 'WAITING_FOR_APPROVAL' && '#eacb00') ||
+              (_item.projectStatus === 'WAITING_TO_ACTIVATE' && '#4dc0b5') ||
+              (_item.projectStatus === 'ACTIVE' && 'green') ||
+              (_item.projectStatus === 'WAITING_TO_PUBLISH' && '#f66d9b') ||
+              (_item.projectStatus === 'CLOSED' && '#6574cd') ||
+              (_item.projectStatus === 'DENIED' && 'red') ||
+              (_item.projectStatus === 'CALLING_TIME_IS_OVER' ? 'red' : 'black')
           },
           {
             name: 'packageName',
@@ -167,6 +182,16 @@ export default function InvestmentTableAll() {
             name: 'quantity',
             value: `${_item.quantity} gói`,
             type: DATA_TYPE.NUMBER
+          },
+          {
+            name: 'totalPrice',
+            value: `${_item.totalPrice} đ`,
+            type: DATA_TYPE.NUMBER_FORMAT,
+            textColor:
+              (_item.status === 'SUCCESS' && 'green') ||
+              (_item.status === 'CANCELED' && 'red') ||
+              (_item.status === 'WAITING' && '#eacb00') ||
+              (_item.status === 'FAILED' ? 'red' : 'black')
           },
           {
             name: 'createDate',

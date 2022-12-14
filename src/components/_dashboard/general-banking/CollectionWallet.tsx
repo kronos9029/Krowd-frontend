@@ -291,8 +291,9 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                       text={fCurrency(e.balance)}
                       variants={varBounceInUp}
                     />
+
                     {/* {fCurrency(e.balance)} */}
-                  </Typography>
+                  </Typography>{' '}
                 </Grid>
 
                 <Grid lg={7}>
@@ -801,7 +802,9 @@ export default function CollectionWallet({ wallet }: { wallet: Wallet }) {
                 </Grid>
               </Grid>
               <Stack direction="row" alignItems="center" flexWrap="wrap">
-                <Typography variant="body2" component="span" sx={{ opacity: 0.72 }}></Typography>
+                <Typography variant="body2" component="span" sx={{ opacity: 0.72, pt: 2 }}>
+                  Ví dùng để chứa số dư nhận từ ví Dự án thanh toán
+                </Typography>
               </Stack>
             </Stack>
           </RootStyle>

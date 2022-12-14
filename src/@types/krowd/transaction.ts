@@ -153,6 +153,7 @@ export type ListOfInvestment = {
   investorImage: string;
   investorEmail: string;
   packageName: string;
+  projectStatus: string;
   packagePrice: number;
   projectName: string;
   projectId: string;
@@ -168,6 +169,7 @@ export type DailyReportProject = {
 export type ListOfDailyReport = {
   id: string;
   stageId: string;
+  stageName: string;
   amount: number;
   reportDate: string;
   createDate: Date | string;
