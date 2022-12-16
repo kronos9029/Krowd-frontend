@@ -69,6 +69,7 @@ export const PATH_DASHBOARD_PROJECT = {
     root: path(ROOTS_DASHBOARD_PROJECT, `/project/projectDetail`),
     reportRevenue: path(ROOTS_DASHBOARD_PROJECT, '/project/daily-revenue'),
     reportUpdate: path(ROOTS_DASHBOARD_PROJECT, '/project/report_update'),
+    historyPayment: path(ROOTS_DASHBOARD_PROJECT, '/project/payment_history'),
     billDailyReport: path(ROOTS_DASHBOARD_PROJECT, '/project/bills/daily')
   },
   wallet_project: {
@@ -117,7 +118,7 @@ export const PATH_DASHBOARD = {
     list: path(ROOTS_DASHBOARD, '/account-transaction/list'),
     listWithdraw: path(ROOTS_DASHBOARD, '/account-transaction/withdraw-request'),
     walletTransaction: path(ROOTS_DASHBOARD, '/account-transaction/wallet-transaction'),
-    payments: path(ROOTS_DASHBOARD, '/account-transaction/payments/list'),
+    // payments: path(ROOTS_DASHBOARD, '/account-transaction/payments/list'),
     periodRevenue: path(ROOTS_DASHBOARD, '/account-transaction/revenue-history')
   },
   eCommerce: {

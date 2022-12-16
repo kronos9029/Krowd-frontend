@@ -101,7 +101,11 @@ async function getsPayment(params: { pageIndex: number; pageSize: number }) {
   });
   return response;
 }
-async function getsPaymentRevenue(params: { pageIndex: number; pageSize: number }) {
+async function getsPaymentRevenue(params: {
+  pageIndex: number;
+  pageSize: number;
+  projectId: string;
+}) {
   const headers = getHeader();
   const response = await axios.get(REACT_APP_API_URL + `${PERIOD_REVENUE}`, {
     headers: headers,

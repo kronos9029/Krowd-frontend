@@ -67,12 +67,12 @@ const sidebarConfig = [
         title: 'Giao dịch ví',
         path: PATH_DASHBOARD.transaction.walletTransaction,
         icon: ICONS.walletTransaction
-      },
-      {
-        title: 'Đầu tư và nhận lãi',
-        path: PATH_DASHBOARD.transaction.payments,
-        icon: ICONS.payment
       }
+      // {
+      //   title: 'Đầu tư và nhận lãi',
+      //   path: PATH_DASHBOARD.transaction.payments,
+      //   icon: ICONS.payment
+      // }
       // {
       //   title: 'Lịch sử doanh thu',
       //   path: PATH_DASHBOARD.transaction.periodRevenue,

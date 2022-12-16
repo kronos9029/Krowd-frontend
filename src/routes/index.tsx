@@ -83,6 +83,7 @@ export default function Router() {
         { path: 'project/projectDetail', element: <Details /> },
         { path: 'project/projectDetail/:id', element: <Details /> },
         { path: 'project/daily-revenue', element: <ReportDailyProject /> },
+        { path: 'project/payment_history', element: <PaymentHistory /> },
         { path: 'project/bills/daily', element: <BillReportDailyProject /> },
         { path: 'project/investment-wallet', element: <UserInvestment /> },
         { path: 'project/report_update', element: <ProjectStageReport /> }
@@ -152,7 +153,7 @@ export default function Router() {
             { path: 'list', element: <UserAccountTransaction /> },
             { path: 'withdraw-request', element: <UserWithDrawTransaction /> },
             { path: 'wallet-transaction', element: <UserWalletTransaction /> },
-            { path: 'payments/list', element: <UserPaymentProject /> },
+            // { path: 'payments/list', element: <UserPaymentProject /> },
             { path: 'revenue-history', element: <UserPeriodRevenueHistory /> }
           ]
         },
@@ -366,6 +367,9 @@ const ProjectListInvested = Loadable(
 );
 const ReportDailyProject = Loadable(
   lazy(() => import('../pages/dashboard/ProjectKrowdManager/ReportDailyProject'))
+);
+const PaymentHistory = Loadable(
+  lazy(() => import('../pages/dashboard/ProjectKrowdManager/PaymentHistory'))
 );
 const BillReportDailyProject = Loadable(
   lazy(() => import('../pages/dashboard/ProjectKrowdManager/BillReportDailyProject'))

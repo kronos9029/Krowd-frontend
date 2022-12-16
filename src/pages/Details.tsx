@@ -429,7 +429,9 @@ export default function ComponentsDetails() {
           )}
 
           {openStage === 'table' && listOfChartStage && listOfChartStage.length > 0 && (
-            <StageListKrowdTable project={projectID} />
+            <Container maxWidth={'lg'}>
+              <StageListKrowdTable project={projectID} />
+            </Container>
           )}
           <Box sx={{ mb: 7 }}>
             <Divider variant="fullWidth" />

@@ -427,13 +427,14 @@ export function getAllPaymentList(pageIndex: number, pageSize: number) {
 }
 //---------------------------- GET ALL PAYMENTS------------------------------
 
-export function getAllPaymentListRevenue(pageIndex2: number, pageSize2: number) {
+export function getAllPaymentListRevenue(pageIndex2: number, pageSize2: number, projectId: string) {
   return async () => {
     dispatch(slice.actions.startLoadingPeriodRevenueList());
     try {
       const response = await TransactionAPI.getsPaymentRevenue({
         pageIndex: pageIndex2,
-        pageSize: pageSize2
+        pageSize: pageSize2,
+        projectId: projectId
       });
       dispatch(slice.actions.getPeriodRevenueListSuccess(response.data));
     } catch (error) {

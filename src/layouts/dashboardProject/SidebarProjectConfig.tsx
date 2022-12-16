@@ -49,8 +49,13 @@ const SidebarProjectConfig = [
         icon: ICONS.daily
       },
       {
-        title: 'Tình hình thường kì',
+        title: 'Tình hình thường kỳ',
         path: PATH_DASHBOARD_PROJECT.project.reportUpdate,
+        icon: ICONS.daily
+      },
+      {
+        title: 'Lịch sử nhận thanh toán',
+        path: PATH_DASHBOARD_PROJECT.project.historyPayment,
         icon: ICONS.term
       }
     ]
